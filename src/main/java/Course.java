@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // entity layer
 
 public class Course {
@@ -7,20 +9,21 @@ public class Course {
      */
     public String courseName;
     public String courseInstructor;
-    public String[] students;
+    public ArrayList<String> students; // should be ArrayList<StudentUser>
     private int numStudents;
-    public String[] tasks;
+    public ArrayList<String> tasks;  // should be ArrayList<Task>
     public Boolean publish;
 
-    public Course(String courseName, String[] tasks) {
+    public Course(String courseName, ArrayList<String> tasks) {
         /* constructor that takes in two arguments:
             - the course name
             - a list of tasks
          */
         this.courseName = courseName;
         this.tasks = tasks;
+
         this.courseInstructor = "";
-        this.students = new String[numStudents];
+        this.students = new ArrayList<>(numStudents);
         this.numStudents = 0;
         this.publish = false;  // course creation, default set to not yet published
     }
