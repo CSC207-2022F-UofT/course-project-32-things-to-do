@@ -1,3 +1,6 @@
+package entities;
+
+import java.util.List;
 import java.util.ArrayList;
 
 // entity layer
@@ -9,20 +12,19 @@ public class Course {
      */
     public String courseName;
     public String courseInstructor;
-    public ArrayList<String> students; // should be ArrayList<StudentUser>
+    public List<String> students; // will be storing the IDs of students
     private int numStudents;
-    public ArrayList<String> tasks;  // should be ArrayList<Task>
+    public List<String> tasks;  // will be storing the tasks IDs
     public Boolean publish;
 
-    public Course(String courseName, ArrayList<String> tasks) {
+    public Course(String courseName, List<String> tasks) {
         /* constructor that takes in two arguments:
             - the course name
             - a list of tasks
          */
         this.courseName = courseName;
         this.tasks = tasks;
-
-        this.courseInstructor = "";
+        this.courseInstructor = "pgries";
         this.students = new ArrayList<>(numStudents);
         this.numStudents = 0;
         this.publish = false;  // course creation, default set to not yet published
