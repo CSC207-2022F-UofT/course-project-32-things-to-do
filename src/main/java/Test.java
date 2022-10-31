@@ -1,9 +1,64 @@
-public class Test extends Task{
+public class Test extends Task implements Timeblockable, Gradable{
     public Test(String title) {
         super(title);
     }
     public Test(String title, int priority) {
         super(title, priority);
+    }
+    /**
+     * Set a new time block
+     * @param newTimeBlock - the new time block of the Test
+     */
+    public void setTimeBlock(int[] newTimeBlock) {
+
+    }
+
+    /**
+     * Get the time block of a Test
+     * @return - the time block of the Test
+     */
+    public int[] getTimeBlock() {
+        return this.timeBlock;
+    }
+
+    /**
+     * Schedule a time block for the user
+     * @return - whether the time block has been successfully scheduled
+     */
+    public boolean scheduleTimeBlock() {
+        return true;
+    }
+
+    /**
+     * Remove a time block from the user's schedule
+     * @return - whether the time block has been successfully removed
+     */
+    public boolean removeTimeBlock() {
+        return true;
+    }
+
+    /**
+     * Change the weightage of the Test
+     * @param weightage - the new weightage
+     */
+    public void setWeightage(double weightage) {
+
+    }
+
+    /**
+     * Update the Test with the user's grade
+     * @param grade - the grade the user has received
+     */
+    public void setGradeReceived(double grade) {
+
+    }
+
+    /**
+     * Set a grade goal for the Test
+     * @param goal - the grade the user would like to receive
+     */
+    public void setGradeGoal(double goal) {
+
     }
     /**
      * Delete a Test by moving it to the user's archive

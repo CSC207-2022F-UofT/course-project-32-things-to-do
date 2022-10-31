@@ -1,4 +1,4 @@
-public class Event extends Task {
+public class Event extends Task implements Timeblockable {
     private boolean recurring;
     private String frequency;
 
@@ -40,6 +40,38 @@ public class Event extends Task {
      */
     protected void setRecurring(boolean recurring, String frequency) {
         if (recurring) this.frequency = frequency;
+    }
+
+    /**
+     * Set a new time block
+     * @param newTimeBlock - the new time block of the Event
+     */
+    public void setTimeBlock(int[] newTimeBlock) {
+
+    }
+
+    /**
+     * Get the time block of an Event
+     * @return - the time block of the Event
+     */
+    public int[] getTimeBlock() {
+        return this.timeBlock;
+    }
+
+    /**
+     * Schedule a time block for the user
+     * @return - whether the time block has been successfully scheduled
+     */
+    public boolean scheduleTimeBlock() {
+        return true;
+    }
+
+    /**
+     * Remove a time block from the user's schedule
+     * @return - whether the time block has been successfully removed
+     */
+    public boolean removeTimeBlock() {
+        return true;
     }
 
     /**

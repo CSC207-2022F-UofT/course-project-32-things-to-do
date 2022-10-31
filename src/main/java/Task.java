@@ -5,6 +5,7 @@ public abstract class Task {
     protected String title;
     protected int priority;
     protected boolean complete = false;
+    private String id = "user name" + 0; // concatenate user's name with length of their toDoList
 
     /**
      * Create a new Task that has a title and default priority value
@@ -25,6 +26,13 @@ public abstract class Task {
         this.priority = priority;
     }
 
+    /**
+     * Retrieve the unique ID of the Task
+     * @return - the ID of the Task
+     */
+    public String getId() {
+        return id;
+    }
     /**
      * Retrieves the title of the Task
      * @return - the title of the Task
