@@ -1,6 +1,5 @@
-/**
- *
- */
+package Entities;
+
 public abstract class Task {
     protected String title;
     protected int priority;
@@ -8,8 +7,8 @@ public abstract class Task {
     private String id = "user name" + 0; // concatenate user's name with length of their toDoList
 
     /**
-     * Create a new Task that has a title and default priority value
-     * @param title - the title of the Task
+     * Create a new Entities.Task that has a title and default priority value
+     * @param title - the title of the Entities.Task
      */
     public Task(String title) {
         this.title = title;
@@ -17,9 +16,9 @@ public abstract class Task {
     }
 
     /**
-     * Create a new Task that has a title and a priority value
-     * @param title - the title of the Task
-     * @param priority - the Task's priority value
+     * Create a new Entities.Task that has a title and a priority value
+     * @param title - the title of the Entities.Task
+     * @param priority - the Entities.Task's priority value
      */
     public Task(String title, int priority) {
         this.title = title;
@@ -27,15 +26,15 @@ public abstract class Task {
     }
 
     /**
-     * Retrieve the unique ID of the Task
-     * @return - the ID of the Task
+     * Retrieve the unique ID of the Entities.Task
+     * @return - the ID of the Entities.Task
      */
     public String getId() {
         return id;
     }
     /**
-     * Retrieves the title of the Task
-     * @return - the title of the Task
+     * Retrieves the title of the Entities.Task
+     * @return - the title of the Entities.Task
      */
     public String getTitle() {
         return this.title;
@@ -50,42 +49,42 @@ public abstract class Task {
     }
 
     /**
-     * Retrieve the priority value of the Task
-     * @return - the priority value of the Task
+     * Retrieve the priority value of the Entities.Task
+     * @return - the priority value of the Entities.Task
      */
     public int getPriority() {
         return this.priority;
     }
 
     /**
-     * Change the priority value of the Task
-     * @param priority - the new priority value of the Task
+     * Change the priority value of the Entities.Task
+     * @param priority - the new priority value of the Entities.Task
      */
     protected void setPriority(int priority) {
 
     }
 
     /**
-     * Sets the Task to complete
+     * Sets the Entities.Task to complete
      */
     protected void setComplete() {
         this.complete = true;
     }
 
     /**
-     * Deletes the Task by moving it to the user's archive
-     * @return - whether the Task has been successfully deleted
+     * Deletes the Entities.Task by moving it to the user's archive
+     * @return - whether the Entities.Task has been successfully deleted
      */
     abstract boolean delete();
 
     /**
-     * Save the Task to the user's data
-     * @return - whether the Task has been successfully saved
+     * Save the Entities.Task to the user's data
+     * @return - whether the Entities.Task has been successfully saved
      */
     abstract boolean save();
 
     /**
-     * Edit the features of the Task
+     * Edit the features of the Entities.Task
      */
     abstract void edit();
 }

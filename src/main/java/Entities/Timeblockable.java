@@ -1,15 +1,17 @@
+package Entities;
+
 public interface Timeblockable {
     int[] timeBlock = new int[2];
 
     /**
      * Set a new time block
-     * @param newTimeBlock - the new time block of the Timeblockable Task
+     * @param newTimeBlock - the new time block of the Entities.Timeblockable Entities.Task
      */
     void setTimeBlock(int[] newTimeBlock);
 
     /**
-     * Get the time block of a Timeblockable Task
-     * @return - the time block of the Task
+     * Get the time block of a Entities.Timeblockable Entities.Task
+     * @return - the time block of the Entities.Task
      */
     int[] getTimeBlock();
 
