@@ -17,11 +17,12 @@ public class Course {
     public List<String> tasks;  // will be storing the tasks IDs
     public Boolean publish;
 
+    /**
+     * Creates a new Course with a course name and a list of tasks
+     * @param courseName the name of the course
+     * @param tasks the tasks corresponding to the course
+     */
     public Course(String courseName, List<String> tasks) {
-        /* constructor that takes in two arguments:
-            - the course name
-            - a list of tasks
-         */
         this.courseName = courseName;
         this.tasks = tasks;
         this.courseInstructor = "pgries";
