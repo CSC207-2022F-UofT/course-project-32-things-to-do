@@ -3,8 +3,9 @@ package entities;
 import java.util.List;
 import java.util.ArrayList;
 
-// entity layer
-
+/**
+ * entity layer
+ */
 public class Course {
     /*
     class for Course entity with private instance variables
