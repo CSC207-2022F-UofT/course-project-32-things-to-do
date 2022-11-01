@@ -1,4 +1,6 @@
-public class Test extends Task implements Timeblockable, Gradable{
+package Entities;
+
+public class Test extends Task implements Timeblockable, Gradable {
     public Test(String title) {
         super(title);
     }
@@ -7,15 +9,15 @@ public class Test extends Task implements Timeblockable, Gradable{
     }
     /**
      * Set a new time block
-     * @param newTimeBlock - the new time block of the Test
+     * @param newTimeBlock - the new time block of the Entities.Test
      */
     public void setTimeBlock(int[] newTimeBlock) {
 
     }
 
     /**
-     * Get the time block of a Test
-     * @return - the time block of the Test
+     * Get the time block of a Entities.Test
+     * @return - the time block of the Entities.Test
      */
     public int[] getTimeBlock() {
         return this.timeBlock;
@@ -38,7 +40,7 @@ public class Test extends Task implements Timeblockable, Gradable{
     }
 
     /**
-     * Change the weightage of the Test
+     * Change the weightage of the Entities.Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
@@ -46,7 +48,7 @@ public class Test extends Task implements Timeblockable, Gradable{
     }
 
     /**
-     * Update the Test with the user's grade
+     * Update the Entities.Test with the user's grade
      * @param grade - the grade the user has received
      */
     public void setGradeReceived(double grade) {
@@ -54,30 +56,30 @@ public class Test extends Task implements Timeblockable, Gradable{
     }
 
     /**
-     * Set a grade goal for the Test
+     * Set a grade goal for the Entities.Test
      * @param goal - the grade the user would like to receive
      */
     public void setGradeGoal(double goal) {
 
     }
     /**
-     * Delete a Test by moving it to the user's archive
-     * @return - whether the Test has been successfully deleted
+     * Delete a Entities.Test by moving it to the user's archive
+     * @return - whether the Entities.Test has been successfully deleted
      */
     protected boolean delete() {
         return true;
     }
 
     /**
-     * Save a Test to the user's data
-     * @return - whether the Test has been successfully saved
+     * Save a Entities.Test to the user's data
+     * @return - whether the Entities.Test has been successfully saved
      */
     protected boolean save() {
         return true;
     }
 
     /**
-     * Edit the features of the Test
+     * Edit the features of the Entities.Test
      */
     protected void edit() {
 

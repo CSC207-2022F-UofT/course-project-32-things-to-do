@@ -1,4 +1,6 @@
-public class Assignment extends Task implements Gradable{
+package Entities;
+
+public class Assignment extends Task implements Gradable {
     public Assignment(String title) {
         super(title);
     }
@@ -7,7 +9,7 @@ public class Assignment extends Task implements Gradable{
     }
 
     /**
-     * Change the weightage of the Test
+     * Change the weightage of the Entities.Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
@@ -15,7 +17,7 @@ public class Assignment extends Task implements Gradable{
     }
 
     /**
-     * Update the Test with the user's grade
+     * Update the Entities.Test with the user's grade
      * @param grade - the grade the user has received
      */
     public void setGradeReceived(double grade) {
@@ -23,7 +25,7 @@ public class Assignment extends Task implements Gradable{
     }
 
     /**
-     * Set a grade goal for the Test
+     * Set a grade goal for the Entities.Test
      * @param goal - the grade the user would like to receive
      */
     public void setGradeGoal(double goal) {
