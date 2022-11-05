@@ -1,8 +1,6 @@
 package Entities;
 
 public interface Timeblockable {
-    int[] timeBlock = new int[2];
-
     /**
      * Set a new time block
      * @param newTimeBlock - the new time block of the Entities.Timeblockable Entities.Task

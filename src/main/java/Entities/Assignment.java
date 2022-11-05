@@ -1,6 +1,10 @@
 package Entities;
 
 public class Assignment extends Task implements Gradable {
+    // Gradable attributes
+    private double weightage = 0;
+    private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
+
     public Assignment(String title) {
         super(title);
     }

@@ -1,6 +1,13 @@
 package Entities;
 
 public class Test extends Task implements Timeblockable, Gradable {
+    // Timeblockable attributes
+    private int[] timeBlock = new int[2];
+
+    // Gradable attributes
+    private double weightage = 0;
+    private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
+
     public Test(String title) {
         super(title);
     }

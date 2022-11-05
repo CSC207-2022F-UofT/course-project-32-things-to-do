@@ -3,6 +3,7 @@ package Entities;
 public class Event extends Task implements Timeblockable {
     private boolean recurring;
     private String frequency;
+    private int[] timeBlock = new int[2];
 
     /**
      * Create an Entities.Event with a title
