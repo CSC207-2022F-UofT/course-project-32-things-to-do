@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class StudentUser {
+public class StudentUser extends User {
 
     /** Entity Layer
      * A student User */

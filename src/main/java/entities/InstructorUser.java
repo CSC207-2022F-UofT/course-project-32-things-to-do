@@ -2,7 +2,7 @@ package entities;
 
 import java.util.List;
 
-public class InstructorUser {
+public class InstructorUser extends User {
 
     /** Entity Layer
      * An Instructor User */
