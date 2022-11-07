@@ -1,11 +1,14 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.time.format.DateTimeFormatter;
 
 public class StudentUser {
+
+    /** Entity Layer
+     * A student User */
 
     public StudentUser(String name, String password) {
     }
@@ -24,5 +27,5 @@ public class StudentUser {
 
     public Map desiredGrades; // make it map Course to double once Course class is up
 
-    public List<DateTimeFormatter> workingHours; // may need to change type
+    public List<List<LocalDateTime>> workingHours; // each internal list contains the start and end times
 }
