@@ -1,9 +1,9 @@
 package Entities;
 
 public abstract class Task {
-    protected String title;
-    protected int priority;
-    protected boolean complete = false;
+    private String title;
+    private int priority;
+    private boolean complete = false;
     private String id = "user name" + 0; // concatenate user's name with length of their toDoList
 
     /**
