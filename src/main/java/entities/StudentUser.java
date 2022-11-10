@@ -13,19 +13,51 @@ public class StudentUser extends User {
     public StudentUser(String name, String password) {
     }
 
-    public List<String> toDoList;
+    private ArrayList<String> toDoList;
 
-    public List<String> taskArchive;
+    public ArrayList<String> getToDoList() {
+        return null;
+    }
 
-    public List<String> courses;
+    private ArrayList<String> taskArchive;
 
-    public ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
+    public ArrayList<String> getTaskArchive() {
+        return null;
+    }
 
-    public ArrayList<String> notifications;
+    private ArrayList<String> courses;
 
-    public String name;
+    public ArrayList<String> getCourses() {
+        return null;
+    }
 
-    public Map desiredGrades; // make it map Course to double once Course class is up
+    private ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
 
-    public List<List<LocalDateTime>> workingHours; // each internal list contains the start and end times
+    public ArrayList getInbox() {
+        return null;
+    }
+
+    private ArrayList<String> notifications;
+
+    public ArrayList<String> getNotifications() {
+        return null;
+    }
+
+    private String name;
+
+    public String getName() {
+        return this.name;
+    }
+
+    private Map desiredGrades; // make it map Course to double once Course class is up
+
+    public Map getDesiredGrades() {
+        return null;
+    }
+
+    private List<List<LocalDateTime>> workingHours; // each internal list contains the start and end times
+
+    public List<List<LocalDateTime>> getWorkingHours() {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstructorUser extends User {
@@ -10,5 +11,11 @@ public class InstructorUser extends User {
     public InstructorUser(String name, String password) {
     }
 
-    public List<String> Courses;
+    private ArrayList<String> Courses;
+
+    public ArrayList<String> getCourses() {
+        return this.Courses;
+    }
+
+    public void addCourse() {}
 }
