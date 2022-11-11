@@ -1,17 +1,23 @@
 package Entities;
 
+import java.time.LocalDateTime;
 public class Event extends Task implements Timeblockable {
     private boolean recurring;
+    // private LocalDateTime endRecurringBy;
+    // ^ implement later
     private String frequency;
-    private int[] timeBlock = new int[2];
+
+    // Timeblockable attributes
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     /**
-     * Create an Entities.Event with a title
+     * Create an Event with a title
      * If the event is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
      * Otherwise, the frequency is blank
-     * @param title - the title of the Entities.Event
-     * @param recurring - whether the Entities.Event is recurring
-     * @param frequency - the frequency at which the Entities.Event occurs (if recurring)
+     * @param title - the title of the Event
+     * @param recurring - whether the Event is recurring
+     * @param frequency - the frequency at which the Event occurs (if recurring)
      */
     public Event(String title, boolean recurring, String frequency) {
         super(title);
@@ -21,13 +27,13 @@ public class Event extends Task implements Timeblockable {
     }
 
     /**
-     * Create an Entities.Event with a title and priority
+     * Create an Event with a title and priority
      * If the event is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
      * Otherwise, the frequency is blank
-     * @param title - the title of the Entities.Event
-     * @param priority - the priority value of the Entities.Event
-     * @param recurring - whether the Entities.Event is recurring
-     * @param frequency - the frequency at which the Entities.Event occurs (if recurring)
+     * @param title - the title of the Event
+     * @param priority - the priority value of the Event
+     * @param recurring - whether the Event is recurring
+     * @param frequency - the frequency at which the Event occurs (if recurring)
      */
     public Event(String title, int priority, boolean recurring, String frequency) {
         super(title, priority);
@@ -36,7 +42,7 @@ public class Event extends Task implements Timeblockable {
     }
 
     /**
-     * Set an Entities.Event as recurring/not
+     * Set an Event as recurring/not
      * Set its new frequency if it is recurring
      * @param recurring - whether the Entities.Event is recurring
      * @param frequency - the frequency at which the Entities.Event occurs (if recurring)
@@ -47,18 +53,20 @@ public class Event extends Task implements Timeblockable {
 
     /**
      * Set a new time block
-     * @param newTimeBlock - the new time block of the Entities.Event
+     * @param startTime - the start of the time block
+     * @param endTime - the end of the time block
      */
-    public void setTimeBlock(int[] newTimeBlock) {
+    public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
 
     }
 
     /**
-     * Get the time block of an Entities.Event
-     * @return - the time block of the Entities.Event
+     * Get the time block of an Event
+     * @return - the time block of the Event
+     *         - in array form: {startTime, endTime}
      */
-    public int[] getTimeBlock() {
-        return this.timeBlock;
+    public LocalDateTime[] getTimeBlock() {
+        return new LocalDateTime[] {this.startTime, this.endTime};
     }
 
     /**

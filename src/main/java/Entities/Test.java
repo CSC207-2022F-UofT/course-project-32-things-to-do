@@ -1,8 +1,11 @@
 package Entities;
 
+import java.time.LocalDateTime;
+
 public class Test extends Task implements Timeblockable, Gradable {
     // Timeblockable attributes
-    private int[] timeBlock = new int[2];
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     // Gradable attributes
     private double weightage = 0;
@@ -16,18 +19,19 @@ public class Test extends Task implements Timeblockable, Gradable {
     }
     /**
      * Set a new time block
-     * @param newTimeBlock - the new time block of the Entities.Test
+     * @param startTime - the start of the new time block
+     * @param endTime - the end of the new time block
      */
-    public void setTimeBlock(int[] newTimeBlock) {
+    public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
 
     }
 
     /**
-     * Get the time block of a Entities.Test
-     * @return - the time block of the Entities.Test
+     * Get the time block of a Test
+     * @return - the time block of the Test
      */
-    public int[] getTimeBlock() {
-        return this.timeBlock;
+    public LocalDateTime[] getTimeBlock() {
+        return new LocalDateTime[] {this.startTime, this.endTime};
     }
 
     /**
@@ -47,7 +51,7 @@ public class Test extends Task implements Timeblockable, Gradable {
     }
 
     /**
-     * Change the weightage of the Entities.Test
+     * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
@@ -55,7 +59,7 @@ public class Test extends Task implements Timeblockable, Gradable {
     }
 
     /**
-     * Update the Entities.Test with the user's grade
+     * Update the Test with the user's grade
      * @param grade - the grade the user has received
      */
     public void setGradeReceived(double grade) {
@@ -63,30 +67,30 @@ public class Test extends Task implements Timeblockable, Gradable {
     }
 
     /**
-     * Set a grade goal for the Entities.Test
+     * Set a grade goal for the Test
      * @param goal - the grade the user would like to receive
      */
     public void setGradeGoal(double goal) {
 
     }
     /**
-     * Delete a Entities.Test by moving it to the user's archive
-     * @return - whether the Entities.Test has been successfully deleted
+     * Delete a Test by moving it to the user's archive
+     * @return - whether the Test has been successfully deleted
      */
     protected boolean delete() {
         return true;
     }
 
     /**
-     * Save a Entities.Test to the user's data
-     * @return - whether the Entities.Test has been successfully saved
+     * Save a Test to the user's data
+     * @return - whether the Test has been successfully saved
      */
     protected boolean save() {
         return true;
     }
 
     /**
-     * Edit the features of the Entities.Test
+     * Edit the features of the Test
      */
     protected void edit() {
 

@@ -1,17 +1,19 @@
 package Entities;
-
+import java.time.LocalDateTime;
 public interface Timeblockable {
     /**
      * Set a new time block
-     * @param newTimeBlock - the new time block of the Entities.Timeblockable Entities.Task
+     * @param startTime - the start of the time block
+     * @param endTime - the end of the time block
      */
-    void setTimeBlock(int[] newTimeBlock);
+    void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime);
 
     /**
-     * Get the time block of a Entities.Timeblockable Entities.Task
-     * @return - the time block of the Entities.Task
+     * Get the time block of a Timeblockable Task
+     * @return - the time block of the Task
+     *         - in array form: {startTime, endTime}
      */
-    int[] getTimeBlock();
+     LocalDateTime[] getTimeBlock();
 
     /**
      * Schedule a time block for the user
