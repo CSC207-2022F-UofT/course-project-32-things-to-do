@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Course {
     /**
     class for Course entity with private instance variables
-    uses StudentUser, InstructorUser, and Task entity classes
+    using StudentUser, InstructorUser, and Task entity classes
      */
     private String courseName;
     private String courseInstructor;
