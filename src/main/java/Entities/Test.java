@@ -1,6 +1,7 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Timeblockable attributes
@@ -14,6 +15,7 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Preparatory attributes
     private double timeSpent = 0;
     private double timeNeeded = 0;
+    private ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled;
 
     /**
      * Create a new Test with a title and time block
@@ -113,7 +115,7 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     }
 
     /**
-     * Schedule the required prep time for the Test
+     * Schedule the required prep time for the Test and add to prepTimeScheduled
      * @return - whether scheduling was successful
      */
     public boolean schedulePrepTime() {

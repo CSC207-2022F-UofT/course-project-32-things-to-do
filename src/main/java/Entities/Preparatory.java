@@ -20,7 +20,7 @@ public interface Preparatory {
     double getTimeLeft();
 
     /**
-     * Schedule the required prep time of the Task and stores it in scheduledTime list
+     * Schedule the required prep time of the Task and stores it in prepTimeScheduled list
      * @return - whether scheduling was successful
      */
     boolean schedulePrepTime();

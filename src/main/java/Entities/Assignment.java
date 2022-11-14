@@ -1,6 +1,8 @@
 package Entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class Assignment extends Task implements Gradable, Preparatory {
     // Gradable attributes
     private double weightage = 0;
@@ -9,6 +11,7 @@ public class Assignment extends Task implements Gradable, Preparatory {
     // Preparatory
     private double timeSpent = 0;
     private double timeNeeded = 0;
+    private ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled;
 
     private LocalDateTime dueDate;
 
@@ -74,7 +77,7 @@ public class Assignment extends Task implements Gradable, Preparatory {
     }
 
     /**
-     * Schedule the required prep time for the Assignment
+     * Schedule the required prep time for the Assignment and add to prepTimeScheduled
      * @return - whether scheduling was successful
      */
     public boolean schedulePrepTime() {
