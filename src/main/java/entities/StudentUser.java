@@ -3,13 +3,14 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class StudentUser extends User {
+public class StudentUser implements User {
 
     /** Entity Layer
      * A student User */
 
     public StudentUser(String name, String password) {
         this.name = name;
+        this.password = password;
         this.toDoList = new ArrayList<String>();
         this.taskArchive = new ArrayList<String>();
         this.courses = new ArrayList<String>();
@@ -18,6 +19,26 @@ public class StudentUser extends User {
         this.desiredGrades = new HashMap<String, Double>();
         this.workingHours = new ArrayList<List<LocalDateTime>>();
     }
+
+    private final String name;
+
+    private final String password;
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getPass() {
+        return password;
+    }
+
+    @Override
+    public boolean checkPassword() {
+        return password != null && password.length() > 8;
+    }
+
+
 
     private ArrayList<String> toDoList; // string being task ids
 
@@ -51,12 +72,6 @@ public class StudentUser extends User {
     public ArrayList<String> getNotifications() {
 
         return this.notifications;
-    }
-
-    private String name;
-
-    public String getName() {
-        return this.name;
     }
 
     private Map<String,Double> desiredGrades; // String is course id

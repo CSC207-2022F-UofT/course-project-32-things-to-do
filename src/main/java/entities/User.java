@@ -1,20 +1,15 @@
 package entities;
 
 // Entity
-public abstract class User {
+public interface User {
 
     /** Entity Layer
      * A general User of this program */
 
-    public boolean checkPassword() {
-        return false;
-    }
+    boolean checkPassword();
 
-    public String getName() {
-        return null;
-    }
+    String getName();
 
-    public String getPass() {
-        return null;
-    }
+    public String getPass();
+
 }

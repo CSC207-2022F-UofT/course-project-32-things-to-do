@@ -1,19 +1,11 @@
 package entities;
 
-// Entity
+// Probably not an entity
 
 public class UserWhisperer {
 
     /** Entity Layer
-     * What this class does */
-
-    public StudentUser createStudent(String name, String password) {
-        return new StudentUser(name, password);
-    }
-
-    public InstructorUser createInstructor(String name, String password) {
-        return null;
-    }
+     * Searches the User Database for this User */
 
 
     public String SearchUser(String name) {
