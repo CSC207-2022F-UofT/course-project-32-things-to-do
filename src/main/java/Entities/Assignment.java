@@ -45,14 +45,6 @@ public class Assignment extends Task implements Gradable {
     }
 
     /**
-     * Set a grade goal for the Test
-     * @param goal - the grade the user would like to receive
-     */
-    public void setGradeGoal(double goal) {
-
-    }
-
-    /**
      * Get the due date of the Assignment
      * @return - the Assignment's due date
      */

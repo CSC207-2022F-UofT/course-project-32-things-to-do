@@ -65,14 +65,6 @@ public class Test extends Task implements Timeblockable, Gradable {
     public void setGradeReceived(double grade) {
 
     }
-
-    /**
-     * Set a grade goal for the Test
-     * @param goal - the grade the user would like to receive
-     */
-    public void setGradeGoal(double goal) {
-
-    }
     /**
      * Delete a Test by moving it to the user's archive
      * @return - whether the Test has been successfully deleted
