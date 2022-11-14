@@ -1,10 +1,14 @@
 package Entities;
 
 import java.time.LocalDateTime;
-public class Assignment extends Task implements Gradable {
+public class Assignment extends Task implements Gradable, Preparatory {
     // Gradable attributes
     private double weightage = 0;
     private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
+
+    // Preparatory
+    private double timeSpent = 0;
+    private double timeNeeded = 0;
 
     private LocalDateTime dueDate;
 
@@ -42,6 +46,39 @@ public class Assignment extends Task implements Gradable {
      */
     public void setGradeReceived(double grade) {
 
+    }
+
+    /**
+     * Update the amount of time the user has spent preparing
+     * @param timeSpent - the amount of time being added
+     */
+    public void updateTimeSpent(double timeSpent) {
+        this.timeSpent += timeSpent;
+    }
+
+    /**
+     * Set the amount of time the user needs to prepare for
+     * @param timeNeeded - the new time
+     */
+    public void setTimeNeeded(double timeNeeded) {
+        this.timeNeeded = timeNeeded;
+    }
+
+    /**
+     * Get the amount of time the user has left to prepare (before due date)
+     * @return - the amount of time the user has remaining
+     */
+    public double getTimeLeft() {
+        // subtract current date from due date
+        return 0;
+    }
+
+    /**
+     * Schedule the required prep time for the Assignment
+     * @return - whether scheduling was successful
+     */
+    public boolean schedulePrepTime() {
+        return true;
     }
 
     /**

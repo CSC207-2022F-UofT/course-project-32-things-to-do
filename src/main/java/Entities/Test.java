@@ -2,7 +2,7 @@ package Entities;
 
 import java.time.LocalDateTime;
 
-public class Test extends Task implements Timeblockable, Gradable {
+public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Timeblockable attributes
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -10,6 +10,10 @@ public class Test extends Task implements Timeblockable, Gradable {
     // Gradable attributes
     private double weightage = 0;
     private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
+
+    // Preparatory attributes
+    private double timeSpent = 0;
+    private double timeNeeded = 0;
 
     public Test(String title) {
         super(title);
@@ -65,6 +69,39 @@ public class Test extends Task implements Timeblockable, Gradable {
     public void setGradeReceived(double grade) {
 
     }
+    /**
+     * Update the amount of time the user has spent preparing
+     * @param timeSpent - the amount of time being added
+     */
+    public void updateTimeSpent(double timeSpent) {
+        this.timeSpent += timeSpent;
+    }
+
+    /**
+     * Set the amount of time the user needs to prepare for
+     * @param timeNeeded - the new time
+     */
+    public void setTimeNeeded(double timeNeeded) {
+        this.timeNeeded = timeNeeded;
+    }
+
+    /**
+     * Get the amount of time the user has left to prepare (before due date)
+     * @return - the amount of time the user has remaining
+     */
+    public double getTimeLeft() {
+        // subtract current date from beginning of time block
+        return 0;
+    }
+
+    /**
+     * Schedule the required prep time for the Test
+     * @return - whether scheduling was successful
+     */
+    public boolean schedulePrepTime() {
+        return true;
+    }
+
     /**
      * Delete a Test by moving it to the user's archive
      * @return - whether the Test has been successfully deleted
