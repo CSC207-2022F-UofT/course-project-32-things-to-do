@@ -15,11 +15,29 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     private double timeSpent = 0;
     private double timeNeeded = 0;
 
-    public Test(String title) {
+    /**
+     * Create a new Test with a title and time block
+     * @param title - name of the test
+     * @param startTime - start of time block
+     * @param endTime - end of time block
+     */
+    public Test(String title, LocalDateTime startTime, LocalDateTime endTime) {
         super(title);
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
-    public Test(String title, int priority) {
+
+    /**
+     * Create a new Test with a title, priority value, and time block
+     * @param title - name of the test
+     * @param priority - priority value of the test
+     * @param startTime - start of time block
+     * @param endTime - end of time block
+     */
+    public Test(String title, int priority, LocalDateTime startTime, LocalDateTime endTime) {
         super(title, priority);
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
     /**
      * Set a new time block

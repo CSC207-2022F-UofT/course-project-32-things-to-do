@@ -1,11 +1,13 @@
 package Entities;
 
-public abstract class Task {
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+public abstract class Task implements Serializable {
     private String title;
     private int priority;
     private boolean complete = false;
-    private String id; // concatenate user's name with current idCount #
-    private static int idCount = 0;
+    private String id;
 
     /**
      * Create a new Task that has a title and default priority value
@@ -14,8 +16,7 @@ public abstract class Task {
     public Task(String title) {
         this.title = title;
         this.priority = 0;
-        this.id = "user's name" + idCount;
-        idCount ++;
+        this.id = LocalDateTime.now().toString();
     }
 
     /**
@@ -26,8 +27,7 @@ public abstract class Task {
     public Task(String title, int priority) {
         this.title = title;
         this.priority = priority;
-        this.id = "user's name" + idCount;
-        idCount ++;
+        this.id = LocalDateTime.now().toString();
     }
 
     /**
