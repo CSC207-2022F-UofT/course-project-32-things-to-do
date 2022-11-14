@@ -46,9 +46,14 @@ public class Course {
     public String getCourseID() {
         return this.courseID;
     }
+
     public ArrayList<String> getStudents() {
         return new ArrayList<String>(this.students);
     }
+
+    /*
+    arraylist of all the task ids associated with a course
+     */
     public ArrayList<Task> getTasks() {
         return new ArrayList<Task>(this.tasks);
     }
