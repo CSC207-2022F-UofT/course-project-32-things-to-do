@@ -15,7 +15,7 @@ public class Course {
     private String courseInstructor;
     private String courseID;
     private ArrayList<String> students; // stores the IDs of students enrolled in the course
-    private ArrayList<Task> tasks;  // stores the IDs of the course's tasks
+    private ArrayList<String> tasks;  // stores the IDs of the course's tasks
     private Boolean published;
 
     /**
@@ -25,7 +25,7 @@ public class Course {
      * @param tasks tasks corresponding to the course
      */
 
-    public Course(String courseName, String courseInstructor, ArrayList<Task> tasks) {
+    public Course(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;
@@ -54,8 +54,8 @@ public class Course {
     /*
     arraylist of all the task ids associated with a course
      */
-    public ArrayList<Task> getTasks() {
-        return new ArrayList<Task>(this.tasks);
+    public ArrayList<String> getTasks() {
+        return new ArrayList<String>(this.tasks);
     }
     public Boolean getPublished() {
         return published;
@@ -76,8 +76,8 @@ public class Course {
     public void setStudents(ArrayList<String> students) {
         this.students = new ArrayList<String>(students);
     }
-    public void setTasks(ArrayList<Task> tasks) {
-        this.tasks = new ArrayList<Task>(tasks);
+    public void setTasks(ArrayList<String> tasks) {
+        this.tasks = new ArrayList<String>(tasks);
     }
     public void setPublished(Boolean published) {
         this.published = published;
