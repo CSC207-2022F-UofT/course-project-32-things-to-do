@@ -2,7 +2,11 @@ package course_enrolment_and_creation_usecase;
 
 import java.util.ArrayList;
 
-// FIX THIS IS WRONG
+// Use case layer
+
+// Notes:
+// the output data produced; returns the response as the output
+// do NOT depend on anything NOR have any references to Entity objects: violates SRP
 
 public class courseCreationResponseModel {
     String courseName;
