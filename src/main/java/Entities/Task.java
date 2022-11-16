@@ -1,7 +1,6 @@
 package Entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public abstract class Task implements Serializable {
     private String title;
@@ -12,22 +11,26 @@ public abstract class Task implements Serializable {
     /**
      * Create a new Task that has a title and default priority value
      * @param title - the title of the Task
+     * @param id - the unique ID of the Task
      */
-    public Task(String title) {
+    public Task(String title, String id) {
         this.title = title;
+        this.id = id;
         this.priority = 0;
-        this.id = LocalDateTime.now().toString();
+
+
     }
 
     /**
      * Create a new Task that has a title and a priority value
      * @param title - the title of the Task
+     * @param id - the unique ID of the Task
      * @param priority - the Task's priority value
      */
-    public Task(String title, int priority) {
+    public Task(String title, String id, int priority) {
         this.title = title;
+        this.id = id;
         this.priority = priority;
-        this.id = LocalDateTime.now().toString();
     }
 
     /**

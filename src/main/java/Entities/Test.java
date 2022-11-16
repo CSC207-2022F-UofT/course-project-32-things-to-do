@@ -19,12 +19,13 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
 
     /**
      * Create a new Test with a title and time block
-     * @param title - name of the test
+     * @param title - name of the Test
+     * @param id - the unique ID of the Test
      * @param startTime - start of time block
      * @param endTime - end of time block
      */
-    public Test(String title, LocalDateTime startTime, LocalDateTime endTime) {
-        super(title);
+    public Test(String title, String id, LocalDateTime startTime, LocalDateTime endTime) {
+        super(title, id);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -32,12 +33,13 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     /**
      * Create a new Test with a title, priority value, and time block
      * @param title - name of the test
+     * @param id - the unique ID of the Test
      * @param priority - priority value of the test
      * @param startTime - start of time block
      * @param endTime - end of time block
      */
-    public Test(String title, int priority, LocalDateTime startTime, LocalDateTime endTime) {
-        super(title, priority);
+    public Test(String title, String id, int priority, LocalDateTime startTime, LocalDateTime endTime) {
+        super(title, id, priority);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -120,6 +122,14 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
      */
     public boolean schedulePrepTime() {
         return true;
+    }
+
+    /**
+     * Get all scheduled prep times
+     * @return - all scheduled prep time
+     */
+    public ArrayList<ArrayList<LocalDateTime>> getPrepTimeScheduled() {
+        return prepTimeScheduled;
     }
 
     /**

@@ -1,5 +1,8 @@
 package Entities;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public interface Preparatory {
     /**
      * Update the amount of time the user has spent preparing
@@ -24,4 +27,10 @@ public interface Preparatory {
      * @return - whether scheduling was successful
      */
     boolean schedulePrepTime();
+
+    /**
+     * Get all scheduled prep times
+     * @return - all scheduled prep time
+     */
+    ArrayList<ArrayList<LocalDateTime>> getPrepTimeScheduled();
 }
