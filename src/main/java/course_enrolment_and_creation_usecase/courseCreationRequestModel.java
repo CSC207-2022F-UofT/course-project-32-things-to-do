@@ -4,7 +4,7 @@ package course_enrolment_and_creation_usecase;
 
 // Notes:
 // DONE?
-// requests what is needed for its input data
+// requests what is needed for its input data (what person in front of computer enters)
 // do NOT depend on anything NOR have any references to Entity objects: violates SRP
 
 import java.util.ArrayList;
@@ -22,19 +22,21 @@ public class courseCreationRequestModel {
         this.tasks = tasks;
     }
 
-//    String getCourseName() {
-//        return courseName;
-//    }
+    String getCourseName() {
+        return courseName;
+    }
 
-    void setCourseName() {
+    public void setCourseName() {
+
         this.courseName = courseName;
     }
 
-//    String getCourseInstructor() {
-//        return courseInstructor;
-//    }
+    String getCourseInstructor() {
+        return courseInstructor;
+    }
 
-    void setCourseInstructor() {
+    public void setCourseInstructor() {
+
         this.courseInstructor = courseInstructor;
     }
 
@@ -43,6 +45,7 @@ public class courseCreationRequestModel {
     }
 
     public ArrayList<String> getTasks() {
+
         return tasks;
     }
 

@@ -11,11 +11,13 @@ import java.util.ArrayList;
 public class courseCreationDSRequestModel {
     private final String courseName;
     private final String courseInstructor;
+    private final String courseID;
     private ArrayList<String> tasks;
 
     public courseCreationDSRequestModel(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
+        this.courseID = courseName + courseInstructor;
         this.tasks = tasks;
     }
 
@@ -24,6 +26,9 @@ public class courseCreationDSRequestModel {
     }
     public String getCourseInstructor() {
         return courseInstructor;
+    }
+    public String getCourseID() {
+        return courseID;
     }
     public ArrayList<String> getTasks() {
         return tasks;
