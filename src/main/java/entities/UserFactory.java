@@ -5,7 +5,7 @@ package entities;
 
 public interface UserFactory {
     /** Entity Layer
-     * Creates Users
+     * Creates Users with the specified name and password
      */
 
     User create(String name, String password);

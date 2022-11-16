@@ -17,7 +17,6 @@ public class StudentUser implements User {
         this.inbox = new ArrayList();
         this.notifications = new ArrayList<String>();
         this.desiredGrades = new HashMap<String, Double>();
-        this.workingHours = new ArrayList<List<LocalDateTime>>();
     }
 
     private final String name;
@@ -38,13 +37,15 @@ public class StudentUser implements User {
         return password != null && password.length() > 8;
     }
 
-
-
     private ArrayList<String> toDoList; // string being task ids
 
     public ArrayList<String> getToDoList() {
 
         return this.toDoList;
+    }
+
+    public void addTaskToList(String task) {
+        this.toDoList.add(task);
     }
 
     private ArrayList<String> taskArchive;
@@ -54,10 +55,21 @@ public class StudentUser implements User {
         return this.taskArchive;
     }
 
+    public void addTaskToArchive(String task) {
+        /**
+         * Adds task to the task archive of this user. Does not remove the task from the to do list.
+         */
+        this.taskArchive.add(task);
+    }
+
     private ArrayList<String> courses;
 
     public ArrayList<String> getCourses() {
         return this.courses;
+    }
+
+    public void addCourse(String course) {
+        this.toDoList.add(course);
     }
 
     private ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
@@ -67,11 +79,21 @@ public class StudentUser implements User {
         return this.inbox;
     }
 
+    public void addInvitation(String invite) {
+        /**
+         * Add invite to this user's inbox.
+         */
+        this.inbox.add(invite);
+    }
+
     private ArrayList<String> notifications;
 
     public ArrayList<String> getNotifications() {
-
         return this.notifications;
+    }
+
+    public void addNotification(String notification) {
+        this.notifications.add(notification);
     }
 
     private Map<String,Double> desiredGrades; // String is course id
@@ -81,12 +103,18 @@ public class StudentUser implements User {
         return this.desiredGrades;
     }
 
-    public void setDesiredGrades() {}
+    public void addDesiredGrade(String course, Double grade) {
+        this.desiredGrades.put(course, grade);
+    }
 
     private List<List<LocalDateTime>> workingHours; // each internal list contains the start and end times
 
     public List<List<LocalDateTime>> getWorkingHours() {
 
         return this.workingHours;
+    }
+
+    public void setWorkingHours(ArrayList<List<LocalDateTime>> hours) {
+        this.workingHours = hours;
     }
 }

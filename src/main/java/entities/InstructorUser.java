@@ -11,11 +11,15 @@ public class InstructorUser implements User {
     public InstructorUser(String name, String password) {
         this.name = name;
         this.password = password;
+        this.courses = new ArrayList<String>();
     }
 
     private final String name;
 
     private final String password;
+
+    private ArrayList<String> courses;
+
     @Override
     public String getName() {
         return name;
@@ -31,11 +35,12 @@ public class InstructorUser implements User {
         return password != null && password.length() > 8;
     }
 
-    private ArrayList<String> Courses;
-
     public ArrayList<String> getCourses() {
-        return this.Courses;
+        return this.courses;
     }
 
-    public void addCourse() {}
+    public void addCourse(String course) {
+        this.courses.add(course);
+    }
+
 }
