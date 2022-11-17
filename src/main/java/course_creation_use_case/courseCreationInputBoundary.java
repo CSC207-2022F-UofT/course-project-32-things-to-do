@@ -1,4 +1,4 @@
-package course_enrolment_and_creation_usecase;
+package course_creation_use_case;
 
 // Use case layer
 

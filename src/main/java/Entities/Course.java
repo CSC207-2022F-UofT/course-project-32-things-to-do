@@ -13,6 +13,7 @@ public class Course {
      */
     private String courseName;
     private String courseInstructor;
+    private String courseID;
     private ArrayList<String> students; // stores the IDs of students enrolled in the course
     private ArrayList<String> tasks;  // stores the IDs of the course's tasks
     private Boolean published;
@@ -27,6 +28,7 @@ public class Course {
     public Course(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
+        this.courseID = courseName + courseInstructor;
         this.tasks = tasks;
         this.students = new ArrayList<String>();
         this.published = false;  // course creation, default set to not yet published
@@ -41,9 +43,17 @@ public class Course {
     public String getCourseInstructor() {
         return courseInstructor;
     }
+    public String getCourseID() {
+        return this.courseID;
+    }
+
     public ArrayList<String> getStudents() {
         return new ArrayList<String>(this.students);
     }
+
+    /*
+    arraylist of all the task ids associated with a course
+     */
     public ArrayList<String> getTasks() {
         return new ArrayList<String>(this.tasks);
     }
@@ -59,6 +69,9 @@ public class Course {
     }
     public void setCourseInstructor(String courseInstructor) {
         this.courseInstructor = courseInstructor;
+    }
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
     }
     public void setStudents(ArrayList<String> students) {
         this.students = new ArrayList<String>(students);
