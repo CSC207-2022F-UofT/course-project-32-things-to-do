@@ -80,13 +80,13 @@ public class RegisterScreen extends JPanel implements ActionListener {
     }
 
     /**
-     * React to a button click that results in evt.
+     * React to a button click that results in event.
      */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
         try {
-            userRegisterController.create(username.getText(),
+            userRegController.create(username.getText(),
                     String.valueOf(password.getPassword()),
                     String.valueOf(repeatPassword.getPassword()));
             showMessageDialog(this, "%s created.".format(username.getText()));

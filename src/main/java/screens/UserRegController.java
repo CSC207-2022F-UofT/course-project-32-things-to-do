@@ -8,7 +8,7 @@ import user_register_usecase.UserRegResponse;
 
 public class UserRegController {
 
-    final  UserRegInputBoundary userInput;
+    final UserRegInputBoundary userInput;
 
     public UserRegController(UserRegInputBoundary accGateway) {
         this.userInput = accGateway;
