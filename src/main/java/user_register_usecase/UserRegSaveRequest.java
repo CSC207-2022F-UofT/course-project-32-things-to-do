@@ -1,10 +1,11 @@
 package user_register_usecase;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 // Use Case Layer
 
-public class UserRegSaveRequest {
+public class UserRegSaveRequest implements Serializable {
 
     private final String name;
 

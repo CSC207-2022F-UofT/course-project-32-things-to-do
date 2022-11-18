@@ -3,7 +3,7 @@ package entities;
 import java.io.Serializable;
 
 // Entity
-public interface User extends Serializable {
+public interface User {
 
     /** Entity Layer
      * A general User of this program */
