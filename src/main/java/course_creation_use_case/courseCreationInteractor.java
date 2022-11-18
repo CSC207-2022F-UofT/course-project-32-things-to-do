@@ -8,13 +8,18 @@ VERY CONFUSED --> NEED COURSE FACTORY?
 the highest level concept; the most protected
  */
 
-public class courseCreationInteractor implements courseCreationInputBoundary {
-    final courseCreationDSGateway courseCreationDSGateway;
-    final courseCreationPresenter courseCreationPresenter;
+import Entities.CourseFactory;
 
-    public courseCreationInteractor(courseCreationDSGateway courseCreationDSGateway, courseCreationPresenter courseCreationPresenter) {
+public class courseCreationInteractor implements courseCreationInputBoundary {
+    final courseCreationDsGateway courseCreationDSGateway;
+    final courseCreationPresenter courseCreationPresenter;
+    final CourseFactory courseFactory;
+
+    public courseCreationInteractor(courseCreationDsGateway courseCreationDSGateway, courseCreationPresenter courseCreationPresenter,
+                                    CourseFactory courseFactory) {
         this.courseCreationDSGateway = courseCreationDSGateway;
         this.courseCreationPresenter = courseCreationPresenter;
+        this.courseFactory = courseFactory;
     }
 
     @Override

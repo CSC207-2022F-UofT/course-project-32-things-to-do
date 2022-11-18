@@ -8,13 +8,13 @@ package course_creation_use_case;
 
 import java.util.ArrayList;
 
-public class courseCreationDSRequestModel {
+public class courseCreationDsRequestModel {
     private final String courseName;
     private final String courseInstructor;
     private final String courseID;
     private ArrayList<String> tasks;
 
-    public courseCreationDSRequestModel(String courseName, String courseInstructor, ArrayList<String> tasks) {
+    public courseCreationDsRequestModel(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;
