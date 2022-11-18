@@ -79,6 +79,9 @@ public class RegisterScreen extends JPanel implements ActionListener {
 
     }
 
+    private void add(LabelTextPanel usernameInfo) {
+    }
+
     /**
      * React to a button click that results in event.
      */
