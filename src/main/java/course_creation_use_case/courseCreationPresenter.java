@@ -2,6 +2,11 @@ package course_creation_use_case;
 
 // Use case layer
 
+/*
+Notes:
+Done? i guess
+ */
+
 public interface courseCreationPresenter {
     /*
     when course is successfully created

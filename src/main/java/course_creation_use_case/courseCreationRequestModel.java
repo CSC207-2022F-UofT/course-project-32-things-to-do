@@ -2,10 +2,13 @@ package course_creation_use_case;
 
 // Use case layer
 
-// Notes:
-// DONE?
-// requests what is needed for its input data (what person in front of computer enters)
-// do NOT depend on anything NOR have any references to Entity objects: violates SRP
+/*
+ Notes:
+ DONE?
+- requests what is needed for its input data (what person in front of computer enters)
+- do NOT depend on anything NOR have any references to Entity objects: violates SRP
+ */
+
 
 import java.util.ArrayList;
 
@@ -22,7 +25,9 @@ public class courseCreationRequestModel {
         this.tasks = tasks;
     }
 
-    String getCourseName() {
+    /**
+     * all getters changed to public, used by FileCourse */
+    public String getCourseName() {
         return courseName;
     }
 
@@ -31,7 +36,7 @@ public class courseCreationRequestModel {
         this.courseName = courseName;
     }
 
-    String getCourseInstructor() {
+    public String getCourseInstructor() {
         return courseInstructor;
     }
 
@@ -40,7 +45,7 @@ public class courseCreationRequestModel {
         this.courseInstructor = courseInstructor;
     }
 
-    String getCourseID() {
+    public String getCourseID() {
         return courseID;
     }
 

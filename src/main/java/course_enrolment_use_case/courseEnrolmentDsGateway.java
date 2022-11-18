@@ -6,5 +6,6 @@ public interface courseEnrolmentDsGateway {
     /* checks if student is in the course */
     boolean existsByStudent(String studentIdentifier);
 
-    void saveStudent(courseEnrolmentDsRequestModel requestModel);
+//    void saveStudent(courseEnrolmentDsRequestModel requestModel);
+    void saveStudent(courseEnrolmentRequestModel requestModel);
 }
