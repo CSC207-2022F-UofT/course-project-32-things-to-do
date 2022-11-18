@@ -1,5 +1,6 @@
 package user_register_usecase;
 
+import entities.StudentUser;
 import entities.User;
 import entities.UserFactory;
 
@@ -35,8 +36,13 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
         }
 
+        // String name, String password, ArrayList<String> toDoList, ArrayList<String> taskArchive,
+//                              ArrayList<String> courses, ArrayList inbox, ArrayList<String> notifications,
+//                              HashMap<String, Double> desiredGrades, LocalDateTime creationTime
+
+
         LocalDateTime now = LocalDateTime.now();
-        UserRegSaveRequest userModel = new UserRegSaveRequest(user.getName(), user.getPass(), now);
+        UserRegSaveRequest userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
         userGateway.save(userModel);
 
         UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());

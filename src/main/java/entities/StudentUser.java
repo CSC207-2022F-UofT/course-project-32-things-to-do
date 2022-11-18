@@ -96,9 +96,9 @@ public class StudentUser implements User {
         this.notifications.add(notification);
     }
 
-    private Map<String,Double> desiredGrades; // String is course id
+    private HashMap<String,Double> desiredGrades; // String is course id
 
-    public Map getDesiredGrades() {
+    public HashMap getDesiredGrades() {
 
         return this.desiredGrades;
     }
@@ -107,9 +107,9 @@ public class StudentUser implements User {
         this.desiredGrades.put(course, grade);
     }
 
-    private List<LocalDateTime> workingHours; // each internal list contains the start and end times
+    private ArrayList<LocalDateTime> workingHours; // each internal list contains the start and end times
 
-    public List<LocalDateTime> getWorkingHours() {
+    public ArrayList<LocalDateTime> getWorkingHours() {
 
         return this.workingHours;
     }
