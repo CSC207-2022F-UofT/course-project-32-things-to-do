@@ -30,7 +30,7 @@ public class courseEnrolmentInteractor implements courseEnrolmentInputBoundary {
         map is courseid --> Course objects
         with valid courseid, go to Course.students and check if it contains STUDENT's id
          */
-//        if (CourseMap.mapping(requestModel.getCourseID()).contains(courseEnrolmentDsGateway.existsByStudent(requestModel.getStudentID()))) {
+//        if (CourseMap.value(requestModel.getCourseID()).contains(courseEnrolmentDsGateway.existsByStudent(requestModel.getStudentID()))) {
 //            return courseEnrolmentPresenter.prepareFailView("Already enrolled in course.");
 //        }
 

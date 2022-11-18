@@ -4,6 +4,12 @@ package course_creation_use_case;
 
 /* Notes
 VERY CONFUSED --> NEED COURSE FACTORY?
+- ok i think the problem is i need to decide how to store date:
+    1. csv file with rows (i want, but how to store courseID as well?)
+    2. coursefactory ???? whatever that is
+    3. courseMAp ...... not really useful for me?
+  - and problemo is: which one of them is persistent / serializable?
+
 ** the class that runs the use case (subclass of input boundary)
 the highest level concept; the most protected
  */
@@ -41,7 +47,7 @@ public class courseCreationInteractor implements courseCreationInputBoundary {
         return null;
 
         /*
-         * what is a courseFactory and is it needed
+         * what is a courseFactory
          */
 
 //        Course course = courseFactory.create(requestModel.getCourseID(), requestModel.getTasks());

@@ -7,26 +7,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CreateCourseScreen extends JPanel implements ActionListener {
-    /** the course name chosen by InstructorUser */
+public class CourseEnrolmentScreen extends JPanel implements ActionListener {
+    /** student enters course name */
     JTextField courseName = new JTextField(15);
 
-    /** the course instructor */
+    /** student enters course instructor */
     JTextField courseInstructor = new JTextField(15);
 
-    /** the part i don't understand ... tasks .... */
-//    JList tasks = new JList(15);
-
-
     /** the controller */
-    CourseCreationController courseCreationController;
+    CourseEnrolmentController courseEnrolmentController;
 
     /**
-     * A window with a title and JButton */
-    public CreateCourseScreen(CourseCreationController controller) {
-        this.courseCreationController = controller;
+     * Window with title and JButtons
+     */
+    public CourseEnrolmentScreen(CourseEnrolmentController controller) {
+        this.courseEnrolmentController = controller;
 
-        JLabel title = new JLabel("Course Creation Screen");
+        JLabel title = new JLabel("Course Enrolment Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel courseNameInfo = new LabelTextPanel(
@@ -35,14 +32,14 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
                 new JLabel("Enter instructor name"), courseInstructor);
 
         JButton cancel = new JButton("Cancel");
-        JButton save = new JButton("Save");
+        JButton search = new JButton("Search");
 
         JPanel buttons = new JPanel();
         buttons.add(cancel);
-        buttons.add(save);
+        buttons.add(search);
 
         cancel.addActionListener(this);
-        save.addActionListener(this);
+        search.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -50,19 +47,16 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
         this.add(courseNameInfo);
         this.add(courseInstructorInfo);
         this.add(buttons);
-
     }
 
     /**
-     * React to a button click ...
+     * reacting to button clicks?
      */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
         try {
-//            courseCreationController.create(courseName.getText(),
-//                    courseInstructor.getText(), tasks.getText());
-//            JOptionPane.showMessageDialog(this, String.format("%s created.".format(courseName.getText())));
+//            courseEnrolmentController.cre
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

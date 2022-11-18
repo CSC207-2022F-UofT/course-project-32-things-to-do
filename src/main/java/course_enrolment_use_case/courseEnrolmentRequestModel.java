@@ -13,6 +13,9 @@ public class courseEnrolmentRequestModel {
         this.courseID = courseName + courseInstructor;
     }
 
+    /**
+     * Change getters to public?
+     */
     String getCourseName() {
         return courseName;
     }
