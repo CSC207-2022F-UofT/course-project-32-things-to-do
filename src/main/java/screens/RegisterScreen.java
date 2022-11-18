@@ -28,7 +28,6 @@ public class RegisterScreen extends JPanel implements ActionListener {
     /**
      * The type of User this user is
      */
-    JButton
 
     /**
      * The controller
@@ -52,8 +51,8 @@ public class RegisterScreen extends JPanel implements ActionListener {
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel("Enter password again"), repeatPassword);
         JTextField typeOfUser;
-        LabelButtonPanel typeOfUserInfo = new LabelTextPanel(
-                new JLabel("Are you an instructor or a student?"), typeOfUser);
+//        LabelButtonPanel typeOfUserInfo = new LabelTextPanel(
+//                new JLabel("Are you an instructor or a student?"), typeOfUser);
 
         JButton instructorUser = new JButton("Instructor");
         JButton studentUser = new JButton("Student");
@@ -63,9 +62,9 @@ public class RegisterScreen extends JPanel implements ActionListener {
         JPanel buttons = new JPanel();
         buttons.add(signUp);
         buttons.add(cancel);
-        buttons.add(typeOfUser);
+//        buttons.add(typeOfUser);
 
-        typeOfUser.addActionListener(this);
+//        typeOfUser.addActionListener(this);
         signUp.addActionListener(this);
         cancel.addActionListener(this);
 
