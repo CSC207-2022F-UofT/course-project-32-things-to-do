@@ -107,14 +107,14 @@ public class StudentUser implements User {
         this.desiredGrades.put(course, grade);
     }
 
-    private List<List<LocalDateTime>> workingHours; // each internal list contains the start and end times
+    private List<LocalDateTime> workingHours; // each internal list contains the start and end times
 
-    public List<List<LocalDateTime>> getWorkingHours() {
+    public List<LocalDateTime> getWorkingHours() {
 
         return this.workingHours;
     }
 
-    public void setWorkingHours(ArrayList<List<LocalDateTime>> hours) {
+    public void setWorkingHours(ArrayList<LocalDateTime> hours) {
         this.workingHours = hours;
     }
 }
