@@ -16,11 +16,12 @@ public class Event extends Task implements Timeblockable {
      * If the event is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
      * Otherwise, the frequency is blank
      * @param title - the title of the Event
+     * @param id - the unique ID of the Event
      * @param recurring - whether the Event is recurring
      * @param frequency - the frequency at which the Event occurs (if recurring)
      */
-    public Event(String title, boolean recurring, String frequency) {
-        super(title);
+    public Event(String title, String id, boolean recurring, String frequency) {
+        super(title, id);
         this.recurring = recurring;
         if (recurring) this.frequency = frequency;
         else this.frequency = "";
@@ -31,12 +32,13 @@ public class Event extends Task implements Timeblockable {
      * If the event is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
      * Otherwise, the frequency is blank
      * @param title - the title of the Event
+     * @param id - the unique ID of the Event
      * @param priority - the priority value of the Event
      * @param recurring - whether the Event is recurring
      * @param frequency - the frequency at which the Event occurs (if recurring)
      */
-    public Event(String title, int priority, boolean recurring, String frequency) {
-        super(title, priority);
+    public Event(String title, String id, int priority, boolean recurring, String frequency) {
+        super(title, id, priority);
         this.recurring = recurring;
         this.frequency = frequency;
     }
