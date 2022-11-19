@@ -89,6 +89,10 @@ public class StudentUser implements User {
         this.inbox.add(invite);
     }
 
+    public void removeInvitation(String invite) {
+        this.inbox.remove(invite);
+    }
+
     private ArrayList<String> notifications;
 
     public ArrayList<String> getNotifications() {
