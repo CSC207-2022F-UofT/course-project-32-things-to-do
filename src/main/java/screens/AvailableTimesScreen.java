@@ -1,5 +1,7 @@
 package screens;
 
+import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -17,7 +19,8 @@ public class AvailableTimesScreen extends JFrame implements CollaborativeSchedul
     //      when you press the button, it darkens so that it indicates that it will be scheduled
 
     public ArrayList<String> present(CollaborativeSchedulingPresenter output) {
-        return output.convertToString();
+        CollaborativeSchedulingResponseModel responseModel = output.getOutputData();
+        return output.prepareAvailableTimes(responseModel).getScheduleString();
     }
 
     JTextField task = new JTextField(15);

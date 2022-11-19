@@ -3,6 +3,7 @@ package screens;
 import use_case_collaborative_scheduling.CollaborativeSchedulingOutputBoundary;
 import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,8 +31,11 @@ public class CollaborativeSchedulingPresenter implements CollaborativeScheduling
     public CollaborativeSchedulingPresenter(CollaborativeSchedulingResponseModel outputData){
         this.outputData = outputData;
     }
+    public CollaborativeSchedulingResponseModel getOutputData() {
+        return outputData;
+    }
 
-    public ArrayList<String> convertToString(){
+    public ArrayList<String> convertToString(CollaborativeSchedulingResponseModel outputData){
 
         // initialize empty ArrayList
         ArrayList<String> output = new ArrayList<>();
@@ -54,6 +58,8 @@ public class CollaborativeSchedulingPresenter implements CollaborativeScheduling
 
     @Override
     public CollaborativeSchedulingResponseModel prepareAvailableTimes(CollaborativeSchedulingResponseModel outputData){
+        ArrayList<String> stringTimes = convertToString(outputData);
+        outputData.setScheduleString(stringTimes);
         return outputData;
     }
 

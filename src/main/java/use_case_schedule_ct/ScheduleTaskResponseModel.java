@@ -1,4 +1,4 @@
-package use_case_collaborative_scheduling;
+package use_case_schedule_ct;
 
 public class ScheduleTaskResponseModel {
 

@@ -1,7 +1,7 @@
 package screens;
 
-import use_case_collaborative_scheduling.ScheduleTaskResponseModel;
-import use_case_collaborative_scheduling.ScheduleTaskOutputBoundary;
+import use_case_schedule_ct.ScheduleTaskResponseModel;
+import use_case_schedule_ct.ScheduleTaskOutputBoundary;
 
 public class SchedulingTaskPresenter implements ScheduleTaskOutputBoundary{
 

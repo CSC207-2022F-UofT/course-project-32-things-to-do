@@ -4,7 +4,9 @@ import entities.CollaborativeTask;
 import entities.StudentUser;
 import entities.TaskMap;
 import entities.Task;
-import use_case_collaborative_scheduling.*;
+import use_case_schedule_ct.ScheduleTaskInputBoundary;
+import use_case_schedule_ct.ScheduleTaskRequestModel;
+import use_case_schedule_ct.ScheduleTaskResponseModel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +25,9 @@ public class ScheduleTaskController {
     }
     // i think you can just pass the task over to the SchedulerInteractor as a SchedulerRequestModel
     // (which takes the given task, the user's existing list of tasks, and the user themselves)
+
+    // the best way to follow clean architecture in this case would be to create an instance of the SchedulerController
+    // in Main then inject it into your controller
 
     public ScheduleTaskResponseModel addTimes(String taskString, String timesString){
         ArrayList<ArrayList<LocalDateTime>> times = stringDateTime(timesString);

@@ -3,6 +3,8 @@ package use_case_collaborative_scheduling;
 import entities.CollaborativeTask;
 import entities.TaskMap;
 
+import java.util.ArrayList;
+
 public class CollaborativeSchedulingRequestModel {
 
     private final CollaborativeTask task;
@@ -10,6 +12,7 @@ public class CollaborativeSchedulingRequestModel {
     private final TaskMap allTasks;
 
     // private final StudentUser user;
+
 
 
     public CollaborativeSchedulingRequestModel(CollaborativeTask task, TaskMap allTasks) {
@@ -22,6 +25,8 @@ public class CollaborativeSchedulingRequestModel {
     public CollaborativeTask getTask() {
         return task;
     }
+
+
 
 
 

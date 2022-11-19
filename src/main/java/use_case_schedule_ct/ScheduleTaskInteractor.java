@@ -1,10 +1,10 @@
-package use_case_collaborative_scheduling;
+package use_case_schedule_ct;
 import entities.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ScheduleTaskInteractor implements ScheduleTaskInputBoundary{
+public class ScheduleTaskInteractor implements ScheduleTaskInputBoundary {
 
     // in this class, want to take the given time and add it to the calendar UI
     // from the view, we get information about the time(s) the user wants to schedule that gets passed down to t
