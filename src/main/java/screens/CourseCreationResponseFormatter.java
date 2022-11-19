@@ -2,19 +2,19 @@ package screens;
 
 // Interface adapters layer
 
-import course_creation_use_case.courseCreationPresenter;
-import course_creation_use_case.courseCreationResponseModel;
+import course_creation_use_case.CourseCreationPresenter;
+import course_creation_use_case.CourseCreationResponseModel;
 
-public class CourseCreationResponseFormatter implements courseCreationPresenter {
+public class CourseCreationResponseFormatter implements CourseCreationPresenter {
 
     @Override
-    public courseCreationResponseModel prepareSuccessView(courseCreationResponseModel response) {
+    public CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel response) {
         /* not sure what this is lol */
         return response;
     }
 
     @Override
-    public courseCreationResponseModel prepareFailView(String error) {
+    public CourseCreationResponseModel prepareFailView(String error) {
         throw new CourseCreationFailed(error);
     }
 }

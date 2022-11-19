@@ -14,15 +14,19 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
     /** the course instructor */
     JTextField courseInstructor = new JTextField(15);
 
-    /** the part i don't understand ... tasks .... */
-//    JList tasks = new JList(15);
+    /* the part i don't understand ... tasks .... */
 
+    /** title of task */
+    JTextField taskName = new JTextField(25);
+
+    /** id? of task */
+    JTextField taskID = new JTextField(25);
 
     /** the controller */
     CourseCreationController courseCreationController;
 
     /**
-     * A window with a title and JButton */
+     * A window with a title, texts to fill in, and JButtons */
     public CreateCourseScreen(CourseCreationController controller) {
         this.courseCreationController = controller;
 
@@ -33,6 +37,10 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
                 new JLabel("Enter course name"), courseName);
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
+        LabelTextPanel taskNameInfo = new LabelTextPanel(
+                new JLabel("Enter task title"), taskName);
+        LabelTextPanel taskIDInfo = new LabelTextPanel(
+                new JLabel("Enter task id"), taskID);
 
         JButton cancel = new JButton("Cancel");
         JButton save = new JButton("Save");
@@ -49,8 +57,9 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
         this.add(title);
         this.add(courseNameInfo);
         this.add(courseInstructorInfo);
+        this.add(taskNameInfo);
+        this.add(taskIDInfo);
         this.add(buttons);
-
     }
 
     /**
@@ -59,12 +68,17 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
+        /** why no work :,(
         try {
+            courseCreationController.create(courseName.getText(),
+                    courseInstructor.getText(), taskName.getText(), taskID.getText());
+            JOptionPane.showMessageDialog(this, String.format("%s created.".format(courseName.getText())));
 //            courseCreationController.create(courseName.getText(),
 //                    courseInstructor.getText(), tasks.getText());
 //            JOptionPane.showMessageDialog(this, String.format("%s created.".format(courseName.getText())));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+         */
     }
 }

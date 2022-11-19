@@ -2,19 +2,17 @@ package course_enrolment_use_case;
 
 // Use case layer
 
-import Entities.CourseMap;
+public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
+    final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
+    final CourseEnrolmentPresenter courseEnrolmentPresenter;
 
-public class courseEnrolmentInteractor implements courseEnrolmentInputBoundary {
-    final courseEnrolmentDsGateway courseEnrolmentDsGateway;
-    final courseEnrolmentPresenter courseEnrolmentPresenter;
-
-    public courseEnrolmentInteractor(courseEnrolmentDsGateway courseEnrolmentDsGateway, courseEnrolmentPresenter courseEnrolmentPresenter) {
+    public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway, CourseEnrolmentPresenter courseEnrolmentPresenter) {
         this.courseEnrolmentDsGateway = courseEnrolmentDsGateway;
         this.courseEnrolmentPresenter = courseEnrolmentPresenter;
     }
 
     @Override
-    public courseEnrolmentResponseModel create(courseEnrolmentRequestModel requestModel) {
+    public CourseEnrolmentResponseModel create(CourseEnrolmentRequestModel requestModel) {
         /* At least one info box left blank */
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")) {
             return courseEnrolmentPresenter.prepareFailView("Please fill in all required information." );

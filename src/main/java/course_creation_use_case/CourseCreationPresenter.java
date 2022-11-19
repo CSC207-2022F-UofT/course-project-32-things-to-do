@@ -7,14 +7,14 @@ Notes:
 Done? i guess
  */
 
-public interface courseCreationPresenter {
+public interface CourseCreationPresenter {
     /*
     when course is successfully created
      */
-    courseCreationResponseModel prepareSuccessView(courseCreationResponseModel newCourse);
+    CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel newCourse);
 
     /*
     when course name and instructor (courseID) already exists
      */
-    courseCreationResponseModel prepareFailView(String error);
+    CourseCreationResponseModel prepareFailView(String error);
 }

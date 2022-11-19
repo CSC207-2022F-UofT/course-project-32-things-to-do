@@ -2,12 +2,12 @@ package course_enrolment_use_case;
 
 // Use case layer
 
-public class courseEnrolmentRequestModel {
+public class CourseEnrolmentRequestModel {
     private String courseName;
     private String courseInstructor;
     private final String courseID;
 
-    public courseEnrolmentRequestModel(String courseName, String courseInstructor) {
+    public CourseEnrolmentRequestModel(String courseName, String courseInstructor) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;

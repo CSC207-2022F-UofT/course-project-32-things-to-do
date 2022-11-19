@@ -10,13 +10,13 @@ Notes:
 - do NOT depend on anything NOR have any references to Entity objects: violates SRP
  */
 
-public class courseCreationResponseModel {
+public class CourseCreationResponseModel {
 //    String courseName;
 //    String instructorName;
     String courseID;
     ArrayList<String> tasks;
 
-    public courseCreationResponseModel(String courseID, ArrayList<String> tasks) {
+    public CourseCreationResponseModel(String courseID, ArrayList<String> tasks) {
         this.courseID = courseID;
         this.tasks = tasks;
     }

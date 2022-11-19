@@ -11,6 +11,6 @@ Notes:
 - input boundary is between the controller and use case
  */
 
-public interface courseCreationInputBoundary {
-    courseCreationResponseModel create(courseCreationRequestModel requestModel);
+public interface CourseCreationInputBoundary {
+    CourseCreationResponseModel create(CourseCreationRequestModel requestModel);
 }

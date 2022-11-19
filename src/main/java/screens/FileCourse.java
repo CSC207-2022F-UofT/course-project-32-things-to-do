@@ -1,8 +1,8 @@
 package screens;
 
-import course_creation_use_case.courseCreationDsGateway;
+import course_creation_use_case.CourseCreationDsGateway;
 //import course_creation_use_case.courseCreationDsRequestModel;
-import course_creation_use_case.courseCreationRequestModel;
+import course_creation_use_case.CourseCreationRequestModel;
 
 /*
  * Notes:
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileCourse implements courseCreationDsGateway {
+public class FileCourse implements CourseCreationDsGateway {
     private final File csvFile;
     private final Map<String, Integer> headers = new HashMap<>();
-    private final Map<String, courseCreationRequestModel> courses = new HashMap<>();
+    private final Map<String, CourseCreationRequestModel> courses = new HashMap<>();
 
     public FileCourse(String csvPath) throws IOException {
         csvFile = new File(csvPath);
@@ -39,7 +39,7 @@ public class FileCourse implements courseCreationDsGateway {
                 String courseInstructor = String.valueOf(col[headers.get("courseInstructor")]);
                 ArrayList<String> tasks = new ArrayList<String>(); // idk what im doing
 //                        /* String.valueOf(col[headers.get("tasks?")]); */
-                courseCreationRequestModel course = new courseCreationRequestModel(courseName, courseInstructor, tasks);
+                CourseCreationRequestModel course = new CourseCreationRequestModel(courseName, courseInstructor, tasks);
                 courses.put(courseName, course);
             }
 
@@ -54,7 +54,7 @@ public class FileCourse implements courseCreationDsGateway {
      * @param requestModel the user information to save
      */
     @Override
-    public void saveCourse(courseCreationRequestModel requestModel) {
+    public void saveCourse(CourseCreationRequestModel requestModel) {
         courses.put(requestModel.getCourseName() ,requestModel);
         this.saveCourse();
     }
@@ -66,7 +66,7 @@ public class FileCourse implements courseCreationDsGateway {
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
 
-            for (courseCreationRequestModel course : courses.values()) {
+            for (CourseCreationRequestModel course : courses.values()) {
                 String line = "%s,%s,%s".format(
                         course.getCourseName(), course.getCourseInstructor(), course.getTasks());
                 writer.write(line);

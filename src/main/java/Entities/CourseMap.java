@@ -24,7 +24,7 @@ public class CourseMap implements Serializable {
      * @param course the course associated with Course
      * @return if the course has been added
      */
-    public boolean addCourse(String id, Course course) {
+    public static boolean addCourse(String id, Course course) {
         if (courseMap.containsKey(id)) {
             return false;
         }

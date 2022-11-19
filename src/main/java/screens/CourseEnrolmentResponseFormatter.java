@@ -2,19 +2,19 @@ package screens;
 
 // Interfaces adapters layer
 
-import course_enrolment_use_case.courseEnrolmentPresenter;
-import course_enrolment_use_case.courseEnrolmentResponseModel;
+import course_enrolment_use_case.CourseEnrolmentPresenter;
+import course_enrolment_use_case.CourseEnrolmentResponseModel;
 
-public class CourseEnrolmentResponseFormatter implements courseEnrolmentPresenter {
+public class CourseEnrolmentResponseFormatter implements CourseEnrolmentPresenter {
 
     @Override
-    public courseEnrolmentResponseModel prepareSuccessView(courseEnrolmentResponseModel response) {
+    public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel response) {
         /* what is this */
         return response;
     }
 
     @Override
-    public courseEnrolmentResponseModel prepareFailView(String error) {
+    public CourseEnrolmentResponseModel prepareFailView(String error) {
         throw new CourseEnrolmentFailed(error);
     }
 }
