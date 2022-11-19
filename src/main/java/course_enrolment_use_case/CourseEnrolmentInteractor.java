@@ -1,6 +1,12 @@
 package course_enrolment_use_case;
 
+
 // Use case layer
+
+import Entities.Course;
+import Entities.CourseMap;
+import course_creation_use_case.CourseCreationRequestModel;
+import course_creation_use_case.CourseCreationResponseModel;
 
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
@@ -19,7 +25,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         /* map is courseid --> Course
         * checks if given course id is in the map of existing courses*/
         }
-//        else if (!CourseMap.containsKey(requestModel.getCourseID())) {
+//        else if (!CourseMap.addCourse(requestModel.getCourseID())) {
 //            return courseEnrolmentPresenter.prepareFailView("Entered information does not correspond to an existing course.");
 //        }
 
@@ -32,7 +38,12 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 //            return courseEnrolmentPresenter.prepareFailView("Already enrolled in course.");
 //        }
 
+        /*
+        add student id to courses' list of students
+        update + save coursemap edits
+        success view to presenter
+         */
+
     return null;
     }
-
 }

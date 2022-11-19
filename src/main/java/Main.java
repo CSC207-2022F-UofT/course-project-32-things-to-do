@@ -1,16 +1,47 @@
 //import Entities.CourseFactory;
+import Entities.Course;
 import Entities.CourseMap;
-import course_creation_use_case.CourseCreationDsGateway;
-import course_creation_use_case.CourseCreationInputBoundary;
-import course_creation_use_case.CourseCreationInteractor;
-import course_creation_use_case.CourseCreationPresenter;
+import course_creation_use_case.*;
 import screens.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
+
+    /** course creation screen */
+    public static void main(String[] args) {
+
+        // build main program window
+        JFrame application = new JFrame("Course Creation Example");
+        CardLayout cardLayout = new CardLayout();
+        JPanel screens = new JPanel(cardLayout);
+        application.add(screens);
+
+        /** create parts to plug into the use case + entities engine -- not csv file */
+        CourseCreationDsGateway course;
+        try {
+            course = new FileCourse("./courses.csv");
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create file.");
+        }
+        CourseCreationPresenter presenter = new CourseCreationResponseFormatter();
+        CourseMap courseMap = new CourseMap();
+        CourseCreationInputBoundary interactor = new CourseCreationInteractor(
+                course, presenter, courseMap);
+        CourseCreationController courseCreationController = new CourseCreationController(
+                interactor
+        );
+
+        // COURSE CREATION build the GUI, plugging in the parts
+        CreateCourseScreen createCourseScreen = new CreateCourseScreen(courseCreationController);
+        screens.add(createCourseScreen, "create a new course");
+        cardLayout.show(screens, "create course");
+        application.pack();
+        application.setVisible(true);
+    }
 
 //    public static void main(String[] args) {
 //
@@ -42,40 +73,4 @@ public class Main {
 //        application.setVisible(true);
 //
 //    }
-
-//    /** course creation screen
-    public static void main(String[] args) {
-
-        // build main program window
-        JFrame application = new JFrame("Course Creation Example");
-        CardLayout cardLayout = new CardLayout();
-        JPanel screens = new JPanel(cardLayout);
-        application.add(screens);
-
-        // create parts to plug into the use case + entities engine
-        CourseCreationDsGateway course;
-        try {
-            course = new FileCourse("./courses.csv");
-        } catch (IOException e) {
-            throw new RuntimeException("Could not create file.");
-        }
-        CourseCreationPresenter presenter = new CourseCreationResponseFormatter();
-        CourseMap courseMap = new CourseMap();
-
-//        CourseFactory courseFactory = new CourseFactory();
-
-        CourseCreationInputBoundary interactor = new CourseCreationInteractor(
-                course, presenter, courseMap);
-        CourseCreationController courseCreationController = new CourseCreationController(
-                interactor
-        );
-
-        // COURSE CREATION build the GUI, plugging in the parts
-        CreateCourseScreen createCourseScreen = new CreateCourseScreen(courseCreationController);
-        screens.add(createCourseScreen, "create a new course");
-        cardLayout.show(screens, "create course");
-        application.pack();
-        application.setVisible(true);
-
-    }
 }

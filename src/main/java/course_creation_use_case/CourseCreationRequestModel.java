@@ -25,8 +25,6 @@ public class CourseCreationRequestModel {
         this.tasks = tasks;
     }
 
-    /**
-     * all getters changed to public, used by FileCourse */
     public String getCourseName() {
         return courseName;
     }

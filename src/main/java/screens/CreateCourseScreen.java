@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CreateCourseScreen extends JPanel implements ActionListener {
     /** the course name chosen by InstructorUser */
@@ -68,10 +69,12 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
-        /** why no work :,(
+        /** why no work :,( */
         try {
+            ArrayList<String> task = new ArrayList<String>();
+            task.add("taskid");
             courseCreationController.create(courseName.getText(),
-                    courseInstructor.getText(), taskName.getText(), taskID.getText());
+                    courseInstructor.getText(), task); // third argument should be taskName.getText()
             JOptionPane.showMessageDialog(this, String.format("%s created.".format(courseName.getText())));
 //            courseCreationController.create(courseName.getText(),
 //                    courseInstructor.getText(), tasks.getText());
@@ -79,6 +82,6 @@ public class CreateCourseScreen extends JPanel implements ActionListener {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-         */
+
     }
 }
