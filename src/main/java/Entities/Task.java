@@ -53,7 +53,7 @@ public abstract class Task implements Serializable {
      * @param title - the new title of the task
      */
     protected void setTitle(String title) {
-
+        this.title = title;
     }
 
     /**
@@ -69,7 +69,7 @@ public abstract class Task implements Serializable {
      * @param priority - the new priority value of the Task
      */
     protected void setPriority(int priority) {
-
+        this.priority = priority;
     }
 
     /**
