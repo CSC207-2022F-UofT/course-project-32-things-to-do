@@ -1,4 +1,3 @@
-//import Entities.CourseFactory;
 import Entities.Course;
 import Entities.CourseMap;
 import course_creation_use_case.*;
