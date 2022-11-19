@@ -161,9 +161,15 @@ public class CalendarScreen extends JPanel implements ActionListener {
 
             // Display selected view panel
             switch (Objects.requireNonNull(viewType)) {
-                case "Day" -> cardLayout.show(viewPanel, "day");
-                case "Week" -> cardLayout.show(viewPanel, "week");
-                case "Month" -> cardLayout.show(viewPanel, "month");
+                case "Day":
+                    cardLayout.show(viewPanel, "day");
+                    break;
+                case "Week":
+                    cardLayout.show(viewPanel, "week");
+                    break;
+                case "Month":
+                    cardLayout.show(viewPanel, "month");
+                    break;
             }
         }
 
