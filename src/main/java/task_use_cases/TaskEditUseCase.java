@@ -1,4 +1,4 @@
-package use_cases;
+package task_use_cases;
 
 import entities.Timeblockable;
 import entities.Gradable;
