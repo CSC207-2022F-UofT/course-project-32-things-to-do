@@ -3,13 +3,15 @@ package Entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static java.time.temporal.ChronoUnit.HOURS;
+
 public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Timeblockable attributes
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     // Gradable attributes
-    private double weightage = 0;
+    private double weightage;
     private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
 
     // Preparatory attributes
@@ -24,10 +26,11 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
      * @param startTime - start of time block
      * @param endTime - end of time block
      */
-    public Test(String title, String id, LocalDateTime startTime, LocalDateTime endTime) {
+    public Test(String title, String id, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
         super(title, id);
         this.startTime = startTime;
         this.endTime = endTime;
+        this.weightage = weightage;
     }
 
     /**
@@ -38,10 +41,11 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
      * @param startTime - start of time block
      * @param endTime - end of time block
      */
-    public Test(String title, String id, int priority, LocalDateTime startTime, LocalDateTime endTime) {
+    public Test(String title, String id, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
         super(title, id, priority);
         this.startTime = startTime;
         this.endTime = endTime;
+        this.weightage = weightage;
     }
     /**
      * Set a new time block
@@ -77,30 +81,63 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     }
 
     /**
+     * Get the weightage of the Test
+     * @return - the Test's weightage
+     */
+    public double getWeightage() {
+        return this.weightage;
+    }
+
+    /**
      * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
+        this.weightage = weightage;
+    }
 
+    /**
+     * Retrieve the grade that the user received on the Test
+     * @return - the user's received grade
+     */
+    public double getGradeReceived() {
+        return this.gradeReceived;
     }
 
     /**
      * Update the Test with the user's grade
-     * @param grade - the grade the user has received
+     * @param gradeReceived - the grade the user has received
      */
-    public void setGradeReceived(double grade) {
-
-    }
-    /**
-     * Update the amount of time the user has spent preparing
-     * @param timeSpent - the amount of time being added
-     */
-    public void updateTimeSpent(double timeSpent) {
-        this.timeSpent += timeSpent;
+    public void setGradeReceived(double gradeReceived) {
+        this.gradeReceived = gradeReceived;
     }
 
     /**
-     * Set the amount of time the user needs to prepare for
+     * Get the amount of time spent on the Test so far (studying)
+     * @return - the amount of time that has been spent
+     */
+    public double getTimeSpent() {
+        return this.timeSpent;
+    }
+
+    /**
+     * Update the amount of time the user has spent preparing (in hours)
+     * @param timeSpent - the amount of time spent
+     */
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    /**
+     * Get the amount of time needed to prep
+     * @return - the amount of time needed
+     */
+    public double getTimeNeeded() {
+        return this.timeNeeded;
+    }
+
+    /**
+     * Set the amount of time the user needs to prepare for (in hours)
      * @param timeNeeded - the new time
      */
     public void setTimeNeeded(double timeNeeded) {
@@ -108,12 +145,11 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     }
 
     /**
-     * Get the amount of time the user has left to prepare (before due date)
+     * Get the amount of time the user has left to prepare in hours (before start time)
      * @return - the amount of time the user has remaining
      */
     public double getTimeLeft() {
-        // subtract current date from beginning of time block
-        return 0;
+        return Double.parseDouble(String.valueOf(HOURS.between(LocalDateTime.now(), this.startTime)));
     }
 
     /**
@@ -133,25 +169,10 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     }
 
     /**
-     * Delete a Test by moving it to the user's archive
-     * @return - whether the Test has been successfully deleted
+     * Set prepTimeScheduled
+     * @param prepTimeScheduled - the new list of prep times
      */
-    protected boolean delete() {
-        return true;
-    }
-
-    /**
-     * Save a Test to the user's data
-     * @return - whether the Test has been successfully saved
-     */
-    protected boolean save() {
-        return true;
-    }
-
-    /**
-     * Edit the features of the Test
-     */
-    protected void edit() {
-
+    public void setPrepTimeScheduled(ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled) {
+        this.prepTimeScheduled = prepTimeScheduled;
     }
 }

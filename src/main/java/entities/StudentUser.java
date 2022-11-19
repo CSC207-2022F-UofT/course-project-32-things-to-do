@@ -1,4 +1,4 @@
-package entities;
+package Entities;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -26,11 +26,27 @@ public class StudentUser extends User {
         return this.toDoList;
     }
 
+    /**
+     * Remove a single Task from the toDoList
+     * @param task - the Task being removed
+     */
+    public void removeFromToDoList(Task task) {
+        this.toDoList.remove(task.getId());
+    }
+
     private ArrayList<String> taskArchive;
 
     public ArrayList<String> getTaskArchive() {
 
         return this.taskArchive;
+    }
+
+    /**
+     * Add a single Task to the taskArchive
+     * @param task - the Task being added
+     */
+    public void addToArchive(Task task) {
+        this.taskArchive.add(task.getId());
     }
 
     private ArrayList<String> courses;

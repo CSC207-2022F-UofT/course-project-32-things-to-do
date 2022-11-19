@@ -2,6 +2,7 @@ package Entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import static java.time.temporal.ChronoUnit.HOURS;
 
 public class Assignment extends Task implements Gradable, Preparatory {
     // Gradable attributes
@@ -37,32 +38,67 @@ public class Assignment extends Task implements Gradable, Preparatory {
         this.dueDate = dueDate;
     }
 
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    /**
+     * Get the weightage of the Test
+     * @return - the Test's weightage
+     */
+    public double getWeightage() {
+        return this.weightage;
+    }
+
     /**
      * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
+        this.weightage = weightage;
+    }
 
+    /**
+     * Retrieve the grade that the user received on the Task
+     * @return - the user's received grade
+     */
+    public double getGradeReceived() {
+        return this.gradeReceived;
     }
 
     /**
      * Update the Test with the user's grade
-     * @param grade - the grade the user has received
+     * @param gradeReceived - the grade the user has received
      */
-    public void setGradeReceived(double grade) {
-
+    public void setGradeReceived(double gradeReceived) {
+        this.gradeReceived = gradeReceived;
     }
 
     /**
-     * Update the amount of time the user has spent preparing
+     * Get the amount of time spent on the Assignment so far
+     * @return - the amount of time that has been spent
+     */
+    public double getTimeSpent() {
+        return this.timeSpent;
+    }
+
+    /**
+     * Update the amount of time the user has spent preparing (in hours)
      * @param timeSpent - the amount of time being added
      */
-    public void updateTimeSpent(double timeSpent) {
-        this.timeSpent += timeSpent;
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
     }
 
     /**
-     * Set the amount of time the user needs to prepare for
+     * Get the amount of time needed to prep
+     * @return - the amount of time needed
+     */
+    public double getTimeNeeded() {
+        return this.timeNeeded;
+    }
+    /**
+     * Set the amount of time the user needs to prepare for (in hours)
      * @param timeNeeded - the new time
      */
     public void setTimeNeeded(double timeNeeded) {
@@ -70,12 +106,11 @@ public class Assignment extends Task implements Gradable, Preparatory {
     }
 
     /**
-     * Get the amount of time the user has left to prepare (before due date)
+     * Get the amount of time the user has left to prepare, in hours (before due date)
      * @return - the amount of time the user has remaining
      */
     public double getTimeLeft() {
-        // subtract current date from due date
-        return 0;
+        return Double.parseDouble(String.valueOf(HOURS.between(LocalDateTime.now(), this.dueDate)));
     }
 
     /**
@@ -95,20 +130,18 @@ public class Assignment extends Task implements Gradable, Preparatory {
     }
 
     /**
+     * Set prepTimeScheduled
+     * @param prepTimeScheduled - the new list of prep times
+     */
+    public void setPrepTimeScheduled(ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled) {
+        this.prepTimeScheduled = prepTimeScheduled;
+    }
+
+    /**
      * Get the due date of the Assignment
      * @return - the Assignment's due date
      */
-    protected LocalDateTime getDueDate() {
+    public LocalDateTime getDueDate() {
         return this.dueDate;
-    }
-
-    protected boolean delete() {
-        return true;
-    }
-    protected boolean save() {
-        return true;
-    }
-    protected void edit() {
-
     }
 }
