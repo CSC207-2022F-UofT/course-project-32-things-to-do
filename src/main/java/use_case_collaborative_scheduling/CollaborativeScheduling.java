@@ -1,34 +1,27 @@
-package use_case;
+package use_case_collaborative_scheduling;
 import entities.*;
 
-
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class CollaborativeScheduling implements CollaborativeSchedulingInputBoundary{
 
 
     private final CollaborativeSchedulingOutputBoundary outputBoundary;
-    // methods I still might need:
-    //      remove time block, call on CollaborativeTask method and just set time block to null
-    //      remove scheduled time (i.e. remove from UI)
-    //      add scheduled time (i.e. add to UI)
 
     public CollaborativeScheduling(CollaborativeSchedulingOutputBoundary outputBoundary){
         this.outputBoundary = outputBoundary;
     }
 
-
+    /**
+     * Main controller of this interactor
+     */
     @Override
     public CollaborativeSchedulingResponseModel schedule(CollaborativeSchedulingRequestModel requestModel) {
-
-//        if (!isUserHost(requestModel.getTask(), requestModel.getUser())) {
-//            // prepare view that says, user is not the host
-//            return outputBoundary.prepareFailView("User is not the host.");
-//        }
 
         ArrayList<StudentUser> all_teammates = requestModel.getTask().getTeammates();
         // adding the leader (user) to the array list
@@ -62,38 +55,10 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
                 return outputBoundary.prepareAvailableTimes(responseModel);
             }
         }
-
-
         CollaborativeSchedulingResponseModel responseNoFilter = new CollaborativeSchedulingResponseModel(available_times);
         return outputBoundary.prepareAvailableTimes(responseNoFilter);
 
-        // return prepare(responseModel);
-
-        // when interactor is done executing the use case, it needs to report back any information
-        // that needs to be displayed in the View
-        // the interactor creates the output data object then calls the output boundary method (implemented
-        // by the presenter), passing the output data object as a parameter
-
-
-
-        // is user is not the host, prepare view that says, user is not the host
-        // if there are no available times to schedule, prepare view that says no available times
-
-        // otherwise display the times the user can choose from
-        // do response model stuff
     }
-
-    // @Override
-    // public CollaborativeSchedulingResponseModel addToCalendar(CollaborativeSchedulingRequestModel requestModel) {
-        // ArrayList<ArrayList<LocalDateTime>> available_times = requestModel.getTimesChosenToSchedule();
-        // iterate through all the times, and change the format, so it's easier to read?
-        // need to consult Celine since our scheduled events are going to show up on the same UI
-        // am I allowed to have the type as void? or should I just prepare a success view?? because I don't need to
-        // present the times or anything, I just need to make sure they're in the calendar
-    // }
-    // don't need because can just call on Celine's controller to input into calendar UI
-    // information gets passed down from view to controller -> call on celine's controller
-
 
     /**
      * Check if the user is the host
@@ -106,9 +71,11 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         return user_name.equals(task.getLeader().getName());
     }
 
-    // filtering by the frequency and is either "daily", "weekly", "monthly"
-    // otherwise frequency is blank
-    // only do this if the frequency isn't blank
+    /**
+     * Filter available times by the frequency daily
+     * @param allTimes - all the available times for scheduling
+     * @return - return an array list, filtered by the day
+     */
     public ArrayList<ArrayList<LocalDateTime>> filterDaily(ArrayList<ArrayList<LocalDateTime>> allTimes) {
         // allTimes is an ArrayList of all available times
         // when the frequency is daily, from the time block in the array list, if other time blocks have the same
@@ -129,6 +96,11 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
 
     }
 
+    /**
+     * Filter available times by frequency weekly
+     * @param allTimes - all the available times for scheduling
+     * @return - return an array list, filtered by the week
+     */
     public ArrayList<ArrayList<LocalDateTime>> filterWeekly(ArrayList<ArrayList<LocalDateTime>> allTimes) {
         // allTimes is an ArrayList of all available times
         // when the frequency is weekly, from the time block in the array list,
@@ -146,6 +118,11 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         return allTimes;
     }
 
+    /**
+     * Filter available times by frequency monthly
+     * @param allTimes - all the available times for scheduling
+     * @return - return an array list, filtered by the month
+     */
     public ArrayList<ArrayList<LocalDateTime>> filterMonthly(ArrayList<ArrayList<LocalDateTime>> allTimes) {
         // allTimes is an ArrayList of all available times
         // when the frequency is monthly, if a time block has the same month, remove it
@@ -292,16 +269,46 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
                 }
             }
         }
-        List<List<LocalDateTime>> workingHours = user.getWorkingHours();
-        for (List<LocalDateTime> block : workingHours) {
-            LocalDateTime startTimeBlock = block.get(0);
-            LocalDateTime endTimeBlock = block.get(1);
-            // if the start time of the working hours is within the time of start and end, return false
-            is_working_hours_free =  is_working_hours_free && givenTime(startTimeBlock, endTimeBlock, start, end);
+        ArrayList<LocalTime> workingHours = user.getWorkingHours();
+        LocalTime workingHoursStart = workingHours.get(0);
+        LocalTime workingHoursEnd = workingHours.get(1);
+        is_working_hours_free = givenLocalDateTimeAndLocalTime(start,end, workingHoursStart, workingHoursEnd);
 
-        }
         return is_task_free & is_working_hours_free;
 
+    }
+
+    /**
+     * Check if given times and dates do not conflict
+     * @param timeBlockStart - start time of the time block
+     * @param timeBlockEnd - end time of the time block
+     * @param workingHoursStart - start of working hours
+     * @param workingHoursEnd - end of working hours
+     * @return - return whether the times and dates given do not conflict
+     */
+    public boolean givenLocalDateTimeAndLocalTime(LocalDateTime timeBlockStart, LocalDateTime timeBlockEnd,
+                                                  LocalTime workingHoursStart, LocalTime workingHoursEnd) {
+        // if timeBlock is within working hours
+        if (timeBlockStart.isAfter(ChronoLocalDateTime.from(workingHoursStart)) &&
+                timeBlockEnd.isBefore(ChronoLocalDateTime.from(workingHoursEnd))) {
+            return false;
+        // if timeBlock covers the whole period of working hours
+        } else if (timeBlockStart.isBefore(ChronoLocalDateTime.from(workingHoursStart)) &&
+                timeBlockEnd.isAfter(ChronoLocalDateTime.from(workingHoursEnd))) {
+            return false;
+        // if timeBlockStart is before workingHoursStart and timeBlockEnd is before workingHoursEnd
+        } else if (timeBlockStart.isBefore(ChronoLocalDateTime.from(workingHoursStart)) &&
+                timeBlockEnd.isBefore(ChronoLocalDateTime.from(workingHoursEnd))) {
+            return false;
+        // if timeBlockStart is the same as workingHoursStart
+        } else if (timeBlockStart.isEqual(ChronoLocalDateTime.from(workingHoursStart))) {
+            return false;
+        // if timeBlockEnd is the same as workingHoursEnd
+        } else if (timeBlockEnd.isEqual(ChronoLocalDateTime.from(workingHoursEnd))) {
+            return false;
+            // if timeBlockStart is after workingHoursStart and timeBlockEnd is after workingHoursEnd
+        } else return !(timeBlockStart.isAfter(ChronoLocalDateTime.from(workingHoursStart)) &&
+                timeBlockEnd.isAfter(ChronoLocalDateTime.from(workingHoursEnd)));
     }
 
     /**
@@ -314,13 +321,14 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
      */
     public boolean givenTime(LocalDateTime timeBlockStart, LocalDateTime timeBlockEnd,
                              LocalDateTime start, LocalDateTime end) {
-        if (timeBlockStart.isAfter(start) & timeBlockStart.isBefore(end)) {
+        // in the case where the time block is within the time of start and end
+        if (timeBlockStart.isAfter(start) && timeBlockEnd.isBefore(end)) {
             return false;
-            // if the end time of their time block is within the time of start and end, return false
-        } else if (timeBlockEnd.isAfter(start) & timeBlockEnd.isBefore(end)) {
+            // in the case where it covers the time period
+        } else if (timeBlockStart.isBefore(start) && timeBlockEnd.isAfter(end)) {
             return false;
-            // if the start and end of time block is within start and end, return false
-        } else if (timeBlockStart.isAfter(start) & timeBlockEnd.isBefore(end)) {
+            // in the case where timeBlockStart is before start and timeBlockEnd is before end
+        } else if (timeBlockStart.isBefore(start) && timeBlockEnd.isBefore(end)) {
             return false;
             // if the start time same as start time of block, return false
         } else if (timeBlockStart.isEqual(start)) {
@@ -328,8 +336,8 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
             // if the end time same as end time of block, return false
         } else if (timeBlockEnd.isEqual(end)) {
             return false;
-            // if the task start time and end time, covers the time period, return false
-        } else return !(timeBlockStart.isBefore(start) & timeBlockEnd.isAfter(end));
+            // in the case where timeBlockStart is after start time and timeBlockEnd is after end time
+        } else return !(timeBlockStart.isAfter(start) && timeBlockEnd.isAfter(end));
     }
 
     // NEED TO IMPLEMENT: Given a user, get all their tasks

@@ -1,4 +1,4 @@
-package use_case;
+package use_case_collaborative_scheduling;
 import entities.*;
 
 import java.time.LocalDateTime;

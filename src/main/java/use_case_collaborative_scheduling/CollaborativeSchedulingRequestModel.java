@@ -1,12 +1,7 @@
-package use_case;
+package use_case_collaborative_scheduling;
 
 import entities.CollaborativeTask;
 import entities.TaskMap;
-import entities.StudentUser;
-import entities.Task;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class CollaborativeSchedulingRequestModel {
 

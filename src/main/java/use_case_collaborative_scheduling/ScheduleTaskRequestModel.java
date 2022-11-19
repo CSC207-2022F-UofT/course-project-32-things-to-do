@@ -1,7 +1,6 @@
-package use_case;
+package use_case_collaborative_scheduling;
 
 import entities.CollaborativeTask;
-import screens.CollaborativeSchedulingController;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

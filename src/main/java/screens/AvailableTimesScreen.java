@@ -1,12 +1,9 @@
 package screens;
 
-import use_case.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AvailableTimesScreen extends JFrame implements CollaborativeSchedulingPresenterInterface,

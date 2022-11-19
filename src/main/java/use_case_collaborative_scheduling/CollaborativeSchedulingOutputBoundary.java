@@ -1,6 +1,4 @@
-package use_case;
-
-import screens.AvailableTimesScreen;
+package use_case_collaborative_scheduling;
 
 public interface CollaborativeSchedulingOutputBoundary {
 

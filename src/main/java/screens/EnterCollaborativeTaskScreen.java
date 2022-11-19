@@ -1,7 +1,5 @@
 package screens;
 
-import use_case.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

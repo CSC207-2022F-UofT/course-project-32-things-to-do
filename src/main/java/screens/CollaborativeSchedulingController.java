@@ -1,16 +1,11 @@
 package screens;
 
 import entities.CollaborativeTask;
-import entities.StudentUser;
-import use_case.CollaborativeSchedulingRequestModel;
-import use_case.CollaborativeSchedulingResponseModel;
-import use_case.CollaborativeSchedulingInputBoundary;
-import use_case.CollaborativeScheduling;
+import use_case_collaborative_scheduling.CollaborativeSchedulingRequestModel;
+import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
+import use_case_collaborative_scheduling.CollaborativeSchedulingInputBoundary;
 import entities.TaskMap;
 import entities.Task;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class CollaborativeSchedulingController {
 
@@ -34,7 +29,7 @@ public class CollaborativeSchedulingController {
         this.scheduleInput = scheduleInput;
         this.allTasks = allTasks;
     }
-    public CollaborativeSchedulingResponseModel findTimes(String title){
+    CollaborativeSchedulingResponseModel findTimes(String title){
         Task task = getTask(title);
         CollaborativeSchedulingRequestModel inputData = new CollaborativeSchedulingRequestModel((CollaborativeTask) task, this.allTasks);
         return scheduleInput.schedule(inputData);

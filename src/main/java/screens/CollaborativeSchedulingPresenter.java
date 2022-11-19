@@ -1,9 +1,8 @@
 package screens;
 
-import use_case.CollaborativeSchedulingOutputBoundary;
-import use_case.CollaborativeSchedulingResponseModel;
+import use_case_collaborative_scheduling.CollaborativeSchedulingOutputBoundary;
+import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

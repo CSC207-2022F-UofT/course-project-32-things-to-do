@@ -1,9 +1,5 @@
 package screens;
 
-import entities.*;
-import screens.CollaborativeSchedulingPresenter;
-import use_case.*;
-
 import java.util.ArrayList;
 
 public interface CollaborativeSchedulingPresenterInterface {
