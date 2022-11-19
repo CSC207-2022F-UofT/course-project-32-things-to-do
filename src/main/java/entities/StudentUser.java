@@ -1,4 +1,4 @@
-package entities;
+package Entities;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,6 +38,8 @@ public class StudentUser extends User {
     public ArrayList<String> getCourses() {
         return this.courses;
     }
+
+    public void setCourses(ArrayList<String> courses) {this.courses = courses;} //remove before merging!!
 
     private ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
 

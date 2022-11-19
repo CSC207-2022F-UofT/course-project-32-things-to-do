@@ -45,6 +45,8 @@ public class Assignment extends Task implements Gradable, Preparatory {
 
     }
 
+    public double getWeightage() {return this.weightage;}
+
     /**
      * Update the Test with the user's grade
      * @param grade - the grade the user has received
@@ -52,6 +54,8 @@ public class Assignment extends Task implements Gradable, Preparatory {
     public void setGradeReceived(double grade) {
 
     }
+
+    public double getGradeReceived() {return this.gradeReceived; }
 
     /**
      * Update the amount of time the user has spent preparing
