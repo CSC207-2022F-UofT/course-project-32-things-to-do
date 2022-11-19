@@ -1,9 +1,11 @@
 package user_register_usecase;
 
+import entities.InstructorUser;
 import entities.StudentUser;
 import entities.User;
 import entities.UserFactory;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 // Use Case Layer
@@ -24,7 +26,7 @@ public class UserRegInteractor implements UserRegInputBoundary {
     }
 
     @Override
-    public UserRegResponse create(UserRegRequest request) {
+    public UserRegResponse create(UserRegRequest request) throws IOException {
         if (userGateway.existsByName(request.getName())) {
             return userPresenter.prepareFailView("That username is taken!");
         } else if (!request.getPassword().equals(request.getReenterPassword())) {
@@ -36,13 +38,19 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
         }
 
-        // String name, String password, ArrayList<String> toDoList, ArrayList<String> taskArchive,
-//                              ArrayList<String> courses, ArrayList inbox, ArrayList<String> notifications,
-//                              HashMap<String, Double> desiredGrades, LocalDateTime creationTime
-
-
         LocalDateTime now = LocalDateTime.now();
-        UserRegSaveRequest userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+
+        UserRegSaveRequest userModel;
+        if (user instanceof StudentUser) {
+            userModel = new StudentSaveRequest(user.getName(), user.getPass(),
+                    (StudentUser) user, now);
+        } else if (user instanceof InstructorUser) {
+            userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
+                    (InstructorUser) user, now);
+        } else {
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+        }
+
         userGateway.save(userModel);
 
         UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());

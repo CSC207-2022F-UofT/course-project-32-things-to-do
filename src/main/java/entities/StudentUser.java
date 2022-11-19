@@ -96,9 +96,9 @@ public class StudentUser implements User {
         this.notifications.add(notification);
     }
 
-    private HashMap<String,Double> desiredGrades; // String is course id
+    private final Map<String,Double> desiredGrades; // String is course id
 
-    public HashMap getDesiredGrades() {
+    public Map<String, Double> getDesiredGrades() {
 
         return this.desiredGrades;
     }
