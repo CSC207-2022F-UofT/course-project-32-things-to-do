@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class CollaborativeSchedulingResponseModel {
 
-    ArrayList<ArrayList<LocalDateTime>> availableTimes;
+    private final ArrayList<ArrayList<LocalDateTime>> availableTimes;
 
     public CollaborativeSchedulingResponseModel(ArrayList<ArrayList<LocalDateTime>> availableTimes) {
         this.availableTimes = availableTimes;

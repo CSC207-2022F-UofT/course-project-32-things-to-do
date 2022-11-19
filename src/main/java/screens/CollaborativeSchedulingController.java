@@ -6,6 +6,8 @@ import use_case.CollaborativeSchedulingRequestModel;
 import use_case.CollaborativeSchedulingResponseModel;
 import use_case.CollaborativeSchedulingInputBoundary;
 import use_case.CollaborativeScheduling;
+import entities.TaskMap;
+import entities.Task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,11 +28,24 @@ public class CollaborativeSchedulingController {
     // make a method to get the task given the name of a task
     final CollaborativeSchedulingInputBoundary scheduleInput;
 
-    public CollaborativeSchedulingController(CollaborativeSchedulingInputBoundary scheduleInput) {
+    private final TaskMap allTasks;
+
+    public CollaborativeSchedulingController(CollaborativeSchedulingInputBoundary scheduleInput, TaskMap allTasks) {
         this.scheduleInput = scheduleInput;
+        this.allTasks = allTasks;
     }
-    public CollaborativeSchedulingResponseModel findTimes(CollaborativeTask task, StudentUser user){
-        CollaborativeSchedulingRequestModel inputData = new CollaborativeSchedulingRequestModel(task, user);
+    public CollaborativeSchedulingResponseModel findTimes(String title){
+        Task task = getTask(title);
+        CollaborativeSchedulingRequestModel inputData = new CollaborativeSchedulingRequestModel((CollaborativeTask) task, this.allTasks);
         return scheduleInput.schedule(inputData);
+    }
+
+    public Task getTask(String title) {
+        for (Task task : allTasks.getTaskMap().values()) {
+            if (task.getTitle().equals(title) && task instanceof CollaborativeTask){
+                return task;
+            }
+        }
+        throw new SchedulingTimesFailed("Task does not exist. Type it again if you want. I don't fucking care at this point.");
     }
 }

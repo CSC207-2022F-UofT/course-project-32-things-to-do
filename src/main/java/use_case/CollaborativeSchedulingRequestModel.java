@@ -1,7 +1,9 @@
 package use_case;
 
 import entities.CollaborativeTask;
+import entities.TaskMap;
 import entities.StudentUser;
+import entities.Task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,21 +12,22 @@ public class CollaborativeSchedulingRequestModel {
 
     private final CollaborativeTask task;
 
-    private final StudentUser user;
+    private final TaskMap allTasks;
+
+    // private final StudentUser user;
 
 
-    public CollaborativeSchedulingRequestModel(CollaborativeTask task, StudentUser user) {
+    public CollaborativeSchedulingRequestModel(CollaborativeTask task, TaskMap allTasks) {
         this.task = task;
-        this.user = user;
+        this.allTasks = allTasks;
     }
-
+    public TaskMap getAllTasks(){
+        return allTasks;
+    }
     public CollaborativeTask getTask() {
         return task;
     }
 
-    public StudentUser getUser() {
-        return user;
-    }
 
 
 }

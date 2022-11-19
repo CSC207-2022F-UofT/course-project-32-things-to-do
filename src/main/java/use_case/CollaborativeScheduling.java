@@ -34,7 +34,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         // adding the leader (user) to the array list
         all_teammates.add(requestModel.getTask().getLeader());
         LocalDateTime task_deadline = requestModel.getTask().getDeadline();
-        TaskCreationUseCaseFiller allTasksEver = requestModel.getAllTasksEver();
+        TaskMap allTasksEver = requestModel.getAllTasks();
 
         ArrayList<ArrayList<LocalDateTime>> available_times = allAvailableTimes(all_teammates, task_deadline,
                 allTasksEver);
@@ -168,7 +168,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
      * @return - a list of times when all users are free from now to the deadline
      */
     public ArrayList<ArrayList<LocalDateTime>> allAvailableTimes(ArrayList<StudentUser> users, LocalDateTime deadline,
-                                                                 TaskCreationUseCaseFiller allTasksEver) {
+                                                                 TaskMap allTasksEver) {
 
         // Initialize LocalDateTime of the time right now
         LocalDateTime now = LocalDateTime.now();
@@ -180,7 +180,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         LocalDateTime end = start.plusHours(1);
 
         // Initialize empty list
-        ArrayList<ArrayList<LocalDateTime>> possible_times = new ArrayList<ArrayList<LocalDateTime>>();
+        ArrayList<ArrayList<LocalDateTime>> possible_times = new ArrayList<>();
 
         // Loop through time blocks at hour intervals, from the nearest hour to the deadline
         do {
@@ -232,7 +232,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
      */
     public boolean areMembersAvailableAtFixedTime(ArrayList<StudentUser> users,
                                                   LocalDateTime start, LocalDateTime end,
-                                                  TaskCreationUseCaseFiller allTasksEver) {
+                                                  TaskMap allTasksEver) {
 
         for (StudentUser user : users) {
             boolean isAvailable;
@@ -339,7 +339,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
      * @return - a list of all their time blocks
      */
     // go through user to do list (task ids as strings) and get all their tasks
-    public ArrayList<Task> getMyTasks(StudentUser user, TaskCreationUseCaseFiller allTasksEver) {
+    public ArrayList<Task> getMyTasks(StudentUser user, TaskMap allTasksEver) {
         // tasks ids are formatted as datetime-student-course
         // allTasksEver is every task in the program file
 
@@ -353,11 +353,11 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         ArrayList<String> task_ids = user.getToDoList();
 
         // iterating through keys
-        for (String key : allTasksEver.getAllTasks().keySet()) {
+        for (String key : allTasksEver.getTaskMap().keySet()) {
             // if the username is in the key
             if (key.contains(username)){
                 // get the task associated with the key
-                Task task_value = allTasksEver.getAllTasks().get(key);
+                Task task_value = allTasksEver.getTaskMap().get(key);
                 // add it to the array list
                 userTasks.add(task_value);
             }
