@@ -1,9 +1,9 @@
-package UseCases;
+package use_cases;
 
-import Entities.StudentUser;
-import Entities.Course;
-import Entities.Task;
-import Entities.TaskMap;
+import entities.StudentUser;
+import entities.Course;
+import entities.Task;
+import entities.TaskMap;
 
 public class TaskDeletionUseCase {
     /**

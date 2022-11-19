@@ -1,8 +1,8 @@
-package UseCases;
+package use_cases;
 
-import Entities.Event;
-import Entities.Test;
-import Entities.Assignment;
+import entities.Event;
+import entities.Test;
+import entities.Assignment;
 // import Entities.CollaborativeTask;
 
 import java.time.LocalDateTime;

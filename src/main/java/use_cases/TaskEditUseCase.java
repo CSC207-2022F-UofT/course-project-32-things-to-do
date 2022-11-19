@@ -1,12 +1,12 @@
-package UseCases;
+package use_cases;
 
-import Entities.Timeblockable;
-import Entities.Gradable;
-import Entities.Preparatory;
+import entities.Timeblockable;
+import entities.Gradable;
+import entities.Preparatory;
 
-import Entities.Task;
-import Entities.Event;
-import Entities.Assignment;
+import entities.Task;
+import entities.Event;
+import entities.Assignment;
 // import Entities.CollaborativeTask;
 
 import java.time.LocalDateTime;

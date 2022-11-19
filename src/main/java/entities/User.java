@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 // Entity
 public abstract class User {

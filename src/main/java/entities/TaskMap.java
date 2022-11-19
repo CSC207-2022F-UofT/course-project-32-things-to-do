@@ -1,6 +1,6 @@
-package Entities;
+package entities;
 
-import ReadWrite.ReadWriter;
+import read_write.ReadWriter;
 
 import java.io.IOException;
 import java.io.Serializable;
