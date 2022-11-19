@@ -1,6 +1,7 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 public class StudentUser implements User {
@@ -47,6 +48,8 @@ public class StudentUser implements User {
     public void addTaskToList(String task) {
         this.toDoList.add(task);
     }
+
+    public void removeTaskFromList(String task) { this.toDoList.remove(task); }
 
     private ArrayList<String> taskArchive;
 
@@ -107,14 +110,14 @@ public class StudentUser implements User {
         this.desiredGrades.put(course, grade);
     }
 
-    private ArrayList<LocalDateTime> workingHours; // each internal list contains the start and end times
+    private ArrayList<LocalTime> workingHours; // each internal list contains the start and end times
 
-    public ArrayList<LocalDateTime> getWorkingHours() {
+    public ArrayList<LocalTime> getWorkingHours() {
 
         return this.workingHours;
     }
 
-    public void setWorkingHours(ArrayList<LocalDateTime> hours) {
+    public void setWorkingHours(ArrayList<LocalTime> hours) {
         this.workingHours = hours;
     }
 }

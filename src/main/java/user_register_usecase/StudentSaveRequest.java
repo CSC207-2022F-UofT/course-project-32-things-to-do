@@ -3,6 +3,7 @@ package user_register_usecase;
 import entities.StudentUser;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class StudentSaveRequest extends UserRegSaveRequest {
 
     private final Map<String, Double> desiredGrades;
 
-    private final ArrayList<LocalDateTime> workingHours;
+    private final ArrayList<LocalTime> workingHours;
 
 
     public StudentSaveRequest(String name, String password, StudentUser student, LocalDateTime creationTime) {
@@ -70,7 +71,7 @@ public class StudentSaveRequest extends UserRegSaveRequest {
         return this.desiredGrades;
     }
 
-    public ArrayList<LocalDateTime> getWorkingHours() {
+    public ArrayList<LocalTime> getWorkingHours() {
 
         return this.workingHours;
     }
