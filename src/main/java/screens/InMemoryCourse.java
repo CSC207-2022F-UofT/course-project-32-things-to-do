@@ -1,7 +1,6 @@
 package screens;
 
 import course_creation_use_case.CourseCreationDsGateway;
-//import course_creation_use_case.courseCreationDsRequestModel;
 import course_creation_use_case.CourseCreationRequestModel;
 
 
@@ -28,24 +27,3 @@ public class InMemoryCourse implements CourseCreationDsGateway {
         System.out.println("Save " + requestModel.getCourseID());
     }
 }
-
-//public class InMemoryCourse implements courseCreationDsGateway {
-//    final private Map<String, courseCreationDsRequestModel> courses = new HashMap<>();
-//
-//    /**
-//     * @param identifier the course's course id
-//     * @return whether the course exists
-//     */
-//    @Override
-//    public boolean existsByCourseID(String identifier) {
-//        return courses.containsKey(identifier);
-//    }
-//
-//    /**
-//     * @param requestModel the data to save
-//     */
-//    @Override
-//    public void saveCourse(courseCreationDsRequestModel requestModel) {
-//        System.out.println("Save " + requestModel.getCourseID());
-//    }
-//}
