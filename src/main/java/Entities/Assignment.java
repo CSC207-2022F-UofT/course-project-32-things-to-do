@@ -38,11 +38,27 @@ public class Assignment extends Task implements Gradable, Preparatory {
     }
 
     /**
+     * Get the weightage of the Assignment
+     * @return - the weightage of the Assignment
+     */
+    public double getWeightage() {
+        return this.weightage;
+    }
+
+    /**
      * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
 
+    }
+
+    /**
+     * Get the grade the user received on the Assignment
+     * @return - the grade the user received
+     */
+    public double getGradeReceived() {
+        return this.gradeReceived;
     }
 
     /**

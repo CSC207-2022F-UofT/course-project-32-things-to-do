@@ -77,11 +77,27 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     }
 
     /**
+     * Get the weightage of the Test
+     * @return - the weightage of the Test
+     */
+    public double getWeightage() {
+        return this.weightage;
+    }
+
+    /**
      * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
 
+    }
+
+    /**
+     * Get the grade the user received on the Test
+     * @return - the grade the user received
+     */
+    public double getGradeReceived() {
+        return this.gradeReceived;
     }
 
     /**

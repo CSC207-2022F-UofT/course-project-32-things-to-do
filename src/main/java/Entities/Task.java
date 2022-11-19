@@ -73,6 +73,14 @@ public abstract class Task implements Serializable {
     }
 
     /**
+     * Retrieve the value of complete
+     * @return - whether the Task is complete
+     */
+    public boolean getComplete() {
+        return this.complete;
+    }
+
+    /**
      * Sets the Task to complete
      */
     protected void setComplete() {
