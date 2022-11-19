@@ -2,7 +2,7 @@ package course_creation_use_case;
 
 // Use case layer
 
-import Entities.*;
+import entities.*;
 
 public class CourseCreationInteractor implements CourseCreationInputBoundary {
     final CourseCreationDsGateway courseCreationDSGateway;

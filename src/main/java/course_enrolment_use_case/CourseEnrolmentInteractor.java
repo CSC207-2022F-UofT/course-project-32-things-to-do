@@ -3,11 +3,6 @@ package course_enrolment_use_case;
 
 // Use case layer
 
-import Entities.Course;
-import Entities.CourseMap;
-import course_creation_use_case.CourseCreationRequestModel;
-import course_creation_use_case.CourseCreationResponseModel;
-
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
     final CourseEnrolmentPresenter courseEnrolmentPresenter;
