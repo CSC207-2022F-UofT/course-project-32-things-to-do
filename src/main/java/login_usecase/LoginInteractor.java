@@ -1,5 +1,6 @@
 package login_usecase;
 
+import entities.User;
 import screens.LoginFailed;
 
 import java.time.LocalDateTime;
