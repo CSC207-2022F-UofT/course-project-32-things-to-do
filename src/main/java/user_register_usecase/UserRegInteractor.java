@@ -13,7 +13,7 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
     final UserRegPresenter userPresenter;
 
-    private UserFactory userFactory;
+//    private UserFactory userFactory;
 
     public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter) {
         this.userGateway = gateway;
@@ -31,10 +31,11 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Enter either 'Instructor' or 'Student'.");
         }
 
+        UserFactory userFactory;
         if (request.getTypeOfUser().equals("Instructor")) {
-            this.userFactory = new InstructorUserFactory();
-        } else if (request.getTypeOfUser().equals("Student")) {
-            this.userFactory = new StudentUserFactory();
+            userFactory = new InstructorUserFactory();
+        } else {
+            userFactory = new StudentUserFactory();
         }
 
         User user = userFactory.create(request.getName(), request.getPassword());
