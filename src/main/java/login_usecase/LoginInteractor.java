@@ -1,5 +1,7 @@
 package login_usecase;
 
+import screens.LoginFailed;
+
 import java.time.LocalDateTime;
 
 public class LoginInteractor implements LoginInputBoundary {
@@ -14,7 +16,7 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     @Override
-    public LoginResponseModel create(LoginRequestModel requestModel) {
+    public LoginResponseModel create(LoginRequestModel requestModel) throws LoginFailed {
         if (!loginGateway.existsByName(requestModel.getName())) {
             return loginPresenter.prepareFailView("Username does not exist");
         } else if (!loginGateway.passOf(requestModel.getName()).equals(requestModel.getPass())) {

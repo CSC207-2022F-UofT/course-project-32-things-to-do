@@ -14,7 +14,7 @@ public class LoginController {
         this.userInput = accGateway;
     }
 
-    LoginResponseModel create(String name, String password) {
+    LoginResponseModel create(String name, String password) throws LoginFailed {
         LoginRequestModel request = new LoginRequestModel(name, password);
 
         return userInput.create(request);

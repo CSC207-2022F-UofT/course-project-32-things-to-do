@@ -2,7 +2,9 @@ package screens;
 
 import javax.swing.*;
 
-public class LabelTextPanel {
-    public LabelTextPanel(JLabel choose_username, JTextField username) {
+public class LabelTextPanel extends JPanel {
+    public LabelTextPanel(JLabel label, JTextField textField) {
+        this.add(label);
+        this.add(textField);
     }
 }

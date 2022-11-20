@@ -1,7 +1,5 @@
 package screens;
 
-import user_register_usecase.UserRegRequest;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,29 +42,35 @@ public class RegisterScreen extends JPanel implements ActionListener {
         JLabel title = new JLabel("Register Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JButton instructor = new JButton("Instructor");
+        JButton student = new JButton("Student");
+
+        JPanel userButtons = new JPanel();
+        userButtons.add(instructor);
+        userButtons.add(student);
+
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel("Choose username"), username);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Choose password"), password);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel("Enter password again"), repeatPassword);
-        JTextField typeOfUser;
-//        LabelButtonPanel typeOfUserInfo = new LabelTextPanel(
-//                new JLabel("Are you an instructor or a student?"), typeOfUser);
+//        LabelPanel chooseTypeOfUser = new LabelTextPanel(new JLabel("I am a:") , userButtons);
+        JLabel chooseTypeOfUser = new JLabel("I am a:");
+        userButtons.add(chooseTypeOfUser);
 
-        JButton instructorUser = new JButton("Instructor");
-        JButton studentUser = new JButton("Student");
         JButton signUp = new JButton("Sign up");
         JButton cancel = new JButton("Cancel");
 
         JPanel buttons = new JPanel();
         buttons.add(signUp);
         buttons.add(cancel);
-//        buttons.add(typeOfUser);
 
 //        typeOfUser.addActionListener(this);
         signUp.addActionListener(this);
         cancel.addActionListener(this);
+        instructor.addActionListener(this);
+        student.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -75,6 +79,7 @@ public class RegisterScreen extends JPanel implements ActionListener {
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
+        this.add(userButtons);
 
     }
 
