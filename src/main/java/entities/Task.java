@@ -42,6 +42,15 @@ public abstract class Task implements Serializable {
     public String getId() {
         return this.id;
     }
+
+    /**
+     * Set a new Task ID (used for adding course code)
+     * @param id - the new ID
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      * Retrieves the title of the Task
      * @return - the title of the Task
