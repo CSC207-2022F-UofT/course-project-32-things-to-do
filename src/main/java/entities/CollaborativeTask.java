@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,8 +6,7 @@ import java.util.ArrayList;
 public class CollaborativeTask extends Task implements Timeblockable{
     private boolean recurring;
     private String frequency;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private ArrayList<LocalDateTime> timeBlocks;
     private ArrayList<StudentUser> teammates;
     private ArrayList<StudentUser> pendingTeammates;
     private ArrayList<StudentUser> declinedTeammates;
@@ -143,6 +142,20 @@ public class CollaborativeTask extends Task implements Timeblockable{
     }
 
     /**
+     * @return whether the Collaborative Task is reoccurring or not.
+     */
+    protected boolean getRecurring(){
+        return this.recurring;
+    }
+
+    /**
+     * @return frequency of Collaborative Task.
+     */
+    protected String getFrequency(){
+        return this.frequency;
+    }
+
+    /**
      * Set a Collaborative Task as recurring/not
      * Set its new frequency if it is recurring
      * @param recurring - whether the Collaborative Task is recurring
@@ -159,28 +172,26 @@ public class CollaborativeTask extends Task implements Timeblockable{
     }
 
     /**
-     * Set a new time block
-     * @param startTime - the start of the time block
-     * @param endTime - the end of the time block
+     * Get the time blocks of a Collaborative Task.
+     * @return - the time blocks of the Collaborative task in an Array List of LocalDateTimes.
      */
-    public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
-
+    public ArrayList<LocalDateTime> getTimeBlocks() {
+        return this.timeBlocks;
     }
 
     /**
-     * Get the time block of an Event
-     * @return - the time block of the Event
-     *         - in array form: {startTime, endTime}
+     * Set new time blocks
+     * @param timeBlocks - Array List of time blocks of the Collaborative Task.
      */
-    public LocalDateTime[] getTimeBlock() {
-        return new LocalDateTime[] {this.startTime, this.endTime};
+    public void setTimeBlocks(ArrayList<LocalDateTime> timeBlocks) {
+
     }
 
     /**
      * Schedule a time block for the user
      * @return - whether the time block has been successfully scheduled
      */
-    public boolean scheduleTimeBlock() {
+    public boolean scheduleTimeBlocks() {
         return true;
     }
 
@@ -188,30 +199,7 @@ public class CollaborativeTask extends Task implements Timeblockable{
      * Remove a time block from the user's schedule
      * @return - whether the time block has been successfully removed
      */
-    public boolean removeTimeBlock() {
+    public boolean removeTimeBlocks() {
         return true;
-    }
-
-    /**
-     * Delete a Collaborative Task by moving it to the user's archive
-     * @return - whether the Collaborative Task has been successfully deleted
-     */
-    protected boolean delete() {
-        return true;
-    }
-
-    /**
-     * Save a Collaborative Task to the user's data
-     * @return - whether the Collaborative Task has been successfully saved
-     */
-    protected boolean save() {
-        return true;
-    }
-
-    /**
-     * Edit the features of the Collaborative Task.
-     */
-    protected void edit(){
-
     }
 }

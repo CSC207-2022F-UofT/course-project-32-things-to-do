@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 public class Invitation {
     private final CollaborativeTask collaborativeTask;
