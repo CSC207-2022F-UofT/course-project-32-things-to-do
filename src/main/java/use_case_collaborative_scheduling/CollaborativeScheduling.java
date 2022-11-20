@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class CollaborativeScheduling implements CollaborativeSchedulingInputBoundary{
 
 
-    private final CollaborativeSchedulingPresenter collaborativeSchedulingPresenter;
+    private final CollaborativeSchedulingOutputBoundary collaborativeSchedulingOutputBoundary;
 
-    public CollaborativeScheduling(CollaborativeSchedulingPresenter collaborativeSchedulingPresenter){
-        this.collaborativeSchedulingPresenter = collaborativeSchedulingPresenter;
+    public CollaborativeScheduling(CollaborativeSchedulingOutputBoundary collaborativeSchedulingOutputBoundary){
+        this.collaborativeSchedulingOutputBoundary = collaborativeSchedulingOutputBoundary;
     }
 
     /**
@@ -35,7 +35,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
 
         // if the list is empty does it return false because its nested? Nope - tested it works fine
         if (available_times.isEmpty()) {
-            return collaborativeSchedulingPresenter.prepareFailView("There are no available times.");
+            return collaborativeSchedulingOutputBoundary.prepareFailView("There are no available times.");
             // prepare view that says that there are no available times
         }
 
@@ -43,21 +43,21 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
             case "daily": {
                 ArrayList<ArrayList<LocalDateTime>> filtered_times = filterDaily(available_times);
                 CollaborativeSchedulingResponseModel responseModel = new CollaborativeSchedulingResponseModel(filtered_times);
-                return collaborativeSchedulingPresenter.prepareAvailableTimes(responseModel);
+                return collaborativeSchedulingOutputBoundary.prepareAvailableTimes(responseModel);
             }
             case "weekly": {
                 ArrayList<ArrayList<LocalDateTime>> filtered_times = filterWeekly(available_times);
                 CollaborativeSchedulingResponseModel responseModel = new CollaborativeSchedulingResponseModel(filtered_times);
-                return collaborativeSchedulingPresenter.prepareAvailableTimes(responseModel);
+                return collaborativeSchedulingOutputBoundary.prepareAvailableTimes(responseModel);
             }
             case "monthly": {
                 ArrayList<ArrayList<LocalDateTime>> filtered_times = filterMonthly(available_times);
                 CollaborativeSchedulingResponseModel responseModel = new CollaborativeSchedulingResponseModel(filtered_times);
-                return collaborativeSchedulingPresenter.prepareAvailableTimes(responseModel);
+                return collaborativeSchedulingOutputBoundary.prepareAvailableTimes(responseModel);
             }
         }
         CollaborativeSchedulingResponseModel responseNoFilter = new CollaborativeSchedulingResponseModel(available_times);
-        return collaborativeSchedulingPresenter.prepareAvailableTimes(responseNoFilter);
+        return collaborativeSchedulingOutputBoundary.prepareAvailableTimes(responseNoFilter);
 
     }
 
