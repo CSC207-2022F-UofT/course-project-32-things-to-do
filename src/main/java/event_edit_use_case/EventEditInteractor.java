@@ -3,7 +3,6 @@ package event_edit_use_case;
 import java.util.ArrayList;
 
 public class EventEditInteractor implements EventEditInputBoundary{
-    private ArrayList<String> changes;
     EventEditPresenter presenter;
 
     public EventEditInteractor(EventEditPresenter presenter) {
@@ -12,12 +11,15 @@ public class EventEditInteractor implements EventEditInputBoundary{
 
     @Override
     public EventEditResponseModel edit(EventEditRequestModel requestModel) {
+        if (requestModel.getTitle().equals("") || requestModel.getStartTime() == null || requestModel.getEndTime() == null) {
+            return presenter.prepareFailView("Please fill in all required information.");
+        }
         requestModel.getEvent().setTitle(requestModel.getTitle());
         requestModel.getEvent().setPriority(requestModel.getPriority());
         requestModel.getEvent().setTimeBlock(requestModel.getStartTime(), requestModel.getEndTime());
         requestModel.getEvent().setRecurring(requestModel.getRecurring(), requestModel.getFrequency());
 
-        EventEditResponseModel responseModel = new EventEditResponseModel("good job");
+        EventEditResponseModel responseModel = new EventEditResponseModel(requestModel.getTitle());
         return presenter.prepareSuccessView(responseModel);
     }
 }

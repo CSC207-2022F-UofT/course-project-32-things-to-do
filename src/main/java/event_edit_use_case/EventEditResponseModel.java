@@ -1,8 +1,8 @@
 package event_edit_use_case;
 
 public class EventEditResponseModel {
-    private String message;
+    private String title;
     public EventEditResponseModel(String message) {
-        this.message = message;
+        this.title = title;
     }
 }

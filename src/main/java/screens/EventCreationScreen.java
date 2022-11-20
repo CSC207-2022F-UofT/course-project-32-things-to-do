@@ -52,7 +52,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+        this.add(screenTitle);
         this.add(titleInfo);
         this.add(prioInfo);
         this.add(startTimeInfo);
@@ -67,13 +67,18 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         if (evt.getActionCommand().equals("Finish")) {
             try {
                 boolean valRecurring = recurring.isSelected();
-                eventCreationController.create(title.getText(), Integer.parseInt(priority.getText()),
+                int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
+                if (valPriority < 0) valPriority = 0;
+
+                eventCreationController.create(title.getText(), valPriority,
                         LocalDateTime.parse(startTime.getText()), LocalDateTime.parse(endTime.getText()),
                         valRecurring, frequency.getText());
                 JOptionPane.showMessageDialog(this, "message");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
+        } else if (evt.getActionCommand().equals("Cancel")) {
+            // todo
         }
     }
 }

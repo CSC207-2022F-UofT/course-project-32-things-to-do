@@ -16,7 +16,7 @@ public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
         requestModel.getStudent().removeFromToDoList(requestModel.getTask());
         requestModel.getStudent().addToArchive(requestModel.getTask());
 
-        TaskReadWrite trw = new TaskReadWrite();
+        TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
         TaskMap.saveToFile(trw);
 
         TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(requestModel.getTask().getTitle());

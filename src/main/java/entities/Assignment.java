@@ -22,9 +22,10 @@ public class Assignment extends Task implements Gradable, Preparatory {
      * @param id - the unique ID of the Assignment
      * @param dueDate - Assignment's due date
      */
-    public Assignment(String title, String id, LocalDateTime dueDate) {
+    public Assignment(String title, String id, LocalDateTime dueDate, double weightage) {
         super(title, id);
         this.dueDate = dueDate;
+        this.weightage = weightage;
     }
     /**
      * Create a new Assignment with a title, due date and priority
@@ -33,9 +34,10 @@ public class Assignment extends Task implements Gradable, Preparatory {
      * @param priority - the Assignment's priority
      * @param dueDate - the Assignment's due date
      */
-    public Assignment(String title, String id, int priority, LocalDateTime dueDate) {
+    public Assignment(String title, String id, int priority, LocalDateTime dueDate, double weightage) {
         super(title, id, priority);
         this.dueDate = dueDate;
+        this.weightage = weightage;
     }
 
     public void setDueDate(LocalDateTime dueDate) {

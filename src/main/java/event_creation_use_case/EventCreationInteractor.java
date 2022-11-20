@@ -10,12 +10,10 @@ import java.time.LocalDateTime;
 public class EventCreationInteractor implements EventCreationInputBoundary {
     final EventCreationPresenter presenter;
     final StudentUser student;
-    final String courseCode;
 
-    public EventCreationInteractor(EventCreationPresenter eventPresenter, StudentUser student, String courseCode) {
+    public EventCreationInteractor(EventCreationPresenter eventPresenter, StudentUser student) {
         this.presenter = eventPresenter;
         this.student = student;
-        this.courseCode = courseCode;
     }
 
     @Override
@@ -25,15 +23,14 @@ public class EventCreationInteractor implements EventCreationInputBoundary {
             return presenter.prepareFailView("Please fill in all required information.");
         }
 
-        // check if id exists for students lol
-        String id = LocalDateTime.now() + "_" + student.getName() + "_" + courseCode;
+        String id = LocalDateTime.now() + "_" + student.getName() + "_none";
 
         Event event = new Event(requestModel.getTitle(), id, requestModel.getPriority(),
                 requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getRecurring(),
                 requestModel.getFrequency());
 
 
-        TaskReadWrite trw = new TaskReadWrite();
+        TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
         TaskMap.saveToFile(trw);
 
         EventCreationResponseModel eventResponseModel = new EventCreationResponseModel(

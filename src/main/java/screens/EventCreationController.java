@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 public class EventCreationController {
     final EventCreationInputBoundary input;
-    public EventCreationController(EventCreationInputBoundary eventGateway) {
-        this.input = eventGateway;
+    public EventCreationController(EventCreationInputBoundary input) {
+        this.input = input;
     }
     EventCreationResponseModel create(String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                       boolean recurring, String frequency) {

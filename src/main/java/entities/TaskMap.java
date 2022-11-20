@@ -55,7 +55,7 @@ public class TaskMap implements Serializable {
      */
     public static void saveToFile(ReadWriter rw) {
         try {
-            rw.saveToFile("src/Data/TaskMap", taskMap);
+            rw.saveToFile(taskMap);
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -68,7 +68,7 @@ public class TaskMap implements Serializable {
      */
     public static void load(ReadWriter rw) {
         try {
-            taskMap = (HashMap) rw.readFromFile("src/Data/TaskMap");
+            taskMap = (HashMap) rw.readFromFile();
         } catch(Exception e) {
             System.out.println(e);
         }
