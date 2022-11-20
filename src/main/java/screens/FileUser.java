@@ -25,13 +25,16 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
          */
 
         this.filePath = path;
+        this.accounts = readFile();
+    }
 
+    private HashMap<String, UserRegSaveRequest> readFile() throws IOException, ClassNotFoundException {
         FileInputStream fileReader = new FileInputStream(this.filePath);
         ObjectInputStream in = new ObjectInputStream(fileReader);
         HashMap<String, UserRegSaveRequest> f = (HashMap<String, UserRegSaveRequest>) in.readObject();
-        this.accounts = f;
         in.close();
         fileReader.close();
+        return f;
     }
 
     /**

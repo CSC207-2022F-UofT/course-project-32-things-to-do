@@ -61,9 +61,6 @@ public class StudentUser implements User {
     }
 
     public void addTaskToArchive(String task) {
-        /**
-         * Adds task to the task archive of this user. Does not remove the task from the to do list.
-         */
         this.taskArchive.add(task);
     }
 
@@ -91,9 +88,6 @@ public class StudentUser implements User {
     }
 
     public void addInvitation(String invite) {
-        /**
-         * Add invite to this user's inbox.
-         */
         this.inbox.add(invite);
     }
 
