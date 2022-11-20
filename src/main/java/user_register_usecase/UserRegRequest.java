@@ -10,10 +10,13 @@ public class UserRegRequest {
 
     private String reenterPassword;
 
-    public UserRegRequest(String name, String password, String reenterPassword) {
+    private String typeOfUser;
+
+    public UserRegRequest(String name, String password, String reenterPassword, String userType) {
         this.name = name;
         this.password = password;
         this.reenterPassword = reenterPassword;
+        this.typeOfUser = userType;
     }
 
     String getName() { return name; }
@@ -30,5 +33,16 @@ public class UserRegRequest {
 
     public void setReenterPassword(String reenterPassword) {
         this.reenterPassword = reenterPassword; }
+
+    String getTypeOfUser() { return typeOfUser; }
+
+    String setTypeOfUser(String userType) {
+        if (userType.equals("Instructor") | userType.equals("Student")) {
+            this.typeOfUser = userType;
+            return "Success";
+        } else {
+            return "User type can only be Instructor or Student";
+        }
+    }
 
 }

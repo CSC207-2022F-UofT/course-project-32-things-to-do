@@ -1,9 +1,6 @@
 package user_register_usecase;
 
-import entities.InstructorUser;
-import entities.StudentUser;
-import entities.User;
-import entities.UserFactory;
+import entities.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -16,13 +13,12 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
     final UserRegPresenter userPresenter;
 
-    final UserFactory userFactory;
+    private UserFactory userFactory;
 
-    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter,
-                             UserFactory userFactory) {
+    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter) {
         this.userGateway = gateway;
         this.userPresenter = userRegPresenter;
-        this.userFactory = userFactory;
+//        this.userFactory = null;
     }
 
     @Override
@@ -31,6 +27,14 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("That username is taken!");
         } else if (!request.getPassword().equals(request.getReenterPassword())) {
             return userPresenter.prepareFailView("Passwords entered do not match.");
+        } else if (!request.getTypeOfUser().equals("Instructor") && !request.getTypeOfUser().equals("Student")) {
+            return userPresenter.prepareFailView("Enter either 'Instructor' or 'Student'.");
+        }
+
+        if (request.getTypeOfUser().equals("Instructor")) {
+            this.userFactory = new InstructorUserFactory();
+        } else if (request.getTypeOfUser().equals("Student")) {
+            this.userFactory = new StudentUserFactory();
         }
 
         User user = userFactory.create(request.getName(), request.getPassword());

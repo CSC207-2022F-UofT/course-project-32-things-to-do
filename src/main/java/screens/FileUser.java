@@ -69,4 +69,8 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
     public String passOf(String name) {
         return accounts.get(name).getPass();
     }
+
+    public Map<String, UserRegSaveRequest> getAccounts() {
+        return this.accounts;
+    }
 }
