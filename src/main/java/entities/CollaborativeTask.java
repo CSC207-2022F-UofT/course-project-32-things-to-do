@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CollaborativeTask extends Task implements Timeblockable{
     private boolean recurring;
     private String frequency;
-    private ArrayList<LocalDateTime> timeBlocks;
+    private ArrayList<ArrayList<LocalDateTime>> timeBlocks;
     private LocalDateTime deadline;
     private ArrayList<StudentUser> teammates;
     private ArrayList<StudentUser> pendingTeammates;
@@ -229,17 +229,17 @@ public class CollaborativeTask extends Task implements Timeblockable{
 
     /**
      * Get the time blocks of a Collaborative Task.
-     * @return - the time blocks of the Collaborative task in an Array List of LocalDateTimes.
+     * @return - the time blocks of the Collaborative task in an Array List of Array Losts of LocalDateTimes.
      */
-    public ArrayList<LocalDateTime> getTimeBlocks() {
+    public ArrayList<ArrayList<LocalDateTime>> getTimeBlocks() {
         return this.timeBlocks;
     }
 
     /**
      * Set new time blocks
-     * @param timeBlocks - Array List of time blocks of the Collaborative Task.
+     * @param timeBlocks - Array List of Array Lists of time blocks of the Collaborative Task.
      */
-    public void setTimeBlocks(ArrayList<LocalDateTime> timeBlocks) {
+    public void setTimeBlocks(ArrayList<ArrayList<LocalDateTime>> timeBlocks) {
 
     }
 
