@@ -51,6 +51,8 @@ public class StudentUser implements User {
 
     public void removeTaskFromList(String task) { this.toDoList.remove(task); }
 
+    public void setToDoList(ArrayList<String> l) { this.toDoList = l; }
+
     private ArrayList<String> taskArchive;
 
     public ArrayList<String> getTaskArchive() {
@@ -65,6 +67,10 @@ public class StudentUser implements User {
         this.taskArchive.add(task);
     }
 
+    public void setTaskArchive(ArrayList<String> t) {
+        this.taskArchive = t;
+    }
+
     private ArrayList<String> courses;
 
     public ArrayList<String> getCourses() {
@@ -74,6 +80,8 @@ public class StudentUser implements User {
     public void addCourse(String course) {
         this.toDoList.add(course);
     }
+
+    public void setCourses(ArrayList<String> c) { this.courses = c; }
 
     private ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
 
@@ -93,6 +101,8 @@ public class StudentUser implements User {
         this.inbox.remove(invite);
     }
 
+    public void setInbox(ArrayList i) { this.inbox = i; }
+
     private ArrayList<String> notifications;
 
     public ArrayList<String> getNotifications() {
@@ -103,7 +113,9 @@ public class StudentUser implements User {
         this.notifications.add(notification);
     }
 
-    private final Map<String,Double> desiredGrades; // String is course id
+    public void setNotifications(ArrayList<String> n) { this.notifications = n; }
+
+    private Map<String,Double> desiredGrades; // String is course id
 
     public Map<String, Double> getDesiredGrades() {
 
@@ -112,6 +124,10 @@ public class StudentUser implements User {
 
     public void addDesiredGrade(String course, Double grade) {
         this.desiredGrades.put(course, grade);
+    }
+
+    public void setDesiredGrades(Map<String, Double> m) {
+        this.desiredGrades = m;
     }
 
     private ArrayList<LocalTime> workingHours; // each internal list contains the start and end times

@@ -6,6 +6,7 @@ import user_register_usecase.UserRegGateway;
 import user_register_usecase.UserRegSaveRequest;
 
 import java.io.*;
+import java.security.KeyException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,4 +74,14 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
     public Map<String, UserRegSaveRequest> getAccounts() {
         return this.accounts;
     }
+
+//    /**
+//     * @param name The username of the user
+//     * @return the UserRegSaveRequest object associated with this username.
+//     * Preconditions: name is a key in accounts
+//     */
+//    public UserRegSaveRequest getUserSaveReq(String name) throws KeyException, IOException {
+////        accounts.get(name);
+//        return accounts.get(name);
+//    }
 }

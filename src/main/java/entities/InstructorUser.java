@@ -43,4 +43,6 @@ public class InstructorUser implements User {
         this.courses.add(course);
     }
 
+    public void setCourses(ArrayList<String> c) { this.courses = c; };
+
 }
