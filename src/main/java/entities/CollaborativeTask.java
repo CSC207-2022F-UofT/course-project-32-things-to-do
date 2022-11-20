@@ -7,6 +7,7 @@ public class CollaborativeTask extends Task implements Timeblockable{
     private boolean recurring;
     private String frequency;
     private ArrayList<LocalDateTime> timeBlocks;
+    private LocalDateTime deadline;
     private ArrayList<StudentUser> teammates;
     private ArrayList<StudentUser> pendingTeammates;
     private ArrayList<StudentUser> declinedTeammates;
@@ -46,6 +47,46 @@ public class CollaborativeTask extends Task implements Timeblockable{
         super(title, id, priority);
         this.recurring = recurring;
         this.frequency = frequency;
+        this.leader = creator;
+    }
+
+    /**
+     * Create a CollaborativeTask with a title and deadline
+     * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
+     * Otherwise, the frequency is blank
+     * @param title - the title of the Collaborative Task
+     * @param id - the unique ID of the Collaborative Task
+     * @param recurring - whether the Collaborative Task is recurring
+     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
+     * @param deadline - the time at which the Collaborative Task is due
+     * @param creator - the Student User who creates the Collaborative Task
+     */
+    public CollaborativeTask(String title, String id, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
+        super(title, id);
+        this.recurring = recurring;
+        if (recurring) this.frequency = frequency;
+        else this.frequency = "";
+        this.deadline = deadline;
+        this.leader = creator;
+    }
+
+    /**
+     * Create a Collaborative Task with a title, priority, and deadline
+     * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
+     * Otherwise, the frequency is blank
+     * @param title - the title of the Collaborative Task
+     * @param id - the unique ID of the Collaborative Task
+     * @param priority - the priority value of the Collaborative Task
+     * @param recurring - whether the Collaborative Task is recurring
+     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
+     * @param deadline - the time at which the Collaborative Task is due
+     * @param creator - the Student User who creates the Collaborative Task
+     */
+    public CollaborativeTask(String title, String id, int priority, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
+        super(title, id, priority);
+        this.recurring = recurring;
+        this.frequency = frequency;
+        this.deadline = deadline;
         this.leader = creator;
     }
 
@@ -169,6 +210,21 @@ public class CollaborativeTask extends Task implements Timeblockable{
         else{
             this.frequency = "";
         }
+    }
+
+    /**
+     * @return deadline for Collaborative Task.
+     */
+    public LocalDateTime getDeadline(){
+        return this.deadline;
+    }
+
+    /**
+     * Set a deadline for a Collaborative Task.
+     * @param deadline - deadline for Collaborative Task.
+     */
+    public void setDeadline(LocalDateTime deadline){
+       this.deadline = deadline;
     }
 
     /**
