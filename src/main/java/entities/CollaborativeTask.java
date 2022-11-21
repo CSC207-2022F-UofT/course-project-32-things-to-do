@@ -121,6 +121,44 @@ public class CollaborativeTask extends Task implements Timeblockable {
         this.deadline = deadline;
     }
 
+    // The following four methods (getTimeBlock, setTimeBlock, scheduleTimeBlock, and removeTimeBlock) are here because this class implements Timeblockable/
+    // Based on the way Collaborative Tasks are scheduled (Feature 5), not sure if they remain necessary.
+    /**
+     * Set the time block of a Collaborative Task
+     * @return - the time block of the Collaborative Task
+     *         - in array form: {startTime, endTime}
+     */
+    public LocalDateTime[] getTimeBlock() {
+        return new LocalDateTime[] {this.startTime, this.endTime};
+    }
+
+    /**
+     * Set a new time block and then schedule it
+     * @param startTime - the start of the time block
+     * @param endTime - the end of the time block
+     */
+    public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        scheduleTimeBlock();
+    }
+
+    /**
+     * Schedule a time block for the user
+     * @return - whether the time block has been successfully scheduled
+     */
+    public boolean scheduleTimeBlock() {
+        return true;
+    }
+
+    /**
+     * Remove a time block from the user's schedule
+     * @return - whether the time block has been successfully removed
+     */
+    public boolean removeTimeBlock() {
+        return true;
+    }
+
     /**
      * Get the time blocks of a Collaborative Task.
      *
