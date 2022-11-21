@@ -5,31 +5,20 @@ import java.util.ArrayList;
 
 public interface Preparatory {
     /**
-     * Get the amount of time spent on the Task so far
-     * @return - the amount of time that has been spent
+     * Update the amount of time the user has spent preparing
+     * @param timeSpent - the amount of time being added
      */
-    double getTimeSpent();
-    /**
-     * Update the amount of time the user has spent preparing (in hours)
-     * @param timeSpent - the amount of time spent
-     */
-    void setTimeSpent(double timeSpent);
+    void updateTimeSpent(double timeSpent);
 
     /**
-     * Get the amount of time needed to prep
-     * @return - the amount of time needed
-     */
-    double getTimeNeeded();
-
-    /**
-     * Set the amount of time the user needs to prepare for (in hours)
+     * Set the amount of time the user needs to prepare for
      * @param timeNeeded - the new time
      */
     void setTimeNeeded(double timeNeeded);
 
     /**
      * Get the amount of time the user has left to prepare (before due date)
-     * @return - the amount of time the user has remaining (in hours)
+     * @return - the amount of time the user has remaining
      */
     double getTimeLeft();
 
@@ -44,10 +33,4 @@ public interface Preparatory {
      * @return - all scheduled prep time
      */
     ArrayList<ArrayList<LocalDateTime>> getPrepTimeScheduled();
-
-    /**
-     * Set prepTimeScheduled
-     * @param prepTimeScheduled - the new list of prep times
-     */
-    void setPrepTimeScheduled(ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled);
 }
