@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 public class Event extends Task implements Timeblockable {
