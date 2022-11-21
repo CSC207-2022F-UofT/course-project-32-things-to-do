@@ -27,8 +27,12 @@ public class CollaborativeTask extends Task implements Timeblockable{
     public CollaborativeTask(String title, String id, boolean recurring, String frequency, StudentUser creator) {
         super(title, id);
         this.recurring = recurring;
-        if (recurring) this.frequency = frequency;
-        else this.frequency = "";
+        if (recurring) {
+            this.frequency = frequency;
+        }
+        else {
+            this.frequency = "";
+        }
         this.leader = creator;
     }
 
@@ -64,8 +68,12 @@ public class CollaborativeTask extends Task implements Timeblockable{
     public CollaborativeTask(String title, String id, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
         super(title, id);
         this.recurring = recurring;
-        if (recurring) this.frequency = frequency;
-        else this.frequency = "";
+        if (recurring) {
+            this.frequency = frequency;
+        }
+        else {
+            this.frequency = "";
+        }
         this.deadline = deadline;
         this.leader = creator;
     }
@@ -240,7 +248,7 @@ public class CollaborativeTask extends Task implements Timeblockable{
      * @param timeBlocks - Array List of Array Lists of time blocks of the Collaborative Task.
      */
     public void setTimeBlocks(ArrayList<ArrayList<LocalDateTime>> timeBlocks) {
-
+        this.timeBlocks = timeBlocks;
     }
 
     /**
