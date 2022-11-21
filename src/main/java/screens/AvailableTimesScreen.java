@@ -8,17 +8,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
-public class AvailableTimesScreen extends JFrame implements CollaborativeSchedulingPresenterInterface,
-        ActionListener{
+public class AvailableTimesScreen extends JFrame implements ActionListener{
 
     ScheduleTaskController scheduleTaskController;
 
     CollaborativeSchedulingPresenter collaborativeSchedulingPresenter;
 
-    public ArrayList<String> present(CollaborativeSchedulingPresenter output) {
-        CollaborativeSchedulingResponseModel responseModel = output.getOutputData();
-        return output.prepareAvailableTimes(responseModel).getScheduleString();
-    }
+//    public ArrayList<String> present(CollaborativeSchedulingPresenter output) {
+//        CollaborativeSchedulingResponseModel responseModel = output.getOutputData();
+//        return output.prepareAvailableTimes(responseModel).getScheduleString();
+//    }
 
     JTextField taskName = new JTextField(15);
     JTextField timesToSchedule = new JTextField(20);
@@ -32,7 +31,7 @@ public class AvailableTimesScreen extends JFrame implements CollaborativeSchedul
         this.scheduleTaskController = scheduleTaskController;
         this.collaborativeSchedulingPresenter = collaborativeSchedulingPresenter;
 
-        ArrayList<String> presentThese = present(collaborativeSchedulingPresenter);
+//        ArrayList<String> presentThese = collaborativeSchedulingPresenter.pre;
 
 
         JLabel title = new JLabel("Available Times");
@@ -43,7 +42,9 @@ public class AvailableTimesScreen extends JFrame implements CollaborativeSchedul
         LabelTextPanel timeInfo = new LabelTextPanel(new JLabel("Enter schduled times separate by a comma"),
                 timesToSchedule);
 
-        JLabel time1 = new JLabel(presentThese.get(0));
+//        JLabel time1 = new JLabel(presentThese.get(0));
+        JLabel time1 = new JLabel("2022-04-05");
+
 
         JButton scheduleTime = new JButton("Schedule");
 
