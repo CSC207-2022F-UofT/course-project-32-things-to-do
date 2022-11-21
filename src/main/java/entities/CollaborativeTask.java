@@ -13,47 +13,6 @@ public class CollaborativeTask extends Task implements Timeblockable{
     private ArrayList<StudentUser> declinedTeammates;
     private StudentUser leader;
 
-
-    /**
-     * Create a CollaborativeTask with a title
-     * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
-     * Otherwise, the frequency is blank
-     * @param title - the title of the Collaborative Task
-     * @param id - the unique ID of the Collaborative Task
-     * @param recurring - whether the Collaborative Task is recurring
-     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
-     * @param creator - the Student User who creates the Collaborative Task
-     */
-    public CollaborativeTask(String title, String id, boolean recurring, String frequency, StudentUser creator) {
-        super(title, id);
-        this.recurring = recurring;
-        if (recurring) {
-            this.frequency = frequency;
-        }
-        else {
-            this.frequency = "";
-        }
-        this.leader = creator;
-    }
-
-    /**
-     * Create a Collaborative Task with a title and priority
-     * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
-     * Otherwise, the frequency is blank
-     * @param title - the title of the Collaborative Task
-     * @param id - the unique ID of the Collaborative Task
-     * @param priority - the priority value of the Collaborative Task
-     * @param recurring - whether the Collaborative Task is recurring
-     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
-     * @param creator - the Student User who creates the Collaborative Task
-     */
-    public CollaborativeTask(String title, String id, int priority, boolean recurring, String frequency, StudentUser creator) {
-        super(title, id, priority);
-        this.recurring = recurring;
-        this.frequency = frequency;
-        this.leader = creator;
-    }
-
     /**
      * Create a CollaborativeTask with a title and deadline
      * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
