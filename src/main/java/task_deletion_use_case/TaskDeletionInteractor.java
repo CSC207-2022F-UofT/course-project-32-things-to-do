@@ -1,8 +1,5 @@
 package task_deletion_use_case;
 
-import entities.Course;
-import entities.StudentUser;
-import entities.Task;
 import entities.TaskMap;
 import read_write.TaskReadWrite;
 
@@ -13,8 +10,8 @@ public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
     }
     @Override
     public TaskDeletionResponseModel deleteStudentTask(TaskDeletionRequestModel requestModel) {
-        requestModel.getStudent().removeFromToDoList(requestModel.getTask());
-        requestModel.getStudent().addToArchive(requestModel.getTask());
+        requestModel.getStudent().removeTaskFromList(requestModel.getTask().getTitle());
+        requestModel.getStudent().addTaskToArchive(requestModel.getTask().getTitle());
 
         TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
         TaskMap.saveToFile(trw);
