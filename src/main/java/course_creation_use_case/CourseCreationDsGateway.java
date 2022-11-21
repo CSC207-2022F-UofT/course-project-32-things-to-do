@@ -8,6 +8,7 @@ Notes:
  */
 
 public interface CourseCreationDsGateway {
+    // checks if the course is already in the course map by its unique id
     boolean existsByCourseID(String courseIdentifier);
 
     void saveCourse(CourseCreationRequestModel requestModel);

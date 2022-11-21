@@ -4,25 +4,24 @@ import java.util.ArrayList;
 
 public class CourseEnrolmentResponseModel {
     String studentID;
-    ArrayList<String> tasks; // not sure if this goes here
+//    ArrayList<String> tasks; // not sure if this goes here
 
 
     /**
      * The info that is stored in the database
      * The CourseMap will only be storing the IDs of enrolled StudentUsers
      * @param studentID the ID corresponding to the StudentUser
-     * @param tasks the tasks of the course
      */
-    public CourseEnrolmentResponseModel(String studentID, ArrayList<String> tasks) {
+    public CourseEnrolmentResponseModel(String studentID) {
         this.studentID = studentID;
-        this.tasks = tasks;
+//        this.tasks = tasks;
     }
 
     public String getStudentID() {
         return studentID;
     }
 
-    public ArrayList<String> getTasks() {
-        return tasks;
-    }
+//    public ArrayList<String> getTasks() {
+//        return tasks;
+//    }
 }

@@ -11,7 +11,7 @@ public interface CourseCreationPresenter {
     CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel newCourse);
 
     /**
-     * Alerts user tht course creation attempted failed
+     * Alerts user that course creation attempted failed
      * @param error the output from the program
      */
     CourseCreationResponseModel prepareFailView(String error);

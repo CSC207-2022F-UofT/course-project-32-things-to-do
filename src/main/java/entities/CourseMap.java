@@ -10,12 +10,13 @@ import java.util.HashMap;
 public class CourseMap implements Serializable {
     private static HashMap<String, Course> courseMap;
 
+
     /**
      * Find a course using its unique ID
      * @param id the unique ID of the course
      * @return the Course object associated with the ID
      */
-    public Course findCourse(String id) {
+    public static Course findCourse(String id) {
         return courseMap.get(id);
     }
 

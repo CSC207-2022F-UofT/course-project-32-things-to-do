@@ -18,7 +18,7 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
 
     /**
      * Creates the task in the request model and returns the corresponding response model
-     * @param requestModel the input from the return
+     * @param requestModel the input from the instructor
      */
     @Override
     public CourseCreationResponseModel create(CourseCreationRequestModel requestModel) {
@@ -27,13 +27,10 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("") || requestModel.getTasks().isEmpty()) {
             return courseCreationPresenter.prepareFailView("Please fill in all required information.");
         }
-        /*
-        Note: Jonathan - no need to check if is instructor; users would have different
-        views because they are in different use cases
-        If the course id (same course name and instructor name) already exists, new
-        course will not be made.
-        Else success
-         */
+
+        // Note: Jonathan - no need to check the type of User, students and instructors
+        // would have different views because they are in different use cases
+        // checks whether the course id is already in the CourseMap (course already exists)
         if (courseCreationDSGateway.existsByCourseID(requestModel.getCourseID())) {
             return courseCreationPresenter.prepareFailView("Course already exists.");
         }

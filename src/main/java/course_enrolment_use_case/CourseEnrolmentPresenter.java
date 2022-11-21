@@ -2,14 +2,18 @@ package course_enrolment_use_case;
 
 // Use case layer
 
-/*
-* Done?
-* */
 
 public interface CourseEnrolmentPresenter {
-    /* when course is found */
+
+    /**
+     * Alerts student user that course enrolment is successful
+     * @param newStudent output from the program (the student user that is enrolled in the course)
+     */
     CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel newStudent);
 
-    /* when course name and instructor combo not present in database*/
+    /**
+     * Alerts student user that course enrolment attempt failed
+     * @param error the output from the program
+     */
     CourseEnrolmentResponseModel prepareFailView(String error);
 }
