@@ -19,8 +19,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
      */
     JButton settings;
     JComboBox<String> viewToggle;
+    JButton exitToMain;
     CardLayout cardLayout;
     JPanel viewPanel;
+    JPanel screens;
+    CardLayout screenLayout;
 
     /**
      * The current entities
@@ -30,9 +33,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
     /**
      * The window of the screen for the Calendar view
      */
-    public CalendarScreen(StudentUser user, ArrayList<Task> allTasks) {
+    public CalendarScreen(StudentUser user, ArrayList<Task> allTasks, JPanel screens, CardLayout screenLayout) {
 
         this.user = user;
+        this.screens = screens;
+        this.screenLayout = screenLayout;
 
         // Create label for title of screen
         JLabel title = new JLabel("Calendar");
@@ -42,6 +47,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
         settings = new JButton("Settings");
         settings.setActionCommand("Settings");
         settings.addActionListener(this);
+
+        // Create button to return to the dashboard
+        exitToMain = new JButton("Return");
+        exitToMain.setActionCommand("Dashboard");
+        exitToMain.addActionListener(this);
 
         // Create view panels
         LocalDate currDate = LocalDate.now();
@@ -66,6 +76,7 @@ public class CalendarScreen extends JPanel implements ActionListener {
         JPanel buttons = new JPanel();
         buttons.add(settings);
         buttons.add(viewToggle);
+        buttons.add(exitToMain);
 
         // Create main panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -152,6 +163,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
             workingHours.add(LocalTime.of(startHour, startMinute));
             workingHours.add(LocalTime.of(endHour, endMinute));
             this.user.setWorkingHours(workingHours);
+        }
+
+        // Trigger button to return to main dashboard
+        if (e.getSource() == exitToMain) {
+            screenLayout.show(screens, "main");
         }
 
         // Trigger button for changing user's view panel
