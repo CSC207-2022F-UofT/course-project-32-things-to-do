@@ -19,6 +19,8 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
 //    private UserFactory userFactory;
 
+    private User user;
+
     /**
      * @param gateway the gateway that interacts with the User database
      * @param userRegPresenter the presenter that shows the success or failure of this attempt to register
@@ -56,6 +58,8 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
         }
 
+        this.user = user;
+
         LocalDateTime now = LocalDateTime.now();
 
         UserRegSaveRequest userModel;
@@ -73,5 +77,9 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
         UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());
         return userPresenter.prepareSuccessView(accResponseModel);
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }
