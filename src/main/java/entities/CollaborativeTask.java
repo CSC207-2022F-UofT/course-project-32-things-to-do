@@ -6,8 +6,10 @@ import java.util.ArrayList;
 public class CollaborativeTask extends Task implements Timeblockable {
     private boolean recurring;
     private String frequency;
-    private ArrayList<ArrayList<LocalDateTime>> timeBlocks;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private LocalDateTime deadline;
+    private ArrayList<ArrayList<LocalDateTime>> timeBlocks;
     private ArrayList<StudentUser> teammates;
     private ArrayList<StudentUser> pendingTeammates;
     private ArrayList<StudentUser> declinedTeammates;
@@ -22,10 +24,12 @@ public class CollaborativeTask extends Task implements Timeblockable {
      * @param id        - the unique ID of the Collaborative Task
      * @param recurring - whether the Collaborative Task is recurring
      * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
+     * @param startTime = the start time and date of the first occurrence of the Collaborative Task
+     * @param endTime   = the end time and date of the first occurrence of the Collaborative Task
      * @param deadline  - the time at which the Collaborative Task is due
      * @param creator   - the Student User who creates the Collaborative Task
      */
-    public CollaborativeTask(String title, String id, int priority, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
+    public CollaborativeTask(String title, String id, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, StudentUser creator) {
         super(title, id, priority);
         this.recurring = recurring;
         if (recurring) {
@@ -33,8 +37,106 @@ public class CollaborativeTask extends Task implements Timeblockable {
         } else {
             this.frequency = "";
         }
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.deadline = deadline;
         this.leader = creator;
+    }
+
+    /**
+     * @return whether the Collaborative Task is reoccurring or not.
+     */
+    public boolean getRecurring() {
+        return this.recurring;
+    }
+
+    /**
+     * @return frequency of Collaborative Task.
+     */
+    public String getFrequency() {
+        return this.frequency;
+    }
+
+    /**
+     * Set a Collaborative Task as recurring/not
+     * Set its new frequency if it is recurring
+     *
+     * @param recurring - whether the Collaborative Task is recurring
+     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
+     */
+    public void setRecurringAndFrequency(boolean recurring, String frequency) {
+        this.recurring = recurring;
+        if (recurring) {
+            this.frequency = frequency;
+        } else {
+            this.frequency = "";
+        }
+    }
+
+    /**
+     * @return start time for the initial occurrence of the Collaborative Task.
+     */
+    public LocalDateTime getStartTime() {
+        return this.startTime;
+    }
+
+    /**
+     * Set a start time for Collaborative Task.
+     *
+     * @param startTime - start time for the initial occurrence of the Collaborative Task.
+     */
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * @return end time for the initial occurrence of the Collaborative Task.
+     */
+    public LocalDateTime getEndTime() {
+        return this.endTime;
+    }
+
+    /**
+     * Set a end time for Collaborative Task.
+     *
+     * @param endTime - end time for the initial occurrence of the Collaborative Task.
+     */
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * @return deadline for Collaborative Task.
+     */
+    public LocalDateTime getDeadline() {
+        return this.deadline;
+    }
+
+    /**
+     * Set a deadline for a Collaborative Task.
+     *
+     * @param deadline - deadline for Collaborative Task.
+     */
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
+    }
+
+    /**
+     * Get the time blocks of a Collaborative Task.
+     *
+     * @return - the time blocks of the Collaborative task in an Array List of Array Losts of LocalDateTimes.
+     */
+    public ArrayList<ArrayList<LocalDateTime>> getTimeBlocks() {
+        return this.timeBlocks;
+    }
+
+    /**
+     * Set new time blocks
+     *
+     * @param timeBlocks - Array List of Array Lists of time blocks of the Collaborative Task.
+     */
+    public void setTimeBlocks(ArrayList<ArrayList<LocalDateTime>> timeBlocks) {
+        this.timeBlocks = timeBlocks;
     }
 
     /**
@@ -134,87 +236,5 @@ public class CollaborativeTask extends Task implements Timeblockable {
      */
     public void removeDeclinedTeammates(ArrayList<StudentUser> oldTeammates) {
         this.declinedTeammates.removeAll(oldTeammates);
-    }
-
-    /**
-     * @return whether the Collaborative Task is reoccurring or not.
-     */
-    public boolean getRecurring() {
-        return this.recurring;
-    }
-
-    /**
-     * @return frequency of Collaborative Task.
-     */
-    public String getFrequency() {
-        return this.frequency;
-    }
-
-    /**
-     * Set a Collaborative Task as recurring/not
-     * Set its new frequency if it is recurring
-     *
-     * @param recurring - whether the Collaborative Task is recurring
-     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
-     */
-    public void setRecurring(boolean recurring, String frequency) {
-        this.recurring = recurring;
-        if (recurring) {
-            this.frequency = frequency;
-        } else {
-            this.frequency = "";
-        }
-    }
-
-    /**
-     * @return deadline for Collaborative Task.
-     */
-    public LocalDateTime getDeadline() {
-        return this.deadline;
-    }
-
-    /**
-     * Set a deadline for a Collaborative Task.
-     *
-     * @param deadline - deadline for Collaborative Task.
-     */
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
-
-    /**
-     * Get the time blocks of a Collaborative Task.
-     *
-     * @return - the time blocks of the Collaborative task in an Array List of Array Losts of LocalDateTimes.
-     */
-    public ArrayList<ArrayList<LocalDateTime>> getTimeBlocks() {
-        return this.timeBlocks;
-    }
-
-    /**
-     * Set new time blocks
-     *
-     * @param timeBlocks - Array List of Array Lists of time blocks of the Collaborative Task.
-     */
-    public void setTimeBlocks(ArrayList<ArrayList<LocalDateTime>> timeBlocks) {
-        this.timeBlocks = timeBlocks;
-    }
-
-    /**
-     * Schedule a time block for the user
-     *
-     * @return - whether the time block has been successfully scheduled
-     */
-    public boolean scheduleTimeBlocks() {
-        return true;
-    }
-
-    /**
-     * Remove a time block from the user's schedule
-     *
-     * @return - whether the time block has been successfully removed
-     */
-    public boolean removeTimeBlocks() {
-        return true;
     }
 }
