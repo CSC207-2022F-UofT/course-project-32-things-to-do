@@ -1,6 +1,6 @@
 package screens;
 
-// Framework / Drivers layer
+// Framework/Drivers layer
 
 import javax.swing.*;
 import java.awt.*;

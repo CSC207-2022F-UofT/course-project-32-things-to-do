@@ -16,9 +16,14 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         this.courseMap = courseMap;
     }
 
+    /**
+     * Creates the task in the request model and returns the corresponding response model
+     * @param requestModel the input from the return
+     */
     @Override
     public CourseCreationResponseModel create(CourseCreationRequestModel requestModel) {
-        /* At least one info box left blank */
+
+        // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("") || requestModel.getTasks().isEmpty()) {
             return courseCreationPresenter.prepareFailView("Please fill in all required information.");
         }
@@ -33,18 +38,19 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
             return courseCreationPresenter.prepareFailView("Course already exists.");
         }
 
-        /* create new course */
+        // checks passed; course can be created
+
+        // create a new course
         Course course = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
         CourseMap.addCourse(requestModel.getCourseID(), course);
 
-        /* checks passed, course successfully created and saved */
+        // course successfully created and saved
         CourseCreationRequestModel courseCreationModel = new CourseCreationRequestModel(course.getCourseName(), course.getCourseInstructor(), course.getTasks());
         courseCreationDSGateway.saveCourse(courseCreationModel);
 
-        /* checks passed, course sent to presenter */
+        // course sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(
                 course.getCourseID(), course.getTasks());
         return courseCreationPresenter.prepareSuccessView(courseResponseModel);
-
     }
 }

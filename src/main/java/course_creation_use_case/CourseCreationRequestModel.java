@@ -4,7 +4,6 @@ package course_creation_use_case;
 
 /*
  Notes:
- DONE?
 - requests what is needed for its input data (what person in front of computer enters)
 - do NOT depend on anything NOR have any references to Entity objects: violates SRP
  */
@@ -18,6 +17,12 @@ public class CourseCreationRequestModel {
     private final String courseID;
     private ArrayList<String> tasks;
 
+    /**
+     * Creates a request model with the given input
+     * @param courseName the name of the course
+     * @param courseInstructor the instructor of the course
+     * @param tasks the task(s) associated with the course
+     */
     public CourseCreationRequestModel(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;

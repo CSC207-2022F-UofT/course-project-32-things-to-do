@@ -5,7 +5,6 @@ package course_creation_use_case;
 
 /*
 Notes:
- DONE
 - the public interface for calling the use case
 - boundaries are interfaces
 - input boundary is between the controller and use case

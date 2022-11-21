@@ -2,19 +2,17 @@ package course_creation_use_case;
 
 // Use case layer
 
-/*
-Notes:
-Done? i guess
- */
-
 public interface CourseCreationPresenter {
-    /*
-    when course is successfully created
+
+    /**
+     * Alerts user that course creation is successful (no existing course)
+     * @param newCourse the output from the program
      */
     CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel newCourse);
 
-    /*
-    when course name and instructor (courseID) already exists
+    /**
+     * Alerts user tht course creation attempted failed
+     * @param error the output from the program
      */
     CourseCreationResponseModel prepareFailView(String error);
 }

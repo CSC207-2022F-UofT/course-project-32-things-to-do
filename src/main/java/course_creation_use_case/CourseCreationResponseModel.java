@@ -7,15 +7,18 @@ import java.util.ArrayList;
 /*
 Notes:
 - the output data produced; returns the response as the output
-- do NOT depend on anything NOR have any references to Entity objects: violates SRP
+- does NOT depend on anything NOR should have any references to Entity objects: violates SRP
  */
 
 public class CourseCreationResponseModel {
-//    String courseName;
-//    String instructorName;
     String courseID;
     ArrayList<String> tasks;
 
+    /**
+     * Creates a response model for course creation use case
+     * @param courseID the unique id of the course being created
+     * @param tasks the task(s) associated with the course being created
+     */
     public CourseCreationResponseModel(String courseID, ArrayList<String> tasks) {
         this.courseID = courseID;
         this.tasks = tasks;
@@ -30,39 +33,9 @@ public class CourseCreationResponseModel {
         return tasks;
     }
 
-    /* do not think this is needed:
+    // i don't think this is needed
     public void setTasks() {
         this.tasks = tasks;
     }
-
-    public courseCreationResponseModel(String courseName, String instructorName) {
-        this.courseName = courseName;
-        this.instructorName = instructorName;
-    }
-
-    public String getCourseName() {
-        return this.courseName;
-    }
-
-    public void setCourseName() {
-        this.courseName = courseName;
-    }
-
-    public String getInstructorName() {
-        return this.instructorName;
-    }
-
-    public void setInstructorName() {
-        this.instructorName = instructorName;
-    }
-
-    public ArrayList<String> getTasks() {
-        return this.tasks;
-    }
-
-    public void setTasks() {
-        this.tasks = tasks;
-    }
-     */
 }
 

@@ -4,15 +4,11 @@ package course_creation_use_case;
 
 /*
 Notes:
-DONE?
 - the methods the repo needs to implement for the interactor to do its job
  */
 
 public interface CourseCreationDsGateway {
-//    boolean existsByCourseName(String courseIdentifier);
-//    boolean existsByInstructorName(String instructorIdentifier);
     boolean existsByCourseID(String courseIdentifier);
 
-//    void saveCourse(courseCreationDsRequestModel requestModel);
     void saveCourse(CourseCreationRequestModel requestModel);
 }
