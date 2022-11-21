@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class ProgressTrackerRequestModel {
 
-    private final String studentUserID;
+    private User studentUser;
 
     private final String courseName;
 
@@ -29,10 +29,10 @@ public class ProgressTrackerRequestModel {
 
     private final String newGoalGrade; //-1 for empty
 
-    public ProgressTrackerRequestModel(String studentUserID, String courseName, HashMap<String, Task> allTasks,
+    public ProgressTrackerRequestModel(User studentUser, String courseName, HashMap<String, Task> allTasks,
                                        HashMap<String, User> allUsers, HashMap<String, Course> allCourses,
                                        String newGradeTaskName, String newGrade, String newGoalGrade) {
-        this.studentUserID = studentUserID;
+        this.studentUser = studentUser;
         this.courseName = courseName;
         this.allTasks = allTasks;
         this.allUsers = allUsers;
@@ -42,8 +42,8 @@ public class ProgressTrackerRequestModel {
         this.newGoalGrade = newGoalGrade;
     }
 
-    public String getStudentUserID() {
-        return studentUserID;
+    public User getStudentUser() {
+        return studentUser;
     }
 
     public String getcourseName() {

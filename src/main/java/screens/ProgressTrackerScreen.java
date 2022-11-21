@@ -77,7 +77,7 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener {
         try {
             //usually the presenter would be updating the view, but in this case, the presenter will
             // eventually be called
-            //TODO might need to controller to presenter later
+            //TODO might need to convert controller to presenter later
             ProgressTrackerResponseModel rsp = progressTrackerController.trackProgress(courseName.getText(),
                     newGradeTaskName.getText(), newGrade.getText(), newGoalGrade.getText());
 

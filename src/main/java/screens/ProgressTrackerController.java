@@ -17,18 +17,17 @@ import java.util.HashMap;
 public class ProgressTrackerController {
 
     final ProgressTrackerInputBoundary progressInput;
-
-    final String studentUserID;
     final String courseName;
+    final User studentUser;
     HashMap<String, Task> allTasks;
     HashMap<String, User> allUsers;
     HashMap<String, Course> allCourses;
 
-    public ProgressTrackerController(ProgressTrackerInputBoundary progressInput, String studentUserID,
+    public ProgressTrackerController(ProgressTrackerInputBoundary progressInput, User studentUser,
                                      String courseName, HashMap<String, Task> allTasks,
                                      HashMap<String, User> allUsers, HashMap<String, Course> allCourses) {
         this.progressInput = progressInput;
-        this.studentUserID = studentUserID;
+        this.studentUser = studentUser;
         this.courseName = courseName;
         this.allTasks = allTasks;
         this.allUsers = allUsers;
@@ -38,7 +37,7 @@ public class ProgressTrackerController {
     ProgressTrackerResponseModel trackProgress(String courseName, String newGradeTaskName, String newGrade,
                                                String newGoalGrade) {
         ProgressTrackerRequestModel requestModel = new ProgressTrackerRequestModel(
-                studentUserID, courseName, allTasks, allUsers, allCourses, newGradeTaskName, newGrade, newGoalGrade);
+                studentUser, courseName, allTasks, allUsers, allCourses, newGradeTaskName, newGrade, newGoalGrade);
 
         return progressInput.trackProgress(requestModel);
     }

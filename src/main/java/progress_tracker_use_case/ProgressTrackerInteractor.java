@@ -24,22 +24,28 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
     @Override
     public ProgressTrackerResponseModel trackProgress(ProgressTrackerRequestModel
                                                                        progressTrackerRequestModel) {
-        String studentID = progressTrackerRequestModel.getStudentUserID();
-        String courseName = progressTrackerRequestModel.getcourseName();
-        HashMap<String, Course> allCourses = progressTrackerRequestModel.getAllCourses();
-        HashMap<String, Task> allTasks = progressTrackerRequestModel.getAllTasks();
-        HashMap<String, User> allUsers = progressTrackerRequestModel.getAllUsers();
 
         try {
+
+            if (!(progressTrackerRequestModel.getStudentUser() instanceof StudentUser)) {
+                throw new RuntimeException("You are not a registered student");
+            }
+            StudentUser studentUser = (StudentUser) progressTrackerRequestModel.getStudentUser();
+
+            String courseName = progressTrackerRequestModel.getcourseName();
+            HashMap<String, Course> allCourses = progressTrackerRequestModel.getAllCourses();
+            HashMap<String, Task> allTasks = progressTrackerRequestModel.getAllTasks();
+            HashMap<String, User> allUsers = progressTrackerRequestModel.getAllUsers();
+
             //parse user input
             double newGrade = stringToDouble(progressTrackerRequestModel.getNewGrade());
             double newGoalGrade = stringToDouble(progressTrackerRequestModel.getNewGoalGrade());
 
             //retrieve course ID based on inputted course name
-            String courseID = courseNameToID(courseName, studentID, allUsers, allCourses);
+            String courseID = courseNameToID(courseName, studentUser, allUsers, allCourses);
 
             //query aggregate task map for this student's tasks in this course
-            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(allTasks, courseID, studentID);
+            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(allTasks, courseID, studentUser);
 
             //if a newGrade was inputted, mutate the corresponding task object
             if (newGrade != -1) { //TODO extend: add multiple grades at once? (remove grades? <- NO! Overwrite only)
@@ -48,7 +54,7 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
 
             //if a newGoalGrade was inputted, mutate the corresponding studentUser object
             if (newGoalGrade != -1) {
-                setCourseGoalGrade(allUsers, studentID, courseID, newGoalGrade);
+                setCourseGoalGrade(allUsers, studentUser, courseID, newGoalGrade);
             }
 
             //calculations
@@ -57,7 +63,7 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
 
             //if goal grade exists for this course, more calculations
             double requiredAverage;
-            Double goalGrade = (Double) ((StudentUser) allUsers.get(studentID)).getDesiredGrades().get(courseID);
+            Double goalGrade = (Double) studentUser.getDesiredGrades().get(courseID);
             if (goalGrade != null) {
                 requiredAverage = requiredAverageCalculator(goalGrade, mockGrade, studentCourseTasks);
             } else {
@@ -98,27 +104,24 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
      * Return a String representing the course ID of the student's course with given course Name
      *
      * @param courseName a String representing the name of the student's course
-     * @param studentID a String representing the user ID of the student
+     * @param studentUser a String representing the user ID of the student
      * @param allUsers an aggregate entity mapping all program users to their user ID
      * @param allCourses an aggregate entity mapping all program courses to their user ID
      * @return the course ID of the student's course
      */
-    private String courseNameToID(String courseName, String studentID, HashMap<String, User> allUsers,
+    private String courseNameToID(String courseName, StudentUser studentUser, HashMap<String, User> allUsers,
                                   HashMap<String, Course> allCourses) {
-        if (allUsers.containsKey(studentID) && allUsers.get(studentID) instanceof StudentUser) {
-            ArrayList<String> allCourseIDs = ((StudentUser) allUsers.get(studentID)).getCourses();
 
-            for (String courseID: allCourseIDs) {
-                if (allCourses.get(courseID).getCourseName().equals(courseName)) {
-                    return courseID;
-                }
+        ArrayList<String> allCourseIDs = studentUser.getCourses();
+
+        for (String courseID: allCourseIDs) {
+            if (allCourses.get(courseID).getCourseName().equals(courseName)) {
+                return courseID;
             }
-
-            throw new RuntimeException("No course with that course name was found.");
-
-        } else {
-            throw new RuntimeException("Your information in our database cannot be found.");
         }
+
+        throw new RuntimeException("No course with that course name was found.");
+
     }
 
     /**
@@ -213,18 +216,19 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
     }
 
     /**
-     * Return all Task tasks for given courseID and studentID that implement Gradable
+     * Return all Task tasks for given courseID and studentUser that implement Gradable
      *
      * @param allTasks an aggregate entity mapping all program tasks to their task ID
      * @param courseID a String representing the course ID of the given course
-     * @param studentID a string representing the user ID of the logged in student
+     * @param studentUser a string representing the user ID of the logged in student
      * @return a list of all the student's Gradable tasks in the given course
      */
-    private ArrayList<Task> getStudentCourseTasks(HashMap<String, Task> allTasks, String courseID, String studentID) {
+    private ArrayList<Task> getStudentCourseTasks(HashMap<String, Task> allTasks, String courseID,
+                                                  StudentUser studentUser) {
         ArrayList<Task> studentCourseTasks = new ArrayList<Task>();
 
         for (String mapKey: allTasks.keySet()) {
-            if (mapKey.contains(courseID) && mapKey.contains(studentID)) {
+            if (mapKey.contains(courseID) && mapKey.contains(studentUser.getName())) {
                 if (allTasks.get(mapKey) instanceof Gradable) {
                     studentCourseTasks.add(allTasks.get(mapKey));
                 }
@@ -266,21 +270,18 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
      * Mutates a user in the aggregate user map, adding/modifying the given desired grade for the given course.
      *
      * @param allUsers an aggregate entity mapping all program users to their user ID
-     * @param studentID a string representing the user id of the logged in student
+     * @param studentUser a string representing the user id of the logged in student
      * @param courseID a string representing the course id of the given course
      * @param newGoalGrade the new desired grade (in percent) for the given course
      */
-    public void setCourseGoalGrade(HashMap<String, User> allUsers, String studentID, String courseID,
+    public void setCourseGoalGrade(HashMap<String, User> allUsers, StudentUser studentUser, String courseID,
                                       double newGoalGrade) {
         if (0 > newGoalGrade || newGoalGrade > 100) {
             throw new RuntimeException("Entered desired grade is out of bounds.");
         }
 
-        if (allUsers.containsKey(studentID) && allUsers.get(studentID) instanceof StudentUser) {
-                ((StudentUser) allUsers.get(studentID)).getDesiredGrades().put(courseID, newGoalGrade);
-        } else {
-            throw new RuntimeException("Your information in our database cannot be found.");
-        }
+        studentUser.getDesiredGrades().put(courseID, newGoalGrade);
+
     }
 
 }
