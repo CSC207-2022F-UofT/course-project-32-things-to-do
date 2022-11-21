@@ -16,9 +16,9 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class EventCreationScreen extends JPanel implements ActionListener {
     JTextField title = new JTextField(15);
     JTextField priority = new JTextField(15);
-    DateFormat df = new SimpleDateFormat("MM-DD-YYYY;HH:mm:ss");
-    JFormattedTextField startTime = new JFormattedTextField(df);
-    JFormattedTextField endTime = new JFormattedTextField(df);
+    // DateFormat df = new SimpleDateFormat("MM-DD-YYYY;HH:mm:ss");
+    JTextField startTime = new JTextField(15);
+    JTextField endTime = new JTextField(15);
     JCheckBox recurring = new JCheckBox();
     JTextField frequency = new JTextField(15);
 
@@ -35,9 +35,9 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter event priority"), priority);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter event start date+time"), startTime);
+                new JLabel("Enter event start date+time (yyyy-MM-dd; hh:mm:ss)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter event end date+time"), endTime);
+                new JLabel("Enter event end date+time (yyyy-MM-dd; hh:mm:ss)"), endTime);
         LabelCheckBox recurringInfo = new LabelCheckBox(
                 new JLabel("Event is recurring"), recurring);
         LabelTextPanel frequencyInfo = new LabelTextPanel(
@@ -76,9 +76,9 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 eventCreationController.create(title.getText(), valPriority,
                         LocalDateTime.parse(startTime.getText()), LocalDateTime.parse(endTime.getText()),
                         valRecurring, frequency.getText());
-                JOptionPane.showMessageDialog(this, "message");
+                showMessageDialog(this, "message");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
+                showMessageDialog(this, e.getMessage());
             }
         } else if (evt.getActionCommand().equals("Cancel")) {
             // todo
