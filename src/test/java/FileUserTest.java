@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 public class FileUserTest {
 
-//    @Test
-//    void saveStudentUser() {
+    @Test
+    void saveStudentUser() {
 //        StudentUser student = new StudentUser("gma", "veryverysad");
 //        StudentSaveRequest ssri = new StudentSaveRequest("gma", "veryverysad", student,
 //                LocalDateTime.now());
