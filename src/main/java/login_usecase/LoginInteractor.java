@@ -19,6 +19,11 @@ public class LoginInteractor implements LoginInputBoundary {
 
     private User user;
 
+    /**
+     * @param loginGate the Gateway class which interacts with the User Database
+     * @param loginPres the Presenter class that shows the User the result of their request
+     */
+
     public LoginInteractor(LoginGateway loginGate, LoginPresenter loginPres) {
         this.loginGateway = loginGate;
         this.loginPresenter = loginPres;
@@ -26,6 +31,12 @@ public class LoginInteractor implements LoginInputBoundary {
 
     public User getUser() { return this.user; }
 
+    /**
+     *
+     * @param requestModel the Login request (containing the user's input)
+     * @return the response to this login request (whether it worked or not)
+     * @throws LoginFailed
+     */
     @Override
     public LoginResponseModel create(LoginRequestModel requestModel) throws LoginFailed {
         if (!loginGateway.existsByName(requestModel.getName())) {

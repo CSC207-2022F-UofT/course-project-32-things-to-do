@@ -7,7 +7,9 @@ import java.util.*;
 public class StudentUser implements User {
 
     /** Entity Layer
-     * A student User */
+     * A Student with a name, password, To Do List, Task Archive, Courses, Inbox, Notifications, and
+     * desired grades.
+     */
 
     public StudentUser(String name, String password) {
         this.name = name;
@@ -23,16 +25,26 @@ public class StudentUser implements User {
     private final String name;
 
     private final String password;
+
+    /**
+     * @return the name of this StudentUser
+     */
     @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the password of this StudentUser
+     */
     @Override
     public String getPass() {
         return password;
     }
 
+    /**
+     * @return whether the entered password is valid
+     */
     @Override
     public boolean checkPassword() {
         return password != null && password.length() > 8;
@@ -124,7 +136,7 @@ public class StudentUser implements User {
         this.desiredGrades = m;
     }
 
-    private ArrayList<LocalTime> workingHours; // each internal list contains the start and end times
+    private ArrayList<LocalTime> workingHours;
 
     public ArrayList<LocalTime> getWorkingHours() {
 
