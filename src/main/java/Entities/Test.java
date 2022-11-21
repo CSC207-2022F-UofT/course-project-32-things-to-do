@@ -1,8 +1,8 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 
-public class Test extends Task implements Timeblockable, Gradable {
+public class Test extends Task implements Timeblockable, entities.Gradable {
     // Timeblockable attributes
     private LocalDateTime startTime;
     private LocalDateTime endTime;
