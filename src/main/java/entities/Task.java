@@ -1,33 +1,38 @@
 package entities;
 
-public abstract class Task {
+import java.io.Serializable;
+
+public abstract class Task implements Serializable {
     private String title;
     private int priority;
     private boolean complete = false;
-    private String id; // concatenate user's name with current idCount #
-    private static int idCount = 0;
+    private String id;
 
     /**
      * Create a new Task that has a title and default priority value
      * @param title - the title of the Task
+     * @param id - the unique ID of the Task
      */
-    public Task(String title) {
+    public Task(String title, String id) {
         this.title = title;
+        this.id = id;
         this.priority = 0;
-        this.id = "user's name" + idCount;
-        idCount ++;
+
+        save(); // save to task map
     }
 
     /**
      * Create a new Task that has a title and a priority value
      * @param title - the title of the Task
+     * @param id - the unique ID of the Task
      * @param priority - the Task's priority value
      */
-    public Task(String title, int priority) {
+    public Task(String title, String id, int priority) {
         this.title = title;
+        this.id = id;
         this.priority = priority;
-        this.id = "user's name" + idCount;
-        idCount ++;
+
+        save(); // save to task map
     }
 
     /**
@@ -37,6 +42,15 @@ public abstract class Task {
     public String getId() {
         return this.id;
     }
+
+    /**
+     * Set a new Task ID (used for adding course code)
+     * @param id - the new ID
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      * Retrieves the title of the Task
      * @return - the title of the Task
@@ -49,7 +63,7 @@ public abstract class Task {
      * Change the title of the task
      * @param title - the new title of the task
      */
-    protected void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -65,31 +79,29 @@ public abstract class Task {
      * Change the priority value of the Task
      * @param priority - the new priority value of the Task
      */
-    protected void setPriority(int priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    /**
+     * Get whether the Task is complete
+     * @return - whether the Task is complete
+     */
+    public boolean getComplete() {
+        return this.complete;
     }
 
     /**
      * Sets the Task to complete
      */
-    protected void setComplete() {
+    public void setComplete() {
         this.complete = true;
     }
 
     /**
-     * Deletes the Task by moving it to the user's archive
-     * @return - whether the Task has been successfully deleted
+     * Save the Task to the taskMap
      */
-    abstract boolean delete();
-
-    /**
-     * Save the Task to the user's data
-     * @return - whether the Task has been successfully saved
-     */
-    abstract boolean save();
-
-    /**
-     * Edit the features of the Task
-     */
-    abstract void edit();
+    public void save() {
+        TaskMap.addTask(this.id, this);
+    }
 }
