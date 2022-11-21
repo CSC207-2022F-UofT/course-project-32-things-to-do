@@ -1,6 +1,5 @@
 package use_case_collaborative_scheduling;
 import entities.*;
-import screens.CollaborativeSchedulingPresenter;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,16 +21,21 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
      * Main controller of this interactor
      */
     @Override
-    public CollaborativeSchedulingResponseModel schedule(CollaborativeSchedulingRequestModel requestModel) {
+    public CollaborativeSchedulingResponseModel schedule(CollaborativeSchedulingRequestModel requestModel, TaskMap taskMap) {
 
-        ArrayList<StudentUser> all_teammates = requestModel.getTask().getTeammates();
+        // request model only has the string name of the task
+        // need to implement getTaskFromTaskTitle
+        CollaborativeTask task = getTaskFromTitle(requestModel.getTaskTitle(), taskMap);
+        if (task.getTitle().equals("No task")) {
+            return collaborativeSchedulingOutputBoundary.prepareFailView("Task does not exist");
+        }
+        ArrayList<StudentUser> all_teammates = task.getTeammates();
         // adding the leader (user) to the array list
-        all_teammates.add(requestModel.getTask().getLeader());
-        LocalDateTime task_deadline = requestModel.getTask().getDeadline();
-        TaskMap allTasksEver = requestModel.getAllTasks();
+        all_teammates.add(task.getLeader());
+        LocalDateTime task_deadline = task.getDeadline();
 
         ArrayList<ArrayList<LocalDateTime>> available_times = allAvailableTimes(all_teammates, task_deadline,
-                allTasksEver);
+                taskMap);
 
         // if the list is empty does it return false because its nested? Nope - tested it works fine
         if (available_times.isEmpty()) {
@@ -39,7 +43,7 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
             // prepare view that says that there are no available times
         }
 
-        switch (requestModel.getTask().getFrequency()) {
+        switch (task.getFrequency()) {
             case "daily": {
                 ArrayList<ArrayList<LocalDateTime>> filtered_times = filterDaily(available_times);
                 CollaborativeSchedulingResponseModel responseModel = new CollaborativeSchedulingResponseModel(filtered_times);
@@ -341,7 +345,6 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         } else return !(timeBlockStart.isAfter(start) && timeBlockEnd.isAfter(end));
     }
 
-    // NEED TO IMPLEMENT: Given a user, get all their tasks
     /**
      * Get all the Task objects associated with a user (since a StudentUser object only stores the ids of a task)
      * @param user - a StudentUser
@@ -362,17 +365,38 @@ public class CollaborativeScheduling implements CollaborativeSchedulingInputBoun
         ArrayList<String> task_ids = user.getToDoList();
 
         // iterating through keys
-        for (String key : allTasksEver.getTaskMap().keySet()) {
-            // if the username is in the key
-            if (key.contains(username)){
-                // get the task associated with the key
-                Task task_value = allTasksEver.getTaskMap().get(key);
-                // add it to the array list
-                userTasks.add(task_value);
-            }
+//        for (String key : allTasksEver.getTaskMap().keySet()) {
+//            // if the username is in the key
+//            if (key.contains(username)){
+//                // get the task associated with the key
+//                Task task_value = allTasksEver.getTaskMap().get(key);
+//                // add it to the array list
+//                userTasks.add(task_value);
+//            }
+//        }
+
+        for (String taskObject : task_ids) {
+            Task task_value = allTasksEver.getTaskMap().get(taskObject);
+            userTasks.add(task_value);
         }
 
         return userTasks;
+    }
+
+    /**
+     * Retrieve the task object if the task name matches the title given and is a CollaborativeTask
+     * @param title - the title being looked for in the task map
+     * @param taskMap - the TaskMap object (includes every single task title mapped to the task object)
+     * @return the task if it is found, otherwise return the defaultTask
+     */
+    public CollaborativeTask getTaskFromTitle(String title, TaskMap taskMap){
+        CollaborativeTask defaultTask = new CollaborativeTask("No task", 1, false, "daily");
+        for (Task task : taskMap.getTaskMap().values()) {
+            if (task.getTitle().equals(title) && task instanceof CollaborativeTask) {
+                return (CollaborativeTask) task;
+            }
+        }
+        return defaultTask;
     }
 
 

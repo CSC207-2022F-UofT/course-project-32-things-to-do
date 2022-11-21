@@ -1,11 +1,9 @@
 package screens;
 
-import entities.CollaborativeTask;
 import use_case_collaborative_scheduling.CollaborativeSchedulingRequestModel;
 import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
 import use_case_collaborative_scheduling.CollaborativeSchedulingInputBoundary;
 import entities.TaskMap;
-import entities.Task;
 
 public class CollaborativeSchedulingController {
 
@@ -30,17 +28,7 @@ public class CollaborativeSchedulingController {
         this.allTasks = allTasks;
     }
     CollaborativeSchedulingResponseModel findTimes(String title){
-        Task task = getTask(title);
-        CollaborativeSchedulingRequestModel inputData = new CollaborativeSchedulingRequestModel((CollaborativeTask) task, this.allTasks);
-        return scheduleInput.schedule(inputData);
-    }
-
-    public Task getTask(String title) {
-        for (Task task : allTasks.getTaskMap().values()) {
-            if (task.getTitle().equals(title) && task instanceof CollaborativeTask){
-                return task;
-            }
-        }
-        throw new SchedulingTimesFailed("Task does not exist. Type it again if you want. I don't fucking care at this point.");
+        CollaborativeSchedulingRequestModel inputData = new CollaborativeSchedulingRequestModel(title, this.allTasks);
+        return scheduleInput.schedule(inputData, allTasks);
     }
 }

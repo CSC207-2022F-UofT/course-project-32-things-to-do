@@ -8,8 +8,5 @@ public interface CollaborativeSchedulingOutputBoundary {
     //      what do I want to the presenter to return after this? different types of screens?
     CollaborativeSchedulingResponseModel prepareAvailableTimes(CollaborativeSchedulingResponseModel responseModel);
 
-    // Previously:
-    // CollaborativeSchedulingResponseModel prepareAvailableTimes(CollaborativeSchedulingResponseModel responseModel);
-
     CollaborativeSchedulingResponseModel prepareFailView(String error);
 }

@@ -47,7 +47,7 @@ public class EnterCollaborativeTaskScreen extends JFrame implements ActionListen
 
     // React to button click that results in evt
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click" + evt.getActionCommand());
+//        System.out.println("Click" + evt.getActionCommand());
 
         collaborativeSchedulingController.findTimes(taskTitle.getText());
     }

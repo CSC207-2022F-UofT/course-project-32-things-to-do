@@ -3,7 +3,6 @@ package screens;
 import use_case_collaborative_scheduling.CollaborativeSchedulingOutputBoundary;
 import use_case_collaborative_scheduling.CollaborativeSchedulingResponseModel;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,14 +25,14 @@ public class CollaborativeSchedulingPresenter implements CollaborativeScheduling
     // controller takes in the string in the parameter in the method that the view called
     // controller knows which use case interactor can do this
 
-    private final CollaborativeSchedulingResponseModel outputData;
-
-    public CollaborativeSchedulingPresenter(CollaborativeSchedulingResponseModel outputData){
-        this.outputData = outputData;
-    }
-    public CollaborativeSchedulingResponseModel getOutputData() {
-        return outputData;
-    }
+//    private final CollaborativeSchedulingResponseModel outputData;
+//
+//    public CollaborativeSchedulingPresenter(CollaborativeSchedulingResponseModel outputData){
+//        this.outputData = outputData;
+//    }
+//    public CollaborativeSchedulingResponseModel getOutputData() {
+//        return outputData;
+//    }
 
     public ArrayList<String> convertToString(CollaborativeSchedulingResponseModel outputData){
 

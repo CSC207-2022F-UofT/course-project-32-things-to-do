@@ -1,29 +1,34 @@
 package use_case_collaborative_scheduling;
 
-import entities.CollaborativeTask;
 import entities.TaskMap;
 
-import java.util.ArrayList;
+/*
+ Notes:
+ - requests what is needed for its input data (what person in front of computer enters)
+ - do NOT depend on anything NOR have any references to Entity objects: violates SRP
+ */
+
 
 public class CollaborativeSchedulingRequestModel {
 
-    private final CollaborativeTask task;
-
-    private final TaskMap allTasks;
+//    private final CollaborativeTask task;
+//    private final TaskMap allTasks;
 
     // private final StudentUser user;
 
+    private final String taskTitle;
+    private final TaskMap taskMap;
 
 
-    public CollaborativeSchedulingRequestModel(CollaborativeTask task, TaskMap allTasks) {
-        this.task = task;
-        this.allTasks = allTasks;
+    public CollaborativeSchedulingRequestModel(String taskTitle, TaskMap taskMap) {
+        this.taskTitle = taskTitle;
+        this.taskMap = taskMap;
     }
-    public TaskMap getAllTasks(){
-        return allTasks;
+    public String getTaskTitle() {
+        return this.taskTitle;
     }
-    public CollaborativeTask getTask() {
-        return task;
+    public TaskMap getTaskMap() {
+        return this.taskMap;
     }
 
 
