@@ -1,36 +1,33 @@
-package Entities;
+package entities;
 
-import java.io.Serializable;
-
-public abstract class Task implements Serializable {
+public abstract class Task {
     private String title;
     private int priority;
     private boolean complete = false;
-    private String id;
+    private String id; // concatenate user's name with current idCount #
+    private static int idCount = 0;
 
     /**
      * Create a new Task that has a title and default priority value
      * @param title - the title of the Task
-     * @param id - the unique ID of the Task
      */
-    public Task(String title, String id) {
+    public Task(String title) {
         this.title = title;
-        this.id = id;
         this.priority = 0;
-
-
+        this.id = "user's name" + idCount;
+        idCount ++;
     }
 
     /**
      * Create a new Task that has a title and a priority value
      * @param title - the title of the Task
-     * @param id - the unique ID of the Task
      * @param priority - the Task's priority value
      */
-    public Task(String title, String id, int priority) {
+    public Task(String title, int priority) {
         this.title = title;
-        this.id = id;
         this.priority = priority;
+        this.id = "user's name" + idCount;
+        idCount ++;
     }
 
     /**
