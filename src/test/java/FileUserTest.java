@@ -1,6 +1,6 @@
 import entities.StudentUser;
 import org.junit.jupiter.api.Test;
-import screens.FileUser2;
+//import screens.FileUser2;
 import user_register_usecase.StudentSaveRequest;
 
 import java.io.IOException;
