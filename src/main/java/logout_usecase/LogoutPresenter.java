@@ -1,6 +1,11 @@
 package logout_usecase;
 
 public interface LogoutPresenter {
-    LogoutResponseModel prepareSuccessView(LogoutResponseModel login);
+
+    /**
+     * @param logout the logout response
+     * @return the successful logout view
+     */
+    LogoutResponseModel prepareSuccessView(LogoutResponseModel logout);
 
 }

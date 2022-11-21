@@ -3,6 +3,9 @@ package user_register_usecase;
 // Use Case Layer
 
 public class UserRegRequest {
+    /**
+     * A request to register a new user with this name and password (from user input).
+     */
 
     private String name;
 
@@ -12,6 +15,12 @@ public class UserRegRequest {
 
     private String typeOfUser;
 
+    /**
+     * @param name the name of this User
+     * @param password the password
+     * @param reenterPassword the re-entered password
+     * @param userType the type of User (i.e. Student or Instructor)
+     */
     public UserRegRequest(String name, String password, String reenterPassword, String userType) {
         this.name = name;
         this.password = password;

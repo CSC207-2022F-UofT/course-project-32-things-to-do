@@ -2,10 +2,17 @@ package login_usecase;
 
 public class LoginRequestModel {
 
+    /**
+     * A login request that contains the user's input for name and password
+     */
     private String name;
 
     private String password;
 
+    /**
+     * @param name the entered username
+     * @param password the entered password
+     */
     public LoginRequestModel(String name, String password) {
         this.name = name;
         this.password = password;

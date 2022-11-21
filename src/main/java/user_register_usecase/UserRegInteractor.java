@@ -9,18 +9,31 @@ import java.time.LocalDateTime;
 
 public class UserRegInteractor implements UserRegInputBoundary {
 
+    /**
+     * The use case for registering a user. Responsible for registering a valid new user.
+     */
+
     final UserRegGateway userGateway;
 
     final UserRegPresenter userPresenter;
 
 //    private UserFactory userFactory;
 
+    /**
+     * @param gateway the gateway that interacts with the User database
+     * @param userRegPresenter the presenter that shows the success or failure of this attempt to register
+     */
     public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter) {
         this.userGateway = gateway;
         this.userPresenter = userRegPresenter;
 //        this.userFactory = null;
     }
 
+    /**
+     * @param request the request to register this user
+     * @return the response to whether this request to register was successful
+     * @throws IOException
+     */
     @Override
     public UserRegResponse create(UserRegRequest request) throws IOException {
         if (userGateway.existsByName(request.getName())) {
