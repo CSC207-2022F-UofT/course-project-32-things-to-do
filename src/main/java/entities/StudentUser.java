@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -63,7 +63,7 @@ public class StudentUser extends User {
 
     private Map<String,Double> desiredGrades; // String is course id
 
-    public Map getDesiredGrades() {
+    public Map<String, Double> getDesiredGrades() {
 
         return this.desiredGrades;
     }

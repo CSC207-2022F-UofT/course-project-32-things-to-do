@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -81,20 +81,16 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
-        this.weightage = weightage;
-    }
 
-    public double getWeightage() {return this.weightage;}
+    }
 
     /**
      * Update the Test with the user's grade
      * @param grade - the grade the user has received
      */
     public void setGradeReceived(double grade) {
-        this.gradeReceived = grade;
-    }
 
-    public double getGradeReceived() {return this.gradeReceived; }
+    }
 
     /**
      * Update the amount of time the user has spent preparing

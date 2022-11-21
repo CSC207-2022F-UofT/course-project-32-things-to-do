@@ -1,8 +1,8 @@
 package screens;
 
-import Entities.Course;
-import Entities.Task;
-import Entities.User;
+import entities.Course;
+import entities.Task;
+import entities.User;
 import progress_tracker_use_case.ProgressTrackerInputBoundary;
 import progress_tracker_use_case.ProgressTrackerRequestModel;
 import progress_tracker_use_case.ProgressTrackerResponseModel;

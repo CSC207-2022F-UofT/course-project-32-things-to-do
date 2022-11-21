@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 public interface Gradable {
     /**
@@ -7,13 +7,10 @@ public interface Gradable {
      */
     void setWeightage(double weightage);
 
-    double getWeightage();
-
     /**
      * Update the Task with the user's grade
      * @param grade - the grade the user has received
      */
     void setGradeReceived(double grade);
 
-    double getGradeReceived();
 }

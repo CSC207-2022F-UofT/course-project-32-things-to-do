@@ -75,8 +75,9 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener {
         System.out.println("Click " + evt.getActionCommand());
 
         try {
-
-            //TODO: does this break clean architecture? Which level is responseModel in?
+            //usually the presenter would be updating the view, but in this case, the presenter will
+            // eventually be called
+            //TODO might need to controller to presenter later
             ProgressTrackerResponseModel rsp = progressTrackerController.trackProgress(courseName.getText(),
                     newGradeTaskName.getText(), newGrade.getText(), newGoalGrade.getText());
 

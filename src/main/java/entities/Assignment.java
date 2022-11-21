@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,15 +45,10 @@ public class Assignment extends Task implements Gradable, Preparatory {
 
     }
 
-    public double getWeightage() {return this.weightage;}
-
     /**
      * Update the Test with the user's grade
      * @param grade - the grade the user has received
      */
-    public void setGradeReceived(double grade) {
-
-    }
 
     public double getGradeReceived() {return this.gradeReceived; }
 

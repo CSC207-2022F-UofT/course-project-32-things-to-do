@@ -1,6 +1,6 @@
 package progress_tracker_use_case;
 
-import Entities.*;
+import entities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,11 +121,18 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
         }
     }
 
+    /**
+     * Calculates the percent of completed tasks out of a student's total tasks in a course.
+     *
+     * @param courseTasks list of a student's total Gradable tasks in a course
+     *                    (precondition: weightage attribute is in DECIMAL percent)
+     * @return the total weight of completed tasks (in percent)
+     */
     private double courseProgressCalculator(ArrayList<Task> courseTasks) {
         double completedWeightage = 0;
 
         for (Task task: courseTasks) {
-            if (task.getComplete() == true) {
+            if (task.getComplete()) {
                 completedWeightage += ((Gradable) task).getWeightage();
             }
         }
@@ -243,8 +250,12 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
 
         for (Task task: studentTasks) {
             if (task.getTitle().equals(newGradeTaskName)) {
-                ((Gradable) allTasks.get(task.getId())).setGradeReceived(newGrade);
-                return;
+                if (allTasks.get(task.getId()).getComplete()) {
+                    ((Gradable) allTasks.get(task.getId())).setGradeReceived(newGrade);
+                    return;
+                } else {
+                    throw new RuntimeException("Set this task to 'Complete' before adding its grade.");
+                }
             }
         }
 

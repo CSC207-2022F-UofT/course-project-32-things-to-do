@@ -1,8 +1,8 @@
 package progress_tracker_use_case;
 
-import Entities.Course;
-import Entities.Task;
-import Entities.User;
+import entities.Course;
+import entities.Task;
+import entities.User;
 
 import java.util.HashMap;
 

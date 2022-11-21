@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import java.io.Serializable;
 
@@ -78,8 +78,6 @@ public abstract class Task implements Serializable {
     public void setComplete() {
         this.complete = true;
     }
-
-    public boolean getComplete() { return complete; }
 
     /**
      * Deletes the Task by moving it to the user's archive
