@@ -11,7 +11,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class EnterCollaborativeTaskScreen extends JFrame implements ActionListener{
 
-    JTextField task = new JTextField(15);
+    JTextField taskTitle = new JTextField(15);
     CollaborativeSchedulingController collaborativeSchedulingController;
 
 
@@ -22,8 +22,7 @@ public class EnterCollaborativeTaskScreen extends JFrame implements ActionListen
         JLabel title = new JLabel("Scheduling Collaborative Tasks");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel enterTask = new JLabel("Enter CollaborativeTask");
-        enterTask.setBounds(10, 50, 300, 20);
+        LabelTextPanel taskInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
 
         JButton submit = new JButton("Submit");
 
@@ -34,46 +33,23 @@ public class EnterCollaborativeTaskScreen extends JFrame implements ActionListen
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(enterTask);
-        this.add(task);
-        this.add(buttons);
+        JPanel main = new JPanel();
+        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 
-        // making the frame
-//        JFrame frame = new JFrame();
-//        frame.setVisible(true);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(500, 400);
-//        frame.setLocation(200, 400);
-//
-//        frame.setBounds(200, 200, 500, 500);
-//
-//        Container cont = frame.getContentPane();
-//        cont.setLayout(null);
-//        JTextField inputTask = new JTextField();
-//        cont.add(inputTask);
-//        inputTask.setBounds(100, 50, 300, 30);
-//        frame.setTitle("Enter title of collaborative task");
-//
-//
-//
-//        JButton submitButton = new JButton("Submit");
-//
-//        submitButton.setBounds(200, 100, 150, 40);
-//        submitButton.setFocusable(false);
-        // submitButton.addActionListener(this);
+        main.add(title);
+        main.add(taskInfo);
+        main.add(buttons);
+        this.setContentPane(main);
 
-//        frame.add(inputTask);
-//        cont.add(submitButton);
-
-
+        this.pack();
+        setVisible(true);
     }
 
     // React to button click that results in evt
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click" + evt.getActionCommand());
 
-        collaborativeSchedulingController.findTimes(task.getText());
+        collaborativeSchedulingController.findTimes(taskTitle.getText());
     }
 
 
