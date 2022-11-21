@@ -19,7 +19,7 @@ public class CourseEnrolmentRequestModel {
     /**
      * Change getters to public?
      */
-    String getCourseName() {
+    public String getCourseName() {
         return courseName;
     }
 
@@ -27,7 +27,7 @@ public class CourseEnrolmentRequestModel {
         this.courseName = courseName;
     }
 
-    String getCourseInstructor() {
+    public String getCourseInstructor() {
         return courseInstructor;
     }
 
@@ -35,11 +35,11 @@ public class CourseEnrolmentRequestModel {
         this.courseInstructor = courseInstructor;
     }
 
-    String getCourseID() {
+    public String getCourseID() {
         return courseID;
     }
 
-    String getStudentID() {
+    public String getStudentID() {
         return studentID;
     }
 }
