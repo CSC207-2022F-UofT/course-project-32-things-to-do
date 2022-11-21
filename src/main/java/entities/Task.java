@@ -18,7 +18,7 @@ public abstract class Task implements Serializable {
         this.id = id;
         this.priority = 0;
 
-
+        save(); // save to task map
     }
 
     /**
@@ -31,6 +31,8 @@ public abstract class Task implements Serializable {
         this.title = title;
         this.id = id;
         this.priority = priority;
+
+        save(); // save to task map
     }
 
     /**
@@ -40,6 +42,15 @@ public abstract class Task implements Serializable {
     public String getId() {
         return this.id;
     }
+
+    /**
+     * Set a new Task ID (used for adding course code)
+     * @param id - the new ID
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /**
      * Retrieves the title of the Task
      * @return - the title of the Task
@@ -52,8 +63,8 @@ public abstract class Task implements Serializable {
      * Change the title of the task
      * @param title - the new title of the task
      */
-    protected void setTitle(String title) {
-
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -68,8 +79,16 @@ public abstract class Task implements Serializable {
      * Change the priority value of the Task
      * @param priority - the new priority value of the Task
      */
-    protected void setPriority(int priority) {
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
+    /**
+     * Get whether the Task is complete
+     * @return - whether the Task is complete
+     */
+    public boolean getComplete() {
+        return this.complete;
     }
 
     /**
@@ -80,19 +99,9 @@ public abstract class Task implements Serializable {
     }
 
     /**
-     * Deletes the Task by moving it to the user's archive
-     * @return - whether the Task has been successfully deleted
+     * Save the Task to the taskMap
      */
-    abstract boolean delete();
-
-    /**
-     * Save the Task to the user's data
-     * @return - whether the Task has been successfully saved
-     */
-    abstract boolean save();
-
-    /**
-     * Edit the features of the Task
-     */
-    abstract void edit();
+    public void save() {
+        TaskMap.addTask(this.id, this);
+    }
 }
