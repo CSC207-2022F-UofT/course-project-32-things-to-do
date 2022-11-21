@@ -1,4 +1,4 @@
-package screens;
+package assignment_creation_screens;
 
 import assignment_creation_use_case.AssignmentCreationInputBoundary;
 import assignment_creation_use_case.AssignmentCreationRequestModel;

@@ -1,4 +1,7 @@
-package screens;
+package event_creation_screens;
+
+import screens.LabelCheckBox;
+import screens.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;

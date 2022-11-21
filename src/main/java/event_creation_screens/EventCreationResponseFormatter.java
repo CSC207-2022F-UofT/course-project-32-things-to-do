@@ -1,4 +1,4 @@
-package screens;
+package event_creation_screens;
 
 import event_creation_use_case.EventCreationPresenter;
 import event_creation_use_case.EventCreationResponseModel;

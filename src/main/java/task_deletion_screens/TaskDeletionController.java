@@ -1,4 +1,4 @@
-package screens;
+package task_deletion_screens;
 
 import entities.Course;
 import entities.StudentUser;

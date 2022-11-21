@@ -1,4 +1,4 @@
-package screens;
+package test_creation_screens;
 
 import test_creation_use_case.TestCreationInputBoundary;
 import test_creation_use_case.TestCreationRequestModel;

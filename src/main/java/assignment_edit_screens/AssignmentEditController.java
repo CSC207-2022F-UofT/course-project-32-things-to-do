@@ -1,4 +1,4 @@
-package screens;
+package assignment_edit_screens;
 
 import entities.Assignment;
 import assignment_edit_use_case.AssignmentEditInputBoundary;

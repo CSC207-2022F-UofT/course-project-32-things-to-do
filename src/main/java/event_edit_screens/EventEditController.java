@@ -1,4 +1,4 @@
-package screens;
+package event_edit_screens;
 
 import entities.Event;
 import event_edit_use_case.EventEditInputBoundary;

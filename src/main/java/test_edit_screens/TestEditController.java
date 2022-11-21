@@ -1,4 +1,4 @@
-package screens;
+package test_edit_screens;
 
 import entities.Test;
 import test_edit_use_case.TestEditInputBoundary;
