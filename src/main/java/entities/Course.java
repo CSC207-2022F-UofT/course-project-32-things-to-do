@@ -79,6 +79,14 @@ public class Course {
     public void setTasks(ArrayList<String> tasks) {
         this.tasks = new ArrayList<String>(tasks);
     }
+
+    /**
+     * Remove a single Task from tasks
+     * @param task - the Task being removed
+     */
+    public void removeTask(Task task) {
+        this.tasks.remove(task.getId());
+    }
     public void setPublished(Boolean published) {
         this.published = published;
     }

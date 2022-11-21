@@ -1,21 +1,51 @@
 package entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
-public class Test extends Task implements Timeblockable, Gradable {
+import static java.time.temporal.ChronoUnit.HOURS;
+
+public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Timeblockable attributes
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     // Gradable attributes
-    private double weightage = 0;
+    private double weightage;
     private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
 
-    public Test(String title) {
-        super(title);
+    // Preparatory attributes
+    private double timeSpent = 0;
+    private double timeNeeded = 0;
+    private ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled;
+
+    /**
+     * Create a new Test with a title and time block
+     * @param title - name of the Test
+     * @param id - the unique ID of the Test
+     * @param startTime - start of time block
+     * @param endTime - end of time block
+     */
+    public Test(String title, String id, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
+        super(title, id);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.weightage = weightage;
     }
-    public Test(String title, int priority) {
-        super(title, priority);
+
+    /**
+     * Create a new Test with a title, priority value, and time block
+     * @param title - name of the test
+     * @param id - the unique ID of the Test
+     * @param priority - priority value of the test
+     * @param startTime - start of time block
+     * @param endTime - end of time block
+     */
+    public Test(String title, String id, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
+        super(title, id, priority);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.weightage = weightage;
     }
     /**
      * Set a new time block
@@ -51,48 +81,98 @@ public class Test extends Task implements Timeblockable, Gradable {
     }
 
     /**
+     * Get the weightage of the Test
+     * @return - the Test's weightage
+     */
+    public double getWeightage() {
+        return this.weightage;
+    }
+
+    /**
      * Change the weightage of the Test
      * @param weightage - the new weightage
      */
     public void setWeightage(double weightage) {
+        this.weightage = weightage;
+    }
 
+    /**
+     * Retrieve the grade that the user received on the Test
+     * @return - the user's received grade
+     */
+    public double getGradeReceived() {
+        return this.gradeReceived;
     }
 
     /**
      * Update the Test with the user's grade
-     * @param grade - the grade the user has received
+     * @param gradeReceived - the grade the user has received
      */
-    public void setGradeReceived(double grade) {
-
+    public void setGradeReceived(double gradeReceived) {
+        this.gradeReceived = gradeReceived;
     }
 
     /**
-     * Set a grade goal for the Test
-     * @param goal - the grade the user would like to receive
+     * Get the amount of time spent on the Test so far (studying)
+     * @return - the amount of time that has been spent
      */
-    public void setGradeGoal(double goal) {
-
+    public double getTimeSpent() {
+        return this.timeSpent;
     }
+
     /**
-     * Delete a Test by moving it to the user's archive
-     * @return - whether the Test has been successfully deleted
+     * Update the amount of time the user has spent preparing (in hours)
+     * @param timeSpent - the amount of time spent
      */
-    protected boolean delete() {
+    public void setTimeSpent(double timeSpent) {
+        this.timeSpent = timeSpent;
+    }
+
+    /**
+     * Get the amount of time needed to prep
+     * @return - the amount of time needed
+     */
+    public double getTimeNeeded() {
+        return this.timeNeeded;
+    }
+
+    /**
+     * Set the amount of time the user needs to prepare for (in hours)
+     * @param timeNeeded - the new time
+     */
+    public void setTimeNeeded(double timeNeeded) {
+        this.timeNeeded = timeNeeded;
+    }
+
+    /**
+     * Get the amount of time the user has left to prepare in hours (before start time)
+     * @return - the amount of time the user has remaining
+     */
+    public double getTimeLeft() {
+        return Double.parseDouble(String.valueOf(HOURS.between(LocalDateTime.now(), this.startTime)));
+    }
+
+    /**
+     * Schedule the required prep time for the Test and add to prepTimeScheduled
+     * @return - whether scheduling was successful
+     */
+    public boolean schedulePrepTime() {
         return true;
     }
 
     /**
-     * Save a Test to the user's data
-     * @return - whether the Test has been successfully saved
+     * Get all scheduled prep times
+     * @return - all scheduled prep time
      */
-    protected boolean save() {
-        return true;
+    public ArrayList<ArrayList<LocalDateTime>> getPrepTimeScheduled() {
+        return prepTimeScheduled;
     }
 
     /**
-     * Edit the features of the Test
+     * Set prepTimeScheduled
+     * @param prepTimeScheduled - the new list of prep times
      */
-    protected void edit() {
-
+    public void setPrepTimeScheduled(ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled) {
+        this.prepTimeScheduled = prepTimeScheduled;
     }
 }
