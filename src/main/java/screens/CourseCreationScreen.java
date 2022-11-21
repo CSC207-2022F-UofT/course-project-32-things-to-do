@@ -15,16 +15,15 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
     /** the course instructor */
     JTextField courseInstructor = new JTextField(15);
 
-    /* the part i don't understand ... tasks .... */
-
     /** title of task */
-    JTextField taskName = new JTextField(25);
+    JTextField taskName = new JTextField(15);
 
     /** the controller */
     CourseCreationController courseCreationController;
 
     /**
-     * A window with a title, texts to fill in, and JButtons */
+     * A window with a title, texts to fill in, and JButtons
+     */
     public CourseCreationScreen(CourseCreationController controller) {
         this.courseCreationController = controller;
 

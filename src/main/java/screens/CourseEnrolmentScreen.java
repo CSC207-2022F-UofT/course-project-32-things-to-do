@@ -14,23 +14,31 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     /** student enters course instructor */
     JTextField courseInstructor = new JTextField(15);
 
+    /** student enters their username (aka student id) */
+    JTextField studentID = new JTextField(15);
+
     /** the controller */
     CourseEnrolmentController courseEnrolmentController;
 
     /**
-     * Window with title and JButtons
+     * Window with title, texts to fill in, and JButtons
      */
     public CourseEnrolmentScreen(CourseEnrolmentController controller) {
         this.courseEnrolmentController = controller;
 
+        // label for the title of the screen
         JLabel title = new JLabel("Course Enrolment Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // text fields for student user to enter in required info
         LabelTextPanel courseNameInfo = new LabelTextPanel(
                 new JLabel("Enter course name"), courseName);
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
+        LabelTextPanel studentIDInfo = new LabelTextPanel(
+                new JLabel("Enter instructor name"), studentID);
 
+        // buttons
         JButton cancel = new JButton("Cancel");
         JButton search = new JButton("Search");
 
@@ -43,22 +51,34 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        // create the new panel
         this.add(title);
         this.add(courseNameInfo);
         this.add(courseInstructorInfo);
+        this.add(studentIDInfo);
         this.add(buttons);
     }
 
     /**
-     * reacting to button clicks?
+     * React to a button click which triggers the corresponding use case
      */
+    @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-
-        try {
-//            courseEnrolmentController.cre
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
+        // student user decides to cancel course enrolment process
+        if (evt.getActionCommand().equals("Cancel")) {
+            try {
+                // do to
+                JOptionPane.showMessageDialog(this, "screen should close");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        } else if (evt.getActionCommand().equals("Search")) {
+            try {
+                // to do: add studentID to course's task parameter
+                JOptionPane.showMessageDialog(this, "Successfully enrolled in course.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }
 }
