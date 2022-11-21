@@ -14,36 +14,11 @@ public class CollaborativeTask extends Task implements Timeblockable{
     private StudentUser leader;
 
     /**
-     * Create a CollaborativeTask with a title and deadline
+     * Create a CollaborativeTask with a title, priority, and deadline
      * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
      * Otherwise, the frequency is blank
      * @param title - the title of the Collaborative Task
      * @param id - the unique ID of the Collaborative Task
-     * @param recurring - whether the Collaborative Task is recurring
-     * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
-     * @param deadline - the time at which the Collaborative Task is due
-     * @param creator - the Student User who creates the Collaborative Task
-     */
-    public CollaborativeTask(String title, String id, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
-        super(title, id);
-        this.recurring = recurring;
-        if (recurring) {
-            this.frequency = frequency;
-        }
-        else {
-            this.frequency = "";
-        }
-        this.deadline = deadline;
-        this.leader = creator;
-    }
-
-    /**
-     * Create a Collaborative Task with a title, priority, and deadline
-     * If the collaborative task is recurring, indicate the frequency (eg "daily", "weekly", "monthly)
-     * Otherwise, the frequency is blank
-     * @param title - the title of the Collaborative Task
-     * @param id - the unique ID of the Collaborative Task
-     * @param priority - the priority value of the Collaborative Task
      * @param recurring - whether the Collaborative Task is recurring
      * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
      * @param deadline - the time at which the Collaborative Task is due
@@ -52,7 +27,12 @@ public class CollaborativeTask extends Task implements Timeblockable{
     public CollaborativeTask(String title, String id, int priority, boolean recurring, String frequency, LocalDateTime deadline, StudentUser creator) {
         super(title, id, priority);
         this.recurring = recurring;
-        this.frequency = frequency;
+        if (recurring) {
+            this.frequency = frequency;
+        }
+        else {
+            this.frequency = "";
+        }
         this.deadline = deadline;
         this.leader = creator;
     }
