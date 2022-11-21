@@ -1,17 +1,20 @@
 package entities;
 
-import java.io.Serializable;
-
 // Entity
-public interface User {
+public abstract class User {
 
     /** Entity Layer
      * A general User of this program */
 
-    boolean checkPassword();
+    public boolean checkPassword() {
+        return false;
+    }
 
-    String getName();
+    public String getName() {
+        return null;
+    }
 
-    public String getPass();
-
+    public String getPass() {
+        return null;
+    }
 }
