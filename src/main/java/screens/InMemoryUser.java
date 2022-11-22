@@ -23,12 +23,12 @@ public class InMemoryUser implements UserRegGateway, LoginGateway {
 
     @Override
     public String passOf(String name) {
-        return null;
+        return users.get(name).getPass();
     }
 
     @Override
     public Map<String, UserRegSaveRequest> getAccounts() {
-        return null;
+        return users;
     }
 
     /**
