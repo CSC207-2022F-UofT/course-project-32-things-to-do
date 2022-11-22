@@ -15,6 +15,12 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         this.scheduleCTOutputBoundary = scheduleCTOutputBoundary;
     }
 
+    /**
+     * Overriding the method in input boundary
+     * @param requestModel - input that user enters (includes task name, username, start, end)
+     * @param hashMap - a hash map of all task ids mapped to tasks
+     * @return a response model
+     */
     @Override
     public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap) {
         // returns that this has conflict
@@ -55,6 +61,14 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         }
     }
 
+    /**
+     * Finds all the dates to meet up given the frequency of a task
+     * @param frequency - either "daily", "weekly" or "monthly"
+     * @param startTime - the start time of the time block
+     * @param endTime - the end time of the time block
+     * @param deadline - the deadline of the task
+     * @return an array list of array lists of local date time (i.e. the dates to meet up)
+     */
     public ArrayList<ArrayList<LocalDateTime>> getDates(String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) {
         ArrayList<ArrayList<LocalDateTime>> times = new ArrayList<>();
         ArrayList<LocalDateTime> initialTime = new ArrayList<>();
@@ -103,7 +117,14 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         return times;
     }
 
-
+    /**
+     * Check if a user is available at a fixed date time
+     * @param user - the student user
+     * @param tasks - an array list of a user's tasks
+     * @param start - the start time of the time block
+     * @param end -the end time of the time block
+     * @return whether or not the user is available at this date time
+     */
     public boolean isUserAvailableAtDateTime(StudentUser user, ArrayList<Task> tasks, LocalDateTime start,
                                              LocalDateTime end) {
         // assume there's a method in TaskUseCase that gets all the tasks a student has
@@ -162,10 +183,14 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         return is_task_free && is_working_hours_free;
     }
 
-    // required methods:
-    // - for each user determine if they have conflict with time given from their tasks
-    // - for each user determine if they have conflict with time given with their working hours
-
+    /**
+     * Check if a time block conflicts with a user's working hours
+     * @param timeBlockStart - the start of the time block
+     * @param timeBlockEnd - the end of the time block
+     * @param workingHoursStart - the start of a user's working hours
+     * @param workingHoursEnd - the end of a user's working hours
+     * @return whether or not a time block conflicts with a user's working hours
+     */
     public boolean workingHoursFree(LocalDateTime timeBlockStart, LocalDateTime timeBlockEnd,
                                     LocalTime workingHoursStart, LocalTime workingHoursEnd) {
         // if timeBlock is within working hours
@@ -194,6 +219,15 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         } else return !(timeBlockStart.getHour() > workingHoursStart.getHour() &&
                 timeBlockEnd.getHour() > workingHoursEnd.getHour());
     }
+
+    /**
+     * Check if two time blocks conflict
+     * @param timeBlockStart - the start of the time block
+     * @param timeBlockEnd - the end of the time block
+     * @param start - the start of another time block
+     * @param end - the end of another time block
+     * @return whether or not two time blocks conflict
+     */
     public boolean givenTime(LocalDateTime timeBlockStart, LocalDateTime timeBlockEnd,
                              LocalDateTime start, LocalDateTime end) {
         // in the case where the time block is within the time of start and end
@@ -215,7 +249,12 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         } else return !(timeBlockStart.isAfter(start) && timeBlockEnd.isAfter(end));
     }
 
-
+    /**
+     * Retrieve the tasks associated with a user from the given hash map
+     * @param user - the student user
+     * @param hashMap - a hash map of all task ids to tasks
+     * @return an array list of tasks
+     */
     public ArrayList<Task> getTaskFromId(StudentUser user, HashMap<String, Task> hashMap) {
         ArrayList<Task> userTasks = new ArrayList<>();
 
