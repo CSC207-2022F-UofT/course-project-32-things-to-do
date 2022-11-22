@@ -1,9 +1,13 @@
 package scheduling_ct_screens;
 import entities.Task;
 import scheduling_ct_use_case.*;
-import entities.TaskMap;
 
 import java.util.HashMap;
+
+/**
+ * Controller for the Scheduling Collaborative Tasks Use Case
+ * Triggers the interactor
+ */
 
 public class ScheduleCTController {
 

@@ -1,11 +1,8 @@
 package scheduling_ct_use_case;
 
-// use case layer
-
-/*
- Notes:
- - requests what is needed for its input data (what person in front of computer enters)
- - do NOT depend on anything NOR have any references to Entity objects: violates SRP
+/**
+ * Request Model for the Scheduling Collaborative Tasks Use Case
+ * Acts as the input data object in the use case layer
  */
 
 public class ScheduleCTRequestModel {

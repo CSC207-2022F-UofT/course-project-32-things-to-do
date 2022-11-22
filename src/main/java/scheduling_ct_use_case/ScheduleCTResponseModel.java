@@ -1,9 +1,14 @@
 package scheduling_ct_use_case;
 
+/**
+ * Response Model for the Scheduling Collaborative Tasks Use Case
+ * Acts as the output data object in the use case layer
+ */
+
 public class ScheduleCTResponseModel {
 
     private final boolean isConflict;
-    private String displayString;
+    String displayString;
 
     public ScheduleCTResponseModel(boolean isConflict) {
 

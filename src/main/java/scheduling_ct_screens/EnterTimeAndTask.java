@@ -1,13 +1,13 @@
 package scheduling_ct_screens;
 
-import scheduling_ct_use_case.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
-
+/**
+ * The View for the Scheduling Collaborative Tasks Use Case
+ */
 
 public class EnterTimeAndTask extends JFrame implements ActionListener {
 

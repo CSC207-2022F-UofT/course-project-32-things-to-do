@@ -8,6 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Scheduling Collaborative Tasks Use Case Interactor (use case layer)
+ * Implements business logic on entities
+ */
+
 public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
     private final ScheduleCTOutputBoundary scheduleCTOutputBoundary;
 
@@ -16,10 +21,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
     }
 
     /**
-     * Overriding the method in input boundary
-     * @param requestModel - input that user enters (includes task name, username, start, end)
-     * @param hashMap - a hash map of all task ids mapped to tasks
-     * @return a response model
+     * The main controller of this interactor that calls the helper methods
      */
     @Override
     public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap) {
