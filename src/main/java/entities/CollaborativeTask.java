@@ -22,6 +22,7 @@ public class CollaborativeTask extends Task implements Timeblockable {
      *
      * @param title     - the title of the Collaborative Task
      * @param id        - the unique ID of the Collaborative Task
+     * @param priority  - the priority value of the Collaborative Task
      * @param recurring - whether the Collaborative Task is recurring
      * @param frequency - the frequency at which the Collaborative Task occurs (if recurring)
      * @param startTime = the start time and date of the first occurrence of the Collaborative Task
