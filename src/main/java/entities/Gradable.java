@@ -24,4 +24,5 @@ public interface Gradable {
      * @param grade - the grade the user has received
      */
     void setGradeReceived(double grade);
+
 }
