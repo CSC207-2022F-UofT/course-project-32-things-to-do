@@ -1,4 +1,5 @@
 package scheduling_ct_screens;
+import entities.StudentUser;
 import entities.Task;
 import scheduling_ct_use_case.*;
 
@@ -15,17 +16,24 @@ public class ScheduleCTController {
 
     private final HashMap<String, Task> hashMap;
 
-    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput, HashMap<String, Task> hashMap) {
+    private final StudentUser studentUser;
+
+    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput, HashMap<String, Task> hashMap, StudentUser studentUser) {
         this.scheduleInput = scheduleInput;
         this.hashMap = hashMap;
+        this.studentUser = studentUser;
     }
 
     public HashMap<String, Task> getTaskMap() {
         return hashMap;
     }
 
-    public ScheduleCTResponseModel isConflict(String taskName, String username, String startTime, String endTime) {
-        ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, username, startTime, endTime);
+    public StudentUser getStudentUser() {
+        return studentUser;
+    }
+
+    public ScheduleCTResponseModel isConflict(String taskName, String startTime, String endTime) {
+        ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime, studentUser);
         return scheduleInput.schedule(inputData, this.hashMap);
     }
 

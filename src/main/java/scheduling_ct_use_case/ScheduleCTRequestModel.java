@@ -1,5 +1,7 @@
 package scheduling_ct_use_case;
 
+import entities.StudentUser;
+
 /**
  * Request Model for the Scheduling Collaborative Tasks Use Case
  * Acts as the input data object in the use case layer
@@ -9,28 +11,31 @@ public class ScheduleCTRequestModel {
 
     private final String taskName;
 
-    private final String username;
-
     private final String startTime;
 
     private final String endTime;
 
-    public ScheduleCTRequestModel(String taskName, String username, String startTime, String endTime) {
+    private final StudentUser studentUser;
+
+    public ScheduleCTRequestModel(String taskName, String startTime, String endTime, StudentUser studentUser) {
         this.taskName = taskName;
-        this.username = username;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.studentUser = studentUser;
     }
 
     public String getTaskName() {
         return taskName;
     }
-    public String getUsername() { return username; }
     public String getStartTime() {
         return startTime;
     }
     public String getEndTime() {
         return endTime;
+    }
+
+    public StudentUser getStudentUser() {
+        return studentUser;
     }
 
 

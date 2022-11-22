@@ -13,7 +13,6 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
 
     ScheduleCTController scheduleCTController;
     JTextField taskTitle = new JTextField(15);
-    JTextField username = new JTextField(15);
     JTextField startTime = new JTextField(15);
     JTextField endTime = new JTextField(15);
 
@@ -27,8 +26,6 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel taskInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
-
-        LabelTextPanel userInfo = new LabelTextPanel(new JLabel("Enter user name"), username);
 
         LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time"), startTime);
 
@@ -49,7 +46,6 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
 
         main.add(title);
         main.add(taskInfo);
-        main.add(userInfo);
         main.add(startInfo);
         main.add(endInfo);
         main.add(buttons);
@@ -62,7 +58,7 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
     // React to button click that results in evt
     public void actionPerformed(ActionEvent evt) {
 //        System.out.println("Click" + evt.getActionCommand());
-        scheduleCTController.isConflict(taskTitle.getText(), username.getText(), startTime.getText(), endTime.getText());
+        scheduleCTController.isConflict(taskTitle.getText(), startTime.getText(), endTime.getText());
 
 
     }

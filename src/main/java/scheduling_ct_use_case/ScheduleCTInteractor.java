@@ -28,7 +28,14 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         // returns that this has conflict
         // otherwise will automatically schedule and return a success view
 
+
         CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), hashMap);
+
+        if (requestModel.getStudentUser() != task.getLeader()) {
+            return scheduleCTOutputBoundary.prepareFailView("User is not the leader. " +
+                    "You don't have scheduling access");
+        }
+
         ArrayList<StudentUser> users = task.getTeammates();
         users.add(task.getLeader());
 
