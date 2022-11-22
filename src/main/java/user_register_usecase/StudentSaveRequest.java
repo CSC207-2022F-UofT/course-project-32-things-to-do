@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StudentSaveRequest extends UserRegSaveRequest {
+    /**
+     * A transient data storage class that contains the same information as a StudentUser
+     */
 
     private String name;
 
@@ -30,7 +33,12 @@ public class StudentSaveRequest extends UserRegSaveRequest {
 
     private final ArrayList<LocalTime> workingHours;
 
-
+    /**
+     * @param name the name of this StudentUser
+     * @param password the password of this StudentUser
+     * @param student the StudentUser that needs to be saved
+     * @param creationTime the time at which this StudentUser was created or saved
+     */
     public StudentSaveRequest(String name, String password, StudentUser student, LocalDateTime creationTime) {
         super(name, password, student, creationTime);
         this.toDoList = student.getToDoList();

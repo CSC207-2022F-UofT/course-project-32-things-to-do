@@ -11,19 +11,34 @@ import java.time.LocalDateTime;
 
 
 public class LogoutInteractor implements LogoutInputBoundary {
+
+    /**
+     * The use case for logging out.
+     */
     final LogoutGateway userGateway;
 
     final LogoutPresenter userPresenter;
 
     final User user;
 
-
+    /**
+     * @param gateway the logout gateway (which interacts with the User database)
+     * @param logoutPresenter the logout presenter
+     * @param u the User that is logging out
+     */
     public LogoutInteractor(LogoutGateway gateway, LogoutPresenter logoutPresenter, User u) {
         this.userGateway = gateway;
         this.userPresenter = logoutPresenter;
         this.user = u;
     }
 
+    /**
+     * Save a new UserRegSaveRequest which contains all of the information in the User that is trying to
+     * log out into the User database.
+     * @param request the request to logout
+     * @return the logout response
+     * @throws IOException
+     */
     @Override
     public LogoutResponseModel create(LogoutRequestModel request) throws IOException {
 

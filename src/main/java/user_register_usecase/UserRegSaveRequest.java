@@ -13,6 +13,10 @@ import java.util.List;
 // Use Case Layer
 
 public class UserRegSaveRequest implements Serializable {
+    /**
+     * A transient data storage class that contains the same information as a User
+     * The parent to InstructorSaveRequest and StudentSaveRequest
+     */
 
     private final String name;
 
@@ -20,6 +24,12 @@ public class UserRegSaveRequest implements Serializable {
 
     private final LocalDateTime creationTime;
 
+    /**
+     * @param name the name of this User
+     * @param password the password of this User
+     * @param user the User object
+     * @param creationTime the time at which this User was saved
+     */
     public UserRegSaveRequest(String name, String password, User user, LocalDateTime creationTime) {
         this.name = name;
         this.password = password;

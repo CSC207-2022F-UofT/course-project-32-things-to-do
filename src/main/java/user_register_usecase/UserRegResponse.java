@@ -8,6 +8,10 @@ public class UserRegResponse {
 
     String creationTime;
 
+    /**
+     * @param login the name of the user that has just logged in
+     * @param creationTime the time of login
+     */
     public UserRegResponse(String login, String creationTime) {
         this.login = login;
         this.creationTime = creationTime;
