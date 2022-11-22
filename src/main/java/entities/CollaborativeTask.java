@@ -124,19 +124,22 @@ public class CollaborativeTask extends Task implements Timeblockable {
 
     // The following four methods (getTimeBlock, setTimeBlock, scheduleTimeBlock, and removeTimeBlock) are here because this class implements Timeblockable/
     // Based on the way Collaborative Tasks are scheduled (Feature 5), not sure if they remain necessary.
+
     /**
      * Set the time block of a Collaborative Task
+     *
      * @return - the time block of the Collaborative Task
-     *         - in array form: {startTime, endTime}
+     * - in array form: {startTime, endTime}
      */
     public LocalDateTime[] getTimeBlock() {
-        return new LocalDateTime[] {this.startTime, this.endTime};
+        return new LocalDateTime[]{this.startTime, this.endTime};
     }
 
     /**
      * Set a new time block and then schedule it
+     *
      * @param startTime - the start of the time block
-     * @param endTime - the end of the time block
+     * @param endTime   - the end of the time block
      */
     public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
         this.startTime = startTime;
@@ -146,6 +149,7 @@ public class CollaborativeTask extends Task implements Timeblockable {
 
     /**
      * Schedule a time block for the user
+     *
      * @return - whether the time block has been successfully scheduled
      */
     public boolean scheduleTimeBlock() {
@@ -154,6 +158,7 @@ public class CollaborativeTask extends Task implements Timeblockable {
 
     /**
      * Remove a time block from the user's schedule
+     *
      * @return - whether the time block has been successfully removed
      */
     public boolean removeTimeBlock() {
@@ -203,24 +208,13 @@ public class CollaborativeTask extends Task implements Timeblockable {
     }
 
     /**
-     * To be used when invitations to join a Collaborative Task are accepted.
+     * Set a new Array List of Student User teammates.
+     * To be used when invitations are accepted, teammates are removed by leader, or teammates remove themselves.
      *
-     * @param newTeammates - an Array List of Student Users who are to be added as teammates.
+     * @param teammates - an Array List of Student Users who are to be added as teammates.
      */
-    public void addTeammates(ArrayList<StudentUser> newTeammates) {
-        this.teammates.addAll(newTeammates);
-    }
-
-    /**
-     * When this method is used by the leader of the Collaborative Task,
-     * the oldTeammates parameter can contain any Student User in the Collaborative Task's teammates list.
-     * When this method is used by any other teammate of the Collaborative Task,
-     * the oldTeammates parameter can only contain themselves.
-     *
-     * @param oldTeammates - an Array List of Student Users who are to be removed as teammates.
-     */
-    public void removeTeammates(ArrayList<StudentUser> oldTeammates) {
-        this.teammates.removeAll(oldTeammates);
+    public void setTeammates(ArrayList<StudentUser> teammates) {
+        this.teammates = teammates;
     }
 
     /**
@@ -232,23 +226,15 @@ public class CollaborativeTask extends Task implements Timeblockable {
     }
 
     /**
-     * To be used when invitations to join a Collaborative Task are sent.
+     * Set a new Array List of Student User pending teammates.
+     * To be used when invitations to join a Collaborative Task are sent, canceled, or responded to.
      *
-     * @param newTeammates - an Array List of Student Users who are being invited to join the Collaborative Task.
+     * @param pendingTeammates - an Array List of Student Users who are being invited to join the Collaborative Task.
      */
-    public void addPendingTeammates(ArrayList<StudentUser> newTeammates) {
-        this.pendingTeammates.addAll(newTeammates);
+    public void setPendingTeammates(ArrayList<StudentUser> pendingTeammates) {
+        this.pendingTeammates = pendingTeammates;
     }
 
-    /**
-     * To be used when invitations to join a Collaborative Task are canceled or responded to.
-     *
-     * @param oldTeammates - an Array List of Student Users who are no longer undergoing the process of being
-     *                     invited to join the Collaborative Task.
-     */
-    public void removePendingTeammates(ArrayList<StudentUser> oldTeammates) {
-        this.pendingTeammates.removeAll(oldTeammates);
-    }
 
     /**
      * @return an Array List of all Student Users who have declined invitations to join the Collaborative Task.
@@ -258,22 +244,14 @@ public class CollaborativeTask extends Task implements Timeblockable {
     }
 
     /**
-     * To be used when invitations to join a Collaborative Task are declined.
+     * Set a new Array List of Student User declined teammates.
+     * To be used when invitations to join a Collaborative Task are declined or when a Student User who has previously
+     * declined an invitation to join the Collaborative Task has accepted a reinvitation to join.
      *
-     * @param newTeammates - an Array List of Student Users who have declined invitations to join the Collaborative Task.
+     * @param declinedTeammates - an Array List of Student Users who have declined invitations to join the Collaborative Task.
      */
-    public void addDeclinedTeammates(ArrayList<StudentUser> newTeammates) {
-        this.declinedTeammates.addAll(newTeammates);
+    public void setDeclinedTeammates(ArrayList<StudentUser> declinedTeammates) {
+        this.declinedTeammates = declinedTeammates;
     }
 
-    /**
-     * To be used when a Student User who has previously declined an invitation to join the Collaborative Task has
-     * accepted a reinvitation to join.
-     *
-     * @param oldTeammates - an Array List of Student Users who have accepted an invitation to join the Collaborative
-     *                     Task after previously declining such an invitation.
-     */
-    public void removeDeclinedTeammates(ArrayList<StudentUser> oldTeammates) {
-        this.declinedTeammates.removeAll(oldTeammates);
-    }
 }
