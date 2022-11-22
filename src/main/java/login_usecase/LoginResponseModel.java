@@ -2,10 +2,17 @@ package login_usecase;
 
 public class LoginResponseModel {
 
+    /**
+     * A login response model with the username and the time of login
+     */
     String name;
 
     String loginTime;
 
+    /**
+     * @param username the name of the User that just logged in
+     * @param timeOfLogin the time at which this User logged in
+     */
     public LoginResponseModel(String username, String timeOfLogin) {
         this.name = username;
         this.loginTime = timeOfLogin;

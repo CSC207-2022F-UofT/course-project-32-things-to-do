@@ -2,9 +2,17 @@ package logout_usecase;
 
 public class LogoutResponseModel {
 
+    /**
+     * A response to the user's request to logout
+     */
     String name;
 
     String logoutTime;
+
+    /**
+     * @param name the username
+     * @param timeOfLogout the time of logout
+     */
     public LogoutResponseModel(String name, String timeOfLogout) {
         this.name = name;
         this.logoutTime = timeOfLogout;
