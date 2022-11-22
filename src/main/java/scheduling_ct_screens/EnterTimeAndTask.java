@@ -28,7 +28,7 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
 
         LabelTextPanel taskInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
 
-        LabelTextPanel userInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
+        LabelTextPanel userInfo = new LabelTextPanel(new JLabel("Enter user name"), username);
 
         LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time"), startTime);
 
