@@ -5,18 +5,25 @@
 ## Register/Log In
 
 Start up the program by running the `Main.java` class in the `src/main/java` directory.
-Upon start up, the first screen the user should see is the registration screen.
+Upon launching the program, a welcome screen with two buttons, `Sign Up` and `Log In`, appears.
 
-## Main Dashboard
-Upon launching the program, a screen with two buttons, `Sign Up` and `Log In`, appears. 
+![](images/welcome_screen.png)
 
-If the user is already registered, they should click `Log In`. 
+If the user is already registered, they should click `Log In`.
 They will be redirected to a login screen where they must enter their username and password into the corresponding fields.
 If the details they enter match the details saved in the database of users, then they will be taken to the dashboard screen.
 
-If the user has not already registered, they should click `Sign Up`. 
-They will enter a username and a password (twice), then "Instructor" or "Student" depending on their role. 
+If the user has not already registered, they should click `Sign Up`.
+They will enter a username and a password (twice), then "Instructor" or "Student" depending on their role.
 If the password meets the requirements and the username is not taken, then they will be taken to the dashboard screen.
+
+![](images/register_screen.png)
+
+## Main Dashboard
+
+The user can access all features of the program through the main dashboard.
+
+![](images/dashboard_screen.png)
 
 ## To-Do List Task Creation
 
@@ -25,6 +32,8 @@ On this screen, the user can add, delete and edit the tasks in their to-do list.
 
 To create tasks, the user must fill in the required fields _(for events the format for start and end date is actually yyyy-MM-ddThh:mm:ss, current prompt is incorrect)_ and click `Submit`. 
 If the formatting is correct and nothing is left blank (except the `priority` field), it should create a new task of whatever type, generate an ID based on the student's name and course ID (if it is a course task), and save it to the task map and TaskMap file immediately.
+
+![](images/event_creation_screen.png)
 
 To delete a task _(UI not yet implemented)_, the user must click a task to view its info and then click the `Delete` button _(not yet implemented)_. 
 This will remove the task from the student's to-do list and move it into their archive, while remaining in the task map.
@@ -41,13 +50,15 @@ On this screen, the user's upcoming tasks will be displayed in either a daily, w
 Both the daily and the weekly view display any tasks in the user's to-do list that have a timeblock, while the monthly view displays the number of tasks that are due (in the case of Assignments) and that are occurring (in the case of Events and Tests) on each day of the month.
 By default, the weekly view is displayed, but the user can change the view through the dropdown menu below the title.
 
+![](images/calendar_screen.png)
+
 The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
 The `Home` button redirects the user back to the main dashboard.
 
 _Not yet implemented (extending on what is currently working in the MVP feature):_
 - The ability to manually select prep time for a Preparatory Task
 
-## Collaborative task creation
+## Collaborative Task Creation
 
 The user inputs the task name of the collaborative task they want to schedule as well as the time block (start time and end time) they want to start scheduling at. 
 Only the leader/creator of the collaborative task is able to schedule it. 
@@ -57,10 +68,12 @@ If there is a conflict with the inputted time block, a screen will pop up that s
 It is on the user to either communicate with their group about this conflict or to try and reschedule another time. 
 If there is no conflict, the dates and times will be scheduled and the program will return the dates and times that are scheduled on a screen to the user.
 
-## Progress tracker
+## Progress Tracker
 
 If the user clicks on the `Progress Tracker` button, the screen for tracking their academic progress will be displayed.
 On this screen, the user can calculate their academic statistics for a course they are enrolled in.
+
+![](images/progress_tracker_screen.png)
 
 To do so, the user must enter the name of the course and click the button `Calculate Grades and Progress` 
 The screen will then display the total weight of completed tasks in that course in % and also a final grade so far of inputted grades for that course. 
@@ -82,6 +95,9 @@ On this screen, the user can either enrol in a course or create a course, depend
 
 **Course creation:**
 Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and a task _(in future implementation they would be able to add more than one task)_.
+
+![](images/course_creation_screen.png)
+
 If the instructor clicks the `Create` button, the program will check whether the course already exists in the CourseMap and if all required fields are filled out.
 If any of checks failed, an error message will pop up.
 Once successful, the `Course` will be added to the `CourseMap`, where its key is the course ID, a unique string made up of the concatenation of the course name and course instructor entered by the instructor themselves.
