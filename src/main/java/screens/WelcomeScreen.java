@@ -3,18 +3,33 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class WelcomeScreen extends JFrame implements ActionListener {
+public class WelcomeScreen extends JPanel implements ActionListener {
+
+    /**
+     * Buttons for the screen
+     */
+    JButton logIn;
+    JButton signUp;
+
+    /**
+     * Objects for connecting to the other screens
+     */
+    CardLayout cardLayout;
+    JPanel screens;
 
     /**
      * A window with a title and a JButton.
      */
-    public WelcomeScreen() {
+    public WelcomeScreen(CardLayout cardLayout, JPanel screens) {
+
+        this.cardLayout = cardLayout;
+        this.screens = screens;
 
         JLabel title = new JLabel("Welcome Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton logIn = new JButton("Log in");
-        JButton signUp = new JButton("Sign up");
+        logIn = new JButton("Log in");
+        signUp = new JButton("Sign up");
 
         JPanel buttons = new JPanel();
         buttons.add(logIn);
@@ -23,20 +38,22 @@ public class WelcomeScreen extends JFrame implements ActionListener {
         logIn.addActionListener(this);
         signUp.addActionListener(this);
 
-        JPanel main = new JPanel();
-        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-
-        main.add(title);
-        main.add(buttons);
-        this.setContentPane(main);
-        this.pack();
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(buttons);
     }
 
     /**
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        if (evt.getSource() == logIn) {
+            cardLayout.show(screens, "login");
+        }
+
+        if (evt.getSource() == signUp) {
+            cardLayout.show(screens, "register");
+        }
     }
 
 }

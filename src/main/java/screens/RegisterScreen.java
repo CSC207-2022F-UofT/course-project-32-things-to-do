@@ -34,11 +34,19 @@ public class RegisterScreen extends JPanel implements ActionListener {
     UserRegController userRegController;
 
     /**
+     * Objects for connecting to the other screens
+     */
+    CardLayout cardLayout;
+    JPanel screens;
+
+    /**
      * A window with a title and a JButton.
      */
-    public RegisterScreen(UserRegController controller) {
+    public RegisterScreen(UserRegController controller, CardLayout cardLayout, JPanel screens) {
 
         this.userRegController = controller;
+        this.cardLayout = cardLayout;
+        this.screens = screens;
 
         JLabel title = new JLabel("Register Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -98,6 +106,7 @@ public class RegisterScreen extends JPanel implements ActionListener {
                     String.valueOf(repeatPassword.getPassword()),
                     String.valueOf(typeOfUser.getText()));
             showMessageDialog(this, "%s created.".format(username.getText()));
+            cardLayout.show(screens, "main");
         } catch (Exception e) {
             showMessageDialog(this, e.getMessage());
         }

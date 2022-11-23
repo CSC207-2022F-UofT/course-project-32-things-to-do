@@ -22,10 +22,18 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
     CourseCreationController courseCreationController;
 
     /**
+     * Objects for connecting to the other screens
+     */
+    JPanel screens;
+    CardLayout screenLayout;
+
+    /**
      * A window with a title, texts to fill in, and JButtons
      */
-    public CourseCreationScreen(CourseCreationController controller) {
+    public CourseCreationScreen(CourseCreationController controller, JPanel screens, CardLayout screenLayout) {
         this.courseCreationController = controller;
+        this.screens = screens;
+        this.screenLayout = screenLayout;
 
         // label for the title of the screen
         JLabel title = new JLabel("Course Creation Screen");
@@ -72,16 +80,11 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         // instructor decides to cancel the course creation process
         if (evt.getActionCommand().equals("Cancel")) {
-            try {
-                // to do
-                JOptionPane.showMessageDialog(this, "screen should close");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+            screenLayout.show(screens, "main");
         } else if (evt.getActionCommand().equals("Save")) {
             try {
                 // initialize new Arraylist and add task
-                ArrayList<String> tasks = new ArrayList<String>();
+                ArrayList<String> tasks = new ArrayList<>();
                 tasks.add(taskName.getText());
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);

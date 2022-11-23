@@ -24,16 +24,15 @@ public class DayViewPanel extends JPanel {
         int year = date.getYear();
 
         // Get working hours
-        LocalTime startTime;
-        LocalTime endTime;
-        ArrayList<LocalTime> workingHours = user.getWorkingHours();
-        if (workingHours.size() == 0) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            startTime = LocalTime.parse("07:00", formatter);
-            endTime = LocalTime.parse("23:00", formatter);
-        } else {
-            startTime = workingHours.get(0);
-            endTime = workingHours.get(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime startTime = LocalTime.parse("07:00", formatter);
+        LocalTime endTime = LocalTime.parse("23:00", formatter);
+        if (user != null) {
+            ArrayList<LocalTime> workingHours = user.getWorkingHours();
+            if (workingHours.size() != 0) {
+                startTime = workingHours.get(0);
+                endTime = workingHours.get(1);
+            }
         }
 
         // Create title panel

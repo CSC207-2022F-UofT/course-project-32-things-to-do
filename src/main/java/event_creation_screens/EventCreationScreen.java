@@ -21,11 +21,15 @@ public class EventCreationScreen extends JPanel implements ActionListener {
     JTextField endTime = new JTextField(15);
     JCheckBox recurring = new JCheckBox();
     JTextField frequency = new JTextField(15);
+    CardLayout screenLayout;
+    JPanel screens;
 
     EventCreationController eventCreationController;
 
-    public EventCreationScreen(EventCreationController controller) {
+    public EventCreationScreen(EventCreationController controller, JPanel screens, CardLayout screenLayout) {
         this.eventCreationController = controller;
+        this.screenLayout = screenLayout;
+        this.screens = screens;
 
         JLabel screenTitle = new JLabel("Event Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -81,7 +85,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 showMessageDialog(this, e.getMessage());
             }
         } else if (evt.getActionCommand().equals("Cancel")) {
-            // todo
+            screenLayout.show(screens, "main");
         }
     }
 }

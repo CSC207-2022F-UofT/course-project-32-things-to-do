@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class CalendarScreen extends JPanel implements ActionListener {
@@ -22,6 +24,10 @@ public class CalendarScreen extends JPanel implements ActionListener {
     JButton exitToMain;
     CardLayout cardLayout;
     JPanel viewPanel;
+
+    /**
+     * Objects for connecting to the other screens
+     */
     JPanel screens;
     CardLayout screenLayout;
 
@@ -29,15 +35,18 @@ public class CalendarScreen extends JPanel implements ActionListener {
      * The current entities
      */
     StudentUser user;
+    ArrayList<Task> allTasks;
 
     /**
      * The window of the screen for the Calendar view
      */
-    public CalendarScreen(StudentUser user, ArrayList<Task> allTasks, JPanel screens, CardLayout screenLayout) {
+    public CalendarScreen(StudentUser user, HashMap<String, Task> taskMap, JPanel screens, CardLayout screenLayout) {
 
         this.user = user;
         this.screens = screens;
         this.screenLayout = screenLayout;
+        Collection<Task> tasks = taskMap.values();
+        this.allTasks = new ArrayList<>(tasks);
 
         // Create label for title of screen
         JLabel title = new JLabel("Calendar");
@@ -57,11 +66,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
         LocalDate currDate = LocalDate.now();
         cardLayout = new CardLayout();
         viewPanel = new JPanel(cardLayout);
-        DayViewPanel dayViewPanel = new DayViewPanel(currDate, allTasks, user);
+        DayViewPanel dayViewPanel = new DayViewPanel(currDate, this.allTasks, user);
         viewPanel.add("day", dayViewPanel);
-        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, allTasks, user);
+        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, this.allTasks, user);
         viewPanel.add("week", weekViewPanel);
-        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, allTasks);
+        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, this.allTasks);
         viewPanel.add("month", monthViewPanel);
 
 
