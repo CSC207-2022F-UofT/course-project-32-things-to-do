@@ -34,6 +34,7 @@ public class ScheduleCTController {
 
     public ScheduleCTResponseModel isConflict(String taskName, String startTime, String endTime) {
         ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime, studentUser);
+        scheduleInput.schedule(inputData, this.hashMap);
         return scheduleInput.schedule(inputData, this.hashMap);
     }
 

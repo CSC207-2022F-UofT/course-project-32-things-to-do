@@ -27,9 +27,9 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
 
         LabelTextPanel taskInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
 
-        LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time"), startTime);
+        LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time as yyyy-MM-dd HH:mm"), startTime);
 
-        LabelTextPanel endInfo = new LabelTextPanel(new JLabel("Enter end time"), endTime);
+        LabelTextPanel endInfo = new LabelTextPanel(new JLabel("Enter end time as yyyy-MM-dd HH:mm"), endTime);
 
 
         JButton submit = new JButton("Submit");
