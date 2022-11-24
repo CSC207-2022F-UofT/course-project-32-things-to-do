@@ -50,12 +50,17 @@ public class Course {
     public ArrayList<String> getStudents() {
         return new ArrayList<String>(this.students);
     }
+    /* add a new student id to the arraylist of student id strings, no return */
+    public void addStudent(String studentID) {
+        this.students.add(studentID);
+    }
 
-    /*
-    arraylist of all the task ids associated with a course
-     */
     public ArrayList<String> getTasks() {
         return new ArrayList<String>(this.tasks);
+    }
+    /* new task added to course (input from instructor user) */
+    public void addTask(String taskID) {
+        this.tasks.add(taskID);
     }
     public Boolean getPublished() {
         return published;
@@ -63,6 +68,7 @@ public class Course {
 
     /*
     setters
+    don't think any setters are needed...
      */
     public void setCourseName(String courseName) {
         this.courseName = courseName;
@@ -78,16 +84,5 @@ public class Course {
     }
     public void setTasks(ArrayList<String> tasks) {
         this.tasks = new ArrayList<String>(tasks);
-    }
-
-    /**
-     * Remove a single Task from tasks
-     * @param task - the Task being removed
-     */
-    public void removeTask(Task task) {
-        this.tasks.remove(task.getId());
-    }
-    public void setPublished(Boolean published) {
-        this.published = published;
     }
 }

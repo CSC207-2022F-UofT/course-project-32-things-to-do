@@ -2,7 +2,7 @@ package course_creation_use_case;
 
 // Use case layer
 
-public interface CourseCreationPresenter {
+public interface CourseCreationOutputBoundary {
 
     /**
      * Alerts user that course creation is successful (no existing course)

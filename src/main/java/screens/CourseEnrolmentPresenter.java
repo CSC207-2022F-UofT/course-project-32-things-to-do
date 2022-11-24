@@ -2,12 +2,12 @@ package screens;
 
 // Interfaces adapters layer
 
-import course_enrolment_use_case.CourseEnrolmentPresenter;
+import course_enrolment_use_case.CourseEnrolmentOutputBoundary;
 import course_enrolment_use_case.CourseEnrolmentResponseModel;
 
 import javax.swing.*;
 
-public class CourseEnrolmentResponseFormatter implements CourseEnrolmentPresenter {
+public class CourseEnrolmentPresenter implements CourseEnrolmentOutputBoundary {
 
     /**
      * Alert student user about course enrolment success

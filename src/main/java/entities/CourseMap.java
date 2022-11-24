@@ -26,6 +26,7 @@ public class CourseMap implements Serializable {
      * @return if the course has been added
      */
     public static boolean addCourse(String id, Course course) {
+        // 2 courses have the same id
         if (courseMap.containsKey(id)) {
             return false;
         }

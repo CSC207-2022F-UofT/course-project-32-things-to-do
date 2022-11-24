@@ -2,12 +2,12 @@ package screens;
 
 // Interface adapters layer
 
-import course_creation_use_case.CourseCreationPresenter;
+import course_creation_use_case.CourseCreationOutputBoundary;
 import course_creation_use_case.CourseCreationResponseModel;
 
 import javax.swing.*;
 
-public class CourseCreationResponseFormatter implements CourseCreationPresenter {
+public class CourseCreationPresenter implements CourseCreationOutputBoundary {
 
     /**
      * Alert user to course creation success
