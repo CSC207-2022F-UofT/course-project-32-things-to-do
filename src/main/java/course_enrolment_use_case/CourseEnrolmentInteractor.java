@@ -26,7 +26,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
      * @param requestModel the input from the student user
      */
     @Override
-    public CourseEnrolmentResponseModel create(CourseEnrolmentRequestModel requestModel) {
+    public CourseEnrolmentResponseModel enrol(CourseEnrolmentRequestModel requestModel) {
 
         // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")

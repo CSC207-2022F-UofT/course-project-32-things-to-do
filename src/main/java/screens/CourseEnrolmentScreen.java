@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     /** student enters course name */
@@ -74,7 +75,12 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
             }
         } else if (evt.getActionCommand().equals("Search")) {
             try {
-                // to do: add studentID to course's task parameter
+                // add studentID to course's task parameter?
+
+                courseEnrolmentController.enrol(courseName.getText(),courseInstructor.getText(), studentID.getText());
+
+                // add course tasks to student's to do list?
+
                 JOptionPane.showMessageDialog(this, "Successfully enrolled in course.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
