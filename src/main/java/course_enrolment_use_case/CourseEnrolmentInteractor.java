@@ -5,6 +5,8 @@ package course_enrolment_use_case;
 
 import entities.*;
 
+import java.util.ArrayList;
+
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
     final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary;
@@ -41,27 +43,40 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // CourseMap is courseid : Course object
         // with course id, find its corresponding Course value, go to its students parameter, and search through that :)
 
-        // to do
-//        if (CourseMap.findCourse(requestModel.getCourseID()).)
-//        if (CourseMap.value(requestModel.getCourseID()).contains(courseEnrolmentDsGateway.existsByStudent(requestModel.getStudentID()))) {
-//            return courseEnrolmentPresenter.prepareFailView("Already enrolled in course.");
-//        }
+        // checks whether the student is already enrolled in the course
+        // gets the arraylist of all students in the course, then checks whether the student id is in it
+        ArrayList<String> courseStudents = CourseMap.findCourse(requestModel.getCourseID()).getStudents();
+        if (courseStudents.contains(requestModel.getStudentID())) {
+            return courseEnrolmentOutputBoundary.prepareFailView("Already enrolled in course");
+        }
 
-        // checks passed; student id can be added to course's students parameter
+        // checks passed; student can be enrolled + course tasks 'cloned' (hopefully?)
 
-        // get the student's id (their username)
-//        String enrolledStudent = requestModel.getStudentID();
-        // to do: add the student id to the associated courses' task parameter
-        // .getStudentId.add.......
+        // add student id to Course parameter 'students'
+        CourseMap.findCourse(requestModel.getCourseID()).addStudent(requestModel.getStudentID());
 
-        // course edits updated
-        // to do: need a 'updateCourse' method?
+        // get course's tasks
+        ArrayList<String> courseTasks = CourseMap.findCourse(requestModel.getCourseID()).getTasks();
+
+        // get the user object for the user in front of the computer
+        /** not sure how i am able to initialize the student / user at the screen
+         * wouldn't make sense to initialize by creating a new StudentUser because i shouldn't be able to
+         * 'get' the password?**/
+        StudentUser user = new StudentUser(requestModel.getStudentID(),"helpwhatispassword");
+        // append each task array to student user's task list
+        for (String task : courseTasks ) {
+            user.getToDoList().add(task);
+        }
+        /** don't think anything in this chunk is needed:
+        // tasks successfully added and saved
+        CourseEnrolmentRequestModel courseEnrolmentModel = new CourseEnrolmentRequestModel(user.get);
+        // do I even need to save anything
+        courseEnrolmentDsGateway.saveStudent(courseEnrolmentModel);
+         **/
 
         // sent to presenter
-        // to do: fix this
-//        CourseEnrolmentResponseModel enrolmentResponseModel =
-//                new CourseEnrolmentResponseModel(enrolledStudent.toLowerCase());
-//        return courseEnrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
-    return null;
+        CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
+                user.getName());
+        return courseEnrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
     }
 }
