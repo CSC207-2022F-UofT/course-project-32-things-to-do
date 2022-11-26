@@ -16,7 +16,10 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
     JTextField startTime = new JTextField(15);
     JTextField endTime = new JTextField(15);
 
-
+    /**
+     * Prepares screen that the user inputs information (task title, start time, end time) into
+     * @param scheduleCTController - the instance of the ScheduleCTController
+     */
     public EnterTimeAndTask(ScheduleCTController scheduleCTController) {
 
         this.scheduleCTController = scheduleCTController;
@@ -55,11 +58,11 @@ public class EnterTimeAndTask extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // React to button click that results in evt
+    /**
+     * Reacts to the (submit) button click that results in event, passing information to the scheduleCTController
+     * @param evt the event to be processed
+     */
     public void actionPerformed(ActionEvent evt) {
-//        System.out.println("Click" + evt.getActionCommand());
         scheduleCTController.isConflict(taskTitle.getText(), startTime.getText(), endTime.getText());
-
-
     }
 }

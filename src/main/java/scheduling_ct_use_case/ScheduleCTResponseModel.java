@@ -12,22 +12,10 @@ public class ScheduleCTResponseModel {
 
     private final boolean isConflict;
     ArrayList<ArrayList<LocalDateTime>> timesToSchedule;
-    String displayString;
 
     public ScheduleCTResponseModel(boolean isConflict) {
 
         this.isConflict = isConflict;
-    }
-
-    public boolean getIsConflict() {
-        return isConflict;
-    }
-
-    public String getDisplayString() {
-        return displayString;
-    }
-    public void setDisplayString(String displayString) {
-        this.displayString = displayString;
     }
 
     public void setTimesToSchedule(ArrayList<ArrayList<LocalDateTime>> timesToSchedule) {
