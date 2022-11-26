@@ -50,9 +50,9 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
 
         LabelTextPanel taskInfo = new LabelTextPanel(new JLabel("Enter task title"), taskTitle);
 
-        LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time"), startTime);
+        LabelTextPanel startInfo = new LabelTextPanel(new JLabel("Enter start time as yyyy-MM-dd HH:mm"), startTime);
 
-        LabelTextPanel endInfo = new LabelTextPanel(new JLabel("Enter end time"), endTime);
+        LabelTextPanel endInfo = new LabelTextPanel(new JLabel("Enter end time as yyyy-MM-dd HH:mm"), endTime);
 
         JButton cancel = new JButton("Cancel");
         JButton submit = new JButton("Schedule");
@@ -75,7 +75,7 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
 
     /**
      * Reacts to the "schedule" button click that results in event, passing information to the scheduleCTController,
-     * and the "cancel" button click, returning back to main
+     * and the "cancel" button click, returns the user back to main
      * @param evt the event to be processed
      */
     public void actionPerformed(ActionEvent evt) {
