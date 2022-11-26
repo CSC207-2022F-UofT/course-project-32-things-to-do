@@ -34,7 +34,10 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
     CardLayout screenLayout;
     JPanel screens;
 
-
+    /**
+     * Prepares screen that the user inputs information (task title, start time, end time) into
+     * @param scheduleCTController - the instance of the ScheduleCTController
+     */
     public ScheduleCTScreen(ScheduleCTController scheduleCTController, JPanel screens, CardLayout screenLayout) {
 
         this.scheduleCTController = scheduleCTController;
@@ -70,7 +73,11 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
         this.add(buttons);
     }
 
-    // React to button click that results in evt
+    /**
+     * Reacts to the "schedule" button click that results in event, passing information to the scheduleCTController,
+     * and the "cancel" button click, returning back to main
+     * @param evt the event to be processed
+     */
     public void actionPerformed(ActionEvent evt) {
         if (evt.getActionCommand().equals("Cancel")) {
             screenLayout.show(screens, "main");
@@ -80,8 +87,6 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
-
-
         }
     }
 }

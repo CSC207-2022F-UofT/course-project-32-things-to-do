@@ -24,19 +24,16 @@ public class ScheduleCTRequestModel {
         this.studentUser = studentUser;
     }
 
-    public String getTaskName() {
-        return taskName;
-    }
+    public String getTaskName() { return taskName; }
+
     public String getStartTime() {
         return startTime;
     }
+
     public String getEndTime() {
         return endTime;
     }
 
-    public StudentUser getStudentUser() {
-        return studentUser;
-    }
-
+    public StudentUser getStudentUser() { return studentUser; }
 
 }
