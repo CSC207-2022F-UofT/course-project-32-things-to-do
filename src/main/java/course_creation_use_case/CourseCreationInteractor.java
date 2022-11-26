@@ -4,6 +4,8 @@ package course_creation_use_case;
 
 import entities.*;
 
+import java.util.ArrayList;
+
 public class CourseCreationInteractor implements CourseCreationInputBoundary {
     final CourseCreationDsGateway courseCreationDSGateway;
     final CourseCreationOutputBoundary courseCreationOutputBoundary;
@@ -31,6 +33,7 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         // Note: Jonathan - no need to check the type of User, students and instructors
         // would have different views because they are in different use cases
         // checks whether the course id is already in the CourseMap (course already exists)
+
         if (courseCreationDSGateway.existsByCourseID(requestModel.getCourseID())) {
             return courseCreationOutputBoundary.prepareFailView("Course already exists.");
         }
@@ -44,6 +47,13 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         // course successfully created and saved
         CourseCreationRequestModel courseCreationModel = new CourseCreationRequestModel(course.getCourseName(), course.getCourseInstructor(), course.getTasks());
         courseCreationDSGateway.saveCourse(courseCreationModel);
+
+        // tasks from course (task id will be course name + task number / index of task in arraylist)
+        ArrayList<String> courseTasks = course.getTasks();
+        for (String task : courseTasks) {
+            // need to initialize new task to add course tasks to TaskMap, but unable to since Task is abstract
+//            TaskMap.addTask(course.getCourseName() + courseTasks.indexOf(task), task);
+        }
 
         // course sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(

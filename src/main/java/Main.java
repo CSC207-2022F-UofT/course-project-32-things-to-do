@@ -1,4 +1,8 @@
 import course_creation_use_case.*;
+//import course_enrolment_use_case.CourseEnrolmentDsGateway;
+import course_enrolment_use_case.CourseEnrolmentInputBoundary;
+import course_enrolment_use_case.CourseEnrolmentInteractor;
+import course_enrolment_use_case.CourseEnrolmentOutputBoundary;
 import entities.*;
 import event_creation_screens.*;
 import event_creation_use_case.*;
@@ -53,6 +57,10 @@ public class Main {
         CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
+//        CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
+//        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor (enrolmentPresenter, courseMap, user.getName());
+//        CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
+
         // Build the GUI
         EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
         screens.add("toDoList", taskScreen);
@@ -65,6 +73,8 @@ public class Main {
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
+
+//        CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolmentController);
 
         MainScreen mainScreen = new MainScreen(screens, cardLayout);
         screens.add("main", mainScreen);

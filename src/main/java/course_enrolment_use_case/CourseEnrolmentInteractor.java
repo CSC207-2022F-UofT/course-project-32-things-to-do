@@ -8,14 +8,12 @@ import entities.*;
 import java.util.ArrayList;
 
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
-    final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
     final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary;
     final CourseMap courseMap;
     final String studentID;
 
-    public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway, CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary,
+    public CourseEnrolmentInteractor(CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary,
                                      CourseMap courseMap, String studentID) {
-        this.courseEnrolmentDsGateway = courseEnrolmentDsGateway;
         this.courseEnrolmentOutputBoundary = courseEnrolmentOutputBoundary;
         this.courseMap = courseMap;
         this.studentID = studentID;
