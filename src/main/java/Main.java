@@ -2,7 +2,6 @@ import course_creation_use_case.*;
 import entities.*;
 import event_creation_screens.*;
 import event_creation_use_case.*;
-import login_usecase.*;
 import progress_tracker_use_case.*;
 import screens.*;
 import user_register_usecase.*;
@@ -49,7 +48,7 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException("Could not create file.");
         }
-        CourseCreationPresenter presenter = new CourseCreationResponseFormatter();
+        CourseCreationOutputBoundary presenter = new CourseCreationPresenter();
         CourseMap courseMap = new CourseMap();
         CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
