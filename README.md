@@ -68,7 +68,7 @@ Then the user must click on the `Submit` button to schedule the collaborative ta
 Only the leader/creator of the collaborative task is able to schedule it.
 Depending on what the user chose frequency and deadline to be, the dates scheduled will differ.
 
-If there is a conflict with the inputted time block, a screen will pop up that says there is a conflict. 
+If there is a conflict with the inputted time block, it will be communicated to the user. 
 It is on the user to either communicate with their group about this conflict or to try and reschedule another time. 
 If there is no conflict, the dates and times will be scheduled and the program will return the successful input.
 
