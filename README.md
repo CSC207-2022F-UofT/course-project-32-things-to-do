@@ -58,15 +58,19 @@ The `Home` button redirects the user back to the main dashboard.
 _Not yet implemented (extending on what is currently working in the MVP feature):_
 - The ability to manually select prep time for a Preparatory Task
 
-## Collaborative Task Creation
+## Scheduling Collaborative Tasks
 
-The user inputs the task name of the collaborative task they want to schedule as well as the time block (start time and end time) they want to start scheduling at. 
-Only the leader/creator of the collaborative task is able to schedule it. 
-Depending on the instance attributes `frequency` and `deadline`, the dates presented to the user will differ. 
+If the user clicks on the `Scheduling CT` button, the screen to schedule a collaborative task will be displayed.
+On this screen, the user can schedule a collaborative task.
+
+To schedule a collaborative task, the user must input the name of the task, as well as the time block (start time and end time) in the format YYYY-MM-dd HH:mm.
+Then the user must click on the `Submit` button to schedule the collaborative task.
+Only the leader/creator of the collaborative task is able to schedule it.
+Depending on what the user chose frequency and deadline to be, the dates scheduled will differ.
 
 If there is a conflict with the inputted time block, a screen will pop up that says there is a conflict. 
 It is on the user to either communicate with their group about this conflict or to try and reschedule another time. 
-If there is no conflict, the dates and times will be scheduled and the program will return the dates and times that are scheduled on a screen to the user.
+If there is no conflict, the dates and times will be scheduled and the program will return the successful input.
 
 ## Progress Tracker
 
