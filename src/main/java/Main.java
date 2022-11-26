@@ -4,6 +4,8 @@ import event_creation_screens.*;
 import event_creation_use_case.*;
 import login_usecase.*;
 import progress_tracker_use_case.*;
+import schedule_conflict_use_case.ScheduleConflictPresenter;
+import scheduler_use_case.SchedulerPresenter;
 import screens.*;
 import user_register_usecase.*;
 
@@ -35,8 +37,12 @@ public class Main {
 
         User user = ((UserRegInteractor) userInteractor).getUser();
 
+        SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
+        ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
+
         EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user);
+        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
+                schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
