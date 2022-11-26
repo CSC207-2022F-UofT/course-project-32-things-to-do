@@ -1,12 +1,14 @@
 package scheduling_ct_use_case;
 
 import entities.*;
+import scheduler_use_case.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * Scheduling Collaborative Tasks Use Case Interactor (use case layer)
@@ -24,9 +26,8 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
      * The main controller of this interactor that calls the helper methods
      */
     @Override
-    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap) {
-        // returns that this has conflict
-        // otherwise will automatically schedule and return a success view
+    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap,
+                                            SchedulerInteractor schedulerInteractor) {
 
         ArrayList<ArrayList<LocalDateTime>> dates = new ArrayList<>();
 
@@ -34,7 +35,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
 
         if (requestModel.getStudentUser() != task.getLeader()) {
             return scheduleCTOutputBoundary.prepareFailView("User is not the leader. " +
-                    "You don't have scheduling access");
+                    "You do not have scheduling access");
         }
 
         ArrayList<StudentUser> users = task.getTeammates();
@@ -46,7 +47,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         LocalDateTime endTime = convertStringToLocalDateTime(requestModel.getEndTime());
 
         for (StudentUser user : users) {
-            ArrayList<Task> userTasks = getTaskFromId(user, hashMap);
+            ArrayList<Task> userTasks = getAllTaskFromIdExceptOne(task, user, hashMap);
             // isUserAvailableAtDateTime returns false if not available
             // if isUserAvailableAtDateTime is false, add it to the list of unavailable users
             if (!isUserAvailableAtDateTime(user, userTasks, startTime, endTime)) {
@@ -55,24 +56,50 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         }
         // if unavailableUser is empty, that means that the users are free and there's no conflict
         if (unavailableUsers.isEmpty()) {
-            if (task.getFrequency().equals("")) {
+            // if task is recurring and the frequency is not an empty string
+            if (task.getRecurring() && task.getFrequency() != "") {
+                dates = getDates(task.getFrequency(), startTime, endTime, task.getDeadline());
+                task.setTimeBlocks(dates);
+            } else {
                 ArrayList<LocalDateTime> theDate = new ArrayList<>();
                 theDate.add(startTime);
                 theDate.add(endTime);
                 dates.add(theDate);
                 task.setTimeBlocks(dates);
-            } else {
-                dates = getDates(task.getFrequency(), startTime, endTime, task.getDeadline());
-                task.setTimeBlocks(dates);
             }
             ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(false);
             scheduleCTResponseModel.setTimesToSchedule(dates);
-
+            task.setTimeBlocks(dates);
+            for (StudentUser user : users) {
+                addToCalendar(user, task, schedulerInteractor, hashMap);
+            }
             return scheduleCTOutputBoundary.prepareNoConflictView(scheduleCTResponseModel);
+        // branches into else when there is a conflict
         } else {
-            ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(true);
-            return scheduleCTOutputBoundary.prepareFailView("Cannot schedule due to conflict");
+            // ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(true);
+            return scheduleCTOutputBoundary.prepareFailView("Cannot schedule due to conflict. " +
+                    "Try another time if you'd like to. :')");
         }
+    }
+
+    /**
+     * Adds the time block to a user's calendar
+     * @param user - the user whose calendar is going to be updated
+     * @param task - the task being added to the calendar
+     * @param schedulerInteractor - scheduler interactor from scheduler_use_case
+     * @param hashMap - hash map of task ids mapped to the task object
+     * @return the scheduler response model
+     */
+    public SchedulerResponseModel addToCalendar(StudentUser user, CollaborativeTask task,
+                                                SchedulerInteractor schedulerInteractor, HashMap<String, Task> hashMap) {
+        // iterate through the array list of users
+        // call getAllTaskFromIdExceptOne on the arrayList of studentUsers (gets all tasks except one wanting to
+        // schedule, bc if you also get the one you want to schedule, schedule conflict might come up)
+        // create a SchedulerRequestModel and call
+
+        ArrayList<Task> allStudentTask = getAllTaskFromIdExceptOne(task, user, hashMap);
+        SchedulerRequestModel schedulerRequestModel = new SchedulerRequestModel(task, allStudentTask, user);
+        return schedulerInteractor.schedule(schedulerRequestModel);
     }
 
     /**
@@ -159,6 +186,10 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
                 if (((Assignment) task).getPrepTimeScheduled() != null) {
                     isAvailable.add(assignmentFree((Assignment) task, start, end));
                 }
+            } else if (task instanceof CollaborativeTask) {
+                if (((CollaborativeTask) task).getTimeBlocks() != null) {
+                    isAvailable.add(collaborativeTaskFree((CollaborativeTask) task, start, end));
+                }
             }
 
         }
@@ -175,15 +206,30 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         return is_task_free && is_working_hours_free;
     }
 
+    /**
+     * Given a task that is an instance of Event, return whether any of the time blocks associated with that task
+     * does not conflict with the given time block
+     * @param event - the Event that you want to see if conflicts occur
+     * @param start - the start date and time of the time block
+     * @param end - the end date and time of the time block
+     * @return - true if there are no conflicts, false if there are conflicts
+     */
     public boolean eventFree(Event event, LocalDateTime start, LocalDateTime end) {
 
         LocalDateTime[] timeBlock = event.getTimeBlock();
         LocalDateTime timeBlockStart = timeBlock[0];
         LocalDateTime timeBlockEnd = timeBlock[1];
         return givenTime(timeBlockStart, timeBlockEnd, start, end);
-        // returns true if there is no conflict
     }
 
+    /**
+     * Given a task that is an instance of Test, return whether any of the time blocks associated with that task
+     * does not conflict with the given time block
+     * @param test - the Test that you want to see if conflicts occur
+     * @param start - the start date and time of the time block
+     * @param end - the end date and time of the time block
+     * @return - true if there are no conflicts, false if there are conflicts
+     */
     public boolean testFree(Test test, LocalDateTime start, LocalDateTime end) {
         LocalDateTime[] timeBlock = test.getTimeBlock();
         LocalDateTime timeBlockStart = timeBlock[0];
@@ -207,19 +253,53 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         return is_test_free;
     }
 
+    /**
+     * Given a task that is an instance of Assignment, return whether any of the time blocks associated with that task
+     * does not conflict with the given time block
+     * @param assignment - the Assignment that you want to see if conflicts occur
+     * @param start - the start date and time of the time block
+     * @param end - the end date and time of the time block
+     * @return true if there are no conflicts, false if there are conflicts
+     */
     public boolean assignmentFree(Assignment assignment, LocalDateTime start, LocalDateTime end) {
 
         boolean is_assignment_free = true;
         ArrayList<ArrayList<LocalDateTime>> prepTime = assignment.getPrepTimeScheduled();
 
-        for (ArrayList<LocalDateTime> prep : prepTime) {
-            LocalDateTime prepStart = prep.get(0);
-            LocalDateTime prepEnd = prep.get(1);
-            if (!givenTime(prepStart, prepEnd, start, end)) {
-                is_assignment_free = false;
+        if (prepTime != null) {
+            for (ArrayList<LocalDateTime> prep : prepTime) {
+                LocalDateTime prepStart = prep.get(0);
+                LocalDateTime prepEnd = prep.get(1);
+                if (!givenTime(prepStart, prepEnd, start, end)) {
+                    is_assignment_free = false;
+                }
             }
         }
         return is_assignment_free;
+    }
+
+    /**
+     * Given a task that is an instance of CollaborativeTask, return whether any of the time blocks associated with that
+     * task does not conflict with the given time block
+     * @param collaborativeTask - the CollaborativeTask that you want to see if conflicts occur
+     * @param start - the start date and time of the time block
+     * @param end - the end date and time of the time block
+     * @return true if there are no conflicts, false if there are conflicts
+     */
+    public boolean collaborativeTaskFree(CollaborativeTask collaborativeTask, LocalDateTime start, LocalDateTime end) {
+        boolean is_collaborative_task_free = true;
+
+        ArrayList<ArrayList<LocalDateTime>> meetingTimes = collaborativeTask.getTimeBlocks();
+         if (meetingTimes != null) {
+             for (ArrayList<LocalDateTime> timeBlock : meetingTimes) {
+                 LocalDateTime timeStart = timeBlock.get(0);
+                 LocalDateTime timeEnd = timeBlock.get(1);
+                 if (!givenTime(timeStart, timeEnd, start, end)) {
+                     is_collaborative_task_free = false;
+                 }
+             }
+         }
+         return is_collaborative_task_free;
     }
 
     /**
@@ -228,7 +308,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
      * @param timeBlockEnd - the end of the time block
      * @param workingHoursStart - the start of a user's working hours
      * @param workingHoursEnd - the end of a user's working hours
-     * @return whether or not a time block conflicts with a user's working hours
+     * @return true if there are no conflict, false if there are conflicts
      */
     public boolean workingHoursFree(LocalDateTime timeBlockStart, LocalDateTime timeBlockEnd,
                                     LocalTime workingHoursStart, LocalTime workingHoursEnd) {
@@ -240,12 +320,16 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         } else if (timeBlockStart.getHour() < workingHoursStart.getHour() &&
                 timeBlockEnd.getHour() > workingHoursEnd.getHour()) {
             return false;
-        // if timeBlockStart is before workingHoursStart and timeBlockEnd is before workingHoursEnd
+        // if timeBlockStart is before workingHoursStart, timeBlockEnd is after workingHoursStart,
+            // and timeBlockEnd is before workingHoursEnd
         } else if (timeBlockStart.getHour()< workingHoursStart.getHour() &&
+                timeBlockEnd.getHour() > workingHoursStart.getHour() &&
                 timeBlockEnd.getHour() < workingHoursEnd.getHour()) {
             return false;
-        // if timeBlockStart is after workingHoursStart and timeBlockEnd is after workingHoursEnd
+        // if timeBlockStart is after workingHoursStart, timeBlockStart is before workingHoursEnd,
+            // and timeBlockEnd is after workingHoursEnd
         } else if (timeBlockStart.getHour() > workingHoursStart.getHour() &&
+                timeBlockStart.getHour() < workingHoursEnd.getHour() &&
                 timeBlockEnd.getHour() > workingHoursEnd.getHour()) {
             return false;
         // if timeBlockStart is equal to workingHoursStart
@@ -273,8 +357,8 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
             // in the case where it covers the time period
         } else if (timeBlockStart.isBefore(start) && timeBlockEnd.isAfter(end)) {
             return false;
-            // in the case where timeBlockStart is before start and timeBlockEnd is before end
-            // PROBLEM
+            // in the case where timeBlockStart is before start, timeBlockEnd is after start,
+            // and timeBlockEnd is before end
         } else if (timeBlockStart.isBefore(start) && timeBlockEnd.isAfter(start) && timeBlockEnd.isBefore(end)) {
             return false;
             // if the start time same as start time of block, return false
@@ -283,18 +367,19 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
             // if the end time same as end time of block, return false
         } else if (timeBlockEnd.isEqual(end)) {
             return false;
-            // in the case where timeBlockStart is after start time and timeBlockEnd is after end time
-            // PROBLEM
+            // in the case where timeBlockStart is after start time, timeBlockStart is before end time
+            // and timeBlockEnd is after end time
         } else return !(timeBlockStart.isAfter(start) && timeBlockStart.isBefore(end) && timeBlockEnd.isAfter(end));
     }
 
     /**
-     * Retrieve the tasks associated with a user from the given hash map
+     * Retrieve the tasks associated with a user from the given hash map, other than the task that you want scheduled
+     * (remove that task or else when checking for conflicts, it might conflict with that task, don't want that)
      * @param user - the student user
      * @param hashMap - a hash map of all task ids to tasks
      * @return an array list of tasks
      */
-    public ArrayList<Task> getTaskFromId(StudentUser user, HashMap<String, Task> hashMap) {
+    public ArrayList<Task> getAllTaskFromIdExceptOne(Task task, StudentUser user, HashMap<String, Task> hashMap) {
         ArrayList<Task> userTasks = new ArrayList<>();
 
         ArrayList<String> toDoList = user.getToDoList();
@@ -303,6 +388,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
             Task task_value = hashMap.get(taskId);
             userTasks.add(task_value);
         }
+        userTasks.remove(task);
         return userTasks;
     }
 
@@ -310,7 +396,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
      * Get the task object from the task map given the name of the task
      * @param taskName - the name of the task
      * @param hashMap - hashmap of task ids to tasks
-     * @return the task object that corresponds to the task name
+     * @return the task object that corresponds to the task name, if it exists
      */
     public CollaborativeTask getTaskObjectFromName(String taskName, HashMap<String, Task> hashMap) {
         for (Task task : hashMap.values()) {
