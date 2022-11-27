@@ -49,7 +49,7 @@ public class Main {
         CourseCreationDsGateway course;
         try {
             course = new FileCourse("./courses.csv");
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("Could not create file.");
         }
         CourseCreationOutputBoundary presenter = new CourseCreationPresenter();

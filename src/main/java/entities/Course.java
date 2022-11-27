@@ -1,12 +1,13 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * entity layer
  */
 
-public class Course {
+public class Course implements Serializable {
     /**
      * class for Course entity with private instance variables
      * using StudentUser, InstructorUser, and Task entities

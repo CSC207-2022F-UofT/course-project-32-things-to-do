@@ -3,6 +3,8 @@ package course_creation_use_case;
 // Use case layer
 
 import entities.*;
+import read_write.CourseReadWrite;
+import read_write.TaskReadWrite;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,10 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
             // need to initialize new task to add course tasks to TaskMap, but unable to since Task is abstract
 //            TaskMap.addTask(course.getCourseName() + courseTasks.indexOf(task), task);
         }
+
+        // save course to file
+//        CourseReadWrite crw = new CourseReadWrite("src/data/CourseMap");
+//        CourseMap.saveToFile(trw);
 
         // course sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(
