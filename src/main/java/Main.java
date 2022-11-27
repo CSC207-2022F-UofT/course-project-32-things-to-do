@@ -51,6 +51,11 @@ public class Main {
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor (trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
 
+        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
+        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
+        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
+
         CourseCreationDsGateway course;
         try {
             course = new FileCourse("./courses.csv");
@@ -68,6 +73,9 @@ public class Main {
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
         screens.add("calendar", calendarScreen);
+
+        ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
+        screens.add("scheduleCT", scheduleCTScreen);
 
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
