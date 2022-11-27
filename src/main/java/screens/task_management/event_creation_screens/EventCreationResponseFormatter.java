@@ -7,6 +7,7 @@ public class EventCreationResponseFormatter implements EventCreationPresenter {
 
     @Override
     public EventCreationResponseModel prepareSuccessView(EventCreationResponseModel e) {
+        System.out.println("yessir");
         return e;
     }
 
