@@ -51,7 +51,7 @@ public class DayViewPanel extends JPanel {
         ArrayList<String> weekday = new ArrayList<>();
         weekday.add("");
         int weekdayInt = date.getDayOfWeek().getValue();
-        weekday.add(weekdays[weekdayInt]);
+        weekday.add(weekdays[weekdayInt - 1]);
 
         for (int i = 0; i < weekday.size(); i++) {
             GridBagConstraints c = new GridBagConstraints();
