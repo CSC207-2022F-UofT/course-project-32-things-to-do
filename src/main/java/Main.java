@@ -8,6 +8,8 @@ import scheduling_ct_screens.*;
 import scheduling_ct_use_case.ScheduleCTInputBoundary;
 import scheduling_ct_use_case.ScheduleCTInteractor;
 import scheduling_ct_use_case.ScheduleCTOutputBoundary;
+import schedule_conflict_use_case.ScheduleConflictPresenter;
+import scheduler_use_case.SchedulerPresenter;
 import screens.*;
 import user_register_usecase.*;
 
@@ -39,13 +41,13 @@ public class Main {
 
         User user = ((UserRegInteractor) userInteractor).getUser();
 
-//        SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
-//        ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
-//
-//        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-//        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
-//                schedulerPresenter, scheduleConflictPresenter);
-//        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
+        SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
+        ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
+
+        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
+        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
+                schedulerPresenter, scheduleConflictPresenter);
+        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor (trackerPresenter);
@@ -68,8 +70,8 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-//        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-//        screens.add("toDoList", taskScreen);
+        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
+        screens.add("toDoList", taskScreen);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
         screens.add("calendar", calendarScreen);
