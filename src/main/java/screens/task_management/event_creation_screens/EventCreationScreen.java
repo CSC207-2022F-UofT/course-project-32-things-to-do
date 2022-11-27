@@ -105,7 +105,11 @@ public class EventCreationScreen extends JPanel implements ActionListener {
 
                     eventCreationController.create(title.getText(), valPriority,
                             startDate, endDate, valRecurring, frequency.getText());
-
+                    /*
+                    todo: this message is not appearing, there is a null pointer exception in (i think) the interactor,
+                        tried print debugging and stuff stopped printing at the creation of the new event
+                        i am in shambles.
+                     */
                     showMessageDialog(this, "message");
                 } catch (Exception e) {
                     showMessageDialog(this, e);
