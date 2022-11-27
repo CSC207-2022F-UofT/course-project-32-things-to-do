@@ -6,6 +6,7 @@ import entities.Timeblockable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -50,7 +51,10 @@ public class DayViewPanel extends JPanel {
         String[] weekdays = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         ArrayList<String> weekday = new ArrayList<>();
         weekday.add("");
-        int weekdayInt = date.getDayOfWeek().getValue();
+        WeekFields weekField = WeekFields.SUNDAY_START;
+        TemporalField tempField = weekField.dayOfWeek();
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        int weekdayInt = dayOfWeek.get(tempField);
         weekday.add(weekdays[weekdayInt - 1]);
 
         for (int i = 0; i < weekday.size(); i++) {
