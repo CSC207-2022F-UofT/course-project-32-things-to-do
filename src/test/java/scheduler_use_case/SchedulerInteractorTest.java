@@ -2,9 +2,9 @@
 //
 //import entities.*;
 //import org.junit.jupiter.api.Test;
-//import schedule_conflict_use_case.ScheduleConflictPresenter;
-//import screens.ScheduleConflictResponseFormatter;
-//import screens.SchedulerResponseFormatter;
+//import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+//import screens.calendar_scheduler.ScheduleConflictResponseFormatter;
+//import screens.calendar_scheduler.SchedulerResponseFormatter;
 //
 //import java.time.LocalDateTime;
 //
