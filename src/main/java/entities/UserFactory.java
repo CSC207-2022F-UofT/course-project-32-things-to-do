@@ -7,5 +7,7 @@ public interface UserFactory {
     /**
      * Creates Users with the specified name and password
      */
-    User create(String name, String password);
+    StudentUser createStudent(String name, String password);
+
+    InstructorUser createInstructor(String name, String password);
 }

@@ -45,6 +45,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
         LocalDateTime now = LocalDateTime.now();
 
         UserRegSaveRequest userModel;
+
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
                     (StudentUser) user, now);

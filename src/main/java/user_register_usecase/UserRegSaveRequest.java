@@ -48,4 +48,8 @@ public class UserRegSaveRequest implements Serializable {
         return creationTime;
     }
 
+    public User initializeUser() {
+        return null;
+    }
+
 }

@@ -1,5 +1,6 @@
 package user_register_usecase;
 
+import entities.InstructorUser;
 import entities.StudentUser;
 
 import java.time.LocalDateTime;
@@ -82,6 +83,19 @@ public class StudentSaveRequest extends UserRegSaveRequest {
     public ArrayList<LocalTime> getWorkingHours() {
 
         return this.workingHours;
+    }
+
+    @Override
+    public StudentUser initializeUser() {
+        StudentUser s = new StudentUser(this.name, this.password);
+        s.setCourses(this.courses);
+        s.setToDoList(this.toDoList);
+        s.setTaskArchive(this.getTaskArchive());
+        s.setInbox(this.getInbox());
+        s.setNotifications(this.getNotifications());
+        s.setDesiredGrades(this.getDesiredGrades());
+        s.setWorkingHours(this.getWorkingHours());
+        return s;
     }
 
 }

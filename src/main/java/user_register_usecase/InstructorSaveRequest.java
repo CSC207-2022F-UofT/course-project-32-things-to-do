@@ -33,4 +33,11 @@ public class InstructorSaveRequest extends UserRegSaveRequest {
         return this.courses;
     }
 
+    @Override
+    public InstructorUser initializeUser() {
+        InstructorUser i = new InstructorUser(this.name, this.password);
+        i.setCourses(this.courses);
+        return i;
+    }
+
 }

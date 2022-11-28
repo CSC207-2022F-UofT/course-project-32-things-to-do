@@ -17,24 +17,25 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
     final UserRegPresenter userPresenter;
 
-//    private UserFactory userFactory;
+    final UserFactory userFactory;
 
     private User user;
 
     /**
      * @param gateway the gateway that interacts with the User database
      * @param userRegPresenter the presenter that shows the success or failure of this attempt to register
+     * @param factory the factory that creates Users
      */
-    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter) {
+    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter, UserFactory factory) {
         this.userGateway = gateway;
         this.userPresenter = userRegPresenter;
-//        this.userFactory = null;
+        this.userFactory = factory;
     }
 
     /**
      * @param request the request to register this user
      * @return the response to whether this request to register was successful
-     * @throws IOException
+     * @throws IOException if anything goes wrong
      */
     @Override
     public UserRegResponse create(UserRegRequest request) throws IOException {
@@ -46,19 +47,15 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Enter either 'Instructor' or 'Student'.");
         }
 
-        UserFactory userFactory;
         if (request.getTypeOfUser().equals("Instructor")) {
-            userFactory = new InstructorUserFactory();
+            this.user = userFactory.createInstructor(request.getName(), request.getPassword());
         } else {
-            userFactory = new StudentUserFactory();
+            this.user = userFactory.createStudent(request.getName(), request.getPassword());
         }
 
-        User user = userFactory.create(request.getName(), request.getPassword());
         if (!user.checkPassword()) {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
         }
-
-        this.user = user;
 
         LocalDateTime now = LocalDateTime.now();
 
