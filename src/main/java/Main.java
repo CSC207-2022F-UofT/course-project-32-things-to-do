@@ -8,6 +8,8 @@ import scheduling_ct_screens.*;
 import scheduling_ct_use_case.ScheduleCTInputBoundary;
 import scheduling_ct_use_case.ScheduleCTInteractor;
 import scheduling_ct_use_case.ScheduleCTOutputBoundary;
+import schedule_conflict_use_case.ScheduleConflictPresenter;
+import scheduler_use_case.SchedulerPresenter;
 import screens.*;
 import user_register_usecase.*;
 
@@ -39,8 +41,12 @@ public class Main {
 
         User user = ((UserRegInteractor) userInteractor).getUser();
 
+        SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
+        ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
+
         EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user);
+        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
+                schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();

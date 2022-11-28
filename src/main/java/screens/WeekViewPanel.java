@@ -62,7 +62,11 @@ public class WeekViewPanel extends JPanel {
         Calendar iterator = (Calendar) calendar.clone();
         iterator.add(Calendar.DAY_OF_MONTH, -(iterator.get(Calendar.DAY_OF_WEEK) - 1));
         Calendar maximum = (Calendar) calendar.clone();
-        maximum.add(Calendar.DAY_OF_WEEK, 7-dayOfWeek);
+        if (maximum.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            maximum.add(Calendar.DAY_OF_WEEK, 7-dayOfWeek);
+        } else {
+            maximum.add(Calendar.DAY_OF_WEEK, dayOfWeek);
+        }
 
         // Create day of week panels
         String[] weekdays = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
