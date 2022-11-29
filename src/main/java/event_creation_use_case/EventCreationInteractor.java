@@ -4,6 +4,10 @@ import entities.Event;
 import entities.StudentUser;
 import entities.TaskMap;
 import read_write.*;
+import schedule_conflict_use_case.ScheduleConflictPresenter;
+import scheduler_use_case.SchedulerInteractor;
+import scheduler_use_case.SchedulerPresenter;
+import scheduler_use_case.SchedulerRequestModel;
 
 import java.time.LocalDateTime;
 
@@ -11,9 +15,14 @@ public class EventCreationInteractor implements EventCreationInputBoundary {
     final EventCreationPresenter presenter;
     final StudentUser student;
 
-    public EventCreationInteractor(EventCreationPresenter eventPresenter, StudentUser student) {
+    // For connecting to Scheduler use case
+    final SchedulerInteractor scheduler;
+
+    public EventCreationInteractor(EventCreationPresenter eventPresenter, StudentUser student,
+                                   SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
         this.presenter = eventPresenter;
         this.student = student;
+        this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
     }
 
     @Override
@@ -29,12 +38,16 @@ public class EventCreationInteractor implements EventCreationInputBoundary {
                 requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getRecurring(),
                 requestModel.getFrequency());
 
+        EventCreationResponseModel eventResponseModel = new EventCreationResponseModel(
+                requestModel.getTitle(), requestModel.getStartTime(), requestModel.getEndTime());
+
+        // Schedule the newly created event
+        SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(event, student);
+        scheduler.schedule(scheduleRequestModel);
 
         TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
         TaskMap.saveToFile(trw);
 
-        EventCreationResponseModel eventResponseModel = new EventCreationResponseModel(
-                requestModel.getTitle(), requestModel.getStartTime(), requestModel.getEndTime());
         return presenter.prepareSuccessView(eventResponseModel);
     }
 }

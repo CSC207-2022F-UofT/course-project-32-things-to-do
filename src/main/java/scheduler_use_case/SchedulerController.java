@@ -1,9 +1,11 @@
 package scheduler_use_case;
 
+import entities.Event;
 import entities.StudentUser;
 import entities.Task;
+import event_creation_use_case.EventCreationResponseModel;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class SchedulerController {
 
@@ -22,10 +24,12 @@ public class SchedulerController {
 
     /**
      * Create a request model with the given task and return the corresponding response model
-     * @param task - the given task
+     * @param responseModel - the created task's response model
      */
-    SchedulerResponseModel schedule(Task task, ArrayList<Task> allTasks, StudentUser user) {
-        SchedulerRequestModel requestModel = new SchedulerRequestModel(task, allTasks, user);
+    public SchedulerResponseModel schedule(EventCreationResponseModel responseModel) {
+        Event task = new Event("test", "test", 0, LocalDateTime.now(), LocalDateTime.now(), false, null);
+        StudentUser user = new StudentUser("test", "test");
+        SchedulerRequestModel requestModel = new SchedulerRequestModel(task, user);
 
         return taskInput.schedule(requestModel);
     }

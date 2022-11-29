@@ -13,11 +13,11 @@ public class SchedulerRequestModel {
 
     /**
      * Creates a request model with the given input
-     * @param task - the given Task
-     * @param allTasks - the given user's to-do list
-     * @param user - the given StudentUser
+     * @param task - the newly created task
+     * @param user - the student currently logged in
      */
-    public SchedulerRequestModel(Task task, ArrayList<Task> allTasks, StudentUser user) {
+    public SchedulerRequestModel(Task task, StudentUser user) {
+
         this.task = task;
         this.allTasks = allTasks;
         this.user = user;
