@@ -1,20 +1,4 @@
-package test_scheduling_ct_use_case;
-
-import entities.*;
-import org.junit.jupiter.api.Test;
-import scheduling_ct_screens.ScheduleCTPresenter;
-import scheduling_ct_screens.ScheduleCTView;
-import scheduling_ct_screens.ScheduleCTViewInterface;
-import scheduling_ct_use_case.*;
-
-import javax.swing.*;
-import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
+package test_scheduling_collaborative_tasks;
 
 class ScheduleCTInteractorTest {
 

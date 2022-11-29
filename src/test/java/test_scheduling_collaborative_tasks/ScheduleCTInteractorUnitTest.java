@@ -1,6 +1,5 @@
-package test_scheduling_ct_use_case;
+package test_scheduling_collaborative_tasks;
 
-import entities.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import scheduling_ct_screens.ScheduleCTPresenter;
