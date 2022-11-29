@@ -6,6 +6,8 @@ import user_register_usecase.UserRegGateway;
 import user_register_usecase.UserRegSaveRequest;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.KeyException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,7 +27,19 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
          */
 
         this.filePath = path;
-        this.accounts = readFile();
+
+        // method that checks if a path or file exists or not and then
+        // writes an empty map to a new file if it doesn't exist
+        // and reads the existing file if it does exist
+
+        if (Files.exists(Path.of(path))) {
+            this.accounts = readFile();
+        } else {
+            this.accounts = new HashMap<String, UserRegSaveRequest>();
+            save();
+        }
+
+
     }
 
     private HashMap<String, UserRegSaveRequest> readFile() throws IOException, ClassNotFoundException {
@@ -49,7 +63,7 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
 
     private void save() throws IOException {
         /*
-         * Write the new map of usernames to UserRegSaveRequest objects into the User database file.
+         * Write the map of usernames to UserRegSaveRequest objects into the User database file.
          */
 
         FileOutputStream fileWriter = new FileOutputStream(filePath);
