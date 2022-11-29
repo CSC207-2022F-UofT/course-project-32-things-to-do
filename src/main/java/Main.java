@@ -1,14 +1,18 @@
-import course_creation_use_case.*;
-//import course_enrolment_use_case.CourseEnrolmentDsGateway;
-import course_enrolment_use_case.CourseEnrolmentInputBoundary;
-import course_enrolment_use_case.CourseEnrolmentInteractor;
-import course_enrolment_use_case.CourseEnrolmentOutputBoundary;
 import entities.*;
-import event_creation_screens.*;
-import event_creation_use_case.*;
-import progress_tracker_use_case.*;
 import screens.*;
-import user_register_usecase.*;
+import screens.calendar_scheduler.*;
+import screens.course_progress.*;
+import screens.courses_features.*;
+import screens.login_registration.*;
+import screens.task_management.event_creation_screens.*;
+import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_tracker.progress_tracker_use_case.*;
+import screens.collaborative_task_scheduling.*;
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.login_registration.user_register_usecase.*;
+import use_cases.task_management.event_creation_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,31 +43,31 @@ public class Main {
         User user = ((UserRegInteractor) userInteractor).getUser();
 
         EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user);
-        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
+//        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user);
+//        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor (trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
 
         CourseCreationDsGateway course;
-        try {
-            course = new FileCourse("./courses.csv");
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Could not create file.");
-        }
-        CourseCreationOutputBoundary presenter = new CourseCreationPresenter();
-        CourseMap courseMap = new CourseMap();
-        CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
-        CourseCreationController courseCreationController = new CourseCreationController(interactor);
+//        try {
+//            course = new FileCourse("./courses.csv");
+//        } catch (IOException | ClassNotFoundException e) {
+//            throw new RuntimeException("Could not create file.");
+//        }
+//        CourseCreationOutputBoundary presenter = new CourseCreationPresenter();
+//        CourseMap courseMap = new CourseMap();
+//        CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
+//        CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
 //        CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
 //        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor (enrolmentPresenter, courseMap, user.getName());
 //        CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
         // Build the GUI
-        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-        screens.add("toDoList", taskScreen);
+//        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
+//        screens.add("toDoList", taskScreen);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
         screens.add("calendar", calendarScreen);
@@ -71,8 +75,8 @@ public class Main {
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
 
-        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
-        screens.add("course", courseCreationScreen);
+//        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
+//        screens.add("course", courseCreationScreen);
 
 //        CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolmentController);
 

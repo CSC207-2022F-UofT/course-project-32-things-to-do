@@ -14,6 +14,7 @@ public class MainScreen extends JPanel implements ActionListener {
     JButton calendar;
     JButton progressTracker;
     JButton courses;
+    JButton scheduleCT;
 
     /**
      * Objects for connecting to the other screens
@@ -38,11 +39,13 @@ public class MainScreen extends JPanel implements ActionListener {
         calendar = new JButton("Calendar");
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
+        scheduleCT = new JButton("Schedule Collaborative Task");
 
         toDoList.addActionListener(this);
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
+        scheduleCT.addActionListener(this);
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
@@ -50,6 +53,7 @@ public class MainScreen extends JPanel implements ActionListener {
         buttons.add(calendar);
         buttons.add(progressTracker);
         buttons.add(courses);
+        buttons.add(scheduleCT);
 
         // Add all components to the panel
         this.add(title);
@@ -72,6 +76,9 @@ public class MainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == courses) {
             cardLayout.show(screens, "course");
+        }
+        if (evt.getSource() == scheduleCT) {
+            cardLayout.show(screens, "scheduleCT");
         }
 
     }
