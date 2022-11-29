@@ -1,14 +1,12 @@
 package scheduling_ct_use_case;
 
 import entities.*;
-import scheduler_use_case.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Scheduling Collaborative Tasks Use Case Interactor (use case layer)

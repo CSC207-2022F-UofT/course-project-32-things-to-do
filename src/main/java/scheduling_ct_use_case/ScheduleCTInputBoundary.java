@@ -1,7 +1,6 @@
 package scheduling_ct_use_case;
 
 import entities.Task;
-import scheduler_use_case.SchedulerInteractor;
 
 import java.util.HashMap;
 
