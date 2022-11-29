@@ -1,8 +1,8 @@
 package event_creation_screens;
 
-import task_creation_use_case.EventCreationRequestModel;
-import task_creation_use_case.TaskCreationInputBoundary;
-import task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_creation_use_case.EventCreationRequestModel;
 
 import java.time.LocalDateTime;
 

@@ -1,9 +1,12 @@
-package task_edit_use_case;
+package use_cases.task_creation_use_case;
 
-public class TaskEditResponseModel {
+public class TaskCreationResponseModel {
+    // the title of the Task
     private final String title;
+    // the type of Task created (one of "Event", "Assignment", "Test")
     private final String type;
-    public TaskEditResponseModel(String title, String type) {
+
+    public TaskCreationResponseModel(String title, String type) {
         this.title = title;
         this.type = type;
     }

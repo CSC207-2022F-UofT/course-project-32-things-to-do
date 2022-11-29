@@ -1,11 +1,11 @@
-package screens.task_management.task_deletion_screens;
+package task_deletion_screens;
 
 import entities.Course;
 import entities.StudentUser;
 import entities.Task;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionInputBoundary;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionRequestModel;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionResponseModel;
+import use_cases.task_deletion_use_case.TaskDeletionRequestModel;
+import use_cases.task_deletion_use_case.TaskDeletionResponseModel;
+import use_cases.task_deletion_use_case.TaskDeletionInputBoundary;
 
 public class TaskDeletionController {
     final TaskDeletionInputBoundary input;

@@ -1,4 +1,4 @@
-package task_edit_use_case;
+package use_cases.task_edit_use_case;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;

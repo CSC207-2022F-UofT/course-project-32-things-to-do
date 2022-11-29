@@ -1,6 +1,6 @@
 package entities;
 
-import use_cases.task_management.read_write.ReadWriter;
+import use_cases.read_write.ReadWriter;
 
 import java.io.IOException;
 import java.io.Serializable;

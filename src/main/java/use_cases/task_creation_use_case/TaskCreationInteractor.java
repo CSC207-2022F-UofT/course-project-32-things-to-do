@@ -1,7 +1,7 @@
-package task_creation_use_case;
+package use_cases.task_creation_use_case;
 
 import entities.*;
-import read_write.TaskReadWrite;
+import use_cases.read_write.TaskReadWrite;
 
 import java.time.LocalDateTime;
 

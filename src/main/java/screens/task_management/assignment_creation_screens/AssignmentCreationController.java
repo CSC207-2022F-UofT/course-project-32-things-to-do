@@ -1,9 +1,9 @@
 package assignment_creation_screens;
 
-import task_creation_use_case.AssignmentCreationRequestModel;
-import task_creation_use_case.TaskCreationInputBoundary;
-import task_creation_use_case.TaskCreationRequestModel;
-import task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_creation_use_case.AssignmentCreationRequestModel;
+import use_cases.task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_creation_use_case.TaskCreationRequestModel;
 
 import java.time.LocalDateTime;
 

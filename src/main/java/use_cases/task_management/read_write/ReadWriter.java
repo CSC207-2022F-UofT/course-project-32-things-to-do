@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/use_cases/task_management/read_write/ReadWriter.java
 package use_cases.task_management.read_write;
+========
+package use_cases.read_write;
+>>>>>>>> f84ff17 (at this point im not sure):src/main/java/use_cases/read_write/ReadWriter.java
 
 import java.io.IOException;
 

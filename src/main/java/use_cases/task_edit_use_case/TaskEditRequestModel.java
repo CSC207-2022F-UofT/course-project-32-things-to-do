@@ -1,4 +1,4 @@
-package task_edit_use_case;
+package use_cases.task_edit_use_case;
 
 public abstract class TaskEditRequestModel {
     private String title;

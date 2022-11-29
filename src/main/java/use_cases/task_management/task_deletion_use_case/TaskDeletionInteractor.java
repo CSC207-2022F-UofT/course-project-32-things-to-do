@@ -1,7 +1,14 @@
+<<<<<<<< HEAD:src/main/java/use_cases/task_management/task_deletion_use_case/TaskDeletionInteractor.java
 package use_cases.task_management.task_deletion_use_case;
 
 import entities.TaskMap;
 import use_cases.task_management.read_write.TaskReadWrite;
+========
+package use_cases.task_deletion_use_case;
+
+import entities.TaskMap;
+import use_cases.read_write.TaskReadWrite;
+>>>>>>>> f84ff17 (at this point im not sure):src/main/java/use_cases/task_deletion_use_case/TaskDeletionInteractor.java
 
 public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
     final TaskDeletionPresenter presenter;

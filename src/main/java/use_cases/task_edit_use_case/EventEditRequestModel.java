@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/use_cases/task_management/event_edit_use_case/EventEditRequestModel.java
-package use_cases.task_management.event_edit_use_case;
-========
-package task_edit_use_case;
->>>>>>>> e506501 (Condensed all Task creation and editing use cases (previously 6 total) into 2: one for each use case. Also made slight changes to Task to attempt to fix a bug, to no avail):src/main/java/task_edit_use_case/EventEditRequestModel.java
+package use_cases.task_edit_use_case;
 
 import entities.Event;
 

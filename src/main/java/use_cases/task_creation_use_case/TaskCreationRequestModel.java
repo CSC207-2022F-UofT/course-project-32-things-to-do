@@ -1,4 +1,4 @@
-package task_creation_use_case;
+package use_cases.task_creation_use_case;
 
 // abstract request model allows task creation to be complete in one use case rather than 3
 public abstract class TaskCreationRequestModel {
