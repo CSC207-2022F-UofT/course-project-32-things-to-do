@@ -1,0 +1,7 @@
+package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
+
+public interface CollaborativeTaskEditPresenter {
+    CollaborativeTaskEditResponseModel prepareSuccessView(CollaborativeTaskEditResponseModel collaborativeTaskEditResponseModel);
+
+    CollaborativeTaskEditResponseModel prepareFailView(String error);
+}
