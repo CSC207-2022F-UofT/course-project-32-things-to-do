@@ -1,0 +1,5 @@
+package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
+
+public interface CollaborativeTaskEditInputBoundary {
+    CollaborativeTaskEditResponseModel edit(CollaborativeTaskEditRequestModel requestModel);
+}

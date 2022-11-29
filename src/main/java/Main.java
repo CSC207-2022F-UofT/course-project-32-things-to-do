@@ -1,17 +1,18 @@
-import course_creation_use_case.*;
 import entities.*;
-import event_creation_screens.*;
-import event_creation_use_case.*;
-import login_usecase.*;
-import progress_tracker_use_case.*;
-import scheduling_ct_screens.*;
-import scheduling_ct_use_case.ScheduleCTInputBoundary;
-import scheduling_ct_use_case.ScheduleCTInteractor;
-import scheduling_ct_use_case.ScheduleCTOutputBoundary;
-import schedule_conflict_use_case.ScheduleConflictPresenter;
-import scheduler_use_case.SchedulerPresenter;
 import screens.*;
-import user_register_usecase.*;
+import screens.calendar_scheduler.*;
+import screens.course_progress.*;
+import screens.courses_features.*;
+import screens.login_registration.*;
+import screens.task_management.event_creation_screens.*;
+import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_tracker.progress_tracker_use_case.*;
+import screens.collaborative_task_scheduling.*;
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.login_registration.user_register_usecase.*;
+import use_cases.task_management.event_creation_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +51,7 @@ public class Main {
         EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor (trackerPresenter);
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
 
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
@@ -60,7 +61,7 @@ public class Main {
 
         CourseCreationDsGateway course;
         try {
-            course = new FileCourse("./courses.csv");
+            course = new FileCourse("./src/main/java/data/courses.csv");
         } catch (IOException e) {
             throw new RuntimeException("Could not create file.");
         }
