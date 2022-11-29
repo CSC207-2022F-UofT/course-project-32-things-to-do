@@ -20,6 +20,7 @@ class ScheduleCTInteractorTest {
 
     // ****** IMPORTANT NOTE ******* //
     // CURRENTLY THIS ONLY WORKS IF YOU COMMENT OUT THE "save()" IN THE CONSTRUCTORS FOR THE TASK ENTITY
+    // ********
 
 //    @Test
 //    void schedule() {
