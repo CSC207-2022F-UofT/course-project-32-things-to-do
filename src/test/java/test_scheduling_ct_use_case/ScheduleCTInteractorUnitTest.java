@@ -378,97 +378,97 @@ class ScheduleCTInteractorUnitTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void collaborativeTaskFreeNoConflictTest() {
-        // Testing collaborativeTaskFree where given a collaborative task and a start and end date and time
-        // Should return true since there is no conflict
+//    @Test
+//    public void collaborativeTaskFreeNoConflictTest() {
+//        // Testing collaborativeTaskFree where given a collaborative task and a start and end date and time
+//        // Should return true since there is no conflict
+//
+//        // creating time block of collaborative task user wants to schedule
+//        LocalDateTime timeBlockStart = LocalDateTime.of(2022, 11, 26, 3, 0);
+//        LocalDateTime timeBlockEnd = LocalDateTime.of(2022, 11, 26, 4, 0);
+//
+//        // creating student user
+//        StudentUser user = new StudentUser("alyson", "catsAndDog");
+//
+//        // creating a collaborative task
+//        CollaborativeTask collaborativeTask = new CollaborativeTask("Eating", "EatingUser", 1,
+//                true, "daily",
+//                LocalDateTime.of(2022, 11, 26, 7, 0),
+//                LocalDateTime.of(2022, 11, 26, 8, 0),
+//                LocalDateTime.of(2022, 11, 28, 9, 0),
+//                user);
+//        // adding scheduled times to collaborative task
+//        ArrayList<ArrayList<LocalDateTime>> scheduledDates = new ArrayList<>();
+//
+//        ArrayList<LocalDateTime> date1 = new ArrayList<>();
+//        date1.add(LocalDateTime.of(2022, 11, 26, 7, 0));
+//        date1.add(LocalDateTime.of(2022, 11, 26, 8, 0));
+//
+//        ArrayList<LocalDateTime> date2 = new ArrayList<>();
+//        date2.add(LocalDateTime.of(2022, 11, 27, 7, 0));
+//        date2.add(LocalDateTime.of(2022, 11, 27, 8, 0));
+//
+//        ArrayList<LocalDateTime> date3 = new ArrayList<>();
+//        date3.add(LocalDateTime.of(2022, 11, 28, 7, 0));
+//        date3.add(LocalDateTime.of(2022, 11, 29, 8, 0));
+//
+//        scheduledDates.add(date1);
+//        scheduledDates.add(date2);
+//        scheduledDates.add(date3);
+//
+//        collaborativeTask.setTimeBlocks(scheduledDates);
+//
+//        boolean expected = true;
+//        boolean actual = interactor.collaborativeTaskFree(collaborativeTask, timeBlockStart, timeBlockEnd);
+//
+//        Assertions.assertEquals(expected, actual);
+//    }
 
-        // creating time block of collaborative task user wants to schedule
-        LocalDateTime timeBlockStart = LocalDateTime.of(2022, 11, 26, 3, 0);
-        LocalDateTime timeBlockEnd = LocalDateTime.of(2022, 11, 26, 4, 0);
-
-        // creating student user
-        StudentUser user = new StudentUser("alyson", "catsAndDog");
-
-        // creating a collaborative task
-        CollaborativeTask collaborativeTask = new CollaborativeTask("Eating", "EatingUser", 1,
-                true, "daily",
-                LocalDateTime.of(2022, 11, 26, 7, 0),
-                LocalDateTime.of(2022, 11, 26, 8, 0),
-                LocalDateTime.of(2022, 11, 28, 9, 0),
-                user);
-        // adding scheduled times to collaborative task
-        ArrayList<ArrayList<LocalDateTime>> scheduledDates = new ArrayList<>();
-
-        ArrayList<LocalDateTime> date1 = new ArrayList<>();
-        date1.add(LocalDateTime.of(2022, 11, 26, 7, 0));
-        date1.add(LocalDateTime.of(2022, 11, 26, 8, 0));
-
-        ArrayList<LocalDateTime> date2 = new ArrayList<>();
-        date2.add(LocalDateTime.of(2022, 11, 27, 7, 0));
-        date2.add(LocalDateTime.of(2022, 11, 27, 8, 0));
-
-        ArrayList<LocalDateTime> date3 = new ArrayList<>();
-        date3.add(LocalDateTime.of(2022, 11, 28, 7, 0));
-        date3.add(LocalDateTime.of(2022, 11, 29, 8, 0));
-
-        scheduledDates.add(date1);
-        scheduledDates.add(date2);
-        scheduledDates.add(date3);
-
-        collaborativeTask.setTimeBlocks(scheduledDates);
-
-        boolean expected = true;
-        boolean actual = interactor.collaborativeTaskFree(collaborativeTask, timeBlockStart, timeBlockEnd);
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void collaborativeTaskFreeConflictTest() {
-        // Testing collaborativeTaskFree where given a collaborative task and a start and end date and time
-        // Should return false since there is a conflict
-
-        // creating time block of collaborative task user wants to schedule
-        LocalDateTime timeBlockStart = LocalDateTime.of(2022, 11, 27, 7, 0);
-        LocalDateTime timeBlockEnd = LocalDateTime.of(2022, 11, 27, 8, 0);
-
-        // creating student user
-        StudentUser user = new StudentUser("alyson", "catsAndDog");
-
-        // creating a collaborative task
-        CollaborativeTask collaborativeTask = new CollaborativeTask("Eating", "EatingUser", 1,
-                true, "daily",
-                LocalDateTime.of(2022, 11, 26, 7, 0),
-                LocalDateTime.of(2022, 11, 26, 8, 0),
-                LocalDateTime.of(2022, 11, 28, 9, 0),
-                user);
-        // adding scheduled times to collaborative task
-        ArrayList<ArrayList<LocalDateTime>> scheduledDates = new ArrayList<>();
-
-        ArrayList<LocalDateTime> date1 = new ArrayList<>();
-        date1.add(LocalDateTime.of(2022, 11, 26, 7, 0));
-        date1.add(LocalDateTime.of(2022, 11, 26, 8, 0));
-
-        ArrayList<LocalDateTime> date2 = new ArrayList<>();
-        date2.add(LocalDateTime.of(2022, 11, 27, 7, 0));
-        date2.add(LocalDateTime.of(2022, 11, 27, 8, 0));
-
-        ArrayList<LocalDateTime> date3 = new ArrayList<>();
-        date3.add(LocalDateTime.of(2022, 11, 28, 7, 0));
-        date3.add(LocalDateTime.of(2022, 11, 29, 8, 0));
-
-        scheduledDates.add(date1);
-        scheduledDates.add(date2);
-        scheduledDates.add(date3);
-
-        collaborativeTask.setTimeBlocks(scheduledDates);
-
-        boolean expected = false;
-        boolean actual = interactor.collaborativeTaskFree(collaborativeTask, timeBlockStart, timeBlockEnd);
-
-        Assertions.assertEquals(expected, actual);
-    }
+//    @Test
+//    public void collaborativeTaskFreeConflictTest() {
+//        // Testing collaborativeTaskFree where given a collaborative task and a start and end date and time
+//        // Should return false since there is a conflict
+//
+//        // creating time block of collaborative task user wants to schedule
+//        LocalDateTime timeBlockStart = LocalDateTime.of(2022, 11, 27, 7, 0);
+//        LocalDateTime timeBlockEnd = LocalDateTime.of(2022, 11, 27, 8, 0);
+//
+//        // creating student user
+//        StudentUser user = new StudentUser("alyson", "catsAndDog");
+//
+//        // creating a collaborative task
+//        CollaborativeTask collaborativeTask = new CollaborativeTask("Eating", "EatingUser", 1,
+//                true, "daily",
+//                LocalDateTime.of(2022, 11, 26, 7, 0),
+//                LocalDateTime.of(2022, 11, 26, 8, 0),
+//                LocalDateTime.of(2022, 11, 28, 9, 0),
+//                user);
+//        // adding scheduled times to collaborative task
+//        ArrayList<ArrayList<LocalDateTime>> scheduledDates = new ArrayList<>();
+//
+//        ArrayList<LocalDateTime> date1 = new ArrayList<>();
+//        date1.add(LocalDateTime.of(2022, 11, 26, 7, 0));
+//        date1.add(LocalDateTime.of(2022, 11, 26, 8, 0));
+//
+//        ArrayList<LocalDateTime> date2 = new ArrayList<>();
+//        date2.add(LocalDateTime.of(2022, 11, 27, 7, 0));
+//        date2.add(LocalDateTime.of(2022, 11, 27, 8, 0));
+//
+//        ArrayList<LocalDateTime> date3 = new ArrayList<>();
+//        date3.add(LocalDateTime.of(2022, 11, 28, 7, 0));
+//        date3.add(LocalDateTime.of(2022, 11, 29, 8, 0));
+//
+//        scheduledDates.add(date1);
+//        scheduledDates.add(date2);
+//        scheduledDates.add(date3);
+//
+//        collaborativeTask.setTimeBlocks(scheduledDates);
+//
+//        boolean expected = false;
+//        boolean actual = interactor.collaborativeTaskFree(collaborativeTask, timeBlockStart, timeBlockEnd);
+//
+//        Assertions.assertEquals(expected, actual);
+//    }
 
 //    @Test
 //    public void assignmentFreeNoConflictTest() {
