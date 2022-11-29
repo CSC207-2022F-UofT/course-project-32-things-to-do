@@ -1,28 +1,24 @@
+<<<<<<<< HEAD:src/main/java/use_cases/task_management/test_creation_use_case/TestCreationRequestModel.java
 package use_cases.task_management.test_creation_use_case;
+========
+package task_creation_use_case;
+>>>>>>>> e506501 (Condensed all Task creation and editing use cases (previously 6 total) into 2: one for each use case. Also made slight changes to Task to attempt to fix a bug, to no avail):src/main/java/task_creation_use_case/TestCreationRequestModel.java
 
 import java.time.LocalDateTime;
 
-public class TestCreationRequestModel {
-    private String title;
-    private int priority;
+public class TestCreationRequestModel extends TaskCreationRequestModel {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private double weightage;
 
     public TestCreationRequestModel(String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
-        this.title = title;
-        this.priority = priority;
+        super(title, priority);
         this.startTime = startTime;
         this.endTime = endTime;
         this.weightage = weightage;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
-    public int getPriority() {
-        return this.priority;
-    }
+    // getters
     public LocalDateTime getStartTime() {
         return this.startTime;
     }

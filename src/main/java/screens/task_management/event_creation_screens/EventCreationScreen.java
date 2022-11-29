@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -50,7 +48,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel startTimeInfo = new LabelTextPanel(
                 new JLabel("Enter event start time (hh:mm)"), startTime);
         LabelTextPanel endDayInfo = new LabelTextPanel(
-                new JLabel("Enter event end date (yyyy-MM-dd"), endDay);
+                new JLabel("Enter event end date (yyyy-MM-dd)"), endDay);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
                 new JLabel("Enter event end time (hh:mm)"), endTime);
         LabelCheckBox recurringInfo = new LabelCheckBox(
@@ -105,11 +103,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
 
                     eventCreationController.create(title.getText(), valPriority,
                             startDate, endDate, valRecurring, frequency.getText());
-                    /*
-                    todo: this message is not appearing, there is a null pointer exception in (i think) the interactor,
-                        tried print debugging and stuff stopped printing at the creation of the new event
-                        i am in shambles.
-                     */
+
                     showMessageDialog(this, "message");
                 } catch (Exception e) {
                     showMessageDialog(this, e);

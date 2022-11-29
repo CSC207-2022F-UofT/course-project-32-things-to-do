@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class TaskMap implements Serializable {
-    private static HashMap taskMap;
+    private static HashMap<String, Task> taskMap;
 
     /**
      * Find a Task using its unique ID
@@ -21,20 +21,16 @@ public class TaskMap implements Serializable {
     }
 
     /**
-     * Add a Task to the TaskMap
+     * Add a Task to the TaskMap.txt
      * @param id - the ID of the Task
      * @param task - the Task associated with the ID
-     * @return - whether the key-value pair has been added successfully
      */
-    public static boolean addTask(String id, Task task) {
-        if (taskMap.containsKey(id)) return false; // 2 Tasks with same ID
-
+    public static void addTask(String id, Task task) {
         taskMap.put(id, task);
-        return true;
     }
 
     /**
-     * Remove a Task from the TaskMap
+     * Remove a Task from the TaskMap.txt
      * @param task - the Task being removed
      */
     public static void removeTask(Task task) {
@@ -64,7 +60,7 @@ public class TaskMap implements Serializable {
 
     /**
      * Loads the taskMap from a file
-     * @param rw - ReadWriter object reading the TaskMap
+     * @param rw - ReadWriter object reading the TaskMap.txt
      */
     public static void load(ReadWriter rw) {
         try {

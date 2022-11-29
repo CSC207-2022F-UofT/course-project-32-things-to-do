@@ -1,20 +1,20 @@
-package screens.task_management.event_creation_screens;
+package event_creation_screens;
 
-import use_cases.task_management.event_creation_use_case.EventCreationInputBoundary;
-import use_cases.task_management.event_creation_use_case.EventCreationRequestModel;
-import use_cases.task_management.event_creation_use_case.EventCreationResponseModel;
+import task_creation_use_case.EventCreationRequestModel;
+import task_creation_use_case.TaskCreationInputBoundary;
+import task_creation_use_case.TaskCreationResponseModel;
 
 import java.time.LocalDateTime;
 
 public class EventCreationController {
-    final EventCreationInputBoundary input;
-    public EventCreationController(EventCreationInputBoundary input) {
+    final TaskCreationInputBoundary input;
+    public EventCreationController(TaskCreationInputBoundary input) {
         this.input = input;
     }
-    EventCreationResponseModel create(String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
-                                      boolean recurring, String frequency) {
+    TaskCreationResponseModel create(String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+                                     boolean recurring, String frequency) {
         EventCreationRequestModel requestModel = new EventCreationRequestModel(title, priority, startTime, endTime,
                 recurring, frequency);
-        return input.create(requestModel);
+        return input.create(requestModel, "Event");
     }
 }

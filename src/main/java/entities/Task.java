@@ -17,8 +17,6 @@ public abstract class Task implements Serializable {
         this.title = title;
         this.id = id;
         this.priority = 0;
-
-        save(); // save to task map
     }
 
     /**
@@ -31,8 +29,6 @@ public abstract class Task implements Serializable {
         this.title = title;
         this.id = id;
         this.priority = priority;
-
-        save(); // save to task map
     }
 
     /**

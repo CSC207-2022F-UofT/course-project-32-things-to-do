@@ -1,19 +1,20 @@
-package screens.task_management.assignment_creation_screens;
+package assignment_creation_screens;
 
-import use_cases.task_management.assignment_creation_use_case.AssignmentCreationInputBoundary;
-import use_cases.task_management.assignment_creation_use_case.AssignmentCreationRequestModel;
-import use_cases.task_management.assignment_creation_use_case.AssignmentCreationResponseModel;
+import task_creation_use_case.AssignmentCreationRequestModel;
+import task_creation_use_case.TaskCreationInputBoundary;
+import task_creation_use_case.TaskCreationRequestModel;
+import task_creation_use_case.TaskCreationResponseModel;
 
 import java.time.LocalDateTime;
 
 public class AssignmentCreationController {
-    final AssignmentCreationInputBoundary input;
-    public AssignmentCreationController(AssignmentCreationInputBoundary input) {
+    final TaskCreationInputBoundary input;
+    public AssignmentCreationController(TaskCreationInputBoundary input) {
         this.input = input;
     }
-    AssignmentCreationResponseModel create(String title, int priority, LocalDateTime dueDate, double weightage) {
-        AssignmentCreationRequestModel requestModel = new AssignmentCreationRequestModel(title, priority, dueDate,
+    TaskCreationResponseModel create(String title, int priority, LocalDateTime dueDate, double weightage) {
+        TaskCreationRequestModel requestModel = new AssignmentCreationRequestModel(title, priority, dueDate,
                 weightage);
-        return input.create(requestModel);
+        return input.create(requestModel, "Assignment");
     }
 }
