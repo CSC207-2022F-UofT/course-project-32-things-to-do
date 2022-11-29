@@ -1,9 +1,9 @@
-package assignment_creation_screens;
+package screens.task_management.assignment_creation_screens;
 
-import use_cases.task_creation_use_case.AssignmentCreationRequestModel;
-import use_cases.task_creation_use_case.TaskCreationResponseModel;
-import use_cases.task_creation_use_case.TaskCreationInputBoundary;
-import use_cases.task_creation_use_case.TaskCreationRequestModel;
+import use_cases.task_management.task_creation_use_case.AssignmentCreationRequestModel;
+import use_cases.task_management.task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_management.task_creation_use_case.TaskCreationRequestModel;
 
 import java.time.LocalDateTime;
 

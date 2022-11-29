@@ -1,7 +1,7 @@
-package event_creation_screens;
+package screens.task_management.event_creation_screens;
 
-import use_cases.task_creation_use_case.TaskCreationPresenter;
-import use_cases.task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_management.task_creation_use_case.TaskCreationPresenter;
+import use_cases.task_management.task_creation_use_case.TaskCreationResponseModel;
 
 public class EventCreationResponseFormatter implements TaskCreationPresenter {
 

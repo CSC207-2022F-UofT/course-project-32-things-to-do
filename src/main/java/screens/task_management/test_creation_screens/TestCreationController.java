@@ -1,9 +1,9 @@
-package test_creation_screens;
+package screens.task_management.test_creation_screens;
 
-import use_cases.task_creation_use_case.TaskCreationInputBoundary;
-import use_cases.task_creation_use_case.TaskCreationRequestModel;
-import use_cases.task_creation_use_case.TaskCreationResponseModel;
-import use_cases.task_creation_use_case.TestCreationRequestModel;
+import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_management.task_creation_use_case.TaskCreationRequestModel;
+import use_cases.task_management.task_creation_use_case.TaskCreationResponseModel;
+import use_cases.task_management.task_creation_use_case.TestCreationRequestModel;
 
 import java.time.LocalDateTime;
 

@@ -12,7 +12,7 @@ import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.event_creation_use_case.*;
+import use_cases.task_management.task_creation_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,8 +45,8 @@ public class Main {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
+        TaskCreationPresenter eventPresenter = new EventCreationResponseFormatter();
+        TaskCreationInputBoundary eventInteractor = new TaskCreationInteractor(eventPresenter, (StudentUser) user, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(eventInteractor);
 

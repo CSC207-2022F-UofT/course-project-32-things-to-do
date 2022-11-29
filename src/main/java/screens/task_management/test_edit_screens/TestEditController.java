@@ -1,10 +1,10 @@
-package test_edit_screens;
+package screens.task_management.test_edit_screens;
 
 import entities.Test;
-import use_cases.task_edit_use_case.TaskEditInputBoundary;
-import use_cases.task_edit_use_case.TaskEditRequestModel;
-import use_cases.task_edit_use_case.TaskEditResponseModel;
-import use_cases.task_edit_use_case.TestEditRequestModel;
+import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
+import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
+import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
+import use_cases.task_management.task_edit_use_case.TestEditRequestModel;
 
 import java.time.LocalDateTime;
 

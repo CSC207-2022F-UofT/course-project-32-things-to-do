@@ -1,4 +1,4 @@
-package event_creation_screens;
+package screens.task_management.event_creation_screens;
 
 import screens.LabelCheckBox;
 import screens.LabelTextPanel;

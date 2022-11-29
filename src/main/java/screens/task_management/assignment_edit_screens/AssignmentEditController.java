@@ -1,10 +1,10 @@
-package assignment_edit_screens;
+package screens.task_management.assignment_edit_screens;
 
 import entities.Assignment;
-import use_cases.task_edit_use_case.AssignmentEditRequestModel;
-import use_cases.task_edit_use_case.TaskEditInputBoundary;
-import use_cases.task_edit_use_case.TaskEditRequestModel;
-import use_cases.task_edit_use_case.TaskEditResponseModel;
+import use_cases.task_management.task_edit_use_case.AssignmentEditRequestModel;
+import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
+import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
+import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
 
 import java.time.LocalDateTime;
 
