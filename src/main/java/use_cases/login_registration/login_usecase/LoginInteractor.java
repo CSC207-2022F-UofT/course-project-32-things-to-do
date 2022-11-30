@@ -1,8 +1,9 @@
-package login_usecase;
+package use_cases.login_registration.login_usecase;
 
 import entities.User;
-import screens.LoginFailed;
-import user_register_usecase.UserRegSaveRequest;
+import screens.login_registration.LoginFailed;
+import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+
 
 import java.time.LocalDateTime;
 

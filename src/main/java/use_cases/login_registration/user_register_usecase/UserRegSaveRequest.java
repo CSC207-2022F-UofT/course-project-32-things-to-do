@@ -1,7 +1,6 @@
 package use_cases.login_registration.user_register_usecase;
 
 import entities.InstructorUser;
-import entities.StudentUser;
 import entities.User;
 
 import java.io.Serializable;

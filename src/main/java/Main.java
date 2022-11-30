@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         // Build the main program window
         JFrame application = new JFrame("32 Things To Do");
@@ -35,9 +35,10 @@ public class Main {
         HashMap<String, Course> allCourses = new HashMap<>();
 
         // Create the components for injection into the use cases
-        UserRegGateway regUser = new InMemoryUser();
+        UserRegGateway regUser = new FileUser("users.ser");
+        UserFactory fac = new GeneralUserFactory();
         UserRegPresenter userPresenter = new UserRegResponseFormatter();
-        UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter);
+        UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
         UserRegController userRegisterController = new UserRegController(userInteractor);
 
         User user = ((UserRegInteractor) userInteractor).getUser();

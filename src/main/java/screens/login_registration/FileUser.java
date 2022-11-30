@@ -1,17 +1,13 @@
-package screens;
-
-import login_usecase.LoginGateway;
-import logout_usecase.LogoutGateway;
-import user_register_usecase.UserRegGateway;
-import user_register_usecase.UserRegSaveRequest;
+package screens.login_registration;
+import use_cases.login_registration.login_usecase.LoginGateway;
+import use_cases.login_registration.logout_usecase.LogoutGateway;
+import use_cases.login_registration.user_register_usecase.UserRegGateway;
+import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.KeyException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {

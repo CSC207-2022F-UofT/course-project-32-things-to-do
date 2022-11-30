@@ -59,6 +59,15 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
         LocalDateTime now = LocalDateTime.now();
 
+        UserRegSaveRequest userModel = getUserRegSaveRequest(now);
+
+        userGateway.save(userModel);
+
+        UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());
+        return userPresenter.prepareSuccessView(accResponseModel);
+    }
+
+    private UserRegSaveRequest getUserRegSaveRequest(LocalDateTime now) {
         UserRegSaveRequest userModel;
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
@@ -69,11 +78,7 @@ public class UserRegInteractor implements UserRegInputBoundary {
         } else {
             userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
         }
-
-        userGateway.save(userModel);
-
-        UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());
-        return userPresenter.prepareSuccessView(accResponseModel);
+        return userModel;
     }
 
     public User getUser() {
