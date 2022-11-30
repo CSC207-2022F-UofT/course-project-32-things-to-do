@@ -3,9 +3,9 @@ package use_cases.task_management.event_creation_use_case;
 import entities.Event;
 import entities.StudentUser;
 import entities.TaskMap;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerOutputBoundary;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerRequestModel;
 import use_cases.task_management.read_write.TaskReadWrite;
 
@@ -19,10 +19,10 @@ public class EventCreationInteractor implements EventCreationInputBoundary {
     final SchedulerInteractor scheduler;
 
     public EventCreationInteractor(EventCreationPresenter eventPresenter, StudentUser student,
-                                   SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
+                                   SchedulerOutputBoundary schedulerOutputBoundary, ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.presenter = eventPresenter;
         this.student = student;
-        this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
+        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary, schedulerOutputBoundary);
     }
 
     @Override

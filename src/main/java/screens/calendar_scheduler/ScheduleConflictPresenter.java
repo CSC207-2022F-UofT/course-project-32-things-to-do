@@ -1,13 +1,13 @@
 package screens.calendar_scheduler;
 
 import entities.Task;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
 
 import javax.swing.*;
 
-public class ScheduleConflictResponseFormatter implements ScheduleConflictPresenter {
+public class ScheduleConflictPresenter implements ScheduleConflictOutputBoundary {
 
     /**
      * Alert the user to a scheduling conflict

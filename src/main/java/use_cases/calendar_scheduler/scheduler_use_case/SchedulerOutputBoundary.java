@@ -1,6 +1,6 @@
 package use_cases.calendar_scheduler.scheduler_use_case;
 
-public interface SchedulerPresenter {
+public interface SchedulerOutputBoundary {
 
     /**
      * Alert the user of the task scheduling success

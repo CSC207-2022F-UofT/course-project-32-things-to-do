@@ -1,13 +1,12 @@
 package screens.calendar_scheduler;
 
 import entities.Task;
-import screens.course_progress.ProgressTrackingFail;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerOutputBoundary;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerResponseModel;
 
 import javax.swing.*;
 
-public class SchedulerResponseFormatter implements SchedulerPresenter {
+public class SchedulerPresenter implements SchedulerOutputBoundary {
 
     /**
      * Alert the user to the task scheduling success
