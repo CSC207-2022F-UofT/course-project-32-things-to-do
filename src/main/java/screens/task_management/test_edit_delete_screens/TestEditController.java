@@ -1,4 +1,4 @@
-package screens.task_management.test_edit_screens;
+package screens.task_management.test_edit_delete_screens;
 
 import entities.Test;
 import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
@@ -14,8 +14,8 @@ public class TestEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(Test test, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
-        TaskEditRequestModel requestModel = new TestEditRequestModel(test, title, priority, startTime, endTime, weightage);
+    public TaskEditResponseModel edit(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
+        TaskEditRequestModel requestModel = new TestEditRequestModel(id, title, priority, startTime, endTime, weightage);
         return input.edit(requestModel, "Test");
     }
 

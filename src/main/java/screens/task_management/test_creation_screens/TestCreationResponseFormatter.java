@@ -1,13 +1,13 @@
-package screens.task_management.event_creation_screens;
+package screens.task_management.test_creation_screens;
 
 import use_cases.task_management.task_creation_use_case.TaskCreationPresenter;
 import use_cases.task_management.task_creation_use_case.TaskCreationResponseModel;
 
-public class EventCreationResponseFormatter implements TaskCreationPresenter {
+public class TestCreationResponseFormatter implements TaskCreationPresenter {
     /**
-     * Prepare a success view for a successful Event creation
+     * Prepare a success view for the successful Test creation
      * @param response - response model for Task creation
-     * @return - response model
+     * @return - the response model
      */
     @Override
     public TaskCreationResponseModel prepareSuccessView(TaskCreationResponseModel response) {
@@ -15,12 +15,11 @@ public class EventCreationResponseFormatter implements TaskCreationPresenter {
     }
 
     /**
-     * Prepare a failure view for an unsuccessful Event creation
-     * @param error - error in Event creation
-     * @return - response model
+     * Prepare a fail view if Test creation was unsuccessful
+     * @param error - the error
      */
     @Override
     public TaskCreationResponseModel prepareFailView(String error) {
-        throw new EventCreationFailed(error);
+        throw new TestCreationFailed(error);
     }
 }

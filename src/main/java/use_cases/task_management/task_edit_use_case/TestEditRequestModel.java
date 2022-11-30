@@ -5,22 +5,22 @@ import entities.Test;
 import java.time.LocalDateTime;
 
 public class TestEditRequestModel extends TaskEditRequestModel {
-    private final Test test;
+    private final String id;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final double weightage;
 
-    public TestEditRequestModel(Test test, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
+    public TestEditRequestModel(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
         super(title, priority);
-        this.test = test;
+        this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weightage = weightage;
     }
 
     // getters
-    public Test getTest() {
-        return this.test;
+    public String getId() {
+        return this.id;
     }
     public LocalDateTime getStartTime() {
         return this.startTime;

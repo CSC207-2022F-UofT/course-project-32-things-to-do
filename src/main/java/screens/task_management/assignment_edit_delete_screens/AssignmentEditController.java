@@ -1,4 +1,4 @@
-package screens.task_management.assignment_edit_screens;
+package screens.task_management.assignment_edit_delete_screens;
 
 import entities.Assignment;
 import use_cases.task_management.task_edit_use_case.AssignmentEditRequestModel;
@@ -14,8 +14,8 @@ public class AssignmentEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(Assignment assignment, String title, int priority, LocalDateTime dueDate, double weightage) {
-        TaskEditRequestModel requestModel = new AssignmentEditRequestModel(assignment, title, priority, dueDate, weightage);
+    public TaskEditResponseModel edit(String id, String title, int priority, LocalDateTime dueDate, double weightage) {
+        TaskEditRequestModel requestModel = new AssignmentEditRequestModel(id, title, priority, dueDate, weightage);
         return input.edit(requestModel, "Assignment");
     }
 

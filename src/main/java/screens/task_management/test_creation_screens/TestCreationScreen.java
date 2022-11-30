@@ -1,4 +1,4 @@
-package screens.task_management.event_creation_screens;
+package screens.task_management.test_creation_screens;
 
 import screens.LabelCheckBox;
 import screens.LabelTextPanel;
@@ -11,29 +11,28 @@ import java.time.LocalDateTime;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class EventCreationScreen extends JPanel implements ActionListener {
+public class TestCreationScreen extends JPanel implements ActionListener {
     // text fields
     JTextField title = new JTextField(15);
     JTextField priority = new JTextField(15);
     JTextField date = new JTextField(15);
     JTextField startTime = new JTextField(15);
     JTextField endTime = new JTextField(15);
-    JCheckBox recurring = new JCheckBox();
-    JTextField frequency = new JTextField(15);
+    JTextField weightage = new JTextField(15);
 
     // controller
-    EventCreationController eventCreationController;
+    TestCreationController testController;
 
     // to access rest of screens in program
     JPanel screens;
     CardLayout screenLayout;
 
-    public EventCreationScreen(EventCreationController controller, JPanel screens, CardLayout screenLayout) {
-        this.eventCreationController = controller;
+    public TestCreationScreen(TestCreationController testController, JPanel screens, CardLayout screenLayout) {
+        this.testController = testController;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
-        JLabel screenTitle = new JLabel("Event Creation Screen");
+        JLabel screenTitle = new JLabel("Test Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // create labels for all text fields
@@ -47,10 +46,8 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 new JLabel("Enter event start time (hh:mm)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
                 new JLabel("Enter event end time (hh:mm)"), endTime);
-        LabelCheckBox recurringInfo = new LabelCheckBox(
-                new JLabel("Event is recurring"), recurring);
-        LabelTextPanel frequencyInfo = new LabelTextPanel(
-                new JLabel("Enter frequency of event"), frequency);
+        LabelTextPanel weightInfo = new LabelTextPanel(
+                new JLabel("Enter test weightage (double, don't include %)"), weightage);
 
         // finish and cancel buttons
         JButton finish = new JButton("Finish");
@@ -73,11 +70,9 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         this.add(dateInfo);
         this.add(startTimeInfo);
         this.add(endTimeInfo);
-        this.add(recurringInfo);
-        this.add(frequencyInfo);
+        this.add(weightInfo);
         this.add(buttons);
     }
-
     /**
      * React to button presses
      * @param evt the event to be processed
@@ -87,19 +82,18 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         // if "Finish" button pressed
         if (evt.getActionCommand().equals("Finish")) {
             try {
-                // get value of recurring check box
-                boolean valRecurring = recurring.isSelected();
                 // set priority to the value in the box or 0 if blank
                 int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
                 if (valPriority < 0) valPriority = 0;
                 // get the start and end date+times and parse them
                 LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
                 LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                // set weightage value to value in the box or 0 if blank
+                double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 
-                eventCreationController.create(title.getText(), valPriority,
-                        startDate, endDate, valRecurring, frequency.getText());
+                testController.create(title.getText(), valPriority, startDate, endDate, valWeightage);
 
-                showMessageDialog(this, "Event Created Successfully");
+                showMessageDialog(this, "Test Created Successfully");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }

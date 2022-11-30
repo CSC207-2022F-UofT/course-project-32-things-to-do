@@ -1,6 +1,7 @@
-package screens.task_management.event_edit_screens;
+package screens.task_management.event_edit_delete_screens;
 
 import entities.Event;
+import entities.TaskMap;
 import use_cases.task_management.task_edit_use_case.EventEditRequestModel;
 import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
 import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
@@ -14,9 +15,9 @@ public class EventEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(Event event, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public TaskEditResponseModel edit(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                       boolean recurring, String frequency) {
-        TaskEditRequestModel requestModel = new EventEditRequestModel(event, title, priority, startTime, endTime, recurring, frequency);
+        TaskEditRequestModel requestModel = new EventEditRequestModel(id, title, priority, startTime, endTime, recurring, frequency);
         return input.edit(requestModel, "Event");
     }
 
