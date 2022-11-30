@@ -1,0 +1,7 @@
+package screens.login_registration;
+
+public class UserCreationFailed extends RuntimeException {
+    public UserCreationFailed(String error) {
+        super(error);
+    }
+}

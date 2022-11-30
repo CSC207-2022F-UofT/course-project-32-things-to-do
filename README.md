@@ -1,39 +1,118 @@
-# Project Template
+# 32 Things To Do
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+32 Things To Do is a to-do list application that lets students keep track of their assignments, courses and schedule.
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+## Register/Log In
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+Start up the program by running the `Main.java` class in the `src/main/java` directory.
+Upon launching the program, a welcome screen with two buttons, `Sign Up` and `Log In`, appears.
 
-## Workflow Documents
+![](images/welcome_screen.png)
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+If the user is already registered, they should click `Log In`.
+They will be redirected to a login screen where they must enter their username and password into the corresponding fields.
+If the details they enter match the details saved in the database of users, then they will be taken to the dashboard screen.
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+If the user has not already registered, they should click `Sign Up`.
+They will enter a username and a password (twice), then "Instructor" or "Student" depending on their role.
+If the password meets the requirements and the username is not taken, then they will be taken to the dashboard screen.
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
+![](images/register_screen.png)
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
+## Main Dashboard
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
+The user can access all features of the program through the main dashboard.
 
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
+![](images/dashboard_screen.png)
 
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Entities.Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
+## To-Do List Task Creation
 
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
+If the user clicks on the `New Task` button, the screen for creating a new task will be displayed.
+On this screen, the user can add, delete and edit the tasks in their to-do list.
 
-You can create another simple class and try generating a test for this class.
+To create tasks, the user must fill in the required fields _(for events the format for start and end date is actually yyyy-MM-ddThh:mm:ss, current prompt is incorrect)_ and click `Submit`. 
+If the formatting is correct and nothing is left blank (except the `priority` field), it should create a new task of whatever type, generate an ID based on the student's name and course ID (if it is a course task), and save it to the task map and TaskMap file immediately.
+
+![](images/event_creation_screen.png)
+
+To delete a task _(UI not yet implemented)_, the user must click a task to view its info and then click the `Delete` button _(not yet implemented)_. 
+This will remove the task from the student's to-do list and move it into their archive, while remaining in the task map.
+
+For editing _(UI not yet implemented)_, the user must click a task to view its info click the `Edit` button.
+A screen similar to the create screen should appear, allowing the user to change any info about the task. 
+If a section is left blank, no changes will be made.
+
+## Personal Calendar
+
+If the user clicks on the `Calendar` button, the screen for their personal calendar will be displayed.
+On this screen, the user's upcoming tasks will be displayed in either a daily, weekly, or monthly view.
+
+Both the daily and the weekly view display any tasks in the user's to-do list that have a timeblock, while the monthly view displays the number of tasks that are due (in the case of Assignments) and that are occurring (in the case of Events and Tests) on each day of the month.
+By default, the weekly view is displayed, but the user can change the view through the dropdown menu below the title.
+
+![](images/calendar_screen.png)
+
+The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
+The `Home` button redirects the user back to the main dashboard.
+
+_Not yet implemented (extending on what is currently working in the MVP feature):_
+- The ability to manually select prep time for a Preparatory Task
+
+## Scheduling Collaborative Tasks
+
+If the user clicks on the `Scheduling CT` button, the screen to schedule a collaborative task will be displayed.
+On this screen, the user can schedule a collaborative task.
+
+To schedule a collaborative task, the user must input the name of the task, as well as the time block (start time and end time) in the format YYYY-MM-dd HH:mm.
+Then the user must click on the `Submit` button to schedule the collaborative task.
+Only the leader/creator of the collaborative task is able to schedule it.
+Depending on what the user chose frequency and deadline to be, the dates scheduled will differ.
+
+If there is a conflict with the inputted time block, a screen will pop up that says there is a conflict. 
+It is on the user to either communicate with their group about this conflict or to try and reschedule another time. 
+If there is no conflict, the dates and times will be scheduled and the program will return the successful input.
+
+## Progress Tracker
+
+If the user clicks on the `Progress Tracker` button, the screen for tracking their academic progress will be displayed.
+On this screen, the user can calculate their academic statistics for a course they are enrolled in.
+
+![](images/progress_tracker_screen.png)
+
+To do so, the user must enter the name of the course and click the button `Calculate Grades and Progress` 
+The screen will then display the total weight of completed tasks in that course in % and also a final grade so far of inputted grades for that course. 
+If a desired grade has been inputted already or is inputted in this step, the required average for remaining ungraded tasks will be returned (with error messages if the goal grade isn't possible).
+
+Users can also input the grades they receive for a task in the course next, by inputted first the EXACT name of the task and a valid grade in %. 
+Users can also adjust their desired grade here. 
+After clicking `Save and Update`, the statistics at the top of the page will be updated with the new values.
+
+_Not yet implemented (extending on what is currently working in the MVP feature):_
+- error message for non-students (instructors) who try to use feature
+- displaying a list of tasks in a course upon student entering a course name
+- second part of user story in blueprint which allows users to play around with different scenarios for worst/best case final grades. This part of the program calculates the required average for a given assignment or test
+
+## Course Enrolment/Creation
+
+If the user clicks on the `Courses` button, the screen for course enrolment (`StudentUser` only) and course creation (`InstructorUser` only) will be displayed.
+On this screen, the user can either enrol in a course or create a course, depending on their type.
+
+**Course creation:**
+Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and a task _(in future implementation they would be able to add more than one task)_.
+
+![](images/course_creation_screen.png)
+
+If the instructor clicks the `Create` button, the program will check whether the course already exists in the CourseMap and if all required fields are filled out.
+If any of checks failed, an error message will pop up.
+Once successful, the `Course` will be added to the `CourseMap`, where its key is the course ID, a unique string made up of the concatenation of the course name and course instructor entered by the instructor themselves.
+After the program has completed the course creation, the success message will pop up.
+During the entire creation process, clicking the `Cancel` button will close the window without any searches performed.
+
+**Course enrolment:**
+Upon clicking the `Enrol in a Course` button, the student will be prompted to enter the course name and course instructor of the desired course, as well as their username.
+If the student clicks the `Enrol` button, the program will check whether all required text fields are filled out, and if the course ID key can be found in the Map by taking the first 2 inputs and concatenates them (which gives the unique course ID), and searching in the `CourseMap` to see if such a course exists.
+If any of the checks failed, an error message would pop up.
+Once successful, the username of the students (which is their unique ID) will be added to the `students` parameter (which is an ArrayList of strings) of the `Course` entity associated with the course ID.
+Then, the tasks (ArrayList of strings from the `tasks` parameter in the `Course` entity) will be copied and appended to the student’s own task list.
+After the program has completed the course enrolment, the success message will pop up.
+During the entire enrolment process, clicking the `Cancel` button will close the window without any searches performed.
