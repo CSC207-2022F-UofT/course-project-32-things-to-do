@@ -4,7 +4,7 @@ import entities.Preparatory;
 import entities.StudentUser;
 import entities.Task;
 import entities.Timeblockable;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
 
@@ -17,12 +17,12 @@ import java.util.Comparator;
 
 public class SchedulerInteractor implements SchedulerInputBoundary {
 
-    final ScheduleConflictPresenter conflictPresenter;
-    final SchedulerPresenter schedulerPresenter;
+    final ScheduleConflictOutputBoundary conflictPresenter;
+    final SchedulerOutputBoundary schedulerOutputBoundary;
 
-    public SchedulerInteractor(ScheduleConflictPresenter scheduleConflictPresenter, SchedulerPresenter schedulerPresenter) {
-        this.conflictPresenter = scheduleConflictPresenter;
-        this.schedulerPresenter = schedulerPresenter;
+    public SchedulerInteractor(ScheduleConflictOutputBoundary scheduleConflictOutputBoundary, SchedulerOutputBoundary schedulerOutputBoundary) {
+        this.conflictPresenter = scheduleConflictOutputBoundary;
+        this.schedulerOutputBoundary = schedulerOutputBoundary;
     }
 
     /**
@@ -51,7 +51,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
                 // Schedule the conflicting task
                 if (!conflictResponseModel.isScheduleConflict()) {
                     SchedulerResponseModel responseModel = new SchedulerResponseModel(task, allTasks);
-                    return schedulerPresenter.prepareFailView(responseModel);
+                    return schedulerOutputBoundary.prepareFailView("Task scheduling failed due to conflict.");
                 }
             }
         }
@@ -64,7 +64,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
         // Create a response model from the updated to-do list
         SchedulerResponseModel responseModel = new SchedulerResponseModel(task, allTasks);
 
-        return schedulerPresenter.prepareSuccessView(responseModel);
+        return schedulerOutputBoundary.prepareSuccessView(responseModel);
     }
 
     /**
