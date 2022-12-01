@@ -15,7 +15,6 @@ public class CourseCreationPresenter implements CourseCreationOutputBoundary {
      */
     @Override
     public CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel response) {
-
         JOptionPane.showMessageDialog(null, "New course created!");
         return response;
     }

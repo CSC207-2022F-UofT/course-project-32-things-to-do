@@ -5,19 +5,19 @@ package use_cases.course_features.course_creation_use_case;
 import entities.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CourseCreationInteractor implements CourseCreationInputBoundary {
     final CourseCreationDsGateway courseCreationDSGateway;
+    // this is called in filecourse, where stuff is added / modified in the database
     final CourseCreationOutputBoundary courseCreationOutputBoundary;
-    final CourseMap courseMap;
 
-    public CourseCreationInteractor(CourseCreationDsGateway courseCreationDSGateway, CourseCreationOutputBoundary courseCreationOutputBoundary,
-                                    CourseMap courseMap) {
+    public CourseCreationInteractor(CourseCreationDsGateway courseCreationDSGateway,
+                                    CourseCreationOutputBoundary courseCreationOutputBoundary) {
         this.courseCreationDSGateway = courseCreationDSGateway;
         this.courseCreationOutputBoundary = courseCreationOutputBoundary;
-        this.courseMap = courseMap;
     }
+
+    private Course course;
 
     /**
      * Creates the task in the request model and returns the corresponding response model
@@ -31,54 +31,41 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
             return courseCreationOutputBoundary.prepareFailView("Please fill in all required information.");
         }
 
-        // Note: Jonathan - no need to check the type of User, students and instructors
-        // would have different views because they are in different use cases
-        // checks whether the course id is already in the CourseMap (course already exists)
-
+        // checks whether the course id is already in the database / hashmap
         if (courseCreationDSGateway.existsByCourseID(requestModel.getCourseID())) {
             return courseCreationOutputBoundary.prepareFailView("Course already exists.");
         }
 
-        // need to check that task ids entered exist in the Task database
-//        ArrayList<String> courseTasks = requestModel.getTasks();
-//        for (String task : courseTasks) {
-//            if (TaskMap.findTask(task) == null) {
-//                return courseCreationOutputBoundary.prepareFailView("one of the IDs does not correspond with a task.");
-//            }
-//        }
+        // NOTE: CANNOT BE IMPLEMENTED WITHOUT A TASKFILE
+        // checks whether task ids entered exist in the Task database
+        // or not? can generate task ids all the same, just won't be linked to a task...
+        /*
+        ArrayList<String> courseTasks = requestModel.getTasks();
+        for (String task : courseTasks) {
+            if (TaskMap.findTask(task) == null) {
+                return courseCreationOutputBoundary.prepareFailView("one of the IDs does not correspond with a task.");
+            }
+        }
+         */
+
 
         // checks passed; course can be created
 
         // create a new course
-        Course course = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
-        CourseMap.addCourse(requestModel.getCourseID(), course);
-
-        // course successfully created and saved
-        CourseCreationRequestModel courseCreationModel = new CourseCreationRequestModel(course.getCourseName(), course.getCourseInstructor(), course.getTasks());
+        Course courseModel = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
         try {
-            courseCreationDSGateway.save(courseCreationModel);
+            courseCreationDSGateway.saveCourse(courseModel);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        // NEW:
-        // extract tasks array
-
-        // OLD
-        // tasks from course (task id will be course name + task number / index of task in arraylist)
-//        ArrayList<String> courseTasks = course.getTasks();
-//        for (String task : courseTasks) {
-            // need to initialize new task to add course tasks to TaskMap, but unable to since Task is abstract
-//            TaskMap.addTask(course.getCourseName() + courseTasks.indexOf(task), task);
-//        }
-
-        // save course to file
-//        CourseReadWrite crw = new CourseReadWrite("src/data/CourseMap");
-//        CourseMap.saveToFile(trw);
-
-        // course sent to presenter
+        // create response model, sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(
                 course.getCourseID(), course.getTasks());
         return courseCreationOutputBoundary.prepareSuccessView(courseResponseModel);
+    }
+
+    public Course getCourse() {
+        return this.course;
     }
 }

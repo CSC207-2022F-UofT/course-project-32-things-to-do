@@ -1,4 +1,4 @@
-package course_features_use_case;
+package test_course_features;
 
 import org.junit.Test;
 

@@ -76,7 +76,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // do I even need to save anything
         // the answer is yes
         // need to save student id to students parameter of course entity ('enrol in course')
-        courseEnrolmentDsGateway.save(courseEnrolmentModel);
+//        courseEnrolmentDsGateway.saveStudentToCourse(courseEnrolmentModel);
 
 
         // sent to presenter

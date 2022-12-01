@@ -12,16 +12,17 @@ package use_cases.course_features.course_creation_use_case;
 import java.util.ArrayList;
 
 public class CourseCreationRequestModel {
-    private String courseName;
-    private String courseInstructor;
+    private final String courseName;
+    private final String courseInstructor;
     private final String courseID;
-    private ArrayList<String> tasks;
+    private final ArrayList<String> tasks;
 
     /**
      * Creates a request model with the given input
-     * @param courseName the name of the course
+     *
+     * @param courseName       the name of the course
      * @param courseInstructor the instructor of the course
-     * @param tasks the task(s) associated with the course
+     * @param tasks            the task(s) associated with the course
      */
     public CourseCreationRequestModel(String courseName, String courseInstructor, ArrayList<String> tasks) {
         this.courseName = courseName;
@@ -34,18 +35,8 @@ public class CourseCreationRequestModel {
         return courseName;
     }
 
-    public void setCourseName() {
-
-        this.courseName = courseName;
-    }
-
     public String getCourseInstructor() {
         return courseInstructor;
-    }
-
-    public void setCourseInstructor() {
-
-        this.courseInstructor = courseInstructor;
     }
 
     public String getCourseID() {
@@ -55,9 +46,5 @@ public class CourseCreationRequestModel {
     public ArrayList<String> getTasks() {
 
         return tasks;
-    }
-
-    public void setTasks() {
-        this.tasks = tasks;
     }
 }
