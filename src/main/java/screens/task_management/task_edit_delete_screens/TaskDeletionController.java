@@ -1,6 +1,6 @@
-package screens.task_management.task_deletion_screens;
+package screens.task_management.task_edit_delete_screens;
 
-import entities.Course;
+// import entities.Course;
 import entities.StudentUser;
 import entities.Task;
 import use_cases.task_management.task_deletion_use_case.TaskDeletionRequestModel;
@@ -12,14 +12,16 @@ public class TaskDeletionController {
     public TaskDeletionController(TaskDeletionInputBoundary input) {
         this.input = input;
     }
-    public TaskDeletionResponseModel delete(StudentUser student, Task task) {
-        TaskDeletionRequestModel requestModel = new TaskDeletionRequestModel(student, task);
+    public TaskDeletionResponseModel delete(StudentUser student, String taskId) {
+        TaskDeletionRequestModel requestModel = new TaskDeletionRequestModel(student, taskId);
 
-        return input.deleteStudentTask(requestModel);
+        return input.delete(requestModel);
     }
+    /*
     public TaskDeletionResponseModel delete(Course course, Task task) {
         TaskDeletionRequestModel requestModel = new TaskDeletionRequestModel(course, task);
 
         return input.deleteCourseTask(requestModel);
     }
+    */
 }

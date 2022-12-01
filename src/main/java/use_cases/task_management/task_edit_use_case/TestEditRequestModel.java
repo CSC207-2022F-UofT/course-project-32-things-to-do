@@ -1,27 +1,24 @@
 package use_cases.task_management.task_edit_use_case;
 
-import entities.Test;
-
 import java.time.LocalDateTime;
 
 public class TestEditRequestModel extends TaskEditRequestModel {
-    private final Test test;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final double weightage;
-
-    public TestEditRequestModel(Test test, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
-        super(title, priority);
-        this.test = test;
+    private final double timeNeeded;
+    private final double timeSpent;
+    public TestEditRequestModel(String id, boolean complete, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+                                double weightage, double timeNeeded, double timeSpent) {
+        super(id, complete, title, priority);
         this.startTime = startTime;
         this.endTime = endTime;
         this.weightage = weightage;
+        this.timeNeeded = timeNeeded;
+        this.timeSpent = timeSpent;
     }
 
     // getters
-    public Test getTest() {
-        return this.test;
-    }
     public LocalDateTime getStartTime() {
         return this.startTime;
     }
@@ -30,5 +27,11 @@ public class TestEditRequestModel extends TaskEditRequestModel {
     }
     public double getWeightage() {
         return this.weightage;
+    }
+    public double getTimeNeeded() {
+        return this.timeNeeded;
+    }
+    public double getTimeSpent() {
+        return this.timeSpent;
     }
 }

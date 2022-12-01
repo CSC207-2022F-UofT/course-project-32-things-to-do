@@ -1,50 +1,69 @@
 package use_cases.task_management.task_edit_use_case;
 
+import entities.*;
+
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;
+    private final StudentUser student;
 
-    public TaskEditInteractor (TaskEditPresenter presenter) {
+    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
         this.presenter = presenter;
+        this.student = student;
     }
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
-        if (type.equals("Event")) {
+        if (type.equals("Event")) { // Event being edited
+            EventEditRequestModel request = (EventEditRequestModel) requestModel;
+            Event event = (Event) TaskMap.findTask(request.getId());
             // change event title
-            ((EventEditRequestModel)requestModel).getEvent().setTitle(requestModel.getTitle());
+            event.setTitle(requestModel.getTitle());
             // change event priority
-            ((EventEditRequestModel)requestModel).getEvent().setPriority(requestModel.getPriority());
+            event.setPriority(requestModel.getPriority());
             // change event time block
-            ((EventEditRequestModel)requestModel).getEvent().setTimeBlock(
-                    ((EventEditRequestModel)requestModel).getStartTime(),
-                    ((EventEditRequestModel)requestModel).getEndTime());
+            event.setTimeBlock(request.getStartTime(), request.getEndTime());
             // change event recurring value + frequency (if applicable)
-            ((EventEditRequestModel)requestModel).getEvent().setRecurring(
-                    ((EventEditRequestModel)requestModel).getRecurring(),
-                    ((EventEditRequestModel)requestModel).getFrequency());
-        } else if (type.equals("Assignment")) {
+            event.setRecurring(request.getRecurring(), request.getFrequency());
+
+        } else if (type.equals("Assignment")) { // Assignment being edited
+            AssignmentEditRequestModel request = (AssignmentEditRequestModel) requestModel;
+            Assignment assignment = (Assignment) TaskMap.findTask(request.getId());
             // change assignment title
-            ((AssignmentEditRequestModel)requestModel).getAssignment().setTitle(requestModel.getTitle());
+            assignment.setTitle(requestModel.getTitle());
             // change assignment priority
-            ((AssignmentEditRequestModel)requestModel).getAssignment().setPriority(requestModel.getPriority());
+            assignment.setPriority(requestModel.getPriority());
             // change assignment due date
-            ((AssignmentEditRequestModel)requestModel).getAssignment().setDueDate(
-                    ((AssignmentEditRequestModel)requestModel).getDueDate());
+            assignment.setDueDate(request.getDueDate());
             // change assignment weightage
-            ((AssignmentEditRequestModel)requestModel).getAssignment().setWeightage(
-                    ((AssignmentEditRequestModel)requestModel).getWeightage());
-        } else {
+            assignment.setWeightage(request.getWeightage());
+            // change time needed to do assignment
+            assignment.setTimeNeeded(request.getTimeNeeded());
+            // change time spent on assignment so far
+            assignment.setTimeSpent(request.getTimeSpent());
+
+        } else { // Test being edited
+            TestEditRequestModel request = (TestEditRequestModel) requestModel;
+            Test test = (Test) TaskMap.findTask(request.getId());
             // change test title
-            ((TestEditRequestModel)requestModel).getTest().setTitle(requestModel.getTitle());
+            test.setTitle(requestModel.getTitle());
             // change test priority
-            ((TestEditRequestModel)requestModel).getTest().setPriority(requestModel.getPriority());
+            test.setPriority(requestModel.getPriority());
             // change test time block
-            ((TestEditRequestModel)requestModel).getTest().setTimeBlock(
-                    ((TestEditRequestModel)requestModel).getStartTime(),
-                    ((TestEditRequestModel)requestModel).getEndTime());
+            test.setTimeBlock(request.getStartTime(), request.getEndTime());
             // change test weightage
-            ((TestEditRequestModel)requestModel).getTest().setWeightage(
-                    ((TestEditRequestModel)requestModel).getWeightage());
+            test.setWeightage(request.getWeightage());
+            // change time needed to study for test
+            test.setTimeNeeded(request.getTimeNeeded());
+            // change time spent studying
+            test.setTimeSpent(request.getTimeSpent());
         }
+        // check if the task has been marked complete
+        // if it has, move it to the archive
+        if (requestModel.getComplete()) {
+            TaskMap.findTask(requestModel.getId()).setComplete();
+            student.removeTaskFromList(requestModel.getId());
+            student.addTaskToArchive(requestModel.getId());
+        }
+
         TaskEditResponseModel response = new TaskEditResponseModel(requestModel.getTitle(), type);
         return presenter.prepareSuccessView(response);
     }

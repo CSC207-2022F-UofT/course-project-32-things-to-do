@@ -1,4 +1,4 @@
-package screens.task_management.assignment_creation_screens;
+package screens.task_management.task_creation_screens.assignment_creation_screens;
 
 import use_cases.task_management.task_creation_use_case.AssignmentCreationRequestModel;
 import use_cases.task_management.task_creation_use_case.TaskCreationResponseModel;

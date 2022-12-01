@@ -1,16 +1,15 @@
 import screens.calendar_scheduler.ScheduleConflictResponseFormatter;
 import screens.calendar_scheduler.SchedulerResponseFormatter;
-import screens.task_management.event_creation_screens.EventCreationController;
-import screens.task_management.event_creation_screens.EventCreationResponseFormatter;
-import screens.task_management.event_creation_screens.EventCreationScreen;
-import screens.task_management.event_creation_screens.EventCreationController;
+import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
+import screens.task_management.task_creation_screens.TaskCreationResponseFormatter;
+import screens.task_management.task_creation_screens.event_creation_screens.EventCreationScreen;
 import entities.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.task_management.read_write.TaskReadWrite;
 import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
 import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
-import use_cases.task_management.task_creation_use_case.TaskCreationPresenter;
+import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +26,7 @@ public class TempMain {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        TaskCreationPresenter presenter = new EventCreationResponseFormatter();
+        TaskCreationOutputBoundary outputBoundary = new TaskCreationResponseFormatter();
 
         // create test student - use current student when everything else is in main
         StudentUser fakeStudent = new StudentUser("name", "password");
@@ -41,7 +40,7 @@ public class TempMain {
         }
 
         TaskCreationInputBoundary interactor = new TaskCreationInteractor(
-                presenter, fakeStudent, "none",
+                outputBoundary, fakeStudent, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(interactor);
 
