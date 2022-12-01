@@ -1,6 +1,5 @@
 package use_cases.course_features.course_enrolment_use_case;
 
-
 // Use case layer
 
 import entities.*;
@@ -51,7 +50,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // both lines should do the same thing
         courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()).getStudents().add(requestModel.getStudentID());
         try {
-            courseEnrolmentDsGateway.saveStudentToCourse(requestModel.getStudentID());
+            courseEnrolmentDsGateway.saveStudentToCourse(requestModel.getStudentID(), requestModel.getCourseID());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

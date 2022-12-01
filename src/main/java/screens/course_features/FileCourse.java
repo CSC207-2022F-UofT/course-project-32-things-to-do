@@ -125,8 +125,8 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
      * @param courseID the course id associated to the course the student wants to enrol in
      */
     @Override
-    public void saveStudentToCourse(String courseID) throws IOException {
-        courses.get(courseID).getStudents().add("student's username fix");
+    public void saveStudentToCourse(String studentID, String courseID) throws IOException {
+        courses.get(courseID).getStudents().add(studentID);
 
     }
 

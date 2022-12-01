@@ -19,7 +19,7 @@ public interface CourseEnrolmentDsGateway {
     boolean existsByCourseID(String courseIdentifier); // exact same name as CourseCreationDsGateway
     public Course searchForCourse(String courseIdentifier);
     boolean existsStudentInCourse(String courseID, String studentIdentifier);
-    void saveStudentToCourse(String courseID) throws IOException;
+    void saveStudentToCourse(String studentID, String courseID) throws IOException;
     public ArrayList<String> courseTasks(Course requestModel);
 
 }

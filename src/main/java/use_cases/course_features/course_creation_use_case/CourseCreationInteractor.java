@@ -60,7 +60,7 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
 
         // create response model, sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(
-                course.getCourseID(), course.getTasks());
+                courseModel.getCourseID(), courseModel.getTasks());
         return courseCreationOutputBoundary.prepareSuccessView(courseResponseModel);
     }
 
