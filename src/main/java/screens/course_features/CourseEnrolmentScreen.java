@@ -1,4 +1,4 @@
-package screens.courses_features;
+package screens.course_features;
 
 // Framework/Drivers layer
 
@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     /** student enters course name */

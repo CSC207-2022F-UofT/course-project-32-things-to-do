@@ -1,3 +1,5 @@
+package course_features_use_case;
+
 import entities.Course;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,6 @@ public class CourseUnitTest {
     void huh() {
         ArrayList<String> task = new ArrayList<String>();
         task.add("task1");
-        Course course = new Course("csc207", "paulgries", task);
+        Course course = new Course("course1", "inst1", task);
     }
 }

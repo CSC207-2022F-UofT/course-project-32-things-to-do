@@ -1,4 +1,4 @@
-package screens.courses_features;
+package screens.course_features;
 
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentInputBoundary;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentRequestModel;

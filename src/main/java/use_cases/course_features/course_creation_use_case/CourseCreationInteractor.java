@@ -3,9 +3,8 @@ package use_cases.course_features.course_creation_use_case;
 // Use case layer
 
 import entities.*;
-//import read_write.CourseReadWrite;
-//import read_write.TaskReadWrite;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CourseCreationInteractor implements CourseCreationInputBoundary {
@@ -40,6 +39,14 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
             return courseCreationOutputBoundary.prepareFailView("Course already exists.");
         }
 
+        // need to check that task ids entered exist in the Task database
+//        ArrayList<String> courseTasks = requestModel.getTasks();
+//        for (String task : courseTasks) {
+//            if (TaskMap.findTask(task) == null) {
+//                return courseCreationOutputBoundary.prepareFailView("one of the IDs does not correspond with a task.");
+//            }
+//        }
+
         // checks passed; course can be created
 
         // create a new course
@@ -48,14 +55,22 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
 
         // course successfully created and saved
         CourseCreationRequestModel courseCreationModel = new CourseCreationRequestModel(course.getCourseName(), course.getCourseInstructor(), course.getTasks());
-        courseCreationDSGateway.saveCourse(courseCreationModel);
+        try {
+            courseCreationDSGateway.save(courseCreationModel);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
+        // NEW:
+        // extract tasks array
+
+        // OLD
         // tasks from course (task id will be course name + task number / index of task in arraylist)
-        ArrayList<String> courseTasks = course.getTasks();
-        for (String task : courseTasks) {
+//        ArrayList<String> courseTasks = course.getTasks();
+//        for (String task : courseTasks) {
             // need to initialize new task to add course tasks to TaskMap, but unable to since Task is abstract
 //            TaskMap.addTask(course.getCourseName() + courseTasks.indexOf(task), task);
-        }
+//        }
 
         // save course to file
 //        CourseReadWrite crw = new CourseReadWrite("src/data/CourseMap");

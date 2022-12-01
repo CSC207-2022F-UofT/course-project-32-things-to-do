@@ -8,12 +8,15 @@ import entities.*;
 import java.util.ArrayList;
 
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
+
+    final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
     final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary;
     final CourseMap courseMap;
     final String studentID;
 
-    public CourseEnrolmentInteractor(CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary,
+    public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway, CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary,
                                      CourseMap courseMap, String studentID) {
+        this.courseEnrolmentDsGateway = courseEnrolmentDsGateway;
         this.courseEnrolmentOutputBoundary = courseEnrolmentOutputBoundary;
         this.courseMap = courseMap;
         this.studentID = studentID;
@@ -61,16 +64,20 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
          * wouldn't make sense to initialize by creating a new StudentUser because i shouldn't be able to
          * 'get' the password?**/
         StudentUser user = new StudentUser(requestModel.getStudentID(),"helpwhatispassword");
+        Course course = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
         // append each task array to student user's task list
         for (String task : courseTasks ) {
             user.getToDoList().add(task);
         }
-        /** don't think anything in this chunk is needed:
+        // don't think anything in this chunk is needed:
         // tasks successfully added and saved
-        CourseEnrolmentRequestModel courseEnrolmentModel = new CourseEnrolmentRequestModel(user.get);
+        CourseEnrolmentRequestModel courseEnrolmentModel = new CourseEnrolmentRequestModel(
+                course.getCourseName(), course.getCourseInstructor(), user.getName());
         // do I even need to save anything
-        courseEnrolmentDsGateway.saveStudent(courseEnrolmentModel);
-         **/
+        // the answer is yes
+        // need to save student id to students parameter of course entity ('enrol in course')
+        courseEnrolmentDsGateway.save(courseEnrolmentModel);
+
 
         // sent to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(

@@ -1,4 +1,4 @@
-package screens.courses_features;
+package screens.course_features;
 
 // Framework / Drivers layer
 
@@ -77,6 +77,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
 
     /**
      * React to a button click which triggers the corresponding use case
+     * NEED TO FIX THIS!!!
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
@@ -84,16 +85,16 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
         if (evt.getActionCommand().equals("Cancel")) {
             screenLayout.show(screens, "main");
         } else if (evt.getActionCommand().equals("Save")) {
-            try {
+//            try {
                 // initialize new Arraylist and add task
                 ArrayList<String> tasks = new ArrayList<>();
                 tasks.add(taskName.getText());
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);
                 JOptionPane.showMessageDialog(this, "Course successful created.");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, e.getMessage());
+//            }
         }
     }
 }

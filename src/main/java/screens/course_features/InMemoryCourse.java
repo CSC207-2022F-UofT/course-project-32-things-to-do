@@ -1,4 +1,6 @@
-package screens.courses_features;
+package screens.course_features;
+
+// not needed for functionality, only for testing
 
 import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
 import use_cases.course_features.course_creation_use_case.CourseCreationRequestModel;
@@ -23,7 +25,7 @@ public class InMemoryCourse implements CourseCreationDsGateway {
      * @param requestModel the data to save
      */
     @Override
-    public void saveCourse(CourseCreationRequestModel requestModel) {
+    public void save(CourseCreationRequestModel requestModel) {
         System.out.println("Save " + requestModel.getCourseID());
     }
 }
