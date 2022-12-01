@@ -41,8 +41,16 @@ public class TaskMap implements Serializable {
      * Get the full task map
      * @return - the task map
      */
-    public static HashMap getTaskMap() {
+    public static HashMap<String, Task> getTaskMap() {
         return taskMap;
+    }
+
+    /**
+     * Set the full task map
+     * @param tasksMap - the HashMap<String, Task> to set taskMap to
+     */
+    public static void setTaskMap(HashMap<String, Task> tasksMap) {
+        taskMap = tasksMap;
     }
 
     /**
@@ -64,7 +72,7 @@ public class TaskMap implements Serializable {
      */
     public static void load(ReadWriter rw) {
         try {
-            taskMap = (HashMap) rw.readFromFile();
+            taskMap = (HashMap<String, Task>) rw.readFromFile();
         } catch(Exception e) {
             System.out.println(e);
         }

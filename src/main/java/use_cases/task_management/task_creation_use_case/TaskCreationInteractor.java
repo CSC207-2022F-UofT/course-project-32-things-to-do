@@ -61,7 +61,7 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             TaskMap.addTask(id, test);
         }
         // save TaskMap.txt to file:
-        ReadWriter trw = new TaskReadWrite("src/data/TaskMap.txt");
+        ReadWriter trw = new TaskReadWrite("src/main/java/data/TaskMap.txt");
         TaskMap.saveToFile(trw);
 
         // display success to user
