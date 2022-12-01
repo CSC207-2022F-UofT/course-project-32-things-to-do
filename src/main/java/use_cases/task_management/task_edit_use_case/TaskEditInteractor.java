@@ -13,42 +13,49 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
     }
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
-        if (type.equals("Event")) {
-            Event event = (Event) TaskMap.findTask(((EventEditRequestModel)requestModel).getId());
+        if (type.equals("Event")) { // Event being edited
+            EventEditRequestModel request = (EventEditRequestModel) requestModel;
+            Event event = (Event) TaskMap.findTask(request.getId());
             // change event title
             event.setTitle(requestModel.getTitle());
             // change event priority
             event.setPriority(requestModel.getPriority());
             // change event time block
-            event.setTimeBlock(
-                    ((EventEditRequestModel)requestModel).getStartTime(),
-                    ((EventEditRequestModel)requestModel).getEndTime());
+            event.setTimeBlock(request.getStartTime(), request.getEndTime());
             // change event recurring value + frequency (if applicable)
-            event.setRecurring(
-                    ((EventEditRequestModel)requestModel).getRecurring(),
-                    ((EventEditRequestModel)requestModel).getFrequency());
-        } else if (type.equals("Assignment")) {
-            Assignment assignment = (Assignment) TaskMap.findTask(((AssignmentEditRequestModel)requestModel).getId());
+            event.setRecurring(request.getRecurring(), request.getFrequency());
+
+        } else if (type.equals("Assignment")) { // Assignment being edited
+            AssignmentEditRequestModel request = (AssignmentEditRequestModel) requestModel;
+            Assignment assignment = (Assignment) TaskMap.findTask(request.getId());
             // change assignment title
             assignment.setTitle(requestModel.getTitle());
             // change assignment priority
             assignment.setPriority(requestModel.getPriority());
             // change assignment due date
-            assignment.setDueDate(((AssignmentEditRequestModel)requestModel).getDueDate());
+            assignment.setDueDate(request.getDueDate());
             // change assignment weightage
-            assignment.setWeightage(((AssignmentEditRequestModel)requestModel).getWeightage());
-        } else {
-            Test test = (Test) TaskMap.findTask(((TestEditRequestModel)requestModel).getId());
+            assignment.setWeightage(request.getWeightage());
+            // change time needed to do assignment
+            assignment.setTimeNeeded(request.getTimeNeeded());
+            // change time spent on assignment so far
+            assignment.setTimeSpent(request.getTimeSpent());
+
+        } else { // Test being edited
+            TestEditRequestModel request = (TestEditRequestModel) requestModel;
+            Test test = (Test) TaskMap.findTask(request.getId());
             // change test title
             test.setTitle(requestModel.getTitle());
             // change test priority
             test.setPriority(requestModel.getPriority());
             // change test time block
-            test.setTimeBlock(
-                    ((TestEditRequestModel)requestModel).getStartTime(),
-                    ((TestEditRequestModel)requestModel).getEndTime());
+            test.setTimeBlock(request.getStartTime(), request.getEndTime());
             // change test weightage
-            test.setWeightage(((TestEditRequestModel)requestModel).getWeightage());
+            test.setWeightage(request.getWeightage());
+            // change time needed to study for test
+            test.setTimeNeeded(request.getTimeNeeded());
+            // change time spent studying
+            test.setTimeSpent(request.getTimeSpent());
         }
         TaskEditResponseModel response = new TaskEditResponseModel(requestModel.getTitle(), type);
         return presenter.prepareSuccessView(response);

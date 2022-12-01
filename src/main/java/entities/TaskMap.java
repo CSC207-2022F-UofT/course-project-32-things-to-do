@@ -24,9 +24,12 @@ public class TaskMap implements Serializable {
      * Add a Task to the TaskMap.txt
      * @param id - the ID of the Task
      * @param task - the Task associated with the ID
+     * @return - true if the task is successfully added, false if the id already exists
      */
-    public static void addTask(String id, Task task) {
+    public static boolean addTask(String id, Task task) {
+        if (taskMap.containsKey(id)) return false;
         taskMap.put(id, task);
+        return true;
     }
 
     /**

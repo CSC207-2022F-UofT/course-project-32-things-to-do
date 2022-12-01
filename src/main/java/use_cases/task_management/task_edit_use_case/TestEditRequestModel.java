@@ -9,13 +9,17 @@ public class TestEditRequestModel extends TaskEditRequestModel {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final double weightage;
-
-    public TestEditRequestModel(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime, double weightage) {
+    private final double timeNeeded;
+    private final double timeSpent;
+    public TestEditRequestModel(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+                                double weightage, double timeNeeded, double timeSpent) {
         super(title, priority);
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.weightage = weightage;
+        this.timeNeeded = timeNeeded;
+        this.timeSpent = timeSpent;
     }
 
     // getters
@@ -30,5 +34,11 @@ public class TestEditRequestModel extends TaskEditRequestModel {
     }
     public double getWeightage() {
         return this.weightage;
+    }
+    public double getTimeNeeded() {
+        return this.timeNeeded;
+    }
+    public double getTimeSpent() {
+        return this.timeSpent;
     }
 }
