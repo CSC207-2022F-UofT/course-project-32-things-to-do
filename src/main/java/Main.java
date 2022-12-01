@@ -80,6 +80,8 @@ public class Main {
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);
 
+        screens.add("scheduleCTView", (Component) presentOutputInterface);
+
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
 
