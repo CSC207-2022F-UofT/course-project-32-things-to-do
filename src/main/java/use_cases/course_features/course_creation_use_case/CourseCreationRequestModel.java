@@ -44,7 +44,6 @@ public class CourseCreationRequestModel {
     }
 
     public ArrayList<String> getTasks() {
-
         return tasks;
     }
 }

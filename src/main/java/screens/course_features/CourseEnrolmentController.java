@@ -16,5 +16,4 @@ public class CourseEnrolmentController {
 
         return enrolmentInput.enrol(requestModel);
     }
-
 }

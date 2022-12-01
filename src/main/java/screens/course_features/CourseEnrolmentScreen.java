@@ -23,10 +23,18 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     CourseEnrolmentController courseEnrolmentController;
 
     /**
-     * Window with title, texts to fill in, and JButtons
+     * Objects for connecting to the other screens
      */
-    public CourseEnrolmentScreen(CourseEnrolmentController controller) {
+    JPanel screens;
+    CardLayout screenLayout;
+
+    /**
+     * A window with title, text fields to fill in, and JButtons
+     */
+    public CourseEnrolmentScreen(CourseEnrolmentController controller, JPanel screens, CardLayout screenLayout) {
         this.courseEnrolmentController = controller;
+        this.screens = screens;
+        this.screenLayout = screenLayout;
 
         // label for the title of the screen
         JLabel title = new JLabel("Course Enrolment Screen");
@@ -38,7 +46,7 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
         LabelTextPanel studentIDInfo = new LabelTextPanel(
-                new JLabel("Enter instructor name"), studentID);
+                new JLabel("Enter your username"), studentID);
 
         // buttons
         JButton cancel = new JButton("Cancel");
@@ -63,26 +71,26 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
 
     /**
      * React to a button click which triggers the corresponding use case
+     * this probably also needs to be fixed!!!
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
         // student user decides to cancel course enrolment process
         if (evt.getActionCommand().equals("Cancel")) {
-            try {
-                // do to
-                JOptionPane.showMessageDialog(this, "screen should close");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+            screenLayout.show(screens, "main");
+//            try {
+                // TODO wait actually i don't need to display a message because the screen should close
+                JOptionPane.showMessageDialog(this, "screen should close .....");
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(this, e.getMessage());
+//            }
         } else if (evt.getActionCommand().equals("Search")) {
             try {
-                // add studentID to course's task parameter?
-
+                // add student id to Course, alias of course tasks made
+                // TODO send to task creation request model
+                // TODO don't actually know if line below does anything
                 courseEnrolmentController.enrol(courseName.getText(),courseInstructor.getText(), studentID.getText());
-
-                // add course tasks to student's to do list?
-
-                JOptionPane.showMessageDialog(this, "Successfully enrolled in course.");
+                JOptionPane.showMessageDialog(this, "Successfully enrolled in course. tasks added.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }

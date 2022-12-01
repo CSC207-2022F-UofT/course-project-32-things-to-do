@@ -10,14 +10,13 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
     final CourseCreationDsGateway courseCreationDSGateway;
     // this is called in filecourse, where stuff is added / modified in the database
     final CourseCreationOutputBoundary courseCreationOutputBoundary;
+    private Course course; // for response model
 
     public CourseCreationInteractor(CourseCreationDsGateway courseCreationDSGateway,
                                     CourseCreationOutputBoundary courseCreationOutputBoundary) {
         this.courseCreationDSGateway = courseCreationDSGateway;
         this.courseCreationOutputBoundary = courseCreationOutputBoundary;
     }
-
-    private Course course;
 
     /**
      * Creates the task in the request model and returns the corresponding response model

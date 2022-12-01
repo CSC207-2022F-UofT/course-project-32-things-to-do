@@ -42,13 +42,17 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     /**
      * reads the file
      * @return the read hashmap
+     * after in.close():
+     *              Remove this "close" call; closing the resource is handled automatically by the try-with-resources.
+     *              fileReader.close();
      */
     public HashMap<String, Course> readFile() throws IOException, ClassNotFoundException {
-        FileInputStream fileReader = new FileInputStream(this.filePath);
-        ObjectInputStream in = new ObjectInputStream(fileReader);
-        HashMap<String, Course> f = (HashMap<String, Course>) in.readObject();
-        in.close();
-        fileReader.close();
+        HashMap<String, Course> f;
+        try (FileInputStream fileReader = new FileInputStream(this.filePath)) {
+            ObjectInputStream in = new ObjectInputStream(fileReader);
+            f = (HashMap<String, Course>) in.readObject();
+            in.close();
+        }
         return f;
     }
 
@@ -66,13 +70,16 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     /**
      * COURSE CREATION GATEWAY
      * writes the map of course ids to course objects into the Course database file
+     * after out.close():
+     *             Remove this "close" call; closing the resource is handled automatically by the try-with-resources.
+     *             fileWriter.close();
      */
     private void saveCourse() throws IOException {
-        FileOutputStream fileWriter = new FileOutputStream(filePath);
-        ObjectOutputStream out = new ObjectOutputStream(fileWriter);
-        out.writeObject(courses);
-        out.close();
-        fileWriter.close();
+        try (FileOutputStream fileWriter = new FileOutputStream(filePath)) {
+            ObjectOutputStream out = new ObjectOutputStream(fileWriter);
+            out.writeObject(courses);
+            out.close();
+        }
     }
 
     /**
@@ -89,27 +96,46 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
         return this.courses;
     }
 
+    @Override
+    /**
+     * COURSE ENROLMENT GATEWAY
+     * gets the course object associated with course id
+     * used to add student's id to students parameter
+     * and to copy the tasks
+     * @param courseIdentifier the course id of the course that the student wants to enrol in
+     */
+    public Course searchForCourse(String courseIdentifier) {
+        return courses.get(courseIdentifier);
+    }
+
+    /**
+     * COURSE ENROLMENT GATEWAY
+     * return whether the student username is already in students parameter
+     * return whether the student is already enrolled in the course
+     * @param studentIdentifier the student's username
+     */
+    @Override
+    public boolean existsStudentInCourse(String courseID, String studentIdentifier) {
+        return courses.get(courseID).getStudents().contains(studentIdentifier);
+    }
+
     /**
      * COURSE ENROLMENT GATEWAY
      * adds the student's username to the course's students parameter
      * @param courseID the course id associated to the course the student wants to enrol in
      */
     @Override
-    public void saveStudentToCourse(String courseID) {
+    public void saveStudentToCourse(String courseID) throws IOException {
         courses.get(courseID).getStudents().add("student's username fix");
 
     }
 
     /**
-     * return whether the student username is already in students parameter
-     * return whether the student is already enrolled in the course
-     * @param studentIdentifier the student's username
+     * COURSE ENROLMENT GATEWAY
+     * gets the task ids of the course the student wants to enrol in
+     * copy and change here as well? or toss to task creation request model
+     * @param requestModel the course we want tasks from
      */
-    @Override
-    public boolean existsByStudent(String courseID, String studentIdentifier) {
-        return courses.get(courseID).getStudents().contains(studentIdentifier);
-    }
-
     @Override
     public ArrayList<String> courseTasks(Course requestModel) {
         return requestModel.getTasks();

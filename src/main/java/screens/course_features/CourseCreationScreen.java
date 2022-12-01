@@ -72,7 +72,9 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
 
     /**
      * React to a button click which triggers the corresponding use case
+     * have to keep try catch, or else error messages won't show up
      * NEED TO FIX THIS!!!
+     * 1. loop through tasks + append
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
@@ -80,12 +82,16 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
         if (evt.getActionCommand().equals("Cancel")) {
             screenLayout.show(screens, "main");
         } else if (evt.getActionCommand().equals("Save")) {
+            try {
                 // initialize new Arraylist and add task
                 ArrayList<String> tasks = new ArrayList<>();
                 tasks.add(taskNames.getText());
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);
-                JOptionPane.showMessageDialog(this, "Course successful created.");
+                JOptionPane.showMessageDialog(this, "Course successfully created.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }
 }

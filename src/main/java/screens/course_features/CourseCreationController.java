@@ -19,5 +19,4 @@ public class CourseCreationController {
 
         return courseInput.create(requestModel);
     }
-
 }
