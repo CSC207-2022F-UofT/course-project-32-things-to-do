@@ -1,7 +1,6 @@
 package scheduling_ct_screens;
 import scheduling_ct_use_case.*;
 
-import java.util.ArrayList;
 
 /**
  * Presenter for the Collaborative Scheduling Use Case
@@ -24,14 +23,9 @@ public class ScheduleCTPresenter implements ScheduleCTOutputBoundary {
     @Override
     public ScheduleCTResponseModel prepareNoConflictView(ScheduleCTResponseModel responseModel) {
 
-        ArrayList<String> availableDates = responseModel.getScheduledTimes();
+        scheduleCTViewInterface.present(responseModel);
 
-        // making an instance of a class between presenter and view that can communicate information
-        ScheduleCTFormatter scheduleCTFormatter = new ScheduleCTFormatter(availableDates);
-
-        scheduleCTViewInterface.present(scheduleCTFormatter);
-
-        return responseModel;
+        return null;
     }
 
     /**

@@ -10,13 +10,10 @@ import java.util.ArrayList;
 
 public class ScheduleCTResponseModel {
 
-    private final boolean isConflict;
     private final ArrayList<String> scheduledTimes;
     ArrayList<ArrayList<LocalDateTime>> timesToSchedule;
 
-    public ScheduleCTResponseModel(boolean isConflict, ArrayList<String> scheduledTimes) {
-
-        this.isConflict = isConflict;
+    public ScheduleCTResponseModel(ArrayList<String> scheduledTimes) {
         this.scheduledTimes = scheduledTimes;
     }
 

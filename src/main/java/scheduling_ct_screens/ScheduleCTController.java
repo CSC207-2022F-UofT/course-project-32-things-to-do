@@ -33,14 +33,14 @@ public class ScheduleCTController {
     /**
      * Bundles information given by user as well as ScheduleCTController instance variables into a
      * ScheduleCTRequestModel, scheduling that input
-     * @param taskName - the string title/name of the task
+     *
+     * @param taskName  - the string title/name of the task
      * @param startTime - the string representation of the start date and time the user wants to schedule
-     * @param endTime - the string representation of the end date and time the user wants to schedule
-     * @return a scheduleCTResponseModel
+     * @param endTime   - the string representation of the end date and time the user wants to schedule
      */
-    public ScheduleCTResponseModel isConflict(String taskName, String startTime, String endTime) {
+    public void isConflict(String taskName, String startTime, String endTime) {
         ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime, studentUser);
-        return scheduleInput.schedule(inputData, this.hashMap);
+        scheduleInput.schedule(inputData, this.hashMap);
     }
 
 }
