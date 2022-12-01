@@ -12,6 +12,8 @@ import screens.task_management.task_edit_delete_screens.*;
 import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.*;
 import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.*;
 import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.*;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -21,6 +23,7 @@ import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.read_write.TaskReadWrite;
 import use_cases.task_management.task_creation_use_case.*;
+import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,6 +80,12 @@ public class Main {
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
 
+        ToDoListPresenter toDoListPresenter = new ToDoListPresenter((StudentUser) user); //TODO need Natalie's stuff
+        ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
+        toDoListPresenter.setToDoListInput(toDoListInteractor);
+
+
+
         CourseCreationDsGateway course;
         try {
             course = new FileCourse("./src/main/java/data/courses.csv");
@@ -89,8 +98,12 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
+        ToDoListScreen toDoListScreen = new ToDoListScreen(toDoListPresenter, screens, cardLayout);
+        screens.add("toDoList", toDoListScreen);
+
+
         ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(screens, cardLayout);
-        screens.add("toDoList", chooseTask);
+        screens.add("taskCreate", chooseTask);
 
         EventCreationScreen eventCreationScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
         screens.add("event", eventCreationScreen);

@@ -10,6 +10,7 @@ public class MainScreen extends JPanel implements ActionListener {
     /**
      * The selectable buttons on the main screen
      */
+    JButton newTask;
     JButton toDoList;
     JButton calendar;
     JButton progressTracker;
@@ -35,12 +36,14 @@ public class MainScreen extends JPanel implements ActionListener {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create buttons
-        toDoList = new JButton("New Task");
+        newTask = new JButton("New Task");
+        toDoList = new JButton("To Do List");
         calendar = new JButton("Calendar");
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
 
+        newTask.addActionListener(this);
         toDoList.addActionListener(this);
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
@@ -49,6 +52,7 @@ public class MainScreen extends JPanel implements ActionListener {
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
+        buttons.add(newTask);
         buttons.add(toDoList);
         buttons.add(calendar);
         buttons.add(progressTracker);
@@ -65,6 +69,9 @@ public class MainScreen extends JPanel implements ActionListener {
      * Trigger the corresponding use case upon button click
      */
     public void actionPerformed(ActionEvent evt) {
+        if (evt.getSource() == newTask) {
+            cardLayout.show(screens, "taskCreate");
+        }
         if (evt.getSource() == toDoList) {
             cardLayout.show(screens, "toDoList");
         }

@@ -16,18 +16,31 @@ public class ToDoListScreen extends JPanel implements ActionListener {
 
     ToDoListPresenter presenter;
 
-    public ToDoListScreen(ToDoListPresenter presenter) {
+    JButton back
+
+    JPanel screens;
+
+    CardLayout screenLayout;
+
+    public ToDoListScreen(ToDoListPresenter presenter, JPanel screens, CardLayout screenlayout) {
 
         this.presenter = presenter;
+        this.screens = screens;
+        this.screenLayout = screenlayout;
 
         JLabel title = new JLabel("ToDo List");
         title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
+        back = new JButton("Return");
+        back.addActionListener(this);
+
         JPanel toDoList = new JPanel();
         toDoList.setLayout(new BoxLayout(toDoList, BoxLayout.PAGE_AXIS));
 
-        ToDoListResponseModel rsp = presenter.getToDoList();
-        ArrayList<ArrayList<String>> tasks =  rsp.getToDoListView();
+        //TODO problems with student user
+        //ToDoListResponseModel rsp = presenter.getToDoList();
+        //ArrayList<ArrayList<String>> tasks =  rsp.getToDoListView();
+        ArrayList<ArrayList<String>> tasks = new ArrayList<>();
 
         for (ArrayList<String> task: tasks) {
             JButton editDelete = new JButton("Edit/Delete");
@@ -53,25 +66,29 @@ public class ToDoListScreen extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(title);
         this.add(scrollableToDoList);
+        this.add(back);
 
-        //TODO return button
     }
 
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
-        JButton taskButton = (JButton)evt.getSource();
-        String taskName = (String) taskButton.getClientProperty("taskName");
-        String taskId = (String) taskButton.getClientProperty("taskId");
-        String taskType = (String) taskButton.getClientProperty("taskType");
-
-        //change card to corresponding task type edit/delete screen
-        if (taskType.equals("Assignment")) {
-            //TODO change card layout to Assignment edit screen
-        } else if (taskType.equals("Test")) {
-            //TODO change card layout to Test edit screen
+        if (evt.getSource() == back) {
+            screenLayout.show(screens, "main");
         } else {
-            //TODO change card layout to Event edit screen
+            JButton taskButton = (JButton) evt.getSource();
+            String taskName = (String) taskButton.getClientProperty("taskName");
+            String taskId = (String) taskButton.getClientProperty("taskId");
+            String taskType = (String) taskButton.getClientProperty("taskType");
+
+            //change card to corresponding task type edit/delete screen
+            if (taskType.equals("Assignment")) {
+
+            } else if (taskType.equals("Test")) {
+
+            } else {
+
+            }
         }
     }
 
