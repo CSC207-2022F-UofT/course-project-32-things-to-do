@@ -15,9 +15,9 @@ public class EventEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public TaskEditResponseModel edit(boolean complete, String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                       boolean recurring, String frequency) {
-        TaskEditRequestModel requestModel = new EventEditRequestModel(id, title, priority, startTime, endTime, recurring, frequency);
+        TaskEditRequestModel requestModel = new EventEditRequestModel(id, complete, title, priority, startTime, endTime, recurring, frequency);
         return input.edit(requestModel, "Event");
     }
 

@@ -1,15 +1,14 @@
 package use_cases.task_management.task_edit_use_case;
 
-import entities.Assignment;
-import entities.Event;
-import entities.TaskMap;
-import entities.Test;
+import entities.*;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;
+    private final StudentUser student;
 
-    public TaskEditInteractor (TaskEditPresenter presenter) {
+    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
         this.presenter = presenter;
+        this.student = student;
     }
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
@@ -57,6 +56,14 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             // change time spent studying
             test.setTimeSpent(request.getTimeSpent());
         }
+        // check if the task has been marked complete
+        // if it has, move it to the archive
+        if (requestModel.getComplete()) {
+            TaskMap.findTask(requestModel.getId()).setComplete();
+            student.removeTaskFromList(requestModel.getId());
+            student.addTaskToArchive(requestModel.getId());
+        }
+
         TaskEditResponseModel response = new TaskEditResponseModel(requestModel.getTitle(), type);
         return presenter.prepareSuccessView(response);
     }

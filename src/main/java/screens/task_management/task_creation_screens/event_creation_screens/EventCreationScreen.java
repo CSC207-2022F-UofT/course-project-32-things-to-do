@@ -89,6 +89,9 @@ public class EventCreationScreen extends JPanel implements ActionListener {
             try {
                 // get value of recurring check box
                 boolean valRecurring = recurring.isSelected();
+                // set frequency to "" if recurring not checked
+                String valFrequency = "";
+                if (valRecurring) valFrequency = frequency.getText();
                 // set priority to the value in the box or 0 if blank
                 int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
                 if (valPriority < 0) valPriority = 0;
@@ -97,7 +100,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
 
                 eventCreationController.create(title.getText(), valPriority,
-                        startDate, endDate, valRecurring, frequency.getText());
+                        startDate, endDate, valRecurring, valFrequency);
 
                 showMessageDialog(this, "Event Created Successfully");
             } catch (Exception e) {

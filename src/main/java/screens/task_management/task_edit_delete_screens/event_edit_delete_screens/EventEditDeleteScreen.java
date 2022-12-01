@@ -9,9 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class EventEditDeleteScreen extends JPanel implements ActionListener {
-    // text fields
+    // user input
+    JCheckBox complete = new JCheckBox("Mark task complete?");
     JTextField title;
     JTextField priority;
     JTextField date;
@@ -49,9 +54,9 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
         // fill all text fields and whatnot
         title = new JTextField(eventInfo.getTitle());
         priority = new JTextField(eventInfo.getPriority());
-        date = new JTextField(eventInfo.getDate());
-        startTime = new JTextField(eventInfo.getStartTime());
-        endTime = new JTextField(eventInfo.getEndTime());
+        date = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        startTime = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        endTime = new JTextField(eventInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
         recurring = new JCheckBox("Is the event recurring?", eventInfo.getRecurring());
         frequency = new JTextField(eventInfo.getFrequency());
 
@@ -102,6 +107,32 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // todo finish implementation
+        try {
+            if (e.getActionCommand().equals("Finish")) { // finish edit
+                // check if marked complete
+                boolean valComplete = complete.isSelected();
+                // change to original value if field left blank
+                String valTitle = title.getText().equals("") ? eventInfo.getTitle() : title.getText();
+                int valPriority = priority.getText().equals("") ? eventInfo.getPriority() : Integer.parseInt(priority.getText());
+                LocalDateTime valStartTime = date.getText().equals("") || startTime.getText().equals("") ?
+                        eventInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
+                LocalDateTime valEndTime = date.getText().equals("") || endTime.getText().equals("") ?
+                        eventInfo.getEndTime() : LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                boolean valRecurring = recurring.isSelected();
+                String valFrequency = "";
+                if (valRecurring) valFrequency = frequency.getText();
+
+                // edit event
+                eventEditController.edit(valComplete, eventInfo.getId(), valTitle, valPriority, valStartTime, valEndTime, valRecurring, valFrequency);
+            } else if (e.getActionCommand().equals("Delete")) { // delete Event
+                taskDeletionController.delete(student, eventInfo.getId());
+            } else if (e.getActionCommand().equals("Cancel")) { // Edit cancelled
+                screenLayout.show(screens, "main");
+            } else { // checkbox pressed
+                frequency.setEnabled(recurring.isSelected());
+            }
+        } catch (Exception ex) {
+            showMessageDialog(this, ex.getMessage());
+        }
     }
 }

@@ -1,20 +1,18 @@
 package use_cases.task_management.task_edit_use_case;
 
-import entities.Event;
-
 import java.time.LocalDateTime;
 
 public class EventEditRequestModel extends TaskEditRequestModel {
+    private boolean complete;
     private String id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean recurring;
     private String frequency;
 
-    public EventEditRequestModel(String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public EventEditRequestModel(String id, boolean complete, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                  boolean recurring, String frequency) {
-        super(title, priority);
-        this.id = id;
+        super(id, complete, title, priority);
         this.startTime = startTime;
         this.endTime = endTime;
         this.recurring = recurring;

@@ -6,9 +6,8 @@ public interface EventDisplayer {
     String getTitle();
     String getId();
     int getPriority();
-    String getDate();
-    String getStartTime();
-    String getEndTime();
+    LocalDateTime getStartTime();
+    LocalDateTime getEndTime();
     boolean getRecurring();
     String getFrequency();
 }

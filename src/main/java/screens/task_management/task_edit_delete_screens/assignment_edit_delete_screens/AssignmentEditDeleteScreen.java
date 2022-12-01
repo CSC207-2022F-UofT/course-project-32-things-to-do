@@ -14,18 +14,9 @@ import java.time.format.DateTimeFormatter;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-/*
-screen -> controller -> use case -> entity
-screen -> task displayer (interface) -> use case -> entity
-
-click edit/delete button
--> program gets all info
--> program displays screen with prefilled values
--> user enters new values
- */
-
 public class AssignmentEditDeleteScreen extends JPanel implements ActionListener {
-    // text fields
+    // user input
+    JCheckBox complete = new JCheckBox("Mark task complete?");
     JTextField title;
     JTextField priority;
     JTextField dueDay;
@@ -121,6 +112,8 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         try {
             // Assignment being edited
             if (e.getActionCommand().equals("Finish")) {
+                // check if marked complete
+                boolean valComplete = complete.isSelected();
                 // change to original value if field left blank
                 String valTitle = title.getText().equals("") ? assignmentInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? assignmentInfo.getPriority() : Integer.parseInt(priority.getText());
@@ -130,7 +123,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 double valTimeNeeded = timeNeeded.getText().equals("") ? assignmentInfo.getTimeNeeded() : Double.parseDouble(timeNeeded.getText());
                 double valTimeSpent = timeSpent.getText().equals("") ? assignmentInfo.getTimeSpent() : Double.parseDouble(timeSpent.getText());
                 // edit the Assignment
-                assignmentEditController.edit(assignmentInfo.getId(), valTitle, valPriority, valDueDate, valWeightage,
+                assignmentEditController.edit(valComplete, assignmentInfo.getId(), valTitle, valPriority, valDueDate, valWeightage,
                         valTimeNeeded, valTimeSpent);
             }
             // Assignment being deleted
