@@ -1,11 +1,11 @@
 package test_course_features;
 
-import org.junit.Test;
-
-public class CourseCreationInteractorTest {
-
-    @Test
-    void create() {
-
-    }
-}
+//import org.junit.Test;
+//
+//public class CourseCreationInteractorTest {
+//
+//    @Test
+//    void create() {
+//
+//    }
+//}
