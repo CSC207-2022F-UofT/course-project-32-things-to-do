@@ -81,6 +81,24 @@ public class UserRegInteractor implements UserRegInputBoundary {
         return userModel;
     }
 
+    /**
+     * For testing purposes only!! Do not actually use.
+     * @param now time of creation
+     */
+    public UserRegSaveRequest getUserSaveRequest(LocalDateTime now) {
+        UserRegSaveRequest userModel;
+        if (user instanceof StudentUser) {
+            userModel = new StudentSaveRequest(user.getName(), user.getPass(),
+                    (StudentUser) user, now);
+        } else if (user instanceof InstructorUser) {
+            userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
+                    (InstructorUser) user, now);
+        } else {
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+        }
+        return userModel;
+    }
+
     public User getUser() {
         return this.user;
     }
