@@ -35,7 +35,12 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     JPanel screens;
 
     /**
-     * the window for choosing which type of Task to create, after selecting "New task"
+     * The window for deciding which Task to create, after clicking the "New task" button
+     * @param user - the user whom we are making a task for
+     * @param schedulerPresenter - todo
+     * @param scheduleConflictPresenter - todo
+     * @param screens - rest of screens in the program
+     * @param cardLayout - for switching between screens
      */
     public ChooseTaskCreateScreen(User user, SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
                                   JPanel screens, CardLayout cardLayout) {

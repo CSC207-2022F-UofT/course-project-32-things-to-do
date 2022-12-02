@@ -17,13 +17,18 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
 
     /**
      * Interactor for tasks that are involved with scheduling
+     * @param outputBoundary - the output boundary for displaying results
+     * @param user - the User we are making a task for
+     * @param courseName - the name of the course the Task is for, or "none"
+     * @param schedulerPresenter - todo
+     * @param scheduleConflictPresenter - todo
      */
     public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, User user, String courseName,
-                                  SchedulerPresenter schedulerOutputBoundary, ScheduleConflictPresenter scheduleConflictOutputBoundary) {
+                                  SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
         this.outputBoundary = outputBoundary;
         this.user = user;
         this.courseName = courseName;
-        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary, schedulerOutputBoundary);
+        this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
     }
 
     /**

@@ -40,7 +40,13 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
     AssignmentDisplayer assignmentInfo;
 
     /**
-     * a screen for editing/deleting an Assignment
+     * A screen for editing/deleting an Assignment
+     * @param student - the student whose Assignment is being changed
+     * @param assignmentEditController - controller for calling the edit use case
+     * @param taskDeletionController - controller for calling the delete use case
+     * @param screens - rest of screens in program
+     * @param screenLayout - for switching between screens
+     * @param assignmentInfo - for accessing the information of the Assignment
      */
     public AssignmentEditDeleteScreen(
             StudentUser student,
@@ -53,6 +59,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         this.screenLayout = screenLayout;
         this.assignmentInfo = assignmentInfo;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Assignment Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -112,6 +119,10 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         this.add(buttons);
     }
 
+    /**
+     * React to button clicks
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -130,18 +141,22 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 assignmentEditController.edit(valComplete, assignmentInfo.getId(), valPriority, valDueDate, valWeightage,
                         valTimeNeeded, valTimeSpent);
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment edited successfully"); // todo customize this message
                 screenLayout.show(screens, "main");
             }
             // Assignment being deleted
             else if (e.getActionCommand().equals("Delete")) {
+                // delete the Assignment
                 taskDeletionController.delete(student, assignmentInfo.getId());
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment deleted successfully");
                 screenLayout.show(screens, "main");
             }
             // Cancel button pressed
             else {
+                // return to to-do list screen
                 screenLayout.show(screens, "toDoList");
             }
         } catch (Exception ex) {

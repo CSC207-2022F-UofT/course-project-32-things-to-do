@@ -13,6 +13,8 @@ public class EventInfoRetriever implements EventDisplayer {
     public EventInfoRetriever(Event event) {
         this.event = event;
     }
+
+    // Event getters
     @Override
     public String getTitle() {
         return event.getTitle();

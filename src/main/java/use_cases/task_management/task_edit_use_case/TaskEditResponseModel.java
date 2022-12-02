@@ -3,6 +3,12 @@ package use_cases.task_management.task_edit_use_case;
 public class TaskEditResponseModel {
     private final String title;
     private final String type;
+
+    /**
+     * A response model for Task editing
+     * @param title - the title of the Task
+     * @param type - the type of Task
+     */
     public TaskEditResponseModel(String title, String type) {
         this.title = title;
         this.type = type;

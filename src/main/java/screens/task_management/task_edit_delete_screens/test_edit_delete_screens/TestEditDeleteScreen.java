@@ -36,8 +36,18 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
     JPanel screens;
     CardLayout screenLayout;
 
+    // for getting the info about a Test
     TestDisplayer testInfo;
 
+    /**
+     * A screen for editing/deleting a Test
+     * @param student - the student whose Test is being changed
+     * @param testEditController - controller for editing
+     * @param taskDeletionController - controller for deleting
+     * @param screens - rest of screens in the program
+     * @param screenLayout - for switching between screens
+     * @param testInfo - for accessing info about a test
+     */
     public TestEditDeleteScreen(StudentUser student,
                                 TestEditController testEditController, TaskDeletionController taskDeletionController,
                                 JPanel screens, CardLayout screenLayout, TestDisplayer testInfo) {
@@ -48,6 +58,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
         this.screenLayout = screenLayout;
         this.testInfo = testInfo;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Test Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -111,6 +122,10 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
         this.add(buttons);
     }
 
+    /**
+     * React to button clicks
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -135,6 +150,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 showMessageDialog(this, "Test edited successfully."); // todo customize this message
                 screenLayout.show(screens, "main");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
+                // delete Test
                 taskDeletionController.delete(student, testInfo.getId());
 
                 // update user and return to to-do list page

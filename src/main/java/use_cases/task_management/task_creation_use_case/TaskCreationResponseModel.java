@@ -6,6 +6,11 @@ public class TaskCreationResponseModel {
     // the type of Task created (one of "Event", "Assignment", "Test")
     private final String type;
 
+    /**
+     * A response model for successful Task creation
+     * @param title - the title of the Task
+     * @param type - the type of Task
+     */
     public TaskCreationResponseModel(String title, String type) {
         this.title = title;
         this.type = type;

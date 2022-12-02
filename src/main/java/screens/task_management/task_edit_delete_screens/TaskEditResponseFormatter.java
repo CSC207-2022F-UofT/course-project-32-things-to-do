@@ -17,7 +17,7 @@ public class TaskEditResponseFormatter implements TaskEditPresenter {
     /**
      * Prepare a failure view when Task editing is unsuccessful
      * @param error - the error in Task editing
-     * @return - response model
+     * @return - throw a TaskEditFailed error
      */
     @Override
     public TaskEditResponseModel prepareFailView(String error) {

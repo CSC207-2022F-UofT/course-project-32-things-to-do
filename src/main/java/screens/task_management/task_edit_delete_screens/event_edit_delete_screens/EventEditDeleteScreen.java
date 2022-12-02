@@ -39,6 +39,15 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
     // to access info of assignment being edited/deleted
     EventDisplayer eventInfo;
 
+    /**
+     * A screen for editing/deleting an Event
+     * @param student - the student whose Event is being changed
+     * @param eventEditController - controller for editing use case
+     * @param taskDeletionController - controller for deleting use case
+     * @param screens - rest of screens in the program
+     * @param screenLayout - for switching between screens
+     * @param eventInfo - to access info about an Event
+     */
     public EventEditDeleteScreen(StudentUser student, EventEditController eventEditController,
                                  TaskDeletionController taskDeletionController, JPanel screens,
                                  CardLayout screenLayout, EventDisplayer eventInfo) {
@@ -49,6 +58,7 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
         this.screenLayout = screenLayout;
         this.eventInfo = eventInfo;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Event Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -108,6 +118,10 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
         this.add(buttons);
     }
 
+    /**
+     * React to button clicks
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -124,13 +138,14 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
                 String valFrequency = "";
                 if (valRecurring) valFrequency = frequency.getText();
 
-                // edit event
+                // edit Event
                 eventEditController.edit(valComplete, eventInfo.getId(), valPriority, valStartTime, valEndTime, valRecurring, valFrequency);
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event edited successfully");
                 screenLayout.show(screens, "main");
             } else if (e.getActionCommand().equals("Delete")) { // delete Event
+                // delete Event
                 taskDeletionController.delete(student, eventInfo.getId());
 
                 // update user and return to main screen

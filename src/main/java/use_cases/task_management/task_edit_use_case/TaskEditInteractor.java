@@ -6,10 +6,21 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;
     private final StudentUser student;
 
+    /**
+     * An interactor for editing Tasks
+     * @param presenter - displays success/fail views
+     * @param student - student whose task is being edited
+     */
     public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
         this.presenter = presenter;
         this.student = student;
     }
+    /**
+     * Attempt to edit a Task
+     * @param requestModel - the request model of the Task being edited
+     * @param type - type of Task
+     * @return - response model
+     */
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
         if (type.equals("Event")) { // Event being edited
