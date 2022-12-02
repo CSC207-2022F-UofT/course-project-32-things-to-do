@@ -87,7 +87,7 @@ public class StudentUser implements User {
     }
 
     public void addCourse(String course) {
-        this.toDoList.add(course);
+        this.courses.add(course);
     }
 
     public void setCourses(ArrayList<String> c) { this.courses = c; }

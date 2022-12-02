@@ -1,13 +1,14 @@
 package screens.login_registration;
 
 import use_cases.login_registration.login_usecase.LoginGateway;
+import use_cases.login_registration.logout_usecase.LogoutGateway;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 import use_cases.login_registration.user_register_usecase.UserRegGateway;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryUser implements UserRegGateway, LoginGateway {
+public class InMemoryUser implements UserRegGateway, LoginGateway, LogoutGateway {
 
     final private Map<String, UserRegSaveRequest> users = new HashMap<>();
 

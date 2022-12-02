@@ -8,4 +8,5 @@ public interface LogoutPresenter {
      */
     LogoutResponseModel prepareSuccessView(LogoutResponseModel logout);
 
+
 }
