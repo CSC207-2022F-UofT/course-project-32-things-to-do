@@ -18,11 +18,11 @@ public class LoginRequestModel {
         this.password = password;
     }
 
-    String getName() { return name; }
+    public String getName() { return name; }
 
     void setName(String name) { this.name = name; }
 
-    String getPass() { return password; }
+    public String getPass() { return password; }
 
     void setPass(String pass) {
         this.password = pass;

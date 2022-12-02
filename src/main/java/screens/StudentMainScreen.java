@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainScreen extends JPanel implements ActionListener {
+public class StudentMainScreen extends JPanel implements ActionListener {
 
     /**
      * The selectable buttons on the main screen
@@ -22,6 +22,8 @@ public class MainScreen extends JPanel implements ActionListener {
     JButton progressTracker;
     JButton courses;
     JButton scheduleCT;
+
+    JButton logout;
 
     User user;
 
@@ -50,6 +52,7 @@ public class MainScreen extends JPanel implements ActionListener {
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
+        logout = new JButton("Logout");
 
         newTask.addActionListener(this);
         toDoList.addActionListener(this);
@@ -57,6 +60,7 @@ public class MainScreen extends JPanel implements ActionListener {
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
         scheduleCT.addActionListener(this);
+        logout.addActionListener(this);
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
@@ -66,6 +70,7 @@ public class MainScreen extends JPanel implements ActionListener {
         buttons.add(progressTracker);
         buttons.add(courses);
         buttons.add(scheduleCT);
+        buttons.add(logout);
 
         // Add all components to the panel
         this.add(title);
@@ -105,6 +110,9 @@ public class MainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == toDoList) {
             cardLayout.show(screens, "toDoList");
+        }
+        if (evt.getSource() == logout) {
+            cardLayout.show(screens, "welcome");
         }
 
     }
