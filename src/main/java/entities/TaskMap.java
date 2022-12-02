@@ -64,7 +64,6 @@ public class TaskMap implements Serializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     /**

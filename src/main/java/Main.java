@@ -35,12 +35,6 @@ public class Main {
         //create readwriter - read in TaskMap from file upon program start
         TaskReadWrite taskReadWrite = new TaskReadWrite("src/main/java/data/TaskMap.txt");
         TaskMap.load(taskReadWrite);
-        /*
-        if (TaskMap.getTaskMap() == null) {
-            //if TaskMap.txt is empty, initialize taskMap static variable as empty HashMap
-            TaskMap.setTaskMap(new HashMap<String, Task>());
-        }
-         */
 
         // Get objects from database
         HashMap<String, User> allUsers = new HashMap<>();
