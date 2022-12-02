@@ -1,16 +1,20 @@
 import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
+import screens.course_features.*;
 import screens.course_progress.*;
 import screens.login_registration.*;
 import screens.task_management.event_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.event_creation_use_case.*;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Main {
@@ -44,20 +48,28 @@ public class Main {
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor (trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
 
-        CourseCreationDsGateway course;
-//        try {
-//            course = new FileCourse("./courses.csv");
-//        } catch (IOException | ClassNotFoundException e) {
-//            throw new RuntimeException("Could not create file.");
-//        }
-//        CourseCreationOutputBoundary presenter = new CourseCreationPresenter();
-//        CourseMap courseMap = new CourseMap();
-//        CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
-//        CourseCreationController courseCreationController = new CourseCreationController(interactor);
+        CourseCreationDsGateway createCourse;
+        try {
+            createCourse = new FileCourse("courses.ser");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Could not create file.");
+        }
+        CourseCreationOutputBoundary coursePresenter = new CourseCreationPresenter();
+        CourseCreationInputBoundary courseInteractor = new CourseCreationInteractor(createCourse, coursePresenter);
+        CourseCreationController courseController = new CourseCreationController(courseInteractor);
 
-//        CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
-//        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor (enrolmentPresenter, courseMap, user.getName());
-//        CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
+        CourseEnrolmentDsGateway enrolCourse;
+        try {
+            // for testing:
+            // course = new InMemoryCourse();
+            enrolCourse = new FileCourse("courses.ser");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Could not create file.");
+        }
+
+        CourseEnrolmentOutputBoundary enrolPresenter = new CourseEnrolmentPresenter();
+        CourseEnrolmentInputBoundary enrolInteractor = new CourseEnrolmentInteractor(enrolCourse, enrolPresenter);
+        CourseEnrolmentController enrolController = new CourseEnrolmentController(enrolInteractor);
 
         // Build the GUI
 //        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
@@ -69,10 +81,11 @@ public class Main {
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
 
-//        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
-//        screens.add("course", courseCreationScreen);
+        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseController, screens, cardLayout);
+        screens.add("createcourse", courseCreationScreen);
 
-//        CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolmentController);
+        CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolController, screens, cardLayout);
+        screens.add("enrolcourse", courseEnrolmentScreen);
 
         MainScreen mainScreen = new MainScreen(screens, cardLayout);
         screens.add("main", mainScreen);
