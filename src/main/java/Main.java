@@ -49,8 +49,6 @@ public class Main {
         UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
         UserRegController userRegisterController = new UserRegController(userInteractor);
 
-        User user = ((UserRegInteractor) userInteractor).getUser();
-        StudentUser fakeUser = new StudentUser("imposter", "password");
         // Adding in login use case
         LoginGateway loginUser = new FileUser("src/main/java/data/users.ser");
         LoginPresenter loginPresenter = new LoginResponseFormatter();
@@ -93,7 +91,7 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(fakeUser, schedulerPresenter, scheduleConflictPresenter,
+        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerPresenter, scheduleConflictPresenter,
                 screens, cardLayout);
         screens.add("taskCreate", chooseTask);
 
