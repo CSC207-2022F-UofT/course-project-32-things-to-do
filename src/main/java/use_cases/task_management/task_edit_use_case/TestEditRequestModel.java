@@ -8,9 +8,9 @@ public class TestEditRequestModel extends TaskEditRequestModel {
     private final double weightage;
     private final double timeNeeded;
     private final double timeSpent;
-    public TestEditRequestModel(String id, boolean complete, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public TestEditRequestModel(String id, boolean complete, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                 double weightage, double timeNeeded, double timeSpent) {
-        super(id, complete, title, priority);
+        super(id, complete, priority);
         this.startTime = startTime;
         this.endTime = endTime;
         this.weightage = weightage;

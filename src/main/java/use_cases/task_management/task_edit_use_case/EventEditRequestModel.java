@@ -8,9 +8,9 @@ public class EventEditRequestModel extends TaskEditRequestModel {
     private boolean recurring;
     private String frequency;
 
-    public EventEditRequestModel(String id, boolean complete, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public EventEditRequestModel(String id, boolean complete, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                  boolean recurring, String frequency) {
-        super(id, complete, title, priority);
+        super(id, complete, priority);
         this.startTime = startTime;
         this.endTime = endTime;
         this.recurring = recurring;

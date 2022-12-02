@@ -15,8 +15,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
         if (type.equals("Event")) { // Event being edited
             EventEditRequestModel request = (EventEditRequestModel) requestModel;
             Event event = (Event) TaskMap.findTask(request.getId());
-            // change event title
-            event.setTitle(requestModel.getTitle());
             // change event priority
             event.setPriority(requestModel.getPriority());
             // change event time block
@@ -27,8 +25,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
         } else if (type.equals("Assignment")) { // Assignment being edited
             AssignmentEditRequestModel request = (AssignmentEditRequestModel) requestModel;
             Assignment assignment = (Assignment) TaskMap.findTask(request.getId());
-            // change assignment title
-            assignment.setTitle(requestModel.getTitle());
             // change assignment priority
             assignment.setPriority(requestModel.getPriority());
             // change assignment due date
@@ -43,8 +39,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
         } else { // Test being edited
             TestEditRequestModel request = (TestEditRequestModel) requestModel;
             Test test = (Test) TaskMap.findTask(request.getId());
-            // change test title
-            test.setTitle(requestModel.getTitle());
             // change test priority
             test.setPriority(requestModel.getPriority());
             // change test time block
@@ -63,7 +57,8 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             student.removeTaskFromList(requestModel.getId());
             student.addTaskToArchive(requestModel.getId());
         }
-        TaskEditResponseModel response = new TaskEditResponseModel(requestModel.getTitle(), type);
+        TaskEditResponseModel response = new TaskEditResponseModel(
+                TaskMap.findTask(requestModel.getId()).getTitle(), type);
         return presenter.prepareSuccessView(response);
     }
 }

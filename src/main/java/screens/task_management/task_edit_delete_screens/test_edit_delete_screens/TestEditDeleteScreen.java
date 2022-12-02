@@ -53,6 +53,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
         // fill all text fields and whatnot
         title = new JTextField(testInfo.getTitle(), 15);
+        title.setEnabled(false);
         priority = new JTextField("" + testInfo.getPriority(), 15);
         date = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
         startTime = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
@@ -63,7 +64,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
-                new JLabel("Enter new test title"), title);
+                new JLabel("Test title:"), title);
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter new test priority (integer)"), priority);
         LabelTextPanel dateInfo = new LabelTextPanel(
@@ -117,7 +118,6 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 // check if marked complete
                 boolean valComplete = complete.isSelected();
                 // change to original value if field left blank
-                String valTitle = title.getText().equals("") ? testInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? testInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valStartTime = date.getText().equals("") || startTime.getText().equals("") ?
                         testInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText());
@@ -128,7 +128,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 double valTimeSpent = timeSpent.getText().equals("") ? testInfo.getTimeSpent() : Double.parseDouble(timeSpent.getText());
 
                 // edit the Test
-                testEditController.edit(valComplete, testInfo.getId(), valTitle, valPriority, valStartTime, valEndTime, valWeightage,
+                testEditController.edit(valComplete, testInfo.getId(), valPriority, valStartTime, valEndTime, valWeightage,
                         valTimeNeeded, valTimeSpent);
 
                 // update user and return to main list page

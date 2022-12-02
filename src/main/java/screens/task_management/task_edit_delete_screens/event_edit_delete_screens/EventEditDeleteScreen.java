@@ -54,6 +54,7 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
         // fill all text fields and whatnot
         title = new JTextField(eventInfo.getTitle(), 15);
+        title.setEnabled(false);
         priority = new JTextField("" + eventInfo.getPriority(), 15);
         date = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
         startTime = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
@@ -63,7 +64,7 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
-                new JLabel("Enter new event title"), title);
+                new JLabel("Event title:"), title);
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter new event priority (integer)"), priority);
         LabelTextPanel dateInfo = new LabelTextPanel(
@@ -114,7 +115,6 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
                 // check if marked complete
                 boolean valComplete = complete.isSelected();
                 // change to original value if field left blank
-                String valTitle = title.getText().equals("") ? eventInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? eventInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valStartTime = date.getText().equals("") || startTime.getText().equals("") ?
                         eventInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText());
@@ -125,7 +125,7 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
                 if (valRecurring) valFrequency = frequency.getText();
 
                 // edit event
-                eventEditController.edit(valComplete, eventInfo.getId(), valTitle, valPriority, valStartTime, valEndTime, valRecurring, valFrequency);
+                eventEditController.edit(valComplete, eventInfo.getId(), valPriority, valStartTime, valEndTime, valRecurring, valFrequency);
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event edited successfully");

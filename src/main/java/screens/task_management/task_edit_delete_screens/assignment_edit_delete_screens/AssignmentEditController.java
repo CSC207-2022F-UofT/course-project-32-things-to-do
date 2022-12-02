@@ -14,10 +14,10 @@ public class AssignmentEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(boolean complete, String id, String title, int priority, LocalDateTime dueDate, double weightage,
+    public TaskEditResponseModel edit(boolean complete, String id, int priority, LocalDateTime dueDate, double weightage,
                                       double timeNeeded, double timeSpent) {
         TaskEditRequestModel requestModel = new AssignmentEditRequestModel(
-                id, complete, title, priority, dueDate, weightage, timeNeeded, timeSpent);
+                id, complete, priority, dueDate, weightage, timeNeeded, timeSpent);
         return input.edit(requestModel, "Assignment");
     }
 

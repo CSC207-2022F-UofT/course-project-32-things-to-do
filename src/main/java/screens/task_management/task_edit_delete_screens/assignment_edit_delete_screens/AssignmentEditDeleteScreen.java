@@ -58,6 +58,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
 
         // fill all text fields
         title = new JTextField(assignmentInfo.getTitle(), 15);
+        title.setEnabled(false); // can't change title
         priority = new JTextField("" + assignmentInfo.getPriority(), 15);
         dueDay = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
         dueTime = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
@@ -67,13 +68,13 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
-                new JLabel("Enter new Assignment title:"), title);
+                new JLabel("Assignment title:"), title);
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter new Assignment priority (integer):"), priority);
         LabelTextPanel dueDayInfo = new LabelTextPanel(
                 new JLabel("Enter new Assignment due date (yyyy-MM-dd):"), dueDay);
         LabelTextPanel dueTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new Assignment due time (hh:mm):"), dueTime);
+                new JLabel("Enter new Assignment due time (hh:mm, 24 hour time):"), dueTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter new Assignment weightage (double, don't include %):"), weightage);
         LabelTextPanel timeNeededInfo = new LabelTextPanel(
@@ -119,7 +120,6 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 // check if marked complete
                 boolean valComplete = complete.isSelected();
                 // change to original value if field left blank
-                String valTitle = title.getText().equals("") ? assignmentInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? assignmentInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valDueDate = dueDay.getText().equals("") || dueTime.getText().equals("") ?
                         assignmentInfo.getDueDate() : LocalDateTime.parse(dueDay.getText() + "T" + dueTime.getText());
@@ -127,7 +127,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 double valTimeNeeded = timeNeeded.getText().equals("") ? assignmentInfo.getTimeNeeded() : Double.parseDouble(timeNeeded.getText());
                 double valTimeSpent = timeSpent.getText().equals("") ? assignmentInfo.getTimeSpent() : Double.parseDouble(timeSpent.getText());
                 // edit the Assignment
-                assignmentEditController.edit(valComplete, assignmentInfo.getId(), valTitle, valPriority, valDueDate, valWeightage,
+                assignmentEditController.edit(valComplete, assignmentInfo.getId(), valPriority, valDueDate, valWeightage,
                         valTimeNeeded, valTimeSpent);
 
                 showMessageDialog(this, "Assignment edited successfully"); // todo customize this message

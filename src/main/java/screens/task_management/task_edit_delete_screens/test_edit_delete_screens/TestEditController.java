@@ -13,9 +13,9 @@ public class TestEditController {
         this.input = input;
     }
 
-    public TaskEditResponseModel edit(boolean complete, String id, String title, int priority, LocalDateTime startTime, LocalDateTime endTime,
+    public TaskEditResponseModel edit(boolean complete, String id, int priority, LocalDateTime startTime, LocalDateTime endTime,
                                       double weightage, double timeNeeded, double timeSpent) {
-        TaskEditRequestModel requestModel = new TestEditRequestModel(id, complete, title, priority, startTime, endTime, weightage,
+        TaskEditRequestModel requestModel = new TestEditRequestModel(id, complete, priority, startTime, endTime, weightage,
                 timeNeeded, timeSpent);
         return input.edit(requestModel, "Test");
     }

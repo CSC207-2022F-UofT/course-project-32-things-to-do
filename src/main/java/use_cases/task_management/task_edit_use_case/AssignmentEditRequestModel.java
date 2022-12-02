@@ -8,9 +8,9 @@ public class AssignmentEditRequestModel extends TaskEditRequestModel {
     private double timeNeeded;
     private double timeSpent;
 
-    public AssignmentEditRequestModel(String id, boolean complete, String title, int priority, LocalDateTime dueDate, double weightage,
+    public AssignmentEditRequestModel(String id, boolean complete, int priority, LocalDateTime dueDate, double weightage,
                                       double timeNeeded, double timeSpent) {
-        super(id, complete, title, priority);
+        super(id, complete, priority);
         this.dueDate = dueDate;
         this.weightage = weightage;
         this.timeNeeded = timeNeeded;
