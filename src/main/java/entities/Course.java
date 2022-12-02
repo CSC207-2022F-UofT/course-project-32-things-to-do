@@ -17,7 +17,8 @@ public class Course implements Serializable {
     private String courseID;
     private ArrayList<String> students; // stores the IDs of students enrolled in the course
     private ArrayList<String> tasks;  // stores the IDs of the course's tasks
-    private Boolean published;
+//    private Boolean published;
+    private boolean courseIsValid; // for unit testing
 
     /**
      * Creates a new Course with a course name, instructor name, and a list of tasks
@@ -31,8 +32,8 @@ public class Course implements Serializable {
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;
         this.tasks = tasks;
-        this.students = new ArrayList<String>();
-        this.published = false;  // course creation, default set to not yet published
+        this.students = new ArrayList<>();
+//        this.published = false;  // course creation, default set to not yet published
     }
 
     /*
@@ -49,7 +50,7 @@ public class Course implements Serializable {
     }
 
     public ArrayList<String> getStudents() {
-        return new ArrayList<String>(this.students);
+        return new ArrayList<>(this.students);
     }
     /* add a new student id to the arraylist of student id strings, no return */
     public void addStudent(String studentID) {
@@ -57,15 +58,18 @@ public class Course implements Serializable {
     }
 
     public ArrayList<String> getTasks() {
-        return new ArrayList<String>(this.tasks);
+        return new ArrayList<>(this.tasks);
     }
     /* new task added to course (input from instructor user) */
     public void addTask(String taskID) {
         this.tasks.add(taskID);
     }
 
-    public Boolean getPublished() {
-        return published;
+//    public Boolean getPublished() {
+//        return published;
+//    }
+    public boolean courseIsValid() {
+        return (courseName != null && courseInstructor != null && !tasks.isEmpty());
     }
 
     /*
@@ -82,10 +86,10 @@ public class Course implements Serializable {
         this.courseID = courseID;
     }
     public void setStudents(ArrayList<String> students) {
-        this.students = new ArrayList<String>(students);
+        this.students = new ArrayList<>(students);
     }
     public void setTasks(ArrayList<String> tasks) {
-        this.tasks = new ArrayList<String>(tasks);
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
@@ -95,7 +99,7 @@ public class Course implements Serializable {
     public void removeTask(Task task) {
         this.tasks.remove(task.getId());
     }
-    public void setPublished(Boolean published) {
-        this.published = published;
-    }
+//    public void setPublished(Boolean published) {
+//        this.published = published;
+//    }
 }
