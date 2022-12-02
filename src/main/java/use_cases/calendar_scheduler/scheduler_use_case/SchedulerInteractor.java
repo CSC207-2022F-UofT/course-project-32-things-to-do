@@ -50,7 +50,6 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
 
                 // Schedule the conflicting task
                 if (!conflictResponseModel.isScheduleConflict()) {
-                    SchedulerResponseModel responseModel = new SchedulerResponseModel(task, allTasks);
                     return schedulerOutputBoundary.prepareFailView("Task scheduling failed due to conflict.");
                 }
             }

@@ -55,8 +55,9 @@ By default, the weekly view is displayed, but the user can change the view throu
 The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
 The `Home` button redirects the user back to the main dashboard.
 
-_Not yet implemented (extending on what is currently working in the MVP feature):_
-- The ability to manually select prep time for a Preparatory Task
+_Notes:_
+- Though the user having the ability to manually select prep time for a Preparatory Task is listed as a feature in the project specifications, I decided against implementing it as while working on the project, we decided to have all tasks' prep time reschedule whenever a change is made to the user's schedule, thus having the user manually select the prep time for all their tasks again was not user-friendly in my opinion.
+- I decided against using the Observer design pattern for this feature as by the time using this design pattern was suggested, much of the foundational layer of the program had already been completed, and from my understanding implementing the Observer design pattern would have required an overhaul of our Entities layer, thus I felt that while the design pattern was appropriate for this situation, it was too late to implement it in the program.
 
 ## Scheduling Collaborative Tasks
 

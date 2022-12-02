@@ -3,6 +3,8 @@ package scheduler_use_case;
 import entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import screens.calendar_scheduler.ScheduleConflictPresenter;
+import screens.calendar_scheduler.SchedulerPresenter;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 import use_cases.calendar_scheduler.scheduler_use_case.*;
 
@@ -12,8 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SchedulerInteractorTest {
 
+    /**
+     * Test the scheduling of a task with no conflict
+     */
     @Test
-    void schedule() {
+    void noConflictSchedule() {
         // Create anonymous implementing class for the output boundary
         SchedulerOutputBoundary schedulerOutputBoundary = new SchedulerOutputBoundary() {
             @Override
@@ -27,7 +32,27 @@ class SchedulerInteractorTest {
                 return null;
             }
         };
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
+        // Create interactor and test entities
+        SchedulerInputBoundary interactor = new SchedulerInteractor(scheduleConflictOutputBoundary, schedulerOutputBoundary);
+        StudentUser user = new StudentUser("testUser", "testPassword");
+
+        Event event1 = new Event("testEvent1", "testid1", 0, LocalDateTime.of(2022, 12, 10, 14, 0),
+                LocalDateTime.of(2022, 12, 10, 15, 0), false, null);
+
+        // Test scheduling of task
+        SchedulerRequestModel requestModel1 = new SchedulerRequestModel(event1, user);
+        interactor.schedule(requestModel1);
+    }
+
+    /**
+     * Test the scheduling of a task with conflict
+     */
+    @Test
+    void conflictSchedule() {
+        // Create anonymous implementing class for the output boundary
+        SchedulerOutputBoundary schedulerOutputBoundary = new SchedulerPresenter();
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictOutputBoundary() {
             @Override
             public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel requestModel) {
