@@ -1,5 +1,7 @@
 package screens;
 
+import screens.login_registration.LogoutController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class InstructorMain extends JPanel implements ActionListener {
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public InstructorMain(JPanel screens, CardLayout cardLayout) {
+    public InstructorMain(JPanel screens, CardLayout cardLayout, LogoutController controller) {
 
         this.cardLayout = cardLayout;
         this.screens = screens;
