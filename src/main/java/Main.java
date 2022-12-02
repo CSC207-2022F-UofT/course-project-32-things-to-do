@@ -11,6 +11,10 @@ import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.login_registration.login_usecase.LoginGateway;
+import use_cases.login_registration.login_usecase.LoginInputBoundary;
+import use_cases.login_registration.login_usecase.LoginInteractor;
+import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.event_creation_use_case.*;
 
@@ -40,6 +44,13 @@ public class Main {
         UserRegPresenter userPresenter = new UserRegResponseFormatter();
         UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
         UserRegController userRegisterController = new UserRegController(userInteractor);
+
+        // Adding in login use case
+        LoginGateway loginUser = new FileUser("users.ser");
+        LoginPresenter loginPresenter = new LoginResponseFormatter();
+        LoginInputBoundary loginInteractor = new LoginInteractor(loginUser, loginPresenter);
+        LoginController loginController = new LoginController(loginInteractor);
+        //
 
         User user = ((UserRegInteractor) userInteractor).getUser();
 
@@ -93,8 +104,8 @@ public class Main {
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);
 
-//        LoginScreen loginScreen = new LoginScreen(loginController);
-//        screens.add("login", loginScreen);
+        LoginScreen loginScreen = new LoginScreen(loginController, cardLayout, screens);
+        screens.add("login", loginScreen);
 
         WelcomeScreen welcomeScreen = new WelcomeScreen(cardLayout, screens);
         screens.add("welcome", welcomeScreen);
