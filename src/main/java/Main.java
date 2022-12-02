@@ -54,9 +54,10 @@ public class Main {
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
 
+        ScheduleCTGateway gateway = new ScheduleCTFileWriter("TaskMap.txt");
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
-        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
+        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary, gateway);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
 
         CourseCreationDsGateway course;
