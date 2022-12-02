@@ -17,14 +17,13 @@ public class TaskMap implements Serializable {
      * @return - the Task corresponding to the ID
      */
     public static Task findTask(String id) {
-        return (Task) taskMap.get(id);
+        return taskMap.get(id);
     }
 
     /**
      * Add a Task to the TaskMap.txt
      * @param id - the ID of the Task
      * @param task - the Task associated with the ID
-     * @return - true if the task is successfully added, false if the id already exists
      */
     public static void addTask(String id, Task task) {
         taskMap.put(id, task);
@@ -74,7 +73,7 @@ public class TaskMap implements Serializable {
         try {
             taskMap = (HashMap<String, Task>) rw.readFromFile();
         } catch(Exception e) {
-            taskMap = new HashMap<String, Task>();
+            setTaskMap(new HashMap<>());
         }
     }
 }

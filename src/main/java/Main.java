@@ -38,7 +38,6 @@ public class Main {
         TaskMap.load(taskReadWrite);
 
         // Get objects from database
-        HashMap<String, Task> allTasks = new HashMap<>();
         HashMap<String, User> allUsers = new HashMap<>();
         HashMap<String, Course> allCourses = new HashMap<>();
 
@@ -65,7 +64,6 @@ public class Main {
         } else {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
-
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
@@ -107,7 +105,7 @@ public class Main {
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
 
-        StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout);
+        StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
         screens.add("main", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
