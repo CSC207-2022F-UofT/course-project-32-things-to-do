@@ -26,6 +26,8 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     CardLayout cardLayout;
     JPanel screens;
 
+    LogoutController logoutController;
+
     /**
      * The window of the main screen with buttons connecting to each use case
      */
@@ -33,6 +35,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
 
         this.cardLayout = cardLayout;
         this.screens = screens;
+        this.logoutController = controller;
 
         // Create label for title of screen
         JLabel title = new JLabel("32 Things To Do");
