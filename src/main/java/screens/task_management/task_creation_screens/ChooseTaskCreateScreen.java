@@ -1,5 +1,18 @@
 package screens.task_management.task_creation_screens;
 
+import entities.User;
+import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
+import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationScreen;
+import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
+import screens.task_management.task_creation_screens.event_creation_screens.EventCreationScreen;
+import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
+import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
+import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +25,11 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     JButton test = new JButton("New test");
     JButton cancel = new JButton("Cancel");
 
+    // for making task creation screens:
+    User user;
+    SchedulerPresenter schedulerPresenter;
+    ScheduleConflictPresenter scheduleConflictPresenter;
+
     // for connecting to other screens
     CardLayout cardLayout;
     JPanel screens;
@@ -19,7 +37,11 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     /**
      * the window for choosing which type of Task to create, after selecting "New task"
      */
-    public ChooseTaskCreateScreen(JPanel screens, CardLayout cardLayout) {
+    public ChooseTaskCreateScreen(User user, SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+                                  JPanel screens, CardLayout cardLayout) {
+        this.user = user;
+        this.schedulerPresenter = schedulerPresenter;
+        this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
         this.screens = screens;
 
@@ -52,14 +74,33 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("New event")) {
-            cardLayout.show(screens, "event");
-        } else if (e.getActionCommand().equals("New assignment")) {
-            cardLayout.show(screens, "assignment");
-        } else if (e.getActionCommand().equals("New test")) {
-            cardLayout.show(screens, "test");
-        } else {
+        if (e.getActionCommand().equals("Cancel")) { // go back to main
             cardLayout.show(screens, "main");
+        }
+        // create use case components for task creation
+        TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
+        TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
+                taskCreationOutputBoundary, user, "none",
+                schedulerPresenter, scheduleConflictPresenter);
+        EventCreationController eventCreationController = new EventCreationController(taskInteractor);
+        AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
+        TestCreationController testCreationController = new TestCreationController(taskInteractor);
+
+        if (e.getActionCommand().equals("New event")) { // create and go to event screen
+            EventCreationScreen eventCreationScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
+
+            screens.add("event", eventCreationScreen);
+            cardLayout.show(screens, "event");
+        } else if (e.getActionCommand().equals("New assignment")) { // create and go to assignment screen
+            AssignmentCreationScreen assignmentCreationScreen = new AssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
+
+            screens.add("assignment", assignmentCreationScreen);
+            cardLayout.show(screens, "assignment");
+        } else { // create and go to test screen
+            TestCreationScreen testCreationScreen = new TestCreationScreen(testCreationController, screens, cardLayout);
+
+            screens.add("test", testCreationScreen);
+            cardLayout.show(screens, "test");
         }
     }
 }

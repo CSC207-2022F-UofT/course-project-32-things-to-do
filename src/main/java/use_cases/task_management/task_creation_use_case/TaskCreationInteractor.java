@@ -64,14 +64,25 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
                     || request.getFrequency().equals("monthly"))) {
                 return outputBoundary.prepareFailView("Please enter a valid frequency (\"daily\", \"weekly\", \"monthly\" accepted)");
             }
+            // check if times are valid (start time < end time)
+            if (request.getStartTime().isAfter(request.getEndTime())) {
+                return outputBoundary.prepareFailView("Please enter a valid time block");
+            }
+
+            // create new task
             newTask = new Event(requestModel.getTitle(), id, requestModel.getPriority(),
                     request.getStartTime(), request.getEndTime(), request.getRecurring(),
                     request.getFrequency());
         } else { // Task is a Test
+            TestCreationRequestModel request = (TestCreationRequestModel) requestModel;
+            // check if times are valid (start time < end time)
+            if (request.getStartTime().isAfter(request.getEndTime())) {
+                return outputBoundary.prepareFailView("Please enter a valid time block");
+            }
+
+            // create new task
             newTask = new Test(requestModel.getTitle(), id, requestModel.getPriority(),
-                    ((TestCreationRequestModel)requestModel).getStartTime(),
-                    ((TestCreationRequestModel)requestModel).getEndTime(),
-                    ((TestCreationRequestModel)requestModel).getWeightage());
+                    request.getStartTime(), request.getEndTime(), request.getWeightage());
         }
         // save Task to TaskMap and student's to-do list (if applicable)
         TaskMap.addTask(id, newTask);

@@ -52,14 +52,6 @@ public class Main {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
-        TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, fakeUser, "none",
-                schedulerPresenter, scheduleConflictPresenter);
-        EventCreationController eventCreationController = new EventCreationController(taskInteractor);
-        AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
-        TestCreationController testCreationController = new TestCreationController(taskInteractor);
-
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
@@ -81,17 +73,9 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(screens, cardLayout);
+        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(fakeUser, schedulerPresenter, scheduleConflictPresenter,
+                screens, cardLayout);
         screens.add("taskCreate", chooseTask);
-
-        EventCreationScreen eventCreationScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-        screens.add("event", eventCreationScreen);
-
-        AssignmentCreationScreen assignmentCreationScreen = new AssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
-        screens.add("assignment", assignmentCreationScreen);
-
-        TestCreationScreen testCreationScreen = new TestCreationScreen(testCreationController, screens, cardLayout);
-        screens.add("test", testCreationScreen);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
         screens.add("calendar", calendarScreen);
