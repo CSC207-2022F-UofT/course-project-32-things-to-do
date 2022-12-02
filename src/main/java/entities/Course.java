@@ -69,7 +69,7 @@ public class Course implements Serializable {
 //        return published;
 //    }
     public boolean courseIsValid() {
-        return (courseName.equals("") && courseInstructor.equals("") && !tasks.isEmpty());
+        return !(courseName.equals("") || courseInstructor.equals("") || tasks.isEmpty());
     }
 
     /*
