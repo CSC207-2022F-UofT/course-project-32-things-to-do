@@ -47,10 +47,15 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Enter either 'Instructor' or 'Student'.");
         }
 
+        // can make userFactory have a createUser() method that takes in the Name, Pass, and typeOfUser
+        // and creates that type of user (with an if statement)
+
         if (request.getTypeOfUser().equals("Instructor")) {
             this.user = userFactory.createInstructor(request.getName(), request.getPassword());
-        } else {
+        } else if (request.getTypeOfUser().equals("Student")){
             this.user = userFactory.createStudent(request.getName(), request.getPassword());
+        } else {
+            this.user = null;
         }
 
         if (!user.checkPassword()) {
@@ -100,6 +105,10 @@ public class UserRegInteractor implements UserRegInputBoundary {
     }
 
     public User getUser() {
-        return this.user;
+        if ((this.user instanceof StudentUser) | (this.user instanceof InstructorUser)) {
+            return this.user;
+        } else {
+            return null;
+        }
     }
 }

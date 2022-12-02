@@ -52,7 +52,15 @@ public class Main {
         LoginController loginController = new LoginController(loginInteractor);
         //
 
-        User user = ((UserRegInteractor) userInteractor).getUser();
+        // initialize User based on whether they log in or register
+        // if you don't register, then you are logging in:
+        User user;
+        if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
+                (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
+            user = ((UserRegInteractor) userInteractor).getUser();
+        } else {
+            user = ((LoginInteractor) loginInteractor).getUser();
+        }
 
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
