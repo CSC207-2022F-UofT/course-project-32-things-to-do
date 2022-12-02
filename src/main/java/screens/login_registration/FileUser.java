@@ -12,7 +12,8 @@ import java.util.Map;
 
 public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
 
-    private final HashMap<String, UserRegSaveRequest> accounts;
+//    private final HashMap<String, UserRegSaveRequest> accounts;
+    private static HashMap<String, UserRegSaveRequest> accounts;
 
     private final String filePath;
 
@@ -29,9 +30,11 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
         // and reads the existing file if it does exist
 
         if (Files.exists(Path.of(path))) {
-            this.accounts = readFile();
+//            this.accounts = readFile();
+            accounts = readFile();
         } else {
-            this.accounts = new HashMap<String, UserRegSaveRequest>();
+//            this.accounts = new HashMap<String, UserRegSaveRequest>();
+            accounts = new HashMap<String, UserRegSaveRequest>();
             save();
         }
 
@@ -91,7 +94,8 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
     }
 
     public Map<String, UserRegSaveRequest> getAccounts() {
-        return this.accounts;
+//        return this.accounts;
+        return accounts;
     }
 
 }
