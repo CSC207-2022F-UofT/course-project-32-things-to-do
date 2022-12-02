@@ -4,6 +4,7 @@ package use_cases.course_features.course_enrolment_use_case;
 
 import entities.*;
 import screens.login_registration.FileUser;
+import use_cases.login_registration.user_register_usecase.UserRegGateway;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,14 +13,16 @@ import java.util.Map;
 
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
-    final CourseEnrolmentDsGateway courseEnrolmentDsGateway;
-    final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary;
+    final CourseEnrolmentDsGateway courseEnrolmentDsGateway; // the course
+//    final UserRegGateway userRegGateway; // the student
+    final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary; // the presenter
     private StudentUser student; // for response model
     private Course enrolledCourse; // for response model
 
     public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway,
                                      CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary) {
         this.courseEnrolmentDsGateway = courseEnrolmentDsGateway;
+//        this.userRegGateway = userRegGateway;
         this.courseEnrolmentOutputBoundary = courseEnrolmentOutputBoundary;
     }
 
@@ -50,13 +53,16 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // no need to import FileCourse because it implements the gateway
 
         // add student id to Course parameter 'students'
-        // both lines should do the same thing
-        courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()).getStudents().add(requestModel.getStudentID());
+        // saveStudentToCourse methods take care of saving the changes to the file?
         try {
             courseEnrolmentDsGateway.saveStudentToCourse(requestModel.getStudentID(), requestModel.getCourseID());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        // clone course tasks and save to task map (with new student-related ids)
+
+        // tasks should be properly initialized sent to student
 
         // get course's tasks by creating an alias of the Courses tasks parameter (needs to be referring to the same tasks)
         ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
@@ -92,7 +98,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         }
 
         // add map with new task ids to TaskMap
-        // TODO: read file, make edits, then save and close
+        // TODO: read file, make edits, then save changes
         for (Map.Entry<String, Task> entry : newTaskIdMap.entrySet()) {
             TaskMap.addTask(entry.getKey(), entry.getValue());
         }
@@ -103,6 +109,10 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         // add new task ids to the student's task list
 //        StudentUser studentEnrolled = FileUser.getAccounts().get(requestModel.getStudentID());
+//
+//        // add course to student's 'courses' parameter? no?
+//        studentEnrolled.addCourse(requestModel.getCourseID());
+//
 //        for (String newTask : newTaskIds) {
 //            studentEnrolled.getToDoList().add(newTask);
 //            // TODO: update and save FileUser

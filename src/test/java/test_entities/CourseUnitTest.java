@@ -28,23 +28,23 @@ class CourseUnitTest {
 
         assertFalse(course.courseIsValid());
     }
-//    @Test
-//    void course_taskFilled_thenIsFalse() {
-//        ArrayList<String> task = new ArrayList<>();
-//        task.add("task1");
-//        Course course = new Course("", "", task);
-//
-//        assertFalse(course.courseIsValid());
-//    }
-//
-//    @Test
-//    void course_taskAndStrFilled_thenIsFalse() {
-//        ArrayList<String> task = new ArrayList<>();
-//        task.add("task1");
-//        Course course = new Course("", "inst1", task);
-//
-//        assertFalse(course.courseIsValid());
-//    }
+    @Test
+    void course_taskFilled_thenIsFalse() {
+        ArrayList<String> task = new ArrayList<>();
+        task.add("task1");
+        Course course = new Course("", "", task);
+
+        assertFalse(course.courseIsValid());
+    }
+
+    @Test
+    void course_taskAndStrFilled_thenIsFalse() {
+        ArrayList<String> task = new ArrayList<>();
+        task.add("task1");
+        Course course = new Course("", "inst1", task);
+
+        assertFalse(course.courseIsValid());
+    }
 
     @Test
     void course_taskEmpty_thenIsFalse() {
