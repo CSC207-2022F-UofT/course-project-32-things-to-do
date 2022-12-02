@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainScreen extends JPanel implements ActionListener {
+public class StudentMainScreen extends JPanel implements ActionListener {
 
     /**
      * The selectable buttons on the main screen
@@ -16,6 +16,8 @@ public class MainScreen extends JPanel implements ActionListener {
     JButton courses;
     JButton scheduleCT;
 
+    JButton logout;
+
     /**
      * Objects for connecting to the other screens
      */
@@ -25,7 +27,7 @@ public class MainScreen extends JPanel implements ActionListener {
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public MainScreen(JPanel screens, CardLayout cardLayout) {
+    public StudentMainScreen(JPanel screens, CardLayout cardLayout) {
 
         this.cardLayout = cardLayout;
         this.screens = screens;
@@ -40,12 +42,14 @@ public class MainScreen extends JPanel implements ActionListener {
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
+        logout = new JButton("Logout");
 
         toDoList.addActionListener(this);
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
         scheduleCT.addActionListener(this);
+        logout.addActionListener(this);
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
@@ -54,6 +58,7 @@ public class MainScreen extends JPanel implements ActionListener {
         buttons.add(progressTracker);
         buttons.add(courses);
         buttons.add(scheduleCT);
+        buttons.add(logout);
 
         // Add all components to the panel
         this.add(title);
@@ -79,6 +84,9 @@ public class MainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
+        }
+        if (evt.getSource() == logout) {
+            cardLayout.show(screens, "welcome");
         }
 
     }
