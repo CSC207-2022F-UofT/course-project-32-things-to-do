@@ -26,6 +26,9 @@ public class InstructorSaveRequest extends UserRegSaveRequest {
      */
     public InstructorSaveRequest(String name, String password, InstructorUser instructor, LocalDateTime creationTime) {
         super(name, password, instructor, creationTime);
+        this.name = name;
+        this.password = password;
+        this.creationTime = creationTime;
         this.courses = instructor.getCourses();
     }
 

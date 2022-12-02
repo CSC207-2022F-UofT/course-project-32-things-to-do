@@ -78,8 +78,6 @@ public class UserRegInteractorTest {
     UserRegRequest inputData = new UserRegRequest(
             "Saje", "diffusers", "diffusers", "Student");
 
-//    interactor.create(inputData);
-
 
     @Test
     void testGetUserRegSaveRequest() throws IOException {

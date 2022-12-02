@@ -88,13 +88,4 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
         return this.accounts;
     }
 
-//    /**
-//     * @param name The username of the user
-//     * @return the UserRegSaveRequest object associated with this username.
-//     * Preconditions: name is a key in accounts
-//     */
-//    public UserRegSaveRequest getUserSaveReq(String name) throws KeyException, IOException {
-////        accounts.get(name);
-//        return accounts.get(name);
-//    }
 }

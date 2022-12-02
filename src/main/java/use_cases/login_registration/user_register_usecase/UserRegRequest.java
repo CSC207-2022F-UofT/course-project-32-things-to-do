@@ -45,7 +45,7 @@ public class UserRegRequest {
 
     String getTypeOfUser() { return typeOfUser; }
 
-    String setTypeOfUser(String userType) {
+    public String setTypeOfUser(String userType) {
         if (userType.equals("Instructor") | userType.equals("Student")) {
             this.typeOfUser = userType;
             return "Success";

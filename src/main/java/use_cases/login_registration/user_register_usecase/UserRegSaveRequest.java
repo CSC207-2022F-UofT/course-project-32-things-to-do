@@ -1,6 +1,7 @@
 package use_cases.login_registration.user_register_usecase;
 
 import entities.InstructorUser;
+import entities.StudentUser;
 import entities.User;
 
 import java.io.Serializable;
@@ -47,8 +48,12 @@ public class UserRegSaveRequest implements Serializable {
         return creationTime;
     }
 
+    /**
+     * @return a User based on the information stored in this UserRegSaveRequest object
+     * Default is StudentUser
+     */
     public User initializeUser() {
-        return null;
+        return new StudentUser(this.name, this.password);
     }
 
 }
