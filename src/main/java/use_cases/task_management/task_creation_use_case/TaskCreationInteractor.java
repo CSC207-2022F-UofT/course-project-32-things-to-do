@@ -43,14 +43,13 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
     public TaskCreationResponseModel create(TaskCreationRequestModel requestModel, String type) {
         // check for blank title input
         if (requestModel.getTitle().equals("")) return outputBoundary.prepareFailView("Please enter a title.");
-
         // generate unique Task ID
         String id = requestModel.getTitle() + "_" + user.getName() + "_" + courseName;
-        // check if ID exists already too
+        // check if ID exists already (due to repeat titles)
+        if (TaskMap.findTask(id) != null) return outputBoundary.prepareFailView("Please enter a unique title");
 
         // new task being created
         Task newTask;
-
         // create the new Task
         if (type.equals("Assignment")) { // Task is an Assignment
             newTask = new Assignment(requestModel.getTitle(), id, requestModel.getPriority(),
@@ -65,7 +64,6 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
                     || request.getFrequency().equals("monthly"))) {
                 return outputBoundary.prepareFailView("Please enter a valid frequency (\"daily\", \"weekly\", \"monthly\" accepted)");
             }
-
             newTask = new Event(requestModel.getTitle(), id, requestModel.getPriority(),
                     request.getStartTime(), request.getEndTime(), request.getRecurring(),
                     request.getFrequency());
@@ -77,7 +75,9 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
         }
         // save Task to TaskMap and student's to-do list (if applicable)
         TaskMap.addTask(id, newTask);
-        if (user instanceof StudentUser) ((StudentUser)user).addTaskToList(id);
+        if (user instanceof StudentUser) {
+            ((StudentUser)user).addTaskToList(id);
+        }
 
         // save TaskMap to file:
         ReadWriter trw = new TaskReadWrite("src/main/java/data/TaskMap.txt");

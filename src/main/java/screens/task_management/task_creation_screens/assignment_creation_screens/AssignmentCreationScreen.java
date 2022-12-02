@@ -23,12 +23,12 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
 
     // to access other screens in program
     JPanel screens;
-    CardLayout screenlayout;
+    CardLayout screenLayout;
 
     public AssignmentCreationScreen(AssignmentCreationController assignmentController, JPanel screens, CardLayout screenLayout) {
         this.assignmentController = assignmentController;
         this.screens = screens;
-        this.screenlayout = screenLayout;
+        this.screenLayout = screenLayout;
 
         JLabel screenTitle = new JLabel("Assignment Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -81,20 +81,21 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
                 int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
                 if (valPriority < 0) valPriority = 0;
                 // get the due date+time and parse
-                LocalDateTime dueDate = LocalDateTime.parse(dueDay.getText() + "T" + dueTime.getText() + ":00");
+                LocalDateTime dueDate = LocalDateTime.parse(dueDay.getText() + "T" + dueTime.getText());
                 // set weightage to value in the box or 0.0 if blank
                 double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 
                 assignmentController.create(title.getText(), valPriority, dueDate, valWeightage);
 
                 showMessageDialog(this, "Assignment Created Successfully");
+                screenLayout.show(screens, "main");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
-            screenlayout.show(screens, "main");
+            screenLayout.show(screens, "main");
         }
     }
 }

@@ -3,8 +3,6 @@ package use_cases.task_management.task_edit_use_case;
 import java.time.LocalDateTime;
 
 public class EventEditRequestModel extends TaskEditRequestModel {
-    private boolean complete;
-    private String id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private boolean recurring;
@@ -17,9 +15,6 @@ public class EventEditRequestModel extends TaskEditRequestModel {
         this.endTime = endTime;
         this.recurring = recurring;
         this.frequency = frequency;
-    }
-    public String getId() {
-        return this.id;
     }
     public LocalDateTime getStartTime() {
         return this.startTime;

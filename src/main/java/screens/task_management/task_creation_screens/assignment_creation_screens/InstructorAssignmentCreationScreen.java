@@ -25,12 +25,12 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
 
     // to access other screens in program
     JPanel screens;
-    CardLayout screenlayout;
+    CardLayout screenLayout;
 
     public InstructorAssignmentCreationScreen(AssignmentCreationController assignmentController, JPanel screens, CardLayout screenLayout) {
         this.assignmentController = assignmentController;
         this.screens = screens;
-        this.screenlayout = screenLayout;
+        this.screenLayout = screenLayout;
 
         JLabel screenTitle = new JLabel("Assignment Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -84,13 +84,14 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
                 assignmentController.create(title.getText(), 0, dueDate, valWeightage);
 
                 showMessageDialog(this, "Assignment Created Successfully");
+                screenLayout.show(screens, "main");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
-            screenlayout.show(screens, "main");
+            screenLayout.show(screens, "main");
         }
     }
 }

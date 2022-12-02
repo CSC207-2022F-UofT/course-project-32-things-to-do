@@ -20,7 +20,6 @@ public class TaskReadWrite implements ReadWriter {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         output.writeObject(taskMap);
-        System.out.println("good job");
         output.flush();
         output.close();
     }

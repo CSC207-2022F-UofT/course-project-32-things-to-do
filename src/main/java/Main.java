@@ -8,12 +8,6 @@ import screens.task_management.task_creation_screens.*;
 import screens.task_management.task_creation_screens.event_creation_screens.*;
 import screens.task_management.task_creation_screens.test_creation_screens.*;
 import screens.task_management.task_creation_screens.assignment_creation_screens.*;
-import screens.task_management.task_edit_delete_screens.*;
-import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.*;
-import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.*;
-import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.*;
-import screens.task_management.todolist_screens.ToDoListPresenter;
-import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -23,7 +17,6 @@ import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.read_write.TaskReadWrite;
 import use_cases.task_management.task_creation_use_case.*;
-import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +26,6 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) {
-
         // Build the main program window
         JFrame application = new JFrame("32 Things To Do");
         CardLayout cardLayout = new CardLayout();
@@ -43,10 +35,12 @@ public class Main {
         //create readwriter - read in TaskMap from file upon program start
         TaskReadWrite taskReadWrite = new TaskReadWrite("src/main/java/data/TaskMap.txt");
         TaskMap.load(taskReadWrite);
+        /*
         if (TaskMap.getTaskMap() == null) {
             //if TaskMap.txt is empty, initialize taskMap static variable as empty HashMap
             TaskMap.setTaskMap(new HashMap<String, Task>());
         }
+         */
 
         // Get objects from database
         HashMap<String, User> allUsers = new HashMap<>();
@@ -59,13 +53,14 @@ public class Main {
         UserRegController userRegisterController = new UserRegController(userInteractor);
 
         User user = ((UserRegInteractor) userInteractor).getUser();
+        StudentUser fakeUser = new StudentUser("imposter", "password");
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, user, "none",
+                taskCreationOutputBoundary, fakeUser, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
@@ -80,12 +75,6 @@ public class Main {
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
 
-        ToDoListPresenter toDoListPresenter = new ToDoListPresenter((StudentUser) user); //TODO need Natalie's stuff
-        ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
-        toDoListPresenter.setToDoListInput(toDoListInteractor);
-
-
-
         CourseCreationDsGateway course;
         try {
             course = new FileCourse("./src/main/java/data/courses.csv");
@@ -98,10 +87,6 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ToDoListScreen toDoListScreen = new ToDoListScreen(toDoListPresenter, screens, cardLayout);
-        screens.add("toDoList", toDoListScreen);
-
-
         ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(screens, cardLayout);
         screens.add("taskCreate", chooseTask);
 
@@ -126,7 +111,7 @@ public class Main {
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
 
-        MainScreen mainScreen = new MainScreen(screens, cardLayout);
+        MainScreen mainScreen = new MainScreen(fakeUser, screens, cardLayout);
         screens.add("main", mainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);

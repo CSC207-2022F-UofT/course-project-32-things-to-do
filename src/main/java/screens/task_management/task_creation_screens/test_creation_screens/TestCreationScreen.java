@@ -85,14 +85,15 @@ public class TestCreationScreen extends JPanel implements ActionListener {
                 int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
                 if (valPriority < 0) valPriority = 0;
                 // get the start and end date+times and parse them
-                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
-                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText());
+                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText());
                 // set weightage value to value in the box or 0 if blank
                 double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 
                 testController.create(title.getText(), valPriority, startDate, endDate, valWeightage);
 
                 showMessageDialog(this, "Test Created Successfully");
+                screenLayout.show(screens, "main");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }

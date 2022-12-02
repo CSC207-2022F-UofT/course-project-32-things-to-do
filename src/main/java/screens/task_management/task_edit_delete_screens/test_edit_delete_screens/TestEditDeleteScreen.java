@@ -26,7 +26,6 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
     JTextField timeNeeded;
     JTextField timeSpent;
 
-    // todo get rid of this somehow (in all edit screens)
     StudentUser student;
 
     // controllers
@@ -53,14 +52,14 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // fill all text fields and whatnot
-        title = new JTextField(testInfo.getTitle());
-        priority = new JTextField(testInfo.getPriority());
-        date = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE));
-        startTime = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
-        endTime = new JTextField(testInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
-        weightage = new JTextField("" + testInfo.getWeightage());
-        timeNeeded = new JTextField("" + testInfo.getTimeNeeded());
-        timeSpent = new JTextField("" + testInfo.getTimeSpent());
+        title = new JTextField(testInfo.getTitle(), 15);
+        priority = new JTextField("" + testInfo.getPriority(), 15);
+        date = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
+        startTime = new JTextField(testInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
+        endTime = new JTextField(testInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
+        weightage = new JTextField("" + testInfo.getWeightage(), 15);
+        timeNeeded = new JTextField("" + testInfo.getTimeNeeded(), 15);
+        timeSpent = new JTextField("" + testInfo.getTimeSpent(), 15);
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
@@ -99,6 +98,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
         // add all components to panel
         this.add(screenTitle);
+        this.add(complete);
         this.add(titleInfo);
         this.add(prioInfo);
         this.add(dateInfo);
@@ -120,9 +120,9 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 String valTitle = title.getText().equals("") ? testInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? testInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valStartTime = date.getText().equals("") || startTime.getText().equals("") ?
-                        testInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
+                        testInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText());
                 LocalDateTime valEndTime = date.getText().equals("") || endTime.getText().equals("") ?
-                        testInfo.getEndTime() : LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                        testInfo.getEndTime() : LocalDateTime.parse(date.getText() + "T" + endTime.getText());
                 double valWeightage = weightage.getText().equals("") ? testInfo.getWeightage() : Double.parseDouble(weightage.getText());
                 double valTimeNeeded = timeNeeded.getText().equals("") ? testInfo.getTimeNeeded() : Double.parseDouble(timeNeeded.getText());
                 double valTimeSpent = timeSpent.getText().equals("") ? testInfo.getTimeSpent() : Double.parseDouble(timeSpent.getText());
@@ -131,8 +131,15 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 testEditController.edit(valComplete, testInfo.getId(), valTitle, valPriority, valStartTime, valEndTime, valWeightage,
                         valTimeNeeded, valTimeSpent);
 
+                // update user and return to main list page
+                showMessageDialog(this, "Test edited successfully."); // todo customize this message
+                screenLayout.show(screens, "main");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
                 taskDeletionController.delete(student, testInfo.getId());
+
+                // update user and return to to-do list page
+                showMessageDialog(this, "Test deleted successfully.");
+                screenLayout.show(screens, "toDoList");
             } else { // Test is racist
                 screenLayout.show(screens, "main");
             }

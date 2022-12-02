@@ -41,24 +41,25 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
     public EventEditDeleteScreen(StudentUser student, EventEditController eventEditController,
                                  TaskDeletionController taskDeletionController, JPanel screens,
-                                 CardLayout screenLayout) {
+                                 CardLayout screenLayout, EventDisplayer eventInfo) {
         this.student = student;
         this.eventEditController = eventEditController;
         this.taskDeletionController = taskDeletionController;
         this.screens = screens;
         this.screenLayout = screenLayout;
+        this.eventInfo = eventInfo;
 
         JLabel screenTitle = new JLabel("Event Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // fill all text fields and whatnot
-        title = new JTextField(eventInfo.getTitle());
-        priority = new JTextField(eventInfo.getPriority());
-        date = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE));
-        startTime = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
-        endTime = new JTextField(eventInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME));
+        title = new JTextField(eventInfo.getTitle(), 15);
+        priority = new JTextField("" + eventInfo.getPriority(), 15);
+        date = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
+        startTime = new JTextField(eventInfo.getStartTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
+        endTime = new JTextField(eventInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
         recurring = new JCheckBox("Is the event recurring?", eventInfo.getRecurring());
-        frequency = new JTextField(eventInfo.getFrequency());
+        frequency = new JTextField(eventInfo.getFrequency(), 15);
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
@@ -95,6 +96,7 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
         // add all components to panel
         this.add(screenTitle);
+        this.add(complete);
         this.add(titleInfo);
         this.add(prioInfo);
         this.add(dateInfo);
@@ -115,19 +117,27 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
                 String valTitle = title.getText().equals("") ? eventInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? eventInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valStartTime = date.getText().equals("") || startTime.getText().equals("") ?
-                        eventInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
+                        eventInfo.getStartTime() : LocalDateTime.parse(date.getText() + "T" + startTime.getText());
                 LocalDateTime valEndTime = date.getText().equals("") || endTime.getText().equals("") ?
-                        eventInfo.getEndTime() : LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                        eventInfo.getEndTime() : LocalDateTime.parse(date.getText() + "T" + endTime.getText());
                 boolean valRecurring = recurring.isSelected();
                 String valFrequency = "";
                 if (valRecurring) valFrequency = frequency.getText();
 
                 // edit event
                 eventEditController.edit(valComplete, eventInfo.getId(), valTitle, valPriority, valStartTime, valEndTime, valRecurring, valFrequency);
+
+                // update user and return to main screen
+                showMessageDialog(this, "Event edited successfully");
+                screenLayout.show(screens, "main");
             } else if (e.getActionCommand().equals("Delete")) { // delete Event
                 taskDeletionController.delete(student, eventInfo.getId());
-            } else if (e.getActionCommand().equals("Cancel")) { // Edit cancelled
+
+                // update user and return to main screen
+                showMessageDialog(this, "Event deleted successfully");
                 screenLayout.show(screens, "main");
+            } else if (e.getActionCommand().equals("Cancel")) { // Edit cancelled
+                screenLayout.show(screens, "toDoList");
             } else { // checkbox pressed
                 frequency.setEnabled(recurring.isSelected());
             }

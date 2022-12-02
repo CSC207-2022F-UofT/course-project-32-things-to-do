@@ -26,10 +26,8 @@ public class TaskMap implements Serializable {
      * @param task - the Task associated with the ID
      * @return - true if the task is successfully added, false if the id already exists
      */
-    public static boolean addTask(String id, Task task) {
-        if (taskMap.containsKey(id)) return false;
+    public static void addTask(String id, Task task) {
         taskMap.put(id, task);
-        return true;
     }
 
     /**
@@ -64,7 +62,7 @@ public class TaskMap implements Serializable {
         try {
             rw.saveToFile(taskMap);
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
     }
@@ -77,7 +75,7 @@ public class TaskMap implements Serializable {
         try {
             taskMap = (HashMap<String, Task>) rw.readFromFile();
         } catch(Exception e) {
-            System.out.println(e);
+            taskMap = new HashMap<String, Task>();
         }
     }
 }

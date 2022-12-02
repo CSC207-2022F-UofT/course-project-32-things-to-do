@@ -3,7 +3,6 @@ package use_cases.task_management.task_edit_use_case;
 import java.time.LocalDateTime;
 
 public class AssignmentEditRequestModel extends TaskEditRequestModel {
-    private boolean complete;
     private LocalDateTime dueDate;
     private double weightage;
     private double timeNeeded;

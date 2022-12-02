@@ -63,7 +63,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             student.removeTaskFromList(requestModel.getId());
             student.addTaskToArchive(requestModel.getId());
         }
-
         TaskEditResponseModel response = new TaskEditResponseModel(requestModel.getTitle(), type);
         return presenter.prepareSuccessView(response);
     }

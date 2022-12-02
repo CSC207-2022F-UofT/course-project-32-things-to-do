@@ -1,5 +1,11 @@
 package screens;
 
+import entities.StudentUser;
+import entities.User;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import screens.task_management.todolist_screens.ToDoListScreen;
+import use_cases.task_management.todolist_use_case.ToDoListInteractor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +23,8 @@ public class MainScreen extends JPanel implements ActionListener {
     JButton courses;
     JButton scheduleCT;
 
+    User user;
+
     /**
      * Objects for connecting to the other screens
      */
@@ -26,8 +34,8 @@ public class MainScreen extends JPanel implements ActionListener {
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public MainScreen(JPanel screens, CardLayout cardLayout) {
-
+    public MainScreen(User user, JPanel screens, CardLayout cardLayout) {
+        this.user = user;
         this.cardLayout = cardLayout;
         this.screens = screens;
 
@@ -73,6 +81,14 @@ public class MainScreen extends JPanel implements ActionListener {
             cardLayout.show(screens, "taskCreate");
         }
         if (evt.getSource() == toDoList) {
+            ToDoListPresenter toDoListPresenter = new ToDoListPresenter((StudentUser) user); //TODO need Natalie's stuff
+            ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
+            toDoListPresenter.setToDoListInput(toDoListInteractor);
+
+            ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user
+                    , toDoListPresenter, screens, cardLayout);
+            screens.add("toDoList", toDoListScreen);
+
             cardLayout.show(screens, "toDoList");
         }
         if (evt.getSource() == calendar) {
@@ -86,6 +102,9 @@ public class MainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
+        }
+        if (evt.getSource() == toDoList) {
+            cardLayout.show(screens, "toDoList");
         }
 
     }

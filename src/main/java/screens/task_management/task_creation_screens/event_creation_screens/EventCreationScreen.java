@@ -96,13 +96,13 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 int valPriority = priority.getText().equals("") ? 0 : Integer.parseInt(priority.getText());
                 if (valPriority < 0) valPriority = 0;
                 // get the start and end date+times and parse them
-                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
-                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
-
+                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText());
+                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText());
                 eventCreationController.create(title.getText(), valPriority,
                         startDate, endDate, valRecurring, valFrequency);
 
                 showMessageDialog(this, "Event Created Successfully");
+                screenLayout.show(screens, "main");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }

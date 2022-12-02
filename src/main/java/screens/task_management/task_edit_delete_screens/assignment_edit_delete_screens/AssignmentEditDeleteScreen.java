@@ -39,7 +39,9 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
     // to access info of assignment being edited/deleted
     AssignmentDisplayer assignmentInfo;
 
-    // todo: get rid of student from params
+    /**
+     * a screen for editing/deleting an Assignment
+     */
     public AssignmentEditDeleteScreen(
             StudentUser student,
             AssignmentEditController assignmentEditController, TaskDeletionController taskDeletionController,
@@ -55,12 +57,13 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // fill all text fields
-        title = new JTextField(assignmentInfo.getTitle());
-        priority = new JTextField("" + assignmentInfo.getPriority());
-        dueDay = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE));
-        dueTime = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_TIME));
-        timeNeeded = new JTextField("" + assignmentInfo.getTimeNeeded());
-        timeSpent = new JTextField("" + assignmentInfo.getTimeSpent());
+        title = new JTextField(assignmentInfo.getTitle(), 15);
+        priority = new JTextField("" + assignmentInfo.getPriority(), 15);
+        dueDay = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
+        dueTime = new JTextField(assignmentInfo.getDueDate().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
+        weightage = new JTextField("" + assignmentInfo.getWeightage(), 15);
+        timeNeeded = new JTextField("" + assignmentInfo.getTimeNeeded(), 15);
+        timeSpent = new JTextField("" + assignmentInfo.getTimeSpent(), 15);
 
         // create labels for all text fields
         LabelTextPanel titleInfo = new LabelTextPanel(
@@ -97,6 +100,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
 
         // add all components to panel
         this.add(screenTitle);
+        this.add(complete);
         this.add(titleInfo);
         this.add(prioInfo);
         this.add(dueDayInfo);
@@ -118,21 +122,27 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 String valTitle = title.getText().equals("") ? assignmentInfo.getTitle() : title.getText();
                 int valPriority = priority.getText().equals("") ? assignmentInfo.getPriority() : Integer.parseInt(priority.getText());
                 LocalDateTime valDueDate = dueDay.getText().equals("") || dueTime.getText().equals("") ?
-                        assignmentInfo.getDueDate() : LocalDateTime.parse(dueDay.getText() + "T" + dueTime.getText() + ":00");
+                        assignmentInfo.getDueDate() : LocalDateTime.parse(dueDay.getText() + "T" + dueTime.getText());
                 double valWeightage = weightage.getText().equals("") ? assignmentInfo.getWeightage() : Double.parseDouble(weightage.getText());
                 double valTimeNeeded = timeNeeded.getText().equals("") ? assignmentInfo.getTimeNeeded() : Double.parseDouble(timeNeeded.getText());
                 double valTimeSpent = timeSpent.getText().equals("") ? assignmentInfo.getTimeSpent() : Double.parseDouble(timeSpent.getText());
                 // edit the Assignment
                 assignmentEditController.edit(valComplete, assignmentInfo.getId(), valTitle, valPriority, valDueDate, valWeightage,
                         valTimeNeeded, valTimeSpent);
+
+                showMessageDialog(this, "Assignment edited successfully"); // todo customize this message
+                screenLayout.show(screens, "main");
             }
             // Assignment being deleted
             else if (e.getActionCommand().equals("Delete")) {
                 taskDeletionController.delete(student, assignmentInfo.getId());
+
+                showMessageDialog(this, "Assignment deleted successfully");
+                screenLayout.show(screens, "main");
             }
             // Cancel button pressed
             else {
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "toDoList");
             }
         } catch (Exception ex) {
             showMessageDialog(this, ex.getMessage());

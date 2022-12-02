@@ -89,6 +89,7 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
                 testController.create(title.getText(), 0, startDate, endDate, valWeightage);
 
                 showMessageDialog(this, "Test Created Successfully");
+                screenLayout.show(screens, "main");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
