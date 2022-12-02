@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainScreen extends JPanel implements ActionListener {
+public class StudentMainScreen extends JPanel implements ActionListener {
 
     /**
      * The selectable buttons on the main screen
@@ -27,7 +27,7 @@ public class MainScreen extends JPanel implements ActionListener {
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public MainScreen(JPanel screens, CardLayout cardLayout) {
+    public StudentMainScreen(JPanel screens, CardLayout cardLayout) {
 
         this.cardLayout = cardLayout;
         this.screens = screens;

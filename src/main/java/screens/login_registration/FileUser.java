@@ -62,7 +62,13 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
          * Write the map of usernames to UserRegSaveRequest objects into the User database file.
          */
 
-        FileOutputStream fileWriter = new FileOutputStream(filePath);
+        FileOutputStream fileWriter;
+//        if (Files.exists(Path.of(filePath))) {
+//            fileWriter = new FileOutputStream(filePath);
+//        } else {
+//            fileWriter = new FileOutputStream("src/main/java/data/users.ser");
+//        }
+        fileWriter = new FileOutputStream(filePath);
         ObjectOutputStream out = new ObjectOutputStream(fileWriter);
         out.writeObject(accounts);
         out.close();

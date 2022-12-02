@@ -39,14 +39,14 @@ public class Main {
         HashMap<String, Course> allCourses = new HashMap<>();
 
         // Create the components for injection into the use cases
-        UserRegGateway regUser = new FileUser("users.ser");
+        UserRegGateway regUser = new FileUser("src/main/java/data/users.ser");
         UserFactory fac = new GeneralUserFactory();
         UserRegPresenter userPresenter = new UserRegResponseFormatter();
         UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
         UserRegController userRegisterController = new UserRegController(userInteractor);
 
         // Adding in login use case
-        LoginGateway loginUser = new FileUser("users.ser");
+        LoginGateway loginUser = new FileUser("src/main/java/data/users.ser");
         LoginPresenter loginPresenter = new LoginResponseFormatter();
         LoginInputBoundary loginInteractor = new LoginInteractor(loginUser, loginPresenter);
         LoginController loginController = new LoginController(loginInteractor);
@@ -107,8 +107,8 @@ public class Main {
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
 
-        MainScreen mainScreen = new MainScreen(screens, cardLayout);
-        screens.add("main", mainScreen);
+        StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout);
+        screens.add("main", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);

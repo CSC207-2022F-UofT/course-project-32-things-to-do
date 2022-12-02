@@ -52,11 +52,13 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
         if (request.getTypeOfUser().equals("Instructor")) {
             this.user = userFactory.createInstructor(request.getName(), request.getPassword());
-        } else if (request.getTypeOfUser().equals("Student")){
+        } else //if (request.getTypeOfUser().equals("Student"))
+             {
             this.user = userFactory.createStudent(request.getName(), request.getPassword());
-        } else {
-            this.user = null;
         }
+//        else {
+//            this.user = null;
+//        }
 
         if (!user.checkPassword()) {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
