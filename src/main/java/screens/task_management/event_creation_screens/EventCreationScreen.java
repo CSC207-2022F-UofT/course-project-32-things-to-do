@@ -83,7 +83,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 showMessageDialog(this, e.getMessage());
             }
         } else if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
     }
 }

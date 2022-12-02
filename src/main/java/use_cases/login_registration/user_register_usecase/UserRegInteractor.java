@@ -66,6 +66,9 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
         LocalDateTime now = LocalDateTime.now();
 
+        //set the program's currently logged in user
+        CurrentUser.setCurrentUser(user);
+
         UserRegSaveRequest userModel = getUserRegSaveRequest(now);
 
         userGateway.save(userModel);
