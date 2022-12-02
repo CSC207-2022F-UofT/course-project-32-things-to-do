@@ -50,7 +50,7 @@ public class Main {
 
         CourseCreationDsGateway createCourse;
         try {
-            createCourse = new FileCourse("courses.ser");
+            createCourse = new FileCourse("src/main/java/data/courses.ser");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("Could not create file.");
         }
@@ -62,7 +62,7 @@ public class Main {
         try {
             // for testing:
             // course = new InMemoryCourse();
-            enrolCourse = new FileCourse("courses.ser");
+            enrolCourse = new FileCourse("src/main/java/data/courses.ser");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("Could not create file.");
         }

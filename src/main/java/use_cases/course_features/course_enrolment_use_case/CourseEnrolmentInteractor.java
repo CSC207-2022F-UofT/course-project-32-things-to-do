@@ -3,9 +3,12 @@ package use_cases.course_features.course_enrolment_use_case;
 // Use case layer
 
 import entities.*;
+import screens.login_registration.FileUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
@@ -29,8 +32,8 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")
-        || requestModel.getStudentID().equals("")) {
-            return courseEnrolmentOutputBoundary.prepareFailView("Please fill in all required information." );
+                || requestModel.getStudentID().equals("")) {
+            return courseEnrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
         }
 
         // checks if given course id is in the map of existing courses
@@ -56,15 +59,58 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         }
 
         // get course's tasks by creating an alias of the Courses tasks parameter (needs to be referring to the same tasks)
-        ArrayList<String> courseTasks = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
-        ArrayList<String> courseTasksCopy = courseTasks;
+        ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
+        ArrayList<String> courseTaskTitlesCopy = courseTaskTitles;
 
-        // editing the id (key) of each task
-        // toss to task creation request model
+        // make courseTasks into proper id format: courseTasks_instructorname_coursename, add to an arraylist of Tasks
+        String instructorName = requestModel.getCourseInstructor();
+        String courseName = requestModel.getCourseName();
+
+        ArrayList<String> courseTaskId = new ArrayList<>();
+        for (String taskTitleToId : courseTaskTitlesCopy) {
+            taskTitleToId = taskTitleToId + "_" + instructorName + "_" + courseName;
+            courseTaskId.add(taskTitleToId);
+        }
+
+        // get task id : task object pairs from taskmap, save to old task id map
+        HashMap<String, Task> oldTaskIdMap = new HashMap<>();
+        for (String oldTaskId : courseTaskId) {
+            Task taskValue = TaskMap.findTask(oldTaskId);
+            oldTaskIdMap.put(oldTaskId, taskValue);
+        }
+
+        // for each task id : Task pair, change the key name to courseTasks_studentname_coursename, add key-value pair to arraylist
+        // create new arraylist
+        HashMap<String, Task> newTaskIdMap = new HashMap<>();
+        // iterate over original arraylist and put key-value pair into new arraylist with modified key
+        for (HashMap.Entry<String, Task> entry : oldTaskIdMap.entrySet()) {
+            // key has old format title_instructor_course
+            // want to title, so split by _ which gives 'title', 'instructor', 'course'
+            // take first index which is just 'title'
+            // concatenating everything gives title_studentusername_coursename
+            newTaskIdMap.put(entry.getKey().split("_")[0] + "_" + requestModel.getStudentID() + "_" + courseName, (Task) oldTaskIdMap.entrySet());
+        }
+
+        // add map with new task ids to TaskMap
+        // TODO: read file, make edits, then save and close
+        for (Map.Entry<String, Task> entry : newTaskIdMap.entrySet()) {
+            TaskMap.addTask(entry.getKey(), entry.getValue());
+        }
+
+        // take the keys of the key-value pair and add to student's to do list
+        // get the set of all keys of the new task id map and add to arraylist of strings
+        ArrayList<String> newTaskIds = new ArrayList<>(newTaskIdMap.keySet());
+
+        // add new task ids to the student's task list
+//        StudentUser studentEnrolled = FileUser.getAccounts().get(requestModel.getStudentID());
+//        for (String newTask : newTaskIds) {
+//            studentEnrolled.getToDoList().add(newTask);
+//            // TODO: update and save FileUser
+//        }
 
         // create response model, sent to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
-                student.getName(), enrolledCourse.getCourseID(), courseTasksCopy);
+                student.getName(), enrolledCourse.getCourseID(), courseTaskTitlesCopy);
 
         return courseEnrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
     }
