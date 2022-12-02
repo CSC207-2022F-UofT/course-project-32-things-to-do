@@ -1,5 +1,6 @@
 package use_cases.login_registration.login_usecase;
 
+import entities.InstructorUser;
 import entities.User;
 import screens.login_registration.LoginFailed;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
@@ -42,9 +43,16 @@ public class LoginInteractor implements LoginInputBoundary {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        LoginResponseModel loginRes = new LoginResponseModel(requestModel.getName(), now.toString());
 
         this.user = createUser(requestModel);
+
+        LoginResponseModel loginRes;
+
+        if (this.user instanceof InstructorUser) {
+            loginRes = new LoginResponseModel(requestModel.getName(), now.toString(), "Instructor");
+        } else {
+            loginRes = new LoginResponseModel(requestModel.getName(), now.toString(), "Student");
+        }
         return loginPresenter.prepareSuccessView(loginRes);
     }
 

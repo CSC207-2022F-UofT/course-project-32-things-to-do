@@ -1,6 +1,7 @@
 package screens.login_registration;
 
 import screens.LabelTextPanel;
+import use_cases.login_registration.login_usecase.LoginResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,10 +71,14 @@ public class LoginScreen extends JPanel implements ActionListener {
             cardLayout.show(screens, "welcome");
         } else {
             try {
-                loginController.create(username.getText(),
+                LoginResponseModel l = loginController.create(username.getText(),
                         String.valueOf(password.getPassword()));
                 showMessageDialog(this, "% logged in.".format(username.getText()));
-                cardLayout.show(screens, "main");
+                if (l.getTypeOfUser().equals("Instructor")) {
+                    cardLayout.show(screens, "InstructorMain");
+                } else {
+                    cardLayout.show(screens, "main");
+                }
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             } catch (LoginFailed e) {

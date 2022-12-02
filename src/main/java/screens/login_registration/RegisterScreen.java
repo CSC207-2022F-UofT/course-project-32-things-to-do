@@ -111,7 +111,11 @@ public class RegisterScreen extends JPanel implements ActionListener {
                         String.valueOf(repeatPassword.getPassword()),
                         String.valueOf(typeOfUser.getText()));
                 showMessageDialog(this, "%s created.".format(username.getText()));
-                cardLayout.show(screens, "main");
+                if (String.valueOf(typeOfUser.getText()).equals("Student")) {
+                    cardLayout.show(screens, "main");
+                } else if (String.valueOf(typeOfUser.getText()).equals("Instructor")) {
+                    cardLayout.show(screens, "InstructorMain");
+                }
 
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
