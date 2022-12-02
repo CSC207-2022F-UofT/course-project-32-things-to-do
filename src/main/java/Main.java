@@ -15,6 +15,10 @@ import use_cases.login_registration.login_usecase.LoginGateway;
 import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
+import use_cases.login_registration.logout_usecase.LogoutGateway;
+import use_cases.login_registration.logout_usecase.LogoutInputBoundary;
+import use_cases.login_registration.logout_usecase.LogoutInteractor;
+import use_cases.login_registration.logout_usecase.LogoutPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.event_creation_use_case.*;
 
@@ -90,6 +94,13 @@ public class Main {
         CourseMap courseMap = new CourseMap();
         CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
+
+        // Adding in logout use case
+        LogoutGateway logoutUser = new FileUser("src/main/java/data/users.ser");
+        LogoutPresenter logoutPresenter = new LogoutResponseFormatter();
+        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUser, logoutPresenter, user);
+        LogoutController logoutController = new LogoutController(logoutInteractor);
+        //
 
         // Build the GUI
         EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);

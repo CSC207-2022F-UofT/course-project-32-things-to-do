@@ -81,6 +81,7 @@ public class InstructorMain extends JPanel implements ActionListener {
 //            cardLayout.show(screens, "scheduleCT");
 //        }
         if (evt.getSource() == logout) {
+
             cardLayout.show(screens, "welcome");
         }
 
