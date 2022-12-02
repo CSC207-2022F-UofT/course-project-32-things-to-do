@@ -66,16 +66,19 @@ public class LoginScreen extends JPanel implements ActionListener {
      */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
-
-        try {
-            loginController.create(username.getText(),
-                    String.valueOf(password.getPassword()));
-            showMessageDialog(this, "% logged in.".format(username.getText()));
-            cardLayout.show(screens, "main");
-        } catch (Exception e) {
-            showMessageDialog(this, e.getMessage());
-        } catch (LoginFailed e) {
-            throw new RuntimeException(e);
+        if (evt.getActionCommand().equals("Cancel")) {
+            cardLayout.show(screens, "welcome");
+        } else {
+            try {
+                loginController.create(username.getText(),
+                        String.valueOf(password.getPassword()));
+                showMessageDialog(this, "% logged in.".format(username.getText()));
+                cardLayout.show(screens, "main");
+            } catch (Exception e) {
+                showMessageDialog(this, e.getMessage());
+            } catch (LoginFailed e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

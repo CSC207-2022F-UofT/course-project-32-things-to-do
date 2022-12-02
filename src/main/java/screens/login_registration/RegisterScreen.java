@@ -102,15 +102,20 @@ public class RegisterScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
 
-        try {
-            userRegController.create(username.getText(),
-                    String.valueOf(password.getPassword()),
-                    String.valueOf(repeatPassword.getPassword()),
-                    String.valueOf(typeOfUser.getText()));
-            showMessageDialog(this, "%s created.".format(username.getText()));
-            cardLayout.show(screens, "main");
-        } catch (Exception e) {
-            showMessageDialog(this, e.getMessage());
+        if (evt.getActionCommand().equals("Cancel")) {
+            cardLayout.show(screens, "welcome");
+        } else {
+            try {
+                userRegController.create(username.getText(),
+                        String.valueOf(password.getPassword()),
+                        String.valueOf(repeatPassword.getPassword()),
+                        String.valueOf(typeOfUser.getText()));
+                showMessageDialog(this, "%s created.".format(username.getText()));
+                cardLayout.show(screens, "main");
+
+            } catch (Exception e) {
+                showMessageDialog(this, e.getMessage());
+            }
         }
     }
 }
