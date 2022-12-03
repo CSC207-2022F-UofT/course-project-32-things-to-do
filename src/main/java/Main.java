@@ -97,8 +97,7 @@ public class Main {
 
         // Adding in logout use case
         LogoutGateway logoutUser = new FileUser("src/main/java/data/users.ser");
-        LogoutPresenter logoutPresenter = new LogoutResponseFormatter();
-        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUser, logoutPresenter, user);
+        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUser);
         LogoutController logoutController = new LogoutController(logoutInteractor);
         //
 
@@ -119,8 +118,6 @@ public class Main {
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout, logoutController);
-        screens.add("main", studentMainScreen);
-        StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout);
         screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
@@ -130,7 +127,6 @@ public class Main {
         screens.add("login", loginScreen);
 
         InstructorMainScreen instructorMainScreen = new InstructorMainScreen(screens, cardLayout, logoutController);
-//        InstructorMainScreen instructorMainScreen = new InstructorMain(screens, cardLayout, logoutController);
         screens.add("InstructorMain", instructorMainScreen);
 
         WelcomeScreen welcomeScreen = new WelcomeScreen(cardLayout, screens);

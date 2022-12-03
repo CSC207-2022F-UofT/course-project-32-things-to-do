@@ -73,7 +73,7 @@ public class LoginScreen extends JPanel implements ActionListener {
             try {
                 LoginResponseModel l = loginController.create(username.getText(),
                         String.valueOf(password.getPassword()));
-                showMessageDialog(this, "% logged in.".format(username.getText()));
+                showMessageDialog(this, "Successfully logged in.");
                 if (l.getTypeOfUser().equals("Instructor")) {
                     cardLayout.show(screens, "InstructorMain");
                 } else {

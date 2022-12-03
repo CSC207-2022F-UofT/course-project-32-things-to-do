@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class StudentMainScreen extends JPanel implements ActionListener {
 
     /**
@@ -91,7 +93,13 @@ public class StudentMainScreen extends JPanel implements ActionListener {
             cardLayout.show(screens, "scheduleCT");
         }
         if (evt.getSource() == logout) {
-            cardLayout.show(screens, "welcome");
+            try {
+                logoutController.create();
+                showMessageDialog(this, "Successfully logged out");
+                cardLayout.show(screens, "welcome");
+            } catch (Exception e) {
+                showMessageDialog(this, "Logout failed");
+            }
         }
 
     }

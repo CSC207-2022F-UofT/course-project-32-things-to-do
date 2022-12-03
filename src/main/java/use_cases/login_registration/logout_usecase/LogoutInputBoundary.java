@@ -4,10 +4,8 @@ import java.io.IOException;
 
 public interface LogoutInputBoundary {
 
-    /**
-     * @param request the request to logout
-     * @return the logout response
+    /** Save a User's information into the database before they log out
      * @throws IOException
      */
-    LogoutResponseModel create(LogoutRequestModel request) throws IOException;
+    void create() throws IOException;
 }

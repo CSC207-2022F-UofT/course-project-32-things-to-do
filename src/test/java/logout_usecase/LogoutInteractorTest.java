@@ -43,14 +43,10 @@ public class LogoutInteractorTest {
         };
 
         User u = new InstructorUser("paul", "123456789");
-        LogoutInputBoundary interactor = new LogoutInteractor(userRepository, presenter, u);
-
-        // 2) Input data — we can make this up for the test. Normally it would
-        // be created by the Controller.
-        LogoutRequestModel request = new LogoutRequestModel();
+        LogoutInputBoundary interactor = new LogoutInteractor(userRepository);
 
         // 3) Run the use case
-        interactor.create(request);
+        interactor.create();
 
         // was the user saved after logout?
         assert ((InMemoryUser) userRepository).existsByName("paul");
