@@ -26,14 +26,14 @@ public class FileUserTest {
     public FileUserTest() throws IOException, ClassNotFoundException {
     }
 
-    @Test
-    void saveUsers() throws IOException, ClassNotFoundException {
-        FileUser f_u = new FileUser("src/test/java/data/userstest.ser");
-        f_u.save(ssri);
-        assert f_u.existsByName("dhakaad");
-        f_u.save(bruh);
-        assert f_u.existsByName("zinda");
-    }
+//    @Test
+//    void saveUsers() throws IOException, ClassNotFoundException {
+//        FileUser f_u = new FileUser("src/test/java/data/userstest.ser");
+//        f_u.save(ssri);
+//        assert f_u.existsByName("dhakaad");
+//        f_u.save(bruh);
+//        assert f_u.existsByName("zinda");
+//    }
 
     StudentSaveRequest ssri2 = new StudentSaveRequest("plant", "vanillawhey", student,
             LocalDateTime.now());
