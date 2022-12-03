@@ -4,7 +4,9 @@ import screens.calendar_scheduler.*;
 import screens.course_progress.*;
 import screens.courses_features.*;
 import screens.login_registration.*;
-import screens.task_management.event_creation_screens.*;
+import screens.task_management.task_creation_screens.*;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -16,7 +18,8 @@ import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.event_creation_use_case.*;
+import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,8 +36,11 @@ public class Main {
         JPanel screens = new JPanel(cardLayout);
         application.add(screens);
 
+        //create readwriter - read in TaskMap from file upon program start
+        TaskReadWrite taskReadWrite = new TaskReadWrite("src/main/java/data/TaskMap.txt");
+        TaskMap.load(taskReadWrite);
+
         // Get objects from database
-        HashMap<String, Task> allTasks = new HashMap<>();
         HashMap<String, User> allUsers = new HashMap<>();
         HashMap<String, Course> allCourses = new HashMap<>();
 
@@ -62,23 +68,20 @@ public class Main {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
 
+        ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
+        ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
-                schedulerPresenter, scheduleConflictPresenter);
-        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
-
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
-        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
+        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
 
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
 
         CourseCreationDsGateway course;
         try {
@@ -92,10 +95,14 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-        screens.add("toDoList", taskScreen);
+        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerPresenter, scheduleConflictPresenter,
+                screens, cardLayout);
+        screens.add("taskCreate", chooseTask);
 
-        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
+        ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user, toDoListPresenter, screens, cardLayout);
+        screens.add("toDoList", toDoListScreen);
+
+        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
         screens.add("calendar", calendarScreen);
 
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
@@ -107,8 +114,8 @@ public class Main {
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
 
-        StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout);
-        screens.add("StudentMain", studentMainScreen);
+        StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
+        screens.add("main", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);

@@ -5,28 +5,20 @@ import entities.StudentUser;
 import entities.Task;
 
 public class TaskDeletionRequestModel {
+    //private String studentId;
     private StudentUser student;
-    private Course course;
-    private Task task;
+    private String taskId;
 
     // for student tasks
-    public TaskDeletionRequestModel(StudentUser student, Task task) {
+    public TaskDeletionRequestModel(StudentUser student, String taskId) {
         this.student = student;
-        this.task = task;
-    }
-    // for course tasks
-    public TaskDeletionRequestModel(Course course, Task task) {
-        this.course = course;
-        this.task = task;
+        this.taskId = taskId;
     }
 
     public StudentUser getStudent() {
         return this.student;
     }
-    public Course getCourse() {
-        return this.course;
-    }
-    public Task getTask() {
-        return this.task;
+    public String getTaskId() {
+        return this.taskId;
     }
 }

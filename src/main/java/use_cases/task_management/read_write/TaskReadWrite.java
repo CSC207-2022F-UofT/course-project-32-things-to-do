@@ -1,5 +1,7 @@
 package use_cases.task_management.read_write;
 
+import entities.Task;
+
 import java.io.*;
 import java.util.HashMap;
 
@@ -18,7 +20,7 @@ public class TaskReadWrite implements ReadWriter {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         output.writeObject(taskMap);
-        System.out.println("good job");
+        output.flush();
         output.close();
     }
 
@@ -26,12 +28,12 @@ public class TaskReadWrite implements ReadWriter {
      * Read in the taskMap from a file
      * @return - the taskMap being read
      */
-    public HashMap readFromFile() throws IOException, ClassNotFoundException {
+    public HashMap<String, Task> readFromFile() throws IOException, ClassNotFoundException {
         InputStream file = new FileInputStream(path);
         InputStream buffer = new BufferedInputStream(file);
         ObjectInput input = new ObjectInputStream(buffer);
 
-        HashMap taskMap = (HashMap) input.readObject();
+        HashMap<String, Task> taskMap = (HashMap<String, Task>) input.readObject();
         input.close();
         return taskMap;
     }
