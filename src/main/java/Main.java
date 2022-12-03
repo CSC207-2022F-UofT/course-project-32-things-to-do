@@ -74,9 +74,10 @@ public class Main {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
+        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
+        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
-        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
+        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
@@ -108,14 +109,14 @@ public class Main {
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);
 
-        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
+        progressTrackerScreen.setProgressTrackerController(trackerController);
         screens.add("tracker", progressTrackerScreen);
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
-        screens.add("main", studentMainScreen);
+        screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);

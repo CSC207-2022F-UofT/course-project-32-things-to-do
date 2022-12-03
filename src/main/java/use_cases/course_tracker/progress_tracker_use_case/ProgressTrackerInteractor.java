@@ -22,39 +22,35 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
      * The main controller of this interactor. Sequentially calls all the helper methods.
      */
     @Override
-    public ProgressTrackerResponseModel trackProgress(ProgressTrackerRequestModel
-                                                                       progressTrackerRequestModel) {
-
+    public void trackProgress(ProgressTrackerRequestModel progressTrackerRequestModel) {
         try {
-
-            if (!(progressTrackerRequestModel.getStudentUser() instanceof StudentUser)) {
-                throw new RuntimeException("You are not a registered student");
+            if (!CurrentUser.isStudent()) { //should never occur!
+                throw new RuntimeException("You are not a registered student!");
             }
-            StudentUser studentUser = (StudentUser) progressTrackerRequestModel.getStudentUser();
 
             String courseName = progressTrackerRequestModel.getcourseName();
-            HashMap<String, Course> allCourses = progressTrackerRequestModel.getAllCourses();
-            HashMap<String, Task> allTasks = progressTrackerRequestModel.getAllTasks();
-            HashMap<String, User> allUsers = progressTrackerRequestModel.getAllUsers();
 
             //parse user input
             double newGrade = stringToDouble(progressTrackerRequestModel.getNewGrade());
             double newGoalGrade = stringToDouble(progressTrackerRequestModel.getNewGoalGrade());
 
             //retrieve course ID based on inputted course name
-            String courseID = courseNameToID(courseName, studentUser, allUsers, allCourses);
+            String courseID = courseNameToID(courseName);
 
-            //query aggregate task map for this student's tasks in this course
-            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(allTasks, courseID, studentUser);
+            //query aggregate task map for all of this student's tasks in this course
+            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);
+
+            //collect all the tasks that are still ungraded
+            ArrayList<String> ungradedTasks = getUngradedTasks(studentCourseTasks);
 
             //if a newGrade was inputted, mutate the corresponding task object
-            if (newGrade != -1) { //TODO extend: add multiple grades at once? (remove grades? <- NO! Overwrite only)
-                setTaskGrade(allTasks, studentCourseTasks, progressTrackerRequestModel.getNewGradeTaskName(), newGrade);
+            if (newGrade != -1) {
+                setTaskGrade(studentCourseTasks, progressTrackerRequestModel.getNewGradeTaskName(), newGrade);
             }
 
             //if a newGoalGrade was inputted, mutate the corresponding studentUser object
             if (newGoalGrade != -1) {
-                setCourseGoalGrade(allUsers, studentUser, courseID, newGoalGrade);
+                setCourseGoalGrade(courseID, newGoalGrade);
             }
 
             //calculations
@@ -63,7 +59,7 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
 
             //if goal grade exists for this course, more calculations
             double requiredAverage;
-            Double goalGrade = (Double) studentUser.getDesiredGrades().get(courseID);
+            Double goalGrade = ((StudentUser) CurrentUser.getCurrentUser()).getDesiredGrades().get(courseID);
             if (goalGrade != null) {
                 requiredAverage = requiredAverageCalculator(goalGrade, mockGrade, studentCourseTasks);
             } else {
@@ -71,11 +67,11 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
             }
 
             ProgressTrackerResponseModel responseModel = new ProgressTrackerResponseModel(courseProgress, mockGrade,
-                    requiredAverage);
-            return outputBoundary.display(responseModel);
+                    requiredAverage, ungradedTasks);
+            outputBoundary.format(responseModel);
 
         } catch(Exception e) {
-            return outputBoundary.failView(e.getMessage());
+            outputBoundary.failView(e.getMessage());
         }
 
     }
@@ -92,7 +88,7 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
             return -1.0;
         } else {
             try {
-                return Double.valueOf(string);
+                return Double.parseDouble(string);
             } catch(Exception e) {
                 throw new RuntimeException("Entered input is invalid. It should be a (decimal) number " +
                         "with no special characters.");
@@ -104,23 +100,19 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
      * Return a String representing the course ID of the student's course with given course Name
      *
      * @param courseName a String representing the name of the student's course
-     * @param studentUser a String representing the user ID of the student
-     * @param allUsers an aggregate entity mapping all program users to their user ID
-     * @param allCourses an aggregate entity mapping all program courses to their user ID
      * @return the course ID of the student's course
      */
-    private String courseNameToID(String courseName, StudentUser studentUser, HashMap<String, User> allUsers,
-                                  HashMap<String, Course> allCourses) {
+    private String courseNameToID(String courseName) {
 
-        ArrayList<String> allCourseIDs = studentUser.getCourses();
+        ArrayList<String> allCourseIDs = ((StudentUser) CurrentUser.getCurrentUser()).getCourses();
 
         for (String courseID: allCourseIDs) {
-            if (allCourses.get(courseID).getCourseName().equals(courseName)) {
+            if (CourseMap.findCourse(courseID).getCourseName().equals(courseName)) {
                 return courseID;
             }
         }
 
-        throw new RuntimeException("No course with that course name was found.");
+        throw new RuntimeException("None of your enrolled courses match that course name.");
 
     }
 
@@ -218,14 +210,14 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
     /**
      * Return all Task tasks for given courseID and studentUser that implement Gradable
      *
-     * @param allTasks an aggregate entity mapping all program tasks to their task ID
      * @param courseID a String representing the course ID of the given course
-     * @param studentUser a string representing the user ID of the logged in student
      * @return a list of all the student's Gradable tasks in the given course
      */
-    private ArrayList<Task> getStudentCourseTasks(HashMap<String, Task> allTasks, String courseID,
-                                                  StudentUser studentUser) {
-        ArrayList<Task> studentCourseTasks = new ArrayList<Task>();
+    private ArrayList<Task> getStudentCourseTasks(String courseID) {
+        StudentUser studentUser = (StudentUser) CurrentUser.getCurrentUser();
+        HashMap<String, Task> allTasks = TaskMap.getTaskMap();
+
+        ArrayList<Task> studentCourseTasks = new ArrayList<>();
 
         for (String mapKey: allTasks.keySet()) {
             if (mapKey.contains(courseID) && mapKey.contains(studentUser.getName())) {
@@ -239,23 +231,40 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
     }
 
     /**
+     * From a list of Gradable tasks, return a new list of strings of the titles of all the Task objects that
+     * are Gradable and have a gradeReceived value of -1 from the given studentTasks
+     *
+     * @param studentTasks a list of the logged-in student's Task tasks for a course
+     * @return a list of strings
+     */
+    private ArrayList<String> getUngradedTasks(ArrayList<Task> studentTasks) {
+        ArrayList<String> ungradedTasks = new ArrayList<>();
+
+        for (Task task: studentTasks) {
+            if (task instanceof Gradable && ((Gradable) task).getGradeReceived() == -1) {
+                ungradedTasks.add(task.getTitle());
+            }
+        }
+
+        return ungradedTasks;
+    }
+
+    /**
      * Mutates a task in the aggregate task map, setting the given task's received grade to the inputted double.
      *
-     * @param allTasks an aggregate entity mapping all program tasks to their task ID
      * @param studentTasks a list of all the student's Gradable tasks in the given course
      * @param newGradeTaskName the String name of the task for the inputted grade
      * @param newGrade a double representing the new received grade
      */
-    public void setTaskGrade(HashMap<String, Task> allTasks, ArrayList<Task> studentTasks,
-                                           String newGradeTaskName, double newGrade) {
+    public void setTaskGrade(ArrayList<Task> studentTasks, String newGradeTaskName, double newGrade) {
         if (0 > newGrade || newGrade > 100) {
             throw new RuntimeException("Entered grade is out of bounds.");
         }
 
         for (Task task: studentTasks) {
             if (task.getTitle().equals(newGradeTaskName)) {
-                if (allTasks.get(task.getId()).getComplete()) {
-                    ((Gradable) allTasks.get(task.getId())).setGradeReceived(newGrade);
+                if (TaskMap.findTask(task.getId()).getComplete()) {
+                    ((Gradable) TaskMap.findTask(task.getId())).setGradeReceived(newGrade);
                     return;
                 } else {
                     throw new RuntimeException("Set this task to 'Complete' before adding its grade.");
@@ -269,18 +278,15 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
     /**
      * Mutates a user in the aggregate user map, adding/modifying the given desired grade for the given course.
      *
-     * @param allUsers an aggregate entity mapping all program users to their user ID
-     * @param studentUser a string representing the user id of the logged in student
      * @param courseID a string representing the course id of the given course
      * @param newGoalGrade the new desired grade (in percent) for the given course
      */
-    public void setCourseGoalGrade(HashMap<String, User> allUsers, StudentUser studentUser, String courseID,
-                                      double newGoalGrade) {
+    public void setCourseGoalGrade(String courseID, double newGoalGrade) {
         if (0 > newGoalGrade || newGoalGrade > 100) {
             throw new RuntimeException("Entered desired grade is out of bounds.");
         }
 
-        studentUser.getDesiredGrades().put(courseID, newGoalGrade);
+        ((StudentUser) CurrentUser.getCurrentUser()).getDesiredGrades().put(courseID, newGoalGrade);
 
     }
 

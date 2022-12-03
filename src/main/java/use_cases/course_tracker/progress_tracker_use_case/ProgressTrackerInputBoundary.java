@@ -6,5 +6,5 @@ package use_cases.course_tracker.progress_tracker_use_case;
  */
 
 public interface ProgressTrackerInputBoundary {
-    ProgressTrackerResponseModel trackProgress(ProgressTrackerRequestModel requestModel);
+    void trackProgress(ProgressTrackerRequestModel requestModel);
 }

@@ -10,37 +10,48 @@ import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRespons
 
 public class ProgressTrackerPresenter implements ProgressTrackerOutputBoundary {
 
+    final ProgressTrackerViewBoundary viewBoundary;
+
+    public ProgressTrackerPresenter(ProgressTrackerViewBoundary viewBoundary) {
+        this.viewBoundary = viewBoundary;
+    }
+
     /**
      * Reformat the display string from the responseModel based on the existing calculations
      *
      * @param responseModel the returned ProgressTrackerResponseModel from the user case interactor
-     * @return the reformatted responseModel
      */
     @Override
-    public ProgressTrackerResponseModel display(ProgressTrackerResponseModel responseModel) {
-
+    public void format(ProgressTrackerResponseModel responseModel) {
         double progress = responseModel.getCourseProgress();
         double mockGrade = responseModel.getMockGrade();
         double requiredAverage = responseModel.getRequiredAverage();
 
-        String displayString = progress + "% of this course's work is completed! Current grade:  " + mockGrade;
+        StringBuilder displayString = new StringBuilder();
+        displayString.append("Course progress in assessment weightage: ").append(progress).append("%\n");
+        displayString.append("Current (accumulated and weighted) grade: ").append(mockGrade).append("%\n");
         if (requiredAverage != -1) {
-            displayString += " and required average remaining assessments: " + requiredAverage;
+            displayString.append(" Required average in remaining assessments: ").append(requiredAverage).append("%\n");
         }
 
-        responseModel.setDisplayString(displayString);
+        displayString.append("\nRemaining ungraded assessments in this course:\n");
+        for (String taskName: responseModel.getUngradedTasks()) {
+            displayString.append("  ").append(taskName).append("\n");
+        }
 
-        return responseModel;
+        ProgressTrackerViewModel viewModel = new ProgressTrackerViewModel(displayString.toString(),
+                responseModel.getUngradedTasks(), mockGrade);
+
+        viewBoundary.dispaly(viewModel);
 
     }
 
     /**
      * Inject a thrown exception from the Interactor into the view
      * @param error a String representing the error message
-     * @return void
      */
     @Override
-    public ProgressTrackerResponseModel failView(String error) {
+    public void failView(String error) {
         throw new ProgressTrackingFail(error);
     }
 }
