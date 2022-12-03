@@ -58,31 +58,31 @@ public class Main {
 
         // initialize User based on whether they log in or register
         // if you don't register, then you are logging in:
-        User user;
-        if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
-                (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
-            user = ((UserRegInteractor) userInteractor).getUser();
-        } else {
-            user = ((LoginInteractor) loginInteractor).getUser();
-        }
+//        User user;
+//        if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
+//                (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
+//            user = ((UserRegInteractor) userInteractor).getUser();
+//        } else {
+//            user = ((LoginInteractor) loginInteractor).getUser();
+//        }
 
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
-                schedulerPresenter, scheduleConflictPresenter);
-        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
-
-        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
-        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
-
-        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
-        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
-        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
+//        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
+//        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
+//                schedulerPresenter, scheduleConflictPresenter);
+//        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
+//
+//        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
+//        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
+//        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
+//
+//        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
+//        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
+//        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
+//        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
 
         CourseCreationDsGateway course;
         try {
@@ -102,17 +102,17 @@ public class Main {
         //
 
         // Build the GUI
-        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-        screens.add("toDoList", taskScreen);
-
-        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
-        screens.add("calendar", calendarScreen);
-
-        ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
-        screens.add("scheduleCT", scheduleCTScreen);
-
-        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
-        screens.add("tracker", progressTrackerScreen);
+//        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
+//        screens.add("toDoList", taskScreen);
+//
+//        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
+//        screens.add("calendar", calendarScreen);
+//
+//        ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
+//        screens.add("scheduleCT", scheduleCTScreen);
+//
+//        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
+//        screens.add("tracker", progressTrackerScreen);
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);
