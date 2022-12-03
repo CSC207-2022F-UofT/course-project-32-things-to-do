@@ -93,14 +93,14 @@ public class TestCreationScreen extends JPanel implements ActionListener {
                 testController.create(title.getText(), valPriority, startDate, endDate, valWeightage);
 
                 showMessageDialog(this, "Test Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
     }
 }

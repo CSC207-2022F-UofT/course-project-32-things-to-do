@@ -129,13 +129,13 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event edited successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // delete Event
                 taskDeletionController.delete(student, eventInfo.getId());
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event deleted successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Cancel")) { // Edit cancelled
                 screenLayout.show(screens, "toDoList");
             } else { // checkbox pressed

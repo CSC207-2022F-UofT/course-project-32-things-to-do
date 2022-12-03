@@ -1,6 +1,9 @@
 package use_cases.collaborative_task_scheduling.scheduling_ct_use_case;
 
-import entities.StudentUser;
+
+import entities.Task;
+
+import java.util.HashMap;
 
 /**
  * Request Model for the Scheduling Collaborative Tasks Use Case
@@ -15,9 +18,9 @@ public class ScheduleCTRequestModel {
 
     private final String endTime;
 
-    private final StudentUser studentUser;
+    private final Object studentUser;
 
-    public ScheduleCTRequestModel(String taskName, String startTime, String endTime, StudentUser studentUser) {
+    public ScheduleCTRequestModel(String taskName, String startTime, String endTime, Object studentUser) {
         this.taskName = taskName;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -34,6 +37,5 @@ public class ScheduleCTRequestModel {
         return endTime;
     }
 
-    public StudentUser getStudentUser() { return studentUser; }
-
+    public Object getStudentUser() { return studentUser; }
 }

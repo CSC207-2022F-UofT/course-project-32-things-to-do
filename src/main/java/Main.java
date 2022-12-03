@@ -78,10 +78,10 @@ public class Main {
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
 
-        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
-        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
-        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
+        ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
+        ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
+        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor, user);
 
         CourseCreationDsGateway course;
         try {
@@ -107,6 +107,7 @@ public class Main {
 
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);
+        screens.add("scheduleCTView", (Component) scheduleCTOutputView);
 
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
@@ -115,7 +116,7 @@ public class Main {
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
-        screens.add("main", studentMainScreen);
+        screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);

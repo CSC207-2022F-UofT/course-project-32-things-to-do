@@ -84,14 +84,14 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
                 assignmentController.create(title.getText(), 0, dueDate, valWeightage);
 
                 showMessageDialog(this, "Assignment Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "InstructorMain");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "InstructorMain");
         }
     }
 }

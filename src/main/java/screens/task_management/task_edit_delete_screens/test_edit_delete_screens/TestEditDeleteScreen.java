@@ -133,7 +133,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
                 // update user and return to main list page
                 showMessageDialog(this, "Test edited successfully."); // todo customize this message
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
                 taskDeletionController.delete(student, testInfo.getId());
 
@@ -141,7 +141,7 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                 showMessageDialog(this, "Test deleted successfully.");
                 screenLayout.show(screens, "toDoList");
             } else { // Test is racist
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
         } catch (Exception ex) {
             showMessageDialog(this, ex.getMessage());

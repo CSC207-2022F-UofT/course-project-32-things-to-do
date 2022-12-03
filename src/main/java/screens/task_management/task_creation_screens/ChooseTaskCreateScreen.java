@@ -75,7 +75,7 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Cancel")) { // go back to main
-            cardLayout.show(screens, "main");
+            cardLayout.show(screens, "StudentMain");
         }
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();

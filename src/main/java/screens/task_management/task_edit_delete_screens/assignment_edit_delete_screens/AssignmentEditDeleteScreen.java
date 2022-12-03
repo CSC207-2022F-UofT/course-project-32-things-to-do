@@ -131,14 +131,14 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                         valTimeNeeded, valTimeSpent);
 
                 showMessageDialog(this, "Assignment edited successfully"); // todo customize this message
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
             // Assignment being deleted
             else if (e.getActionCommand().equals("Delete")) {
                 taskDeletionController.delete(student, assignmentInfo.getId());
 
                 showMessageDialog(this, "Assignment deleted successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
             // Cancel button pressed
             else {

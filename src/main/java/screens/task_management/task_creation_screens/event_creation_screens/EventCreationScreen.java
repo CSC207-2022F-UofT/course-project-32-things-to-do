@@ -102,7 +102,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                         startDate, endDate, valRecurring, valFrequency);
 
                 showMessageDialog(this, "Event Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
             }
