@@ -22,7 +22,6 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) {
-
         // Build the main program window
         JFrame application = new JFrame("32 Things To Do");
         CardLayout cardLayout = new CardLayout();
@@ -57,8 +56,7 @@ public class Main {
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
-
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, user);
         CourseCreationDsGateway course;
         try {
             course = new FileCourse("./src/main/java/data/courses.csv");

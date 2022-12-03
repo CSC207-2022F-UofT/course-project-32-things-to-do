@@ -24,11 +24,15 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
      * The main controller of this interactor that calls the helper methods
      */
     @Override
-    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap) {
+    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel) {
 
-        CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), hashMap);
+        HashMap<String, Task> taskHashMap =  TaskMap.getTaskMap();
 
-        if (requestModel.getStudentUser() != task.getLeader()) {
+        CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), taskHashMap);
+
+        StudentUser currentUser = (StudentUser) requestModel.getStudentUser();
+
+        if (currentUser != task.getLeader()) {
             return scheduleCTOutputBoundary.prepareFailView("User is not the leader. " +
                     "You do not have scheduling access");
         }
@@ -42,7 +46,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         LocalDateTime endTime = convertStringToLocalDateTime(requestModel.getEndTime());
 
         for (StudentUser user : users) {
-            ArrayList<Task> userTasks = getAllTaskFromIdExceptOne(task, user, hashMap);
+            ArrayList<Task> userTasks = getAllTaskFromIdExceptOne(task, user, taskHashMap);
             // isUserAvailableAtDateTime returns false if not available
             // if isUserAvailableAtDateTime is false, add it to the list of unavailable users
             if (!isUserAvailableAtDateTime(user, userTasks, startTime, endTime)) {
@@ -391,5 +395,21 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         String formattedStart = start.format(formatter);
         String formattedEnd = end.format(formatter);
         return formattedStart + " to " + formattedEnd;
+    }
+
+    /**
+     * Turn all objects into tasks (by casting them) in the hash map
+     * @param objectHashMap - the hash map that maps strings to objects
+     * @return the same hash map but they are task objects instead
+     */
+    public HashMap<String, Task> objectToTask(HashMap<String, Object> objectHashMap) {
+
+        HashMap<String, Task> taskHashMap = new HashMap<>();
+
+        for (String key: objectHashMap.keySet()) {
+            Task task = (Task) objectHashMap.get(key);
+            taskHashMap.put(key, task);
+        }
+        return taskHashMap;
     }
 }

@@ -1,10 +1,8 @@
 package screens.collaborative_task_scheduling;
-import entities.StudentUser;
-import entities.Task;
+
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTInputBoundary;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTRequestModel;
 
-import java.util.HashMap;
 
 /**
  * Controller for the Scheduling Collaborative Tasks Use Case
@@ -15,19 +13,15 @@ public class ScheduleCTController {
 
     final ScheduleCTInputBoundary scheduleInput;
 
-    private final HashMap<String, Task> hashMap;
-
-    private final StudentUser studentUser;
+    private final Object studentUser;
 
     /**
      * Constructor for ScheduleCTController
      * @param scheduleInput - the scheduleCTInputBoundary
-     * @param hashMap - a hash map of all task ids mapped to the task object
      * @param studentUser - the current student user logged in
      */
-    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput, HashMap<String, Task> hashMap, StudentUser studentUser) {
+    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput, Object studentUser) {
         this.scheduleInput = scheduleInput;
-        this.hashMap = hashMap;
         this.studentUser = studentUser;
     }
 
@@ -41,6 +35,6 @@ public class ScheduleCTController {
      */
     public void isConflict(String taskName, String startTime, String endTime) {
         ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime, studentUser);
-        scheduleInput.schedule(inputData, this.hashMap);
+        scheduleInput.schedule(inputData);
     }
 }
