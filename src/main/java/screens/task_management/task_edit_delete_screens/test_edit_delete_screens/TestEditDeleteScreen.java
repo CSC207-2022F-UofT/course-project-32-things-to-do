@@ -76,9 +76,9 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
         LabelTextPanel dateInfo = new LabelTextPanel(
                 new JLabel("Enter new test start date (yyyy-MM-dd)"), date);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new test start time (hh:mm)"), startTime);
+                new JLabel("Enter new test start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new test end time (hh:mm)"), endTime);
+                new JLabel("Enter new test end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter new test weightage (double, don't include %)"), weightage);
         LabelTextPanel timeNeededInfo = new LabelTextPanel(
@@ -142,17 +142,17 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
                         valTimeNeeded, valTimeSpent);
 
                 // update user and return to main list page
-                showMessageDialog(this, "Test edited successfully."); // todo customize this message
+                showMessageDialog(this, "Test edited successfully.");
                 screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
                 // delete Test
                 taskDeletionController.delete(testInfo.getId());
 
-                // update user and return to to-do list page
+                // update user and return to main page
                 showMessageDialog(this, "Test deleted successfully.");
-                screenLayout.show(screens, "toDoList");
-            } else { // Test is racist
                 screenLayout.show(screens, "StudentMain");
+            } else { // cancel button pressed, return to to-do list
+                screenLayout.show(screens, "toDoList");
             }
         } catch (Exception ex) {
             showMessageDialog(this, ex.getMessage());

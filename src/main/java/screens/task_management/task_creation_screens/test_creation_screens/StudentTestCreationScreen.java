@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class TestCreationScreen extends JPanel implements ActionListener {
+public class StudentTestCreationScreen extends JPanel implements ActionListener {
     // text fields
     JTextField title = new JTextField(15);
     JTextField priority = new JTextField(15);
@@ -32,7 +32,7 @@ public class TestCreationScreen extends JPanel implements ActionListener {
      * @param screens - rest of screens in the program
      * @param screenLayout - for switching between screens
      */
-    public TestCreationScreen(TestCreationController testController, JPanel screens, CardLayout screenLayout) {
+    public StudentTestCreationScreen(TestCreationController testController, JPanel screens, CardLayout screenLayout) {
         this.testController = testController;
         this.screens = screens;
         this.screenLayout = screenLayout;
@@ -47,11 +47,11 @@ public class TestCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter test priority (integer)"), priority);
         LabelTextPanel dateInfo = new LabelTextPanel(
-                new JLabel("Enter test start date (yyyy-MM-dd)"), date);
+                new JLabel("Enter test date (yyyy-MM-dd)"), date);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter test start time (hh:mm)"), startTime);
+                new JLabel("Enter test start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter test end time (hh:mm)"), endTime);
+                new JLabel("Enter test end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter test weightage (double, don't include %)"), weightage);
 

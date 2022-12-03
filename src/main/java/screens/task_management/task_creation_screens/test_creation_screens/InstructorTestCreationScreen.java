@@ -47,11 +47,11 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
         LabelTextPanel titleInfo = new LabelTextPanel(
                 new JLabel("Enter test title"), title);
         LabelTextPanel dateInfo = new LabelTextPanel(
-                new JLabel("Enter test start date (yyyy-MM-dd)"), date);
+                new JLabel("Enter test date (yyyy-MM-dd)"), date);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter test start time (hh:mm)"), startTime);
+                new JLabel("Enter test start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter test end time (hh:mm)"), endTime);
+                new JLabel("Enter test end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter test weightage (double, don't include %)"), weightage);
 
@@ -88,8 +88,8 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
         if (evt.getActionCommand().equals("Finish")) {
             try {
                 // get the start and end date+times and parse them
-                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText() + ":00");
-                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText() + ":00");
+                LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText());
+                LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText());
                 // set weightage value to value in the box or 0 if blank
                 double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 

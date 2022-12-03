@@ -74,9 +74,9 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
         LabelTextPanel dateInfo = new LabelTextPanel(
                 new JLabel("Enter new event start date (yyyy-MM-dd)"), date);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new event start time (hh:mm)"), startTime);
+                new JLabel("Enter new event start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new event end time (hh:mm)"), endTime);
+                new JLabel("Enter new event end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel frequencyInfo = new LabelTextPanel(
                 new JLabel("Enter new frequency of event"), frequency);
         frequency.setEnabled(recurring.isSelected());
