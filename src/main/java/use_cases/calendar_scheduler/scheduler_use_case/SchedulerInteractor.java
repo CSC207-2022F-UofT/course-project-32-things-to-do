@@ -125,7 +125,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
         // Schedule prep time for each preparatory task
         for (Preparatory preparatoryTask : preparatoryTasks) {
             // Get time remaining for the task
-            double timeRemaining = preparatoryTask.getTimeNeeded();
+            double timeRemaining = preparatoryTask.getTimeNeeded() - preparatoryTask.getTimeSpent();
 
             // Schedule prep time
             int i = 0;

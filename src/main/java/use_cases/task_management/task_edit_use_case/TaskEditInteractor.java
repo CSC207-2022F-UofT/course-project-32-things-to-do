@@ -1,14 +1,23 @@
 package use_cases.task_management.task_edit_use_case;
 
 import entities.*;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerRequestModel;
+import use_cases.calendar_scheduler.scheduler_use_case.SchedulerResponseModel;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;
     private final StudentUser student;
 
-    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
+    // for connecting to Scheduler use case
+    private SchedulerInteractor scheduler;
+
+    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student,
+                               ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.presenter = presenter;
         this.student = student;
+        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary);
     }
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
@@ -19,6 +28,8 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             event.setPriority(requestModel.getPriority());
             // change event time block
             event.setTimeBlock(request.getStartTime(), request.getEndTime());
+            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(event, student);
+            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
             // change event recurring value + frequency (if applicable)
             event.setRecurring(request.getRecurring(), request.getFrequency());
 
@@ -43,6 +54,8 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             test.setPriority(requestModel.getPriority());
             // change test time block
             test.setTimeBlock(request.getStartTime(), request.getEndTime());
+            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(test, student);
+            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
             // change test weightage
             test.setWeightage(request.getWeightage());
             // change time needed to study for test
