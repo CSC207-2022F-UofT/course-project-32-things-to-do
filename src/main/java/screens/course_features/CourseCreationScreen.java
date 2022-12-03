@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CourseCreationScreen extends JPanel implements ActionListener {
     /** the course name chosen by InstructorUser */
@@ -83,12 +85,20 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
             screenLayout.show(screens, "main");
         } else if (evt.getActionCommand().equals("Save")) {
             try {
-                // initialize new Arraylist and add task
-                ArrayList<String> tasks = new ArrayList<>();
-                tasks.add(taskNames.getText());
+                // tasksNames right now is an arraylist of ONE string with the string being "task1, task2"
+                // split string so that each task is a string
+                String[] tasksSplit = taskNames.getText().split(",");
+                List<String> taskArrayList;
+                taskArrayList = Arrays.asList(tasksSplit);
+
+                // tasklist should be arraylist ["task1", "task2"]
+                // add all strings to arraylist 'tasks'
+                ArrayList<String> tasks = new ArrayList<>(taskArrayList);
+
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);
-                JOptionPane.showMessageDialog(this, "Course successfully created.");
+                JOptionPane.showMessageDialog(
+                        this, "Course" + courseName.getText() + "and tasks" + tasks + "successfully created.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
