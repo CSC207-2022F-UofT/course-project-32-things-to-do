@@ -1,17 +1,20 @@
 package use_cases.task_management.task_edit_use_case;
 
+import entities.TaskMap;
 import entities.Test;
 
 import java.time.LocalDateTime;
 
 public class TestInfoRetriever implements TestDisplayer {
     private final Test test;
+    private final String id;
     /**
      * An object that retrieves the info of a Test to be displayed in edit screens
-     * @param test - the Test whose info is being displayed
+     * @param id - ID of Test whose info is being displayed
      */
-    public TestInfoRetriever(Test test) {
-        this.test = test;
+    public TestInfoRetriever(String id) {
+        this.test = (Test) TaskMap.findTask(id);
+        this.id = id;
     }
     @Override
     public String getTitle() {
@@ -20,7 +23,7 @@ public class TestInfoRetriever implements TestDisplayer {
 
     @Override
     public String getId() {
-        return test.getId();
+        return this.id;
     }
 
     @Override

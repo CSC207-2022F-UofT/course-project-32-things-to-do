@@ -3,7 +3,7 @@ package use_cases.collaborative_task_management.collaborative_task_creation_use_
 import entities.CollaborativeTask;
 import entities.StudentUser;
 import entities.TaskMap;
-import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.read_write.FileTaskMap;
 
 import java.time.LocalDateTime;
 
@@ -26,7 +26,7 @@ public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCre
 
         CollaborativeTask collaborativeTask = new CollaborativeTask(requestModel.getTitle(), id, requestModel.getPriority(), requestModel.getRecurring(), requestModel.getFrequency(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), student);
 
-        TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
+        FileTaskMap trw = new FileTaskMap("src/data/TaskMap");
         TaskMap.saveToFile(trw);
 
         CollaborativeTaskCreationResponseModel collaborativeTaskResponseModel = new CollaborativeTaskCreationResponseModel(requestModel.getTitle(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), requestModel.getLeader());

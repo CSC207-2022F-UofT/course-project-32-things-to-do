@@ -1,8 +1,5 @@
 package screens.task_management.todolist_screens;
 
-import entities.Assignment;
-import entities.StudentUser;
-import entities.TaskMap;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import screens.task_management.task_edit_delete_screens.TaskDeletionResponseFormatter;
 import screens.task_management.task_edit_delete_screens.TaskEditResponseFormatter;
@@ -29,7 +26,6 @@ import java.util.ArrayList;
  */
 
 public class ToDoListScreen extends JPanel implements ActionListener {
-    StudentUser student;
 
     ToDoListPresenter presenter;
 
@@ -39,8 +35,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
 
     CardLayout screenLayout;
 
-    public ToDoListScreen(StudentUser student, ToDoListPresenter presenter, JPanel screens, CardLayout screenLayout) {
-        this.student = student;
+    public ToDoListScreen(ToDoListPresenter presenter, JPanel screens, CardLayout screenLayout) {
         this.presenter = presenter;
         this.screens = screens;
         this.screenLayout = screenLayout;
@@ -102,7 +97,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
 
             // create use case components
             TaskEditPresenter taskEditPresenter = new TaskEditResponseFormatter();
-            TaskEditInputBoundary taskEditInteractor = new TaskEditInteractor(taskEditPresenter, student);
+            TaskEditInputBoundary taskEditInteractor = new TaskEditInteractor(taskEditPresenter);
             EventEditController eventEditController = new EventEditController(taskEditInteractor);
             AssignmentEditController assignmentEditController = new AssignmentEditController(taskEditInteractor);
             TestEditController testEditController = new TestEditController(taskEditInteractor);
@@ -112,23 +107,22 @@ public class ToDoListScreen extends JPanel implements ActionListener {
             TaskDeletionController taskDeletionController = new TaskDeletionController(taskDeletionInteractor);
 
             //change card to corresponding task type edit/delete screen
-            // todo taking a student is suspect -- all of these screens take a student
             if (taskType.equals("Assignment")) {
-                AssignmentDisplayer assignmentInfo = new AssignmentInfoRetriever((Assignment) TaskMap.findTask(taskId));
+                AssignmentDisplayer assignmentInfo = new AssignmentInfoRetriever(taskId);
                 AssignmentEditDeleteScreen assignmentEditDeleteScreen = new AssignmentEditDeleteScreen(
-                        student, assignmentEditController, taskDeletionController, screens, screenLayout, assignmentInfo);
+                        assignmentEditController, taskDeletionController, screens, screenLayout, assignmentInfo);
                 screens.add("assignmentEdit", assignmentEditDeleteScreen);
                 screenLayout.show(screens, "assignmentEdit");
             } else if (taskType.equals("Test")) {
-                TestDisplayer testInfo = new TestInfoRetriever((entities.Test) TaskMap.findTask(taskId));
+                TestDisplayer testInfo = new TestInfoRetriever(taskId);
                 TestEditDeleteScreen testEditDeleteScreen = new TestEditDeleteScreen(
-                        student, testEditController, taskDeletionController, screens, screenLayout, testInfo);
+                        testEditController, taskDeletionController, screens, screenLayout, testInfo);
                 screens.add("testEdit", testEditDeleteScreen);
                 screenLayout.show(screens, "testEdit");
             } else {
-                EventDisplayer eventInfo = new EventInfoRetriever((entities.Event)TaskMap.findTask(taskId));
+                EventDisplayer eventInfo = new EventInfoRetriever(taskId);
                 EventEditDeleteScreen eventEditDeleteScreen = new EventEditDeleteScreen(
-                        student, eventEditController, taskDeletionController, screens, screenLayout, eventInfo);
+                        eventEditController, taskDeletionController, screens, screenLayout, eventInfo);
                 screens.add("eventEdit", eventEditDeleteScreen);
                 screenLayout.show(screens, "eventEdit");
             }

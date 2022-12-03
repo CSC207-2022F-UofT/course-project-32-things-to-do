@@ -1,8 +1,10 @@
 package use_cases.task_management.task_deletion_use_case;
 
+import entities.CurrentUser;
+import entities.StudentUser;
 import entities.TaskMap;
-import use_cases.task_management.read_write.ReadWriter;
-import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.read_write.FileTaskMap;
 
 public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
     final TaskDeletionPresenter presenter;
@@ -17,11 +19,11 @@ public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
     @Override
     public TaskDeletionResponseModel delete(TaskDeletionRequestModel requestModel) {
         // remove the Task
-        requestModel.getStudent().removeTaskFromList(requestModel.getTaskId());
-        requestModel.getStudent().addTaskToArchive(requestModel.getTaskId());
+        ((StudentUser) CurrentUser.getCurrentUser()).removeTaskFromList(requestModel.getTaskId());
+        ((StudentUser) CurrentUser.getCurrentUser()).addTaskToArchive(requestModel.getTaskId());
 
         // save changes
-        ReadWriter trw = new TaskReadWrite("src/main/java/data/TaskMap.txt");
+        TaskMapGateway trw = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskMap.saveToFile(trw);
 
         // create response model

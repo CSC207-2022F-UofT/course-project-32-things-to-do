@@ -93,7 +93,7 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
 
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }
@@ -101,7 +101,7 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
             // return to main screen
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
     }
 }

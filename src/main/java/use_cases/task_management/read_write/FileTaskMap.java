@@ -5,9 +5,9 @@ import entities.Task;
 import java.io.*;
 import java.util.HashMap;
 
-public class TaskReadWrite implements ReadWriter {
+public class FileTaskMap implements TaskMapGateway {
     String path;
-    public TaskReadWrite(String path) {
+    public FileTaskMap(String path) {
         this.path = path;
     }
     /**

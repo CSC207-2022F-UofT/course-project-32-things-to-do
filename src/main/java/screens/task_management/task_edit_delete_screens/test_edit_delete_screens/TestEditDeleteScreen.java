@@ -1,6 +1,5 @@
 package screens.task_management.task_edit_delete_screens.test_edit_delete_screens;
 
-import entities.StudentUser;
 import screens.LabelTextPanel;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import use_cases.task_management.task_edit_use_case.TestDisplayer;
@@ -26,8 +25,6 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
     JTextField timeNeeded;
     JTextField timeSpent;
 
-    StudentUser student;
-
     // controllers
     TestEditController testEditController;
     TaskDeletionController taskDeletionController;
@@ -41,17 +38,15 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
     /**
      * A screen for editing/deleting a Test
-     * @param student - the student whose Test is being changed
      * @param testEditController - controller for editing
      * @param taskDeletionController - controller for deleting
      * @param screens - rest of screens in the program
      * @param screenLayout - for switching between screens
      * @param testInfo - for accessing info about a test
      */
-    public TestEditDeleteScreen(StudentUser student,
+    public TestEditDeleteScreen(
                                 TestEditController testEditController, TaskDeletionController taskDeletionController,
                                 JPanel screens, CardLayout screenLayout, TestDisplayer testInfo) {
-        this.student = student;
         this.testEditController = testEditController;
         this.taskDeletionController = taskDeletionController;
         this.screens = screens;
@@ -148,16 +143,16 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
                 // update user and return to main list page
                 showMessageDialog(this, "Test edited successfully."); // todo customize this message
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
                 // delete Test
-                taskDeletionController.delete(student, testInfo.getId());
+                taskDeletionController.delete(testInfo.getId());
 
                 // update user and return to to-do list page
                 showMessageDialog(this, "Test deleted successfully.");
                 screenLayout.show(screens, "toDoList");
             } else { // Test is racist
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
         } catch (Exception ex) {
             showMessageDialog(this, ex.getMessage());

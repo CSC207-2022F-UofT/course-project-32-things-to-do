@@ -97,7 +97,7 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
 
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } catch (Exception e) { // if there are any detectable errors in the input (eg parsing errors)
                 showMessageDialog(this, e.getMessage());
             }
@@ -105,7 +105,7 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
             // return to main screen
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
     }
 }

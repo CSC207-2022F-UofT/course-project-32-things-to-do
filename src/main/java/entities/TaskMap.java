@@ -1,6 +1,6 @@
 package entities;
 
-import use_cases.task_management.read_write.ReadWriter;
+import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class TaskMap implements Serializable {
      * Saves the taskMap to a file
      * @param rw - ReadWriter object saving the taskMap
      */
-    public static void saveToFile(ReadWriter rw) {
+    public static void saveToFile(TaskMapGateway rw) {
         try {
             rw.saveToFile(taskMap);
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class TaskMap implements Serializable {
      * Loads the taskMap from a file
      * @param rw - ReadWriter object reading the TaskMap.txt
      */
-    public static void load(ReadWriter rw) {
+    public static void load(TaskMapGateway rw) {
         try {
             taskMap = (HashMap<String, Task>) rw.readFromFile();
         } catch(Exception e) {

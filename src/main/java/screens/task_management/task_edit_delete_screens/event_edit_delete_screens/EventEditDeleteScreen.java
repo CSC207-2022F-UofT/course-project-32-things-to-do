@@ -1,6 +1,5 @@
 package screens.task_management.task_edit_delete_screens.event_edit_delete_screens;
 
-import entities.StudentUser;
 import screens.LabelTextPanel;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import use_cases.task_management.task_edit_use_case.EventDisplayer;
@@ -25,9 +24,6 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
     JCheckBox recurring;
     JTextField frequency;
 
-    // todo: this needs to leave
-    StudentUser student;
-
     // controllers
     EventEditController eventEditController;
     TaskDeletionController taskDeletionController;
@@ -41,17 +37,15 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
     /**
      * A screen for editing/deleting an Event
-     * @param student - the student whose Event is being changed
      * @param eventEditController - controller for editing use case
      * @param taskDeletionController - controller for deleting use case
      * @param screens - rest of screens in the program
      * @param screenLayout - for switching between screens
      * @param eventInfo - to access info about an Event
      */
-    public EventEditDeleteScreen(StudentUser student, EventEditController eventEditController,
+    public EventEditDeleteScreen(EventEditController eventEditController,
                                  TaskDeletionController taskDeletionController, JPanel screens,
                                  CardLayout screenLayout, EventDisplayer eventInfo) {
-        this.student = student;
         this.eventEditController = eventEditController;
         this.taskDeletionController = taskDeletionController;
         this.screens = screens;
@@ -143,14 +137,14 @@ public class EventEditDeleteScreen extends JPanel implements ActionListener {
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event edited successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // delete Event
                 // delete Event
-                taskDeletionController.delete(student, eventInfo.getId());
+                taskDeletionController.delete(eventInfo.getId());
 
                 // update user and return to main screen
                 showMessageDialog(this, "Event deleted successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Cancel")) { // Edit cancelled
                 screenLayout.show(screens, "toDoList");
             } else { // checkbox pressed

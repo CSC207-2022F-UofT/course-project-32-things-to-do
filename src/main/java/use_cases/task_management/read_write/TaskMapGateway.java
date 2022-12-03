@@ -2,7 +2,7 @@ package use_cases.task_management.read_write;
 
 import java.io.IOException;
 
-public interface ReadWriter {
+public interface TaskMapGateway {
     /**
      * Save a serializable object to a file
      * @param o - object to be serialized

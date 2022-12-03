@@ -4,16 +4,14 @@ import entities.*;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskEditPresenter presenter;
-    private final StudentUser student;
+    private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
     /**
      * An interactor for editing Tasks
      * @param presenter - displays success/fail views
-     * @param student - student whose task is being edited
      */
-    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
+    public TaskEditInteractor (TaskEditPresenter presenter) {
         this.presenter = presenter;
-        this.student = student;
     }
     /**
      * Attempt to edit a Task
@@ -68,6 +66,10 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             student.removeTaskFromList(requestModel.getId());
             student.addTaskToArchive(requestModel.getId());
         }
+
+        // save changes
+
+
         TaskEditResponseModel response = new TaskEditResponseModel(
                 TaskMap.findTask(requestModel.getId()).getTitle(), type);
         return presenter.prepareSuccessView(response);

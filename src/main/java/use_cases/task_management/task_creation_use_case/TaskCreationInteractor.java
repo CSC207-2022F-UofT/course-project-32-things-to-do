@@ -4,12 +4,12 @@ import entities.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
-import use_cases.task_management.read_write.ReadWriter;
-import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.read_write.FileTaskMap;
 
 public class TaskCreationInteractor implements TaskCreationInputBoundary {
     private final TaskCreationOutputBoundary outputBoundary;
-    private final User user;
+    private final User user = CurrentUser.getCurrentUser();
     private final String courseName;
 
     // for connecting to Scheduler use case
@@ -18,15 +18,13 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
     /**
      * Interactor for tasks that are involved with scheduling
      * @param outputBoundary - the output boundary for displaying results
-     * @param user - the User we are making a task for
      * @param courseName - the name of the course the Task is for, or "none"
      * @param schedulerPresenter - todo
      * @param scheduleConflictPresenter - todo
      */
-    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, User user, String courseName,
+    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, String courseName,
                                   SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
         this.outputBoundary = outputBoundary;
-        this.user = user;
         this.courseName = courseName;
         this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
     }
@@ -34,9 +32,8 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
     /**
      * Interactor without scheduling (for course task creation)
      */
-    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, User user, String courseName) {
+    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, String courseName) {
         this.outputBoundary = outputBoundary;
-        this.user = user;
         this.courseName = courseName;
     }
     /**
@@ -96,7 +93,7 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
         }
 
         // save TaskMap to file:
-        ReadWriter trw = new TaskReadWrite("src/main/java/data/TaskMap.txt");
+        TaskMapGateway trw = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskMap.saveToFile(trw);
 
         // display success to user

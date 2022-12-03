@@ -113,7 +113,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
 
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Event Created Successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }

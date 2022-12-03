@@ -1,6 +1,5 @@
 package screens.task_management.task_creation_screens;
 
-import entities.User;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationScreen;
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
@@ -9,9 +8,7 @@ import screens.task_management.task_creation_screens.test_creation_screens.TestC
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
-import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
-import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
-import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
+import use_cases.task_management.task_creation_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +23,6 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     JButton cancel = new JButton("Cancel");
 
     // for making task creation screens:
-    User user;
     SchedulerPresenter schedulerPresenter;
     ScheduleConflictPresenter scheduleConflictPresenter;
 
@@ -36,15 +32,13 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
 
     /**
      * The window for deciding which Task to create, after clicking the "New task" button
-     * @param user - the user whom we are making a task for
      * @param schedulerPresenter - todo
      * @param scheduleConflictPresenter - todo
      * @param screens - rest of screens in the program
      * @param cardLayout - for switching between screens
      */
-    public ChooseTaskCreateScreen(User user, SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+    public ChooseTaskCreateScreen(SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
                                   JPanel screens, CardLayout cardLayout) {
-        this.user = user;
         this.schedulerPresenter = schedulerPresenter;
         this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
@@ -80,12 +74,12 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Cancel")) { // go back to main
-            cardLayout.show(screens, "main");
+            cardLayout.show(screens, "StudentMain");
         }
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, user, "none",
+                taskCreationOutputBoundary, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);

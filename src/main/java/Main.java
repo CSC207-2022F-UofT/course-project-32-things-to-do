@@ -18,7 +18,7 @@ import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.read_write.FileTaskMap;
 import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
@@ -37,7 +37,7 @@ public class Main {
         application.add(screens);
 
         //create readwriter - read in TaskMap from file upon program start
-        TaskReadWrite taskReadWrite = new TaskReadWrite("src/main/java/data/TaskMap.txt");
+        FileTaskMap taskReadWrite = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskMap.load(taskReadWrite);
 
         // Get objects from database
@@ -60,6 +60,8 @@ public class Main {
 
         // initialize User based on whether they log in or register
         // if you don't register, then you are logging in:
+
+        // delete once everyone's stuff is resolved
         User user;
         if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
                 (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
@@ -67,6 +69,7 @@ public class Main {
         } else {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
+
 
         ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
         ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
@@ -95,11 +98,11 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerPresenter, scheduleConflictPresenter,
+        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(schedulerPresenter, scheduleConflictPresenter,
                 screens, cardLayout);
         screens.add("taskCreate", chooseTask);
 
-        ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user, toDoListPresenter, screens, cardLayout);
+        ToDoListScreen toDoListScreen = new ToDoListScreen(toDoListPresenter, screens, cardLayout);
         screens.add("toDoList", toDoListScreen);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
@@ -115,7 +118,7 @@ public class Main {
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
-        screens.add("main", studentMainScreen);
+        screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);
