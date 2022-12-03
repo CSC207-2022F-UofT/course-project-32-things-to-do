@@ -5,6 +5,7 @@ import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
 import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
 import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class EventEditController {
@@ -30,7 +31,7 @@ public class EventEditController {
      * @return - response model (input boundary will indicate success/failure)
      */
     public TaskEditResponseModel edit(boolean complete, String id, int priority, LocalDateTime startTime, LocalDateTime endTime,
-                                      boolean recurring, String frequency) {
+                                      boolean recurring, String frequency) throws IOException {
         // create request model
         TaskEditRequestModel requestModel = new EventEditRequestModel(id, complete, priority, startTime, endTime, recurring, frequency);
         // try to edit Test

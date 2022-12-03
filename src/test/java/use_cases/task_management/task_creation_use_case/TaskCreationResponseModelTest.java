@@ -9,12 +9,17 @@ class TaskCreationResponseModelTest {
     static TaskCreationResponseModel response;
     @BeforeAll
     static void beforeAll() {
-        response = new TaskCreationResponseModel("title", "Assignment");
+        response = new TaskCreationResponseModel("title", "id", "Assignment");
     }
 
     @Test
     void getTitle() {
         assertEquals(response.getTitle(), "title");
+    }
+
+    @Test
+    void getId() {
+        assertEquals(response.getId(), "id");
     }
 
     @Test

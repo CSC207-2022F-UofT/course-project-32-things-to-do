@@ -1,9 +1,11 @@
 package screens.task_management.task_creation_screens;
 
+import screens.task_management.FileTaskMap;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
 import screens.task_management.task_creation_screens.assignment_creation_screens.InstructorAssignmentCreationScreen;
 import screens.task_management.task_creation_screens.test_creation_screens.InstructorTestCreationScreen;
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
+import use_cases.task_management.read_write.TaskMapGateway;
 import use_cases.task_management.task_creation_use_case.*;
 
 import javax.swing.*;
@@ -59,8 +61,9 @@ public class InstructorChooseTaskCreateScreen extends JPanel implements ActionLi
     public void actionPerformed(ActionEvent e) {
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
+        TaskMapGateway taskMapGateway = new FileTaskMap("src/java/main/data/TaskMap.txt");
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, "none");
+                taskMapGateway, taskCreationOutputBoundary, "none");
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
         TestCreationController testCreationController = new TestCreationController(taskInteractor);
 

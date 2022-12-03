@@ -4,11 +4,11 @@ import entities.CurrentUser;
 import entities.StudentUser;
 import entities.TaskMap;
 import use_cases.task_management.read_write.TaskMapGateway;
-import use_cases.task_management.read_write.FileTaskMap;
-
 public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
+    final TaskMapGateway taskMapGateway;
     final TaskDeletionPresenter presenter;
-    public TaskDeletionInteractor(TaskDeletionPresenter presenter) {
+    public TaskDeletionInteractor(TaskMapGateway taskMapGateway, TaskDeletionPresenter presenter) {
+        this.taskMapGateway = taskMapGateway;
         this.presenter = presenter;
     }
     /**
@@ -23,11 +23,10 @@ public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
         ((StudentUser) CurrentUser.getCurrentUser()).addTaskToArchive(requestModel.getTaskId());
 
         // save changes
-        TaskMapGateway trw = new FileTaskMap("src/main/java/data/TaskMap.txt");
-        TaskMap.saveToFile(trw);
+        taskMapGateway.save(TaskMap.getTaskMap());
 
         // create response model
-        TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(TaskMap.findTask(requestModel.getTaskId()).getTitle());
+        TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(TaskMap.findTask(requestModel.getTaskId()).getTitle(), requestModel.getTaskId());
 
         // indicate success
         return presenter.prepareSuccessView(responseModel);

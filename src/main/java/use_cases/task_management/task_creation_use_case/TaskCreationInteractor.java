@@ -5,9 +5,8 @@ import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictP
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.task_management.read_write.TaskMapGateway;
-import use_cases.task_management.read_write.FileTaskMap;
-
 public class TaskCreationInteractor implements TaskCreationInputBoundary {
+    private final TaskMapGateway taskMapRepository;
     private final TaskCreationOutputBoundary outputBoundary;
     private final User user = CurrentUser.getCurrentUser();
     private final String courseName;
@@ -17,13 +16,15 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
 
     /**
      * Interactor for tasks that are involved with scheduling
+     * @param taskMapRepository - for saving the task to a file
      * @param outputBoundary - the output boundary for displaying results
      * @param courseName - the name of the course the Task is for, or "none"
      * @param schedulerPresenter - todo
      * @param scheduleConflictPresenter - todo
      */
-    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, String courseName,
+    public TaskCreationInteractor(TaskMapGateway taskMapRepository, TaskCreationOutputBoundary outputBoundary, String courseName,
                                   SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
+        this.taskMapRepository = taskMapRepository;
         this.outputBoundary = outputBoundary;
         this.courseName = courseName;
         this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
@@ -32,7 +33,8 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
     /**
      * Interactor without scheduling (for course task creation)
      */
-    public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, String courseName) {
+    public TaskCreationInteractor(TaskMapGateway taskMapRepository, TaskCreationOutputBoundary outputBoundary, String courseName) {
+        this.taskMapRepository = taskMapRepository;
         this.outputBoundary = outputBoundary;
         this.courseName = courseName;
     }
@@ -93,11 +95,10 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
         }
 
         // save TaskMap to file:
-        TaskMapGateway trw = new FileTaskMap("src/main/java/data/TaskMap.txt");
-        TaskMap.saveToFile(trw);
+        taskMapRepository.save(TaskMap.getTaskMap());
 
         // display success to user
-        TaskCreationResponseModel response = new TaskCreationResponseModel(requestModel.getTitle(), type);
+        TaskCreationResponseModel response = new TaskCreationResponseModel(requestModel.getTitle(), id, type);
         return outputBoundary.prepareSuccessView(response);
     }
 }

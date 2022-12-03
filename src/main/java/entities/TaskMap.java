@@ -1,8 +1,5 @@
 package entities;
 
-import use_cases.task_management.read_write.TaskMapGateway;
-
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -53,27 +50,27 @@ public class TaskMap implements Serializable {
         taskMap = tasksMap;
     }
 
-    /**
-     * Saves the taskMap to a file
-     * @param rw - ReadWriter object saving the taskMap
-     */
-    public static void saveToFile(TaskMapGateway rw) {
-        try {
-            rw.saveToFile(taskMap);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Loads the taskMap from a file
-     * @param rw - ReadWriter object reading the TaskMap.txt
-     */
-    public static void load(TaskMapGateway rw) {
-        try {
-            taskMap = (HashMap<String, Task>) rw.readFromFile();
-        } catch(Exception e) {
-            setTaskMap(new HashMap<>());
-        }
-    }
+//    /**
+//     * Saves the taskMap to a file
+//     * @param rw - ReadWriter object saving the taskMap
+//     */
+//    public static void saveToFile(TaskMapGateway rw) {
+//        try {
+//            rw.saveToFile(taskMap);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * Loads the taskMap from a file
+//     * @param rw - ReadWriter object reading the TaskMap.txt
+//     */
+//    public static void load(TaskMapGateway rw) {
+//        try {
+//            taskMap = (HashMap<String, Task>) rw.readFromFile();
+//        } catch(Exception e) {
+//            setTaskMap(new HashMap<>());
+//        }
+//    }
 }

@@ -16,7 +16,7 @@ import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.read_write.FileTaskMap;
+import screens.task_management.FileTaskMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class Main {
 
         //create readwriter - read in TaskMap from file upon program start
         FileTaskMap taskReadWrite = new FileTaskMap("src/main/java/data/TaskMap.txt");
-        TaskMap.load(taskReadWrite);
+        TaskMap.setTaskMap(taskReadWrite.load());
 
         // Get objects from database
         HashMap<String, User> allUsers = new HashMap<>();

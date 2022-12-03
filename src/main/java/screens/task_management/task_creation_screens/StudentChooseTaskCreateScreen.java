@@ -1,5 +1,6 @@
 package screens.task_management.task_creation_screens;
 
+import screens.task_management.FileTaskMap;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationScreen;
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
@@ -8,6 +9,7 @@ import screens.task_management.task_creation_screens.test_creation_screens.TestC
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.task_management.read_write.TaskMapGateway;
 import use_cases.task_management.task_creation_use_case.*;
 
 import javax.swing.*;
@@ -78,8 +80,9 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
         }
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
+        TaskMapGateway taskMapGateway = new FileTaskMap("src/java/main/data/TaskMap.txt");
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, "none",
+                taskMapGateway, taskCreationOutputBoundary, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);

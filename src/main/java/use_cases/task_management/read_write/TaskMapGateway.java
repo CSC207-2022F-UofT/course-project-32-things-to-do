@@ -1,17 +1,26 @@
 package use_cases.task_management.read_write;
 
-import java.io.IOException;
+import entities.Task;
+
+import java.util.HashMap;
 
 public interface TaskMapGateway {
     /**
-     * Save a serializable object to a file
-     * @param o - object to be serialized
+     * Save a TaskMap to a file
+     * @param taskMap - the task map being saved
      */
-    void saveToFile(Object o) throws IOException;
+    void save(HashMap<String, Task> taskMap);
 
     /**
      * Read in a serializable object from a file
      * @return - the object being read
      */
-    Object readFromFile() throws IOException, ClassNotFoundException;
+    Object load();
+
+    /**
+     * Check if an Id exists in the task map
+     * @param id - the ID
+     * @return - whether the ID is in the task map
+     */
+    boolean existsById(String id);
 }

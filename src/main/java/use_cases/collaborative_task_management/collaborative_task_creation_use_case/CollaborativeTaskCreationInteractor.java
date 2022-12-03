@@ -3,8 +3,9 @@ package use_cases.collaborative_task_management.collaborative_task_creation_use_
 import entities.CollaborativeTask;
 import entities.StudentUser;
 import entities.TaskMap;
-import use_cases.task_management.read_write.FileTaskMap;
+import screens.task_management.FileTaskMap;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCreationInputBoundary {
@@ -17,7 +18,7 @@ public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCre
     }
 
     @Override
-    public CollaborativeTaskCreationResponseModel create(CollaborativeTaskCreationRequestModel requestModel) {
+    public CollaborativeTaskCreationResponseModel create(CollaborativeTaskCreationRequestModel requestModel) throws IOException {
         if (requestModel.getTitle().equals("") || requestModel.getStartTime() == null || requestModel.getEndTime() == null || requestModel.getDeadline() == null || (requestModel.getRecurring() && requestModel.getFrequency().equals(""))) {
             return presenter.prepareFailView("Please fill in all required information.");
         }
@@ -27,7 +28,7 @@ public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCre
         CollaborativeTask collaborativeTask = new CollaborativeTask(requestModel.getTitle(), id, requestModel.getPriority(), requestModel.getRecurring(), requestModel.getFrequency(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), student);
 
         FileTaskMap trw = new FileTaskMap("src/data/TaskMap");
-        TaskMap.saveToFile(trw);
+        trw.save(TaskMap.getTaskMap());
 
         CollaborativeTaskCreationResponseModel collaborativeTaskResponseModel = new CollaborativeTaskCreationResponseModel(requestModel.getTitle(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), requestModel.getLeader());
         return presenter.prepareSuccessView(collaborativeTaskResponseModel);

@@ -65,13 +65,4 @@ class TaskMapTest {
         // new map should be the same as before
         assertEquals(TaskMap.getTaskMap(), hashMap);
     }
-
-    @Test
-    void saveToFile() {
-
-    }
-
-    @Test
-    void load() {
-    }
 }

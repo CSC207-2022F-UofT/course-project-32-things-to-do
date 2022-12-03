@@ -30,6 +30,7 @@ public class AssignmentCreationController {
         // create request model
         TaskCreationRequestModel requestModel = new AssignmentCreationRequestModel(title, priority, dueDate,
                 weightage);
+
         // try to create Assignment
         return input.create(requestModel, "Assignment");
     }
