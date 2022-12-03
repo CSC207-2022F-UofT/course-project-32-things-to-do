@@ -10,4 +10,9 @@ public class TaskDeletionResponseModel {
     public TaskDeletionResponseModel(String title) {
         this.title = title;
     }
+
+    // getter
+    public String getTitle() {
+        return this.title;
+    }
 }
