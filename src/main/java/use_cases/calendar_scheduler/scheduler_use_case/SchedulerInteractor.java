@@ -1,12 +1,11 @@
 package use_cases.calendar_scheduler.scheduler_use_case;
 
-import entities.Preparatory;
-import entities.StudentUser;
-import entities.Task;
-import entities.Timeblockable;
+import entities.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
+import use_cases.task_management.todolist_use_case.TaskType;
+import use_cases.task_management.todolist_use_case.ToDoListItem;
 
 import java.lang.reflect.Array;
 import java.time.Duration;
@@ -20,11 +19,9 @@ import java.util.Objects;
 public class SchedulerInteractor implements SchedulerInputBoundary {
 
     final ScheduleConflictOutputBoundary conflictPresenter;
-    final SchedulerOutputBoundary schedulerOutputBoundary;
 
-    public SchedulerInteractor(ScheduleConflictOutputBoundary scheduleConflictOutputBoundary, SchedulerOutputBoundary schedulerOutputBoundary) {
+    public SchedulerInteractor(ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.conflictPresenter = scheduleConflictOutputBoundary;
-        this.schedulerOutputBoundary = schedulerOutputBoundary;
     }
 
     /**
@@ -34,10 +31,20 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
     @Override
     public SchedulerResponseModel schedule(SchedulerRequestModel requestModel) {
 
+        SchedulerResponseModel responseModel = new SchedulerResponseModel(false);
+
         // Get the task to be scheduled
         Task task = requestModel.getTask();
-        ArrayList<Task> allTasks = requestModel.getAllTasks();
         StudentUser user = requestModel.getUser();
+
+        // Get the user's existing tasks
+        ArrayList<String> taskIDs = user.getToDoList();
+        ArrayList<Task> allTasks = new ArrayList<>();
+        for (String taskID : taskIDs) {
+            //get the Task object for this task from the entity TaskMap static variable
+            Task existingTask = TaskMap.getTaskMap().get(taskID);
+            allTasks.add(existingTask);
+        }
 
         // Check if task has a time conflict with an existing task
         if (task instanceof Timeblockable) {
@@ -51,21 +58,19 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
                 ScheduleConflictResponseModel conflictResponseModel = conflictPresenter.alertConflict(conflictRequestModel);
 
                 // Cancel scheduling if user chooses to
-                if (!conflictResponseModel.isScheduleConflict()) {
-                    return schedulerOutputBoundary.prepareFailView("Task scheduling failed due to conflict.");
+                if (!conflictResponseModel.isScheduleWithConflict()) {
+                    responseModel.setScheduleCancel(true);
+                    return responseModel;
                 }
             }
         }
 
-        allTasks.add(task);
-
         // Schedule prep time if required
-        schedulePrepTime(user, allTasks);
+        if (task instanceof Preparatory) {
+            schedulePrepTime(user, (Preparatory) task, allTasks);
+        }
 
-        // Create a response model from the updated to-do list
-        SchedulerResponseModel responseModel = new SchedulerResponseModel(task, allTasks);
-
-        return schedulerOutputBoundary.prepareSuccessView(responseModel);
+        return responseModel;
     }
 
     /**
@@ -102,13 +107,14 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
      * @param user - the given StudentUser
      * @param allTasks - the given StudentUser's to-do list
      */
-    private void schedulePrepTime(StudentUser user, ArrayList<Task> allTasks) {
+    private void schedulePrepTime(StudentUser user, Preparatory task, ArrayList<Task> allTasks) {
 
         // Get all available times
         ArrayList<ArrayList<LocalDateTime>> availableTimes = getAvailableTimes(user, allTasks);
         ArrayList<Preparatory> preparatoryTasks = new ArrayList<>();
 
         // Get preparatory tasks sorted by time left
+        allTasks.add((Task) task);
         for (Task existingTask : allTasks) {
             if (existingTask instanceof Preparatory) {
                 preparatoryTasks.add((Preparatory) existingTask);
@@ -119,7 +125,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
         // Schedule prep time for each preparatory task
         for (Preparatory preparatoryTask : preparatoryTasks) {
             // Get time remaining for the task
-            double timeRemaining = preparatoryTask.getTimeLeft();
+            double timeRemaining = preparatoryTask.getTimeNeeded();
 
             // Schedule prep time
             int i = 0;
@@ -183,13 +189,24 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
 
         // Block out non-working hours
         ArrayList<LocalTime> workingHours = user.getWorkingHours();
-        LocalTime workingStartTime = workingHours.get(0);
-        LocalTime workingEndTime = workingHours.get(1);
-        for (LocalDate date = LocalDate.now(); date.isBefore(date.plusYears(1)); date = date.plusDays(1)) {
-            LocalDateTime endTime = LocalDateTime.of(date, workingStartTime);
-            LocalDateTime startTime = LocalDateTime.of(date.plusDays(1), workingEndTime);
-            LocalDateTime[] timeBlock = {endTime, startTime};
+        LocalTime workingStartTime;
+        LocalTime workingEndTime;
+        if (workingHours != null) {
+            workingStartTime = workingHours.get(0);
+            workingEndTime = workingHours.get(1);
+        } else {
+            workingStartTime = LocalTime.of(7, 0);
+            workingEndTime = LocalTime.of(23, 0);
+        }
+
+        LocalDate currDate = LocalDate.now();
+        LocalDate date = currDate;
+        while (date.isBefore(currDate.plusMonths(1))) {
+            LocalDateTime endTime = LocalDateTime.of(date.plusDays(1), workingStartTime);
+            LocalDateTime startTime = LocalDateTime.of(date, workingEndTime);
+            LocalDateTime[] timeBlock = {startTime, endTime};
             existingTimeBlocks.add(timeBlock);
+            date = date.plusDays(1);
         }
         existingTimeBlocks.sort(Comparator.comparing(tb -> tb[0]));
 
