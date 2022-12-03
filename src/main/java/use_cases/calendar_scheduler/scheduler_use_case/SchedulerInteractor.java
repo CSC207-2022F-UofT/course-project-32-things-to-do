@@ -128,7 +128,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
             while (timeRemaining > 0) {
                 // Get next block of available time
                 ArrayList<LocalDateTime> availableTime = availableTimes.get(i);
-                long availableDuration = Duration.between(availableTime.get(0), availableTime.get(1)).toHours();
+                long availableDuration = Duration.between(availableTime.get(0), availableTime.get(1)).toMinutes();
 
                 // Subtract remaining time needed from block of available time
                 if (timeRemaining < availableDuration) {

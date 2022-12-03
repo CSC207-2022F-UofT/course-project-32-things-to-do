@@ -9,12 +9,9 @@ import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
-import use_cases.login_registration.login_usecase.LoginGateway;
-import use_cases.login_registration.login_usecase.LoginInputBoundary;
-import use_cases.login_registration.login_usecase.LoginInteractor;
-import use_cases.login_registration.login_usecase.LoginPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
+import use_cases.login_registration.login_usecase.*;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.event_creation_use_case.*;
 
