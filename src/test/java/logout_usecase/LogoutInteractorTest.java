@@ -1,9 +1,6 @@
 package logout_usecase;
 
-import entities.GeneralUserFactory;
-import entities.InstructorUser;
-import entities.User;
-import entities.UserFactory;
+import entities.*;
 import org.junit.jupiter.api.Test;
 import screens.login_registration.InMemoryUser;
 import screens.login_registration.LogoutResponseFormatter;
@@ -23,26 +20,8 @@ public class LogoutInteractorTest {
 
         LogoutGateway userRepository = new InMemoryUser();
 
-        // This creates an anonymous implementing class for the Output Boundary.
-        LogoutPresenter presenter = new LogoutResponseFormatter() {
-
-            @Override
-            public LogoutResponseModel prepareSuccessView(LogoutResponseModel logout) {
-                // 4) Check that the Output Data and associated changes
-                // are correct
-                assertEquals("paul", logout.getName());
-                assertNotNull(logout.getLogoutTime()); // any creation time is fine.
-                return null;
-            }
-
-            public LogoutResponseModel prepareFailView(String error) {
-                fail("Use case failure is unexpected.");
-                return null;
-            }
-
-        };
-
         User u = new InstructorUser("paul", "123456789");
+        CurrentUser.setCurrentUser(u);
         LogoutInputBoundary interactor = new LogoutInteractor(userRepository);
 
         // 3) Run the use case
