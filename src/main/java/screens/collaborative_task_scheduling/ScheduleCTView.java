@@ -63,7 +63,7 @@ public class ScheduleCTView extends JPanel implements ScheduleCTViewInterface, A
 
     public void actionPerformed(ActionEvent evt) {
         try {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

@@ -82,7 +82,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         // instructor decides to cancel the course creation process
         if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         } else if (evt.getActionCommand().equals("Save")) {
             try {
                 // initialize new Arraylist and add task

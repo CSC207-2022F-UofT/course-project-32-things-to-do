@@ -108,7 +108,7 @@ public class Main {
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout);
-        screens.add("main", studentMainScreen);
+        screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);
@@ -116,7 +116,7 @@ public class Main {
         LoginScreen loginScreen = new LoginScreen(loginController, cardLayout, screens);
         screens.add("login", loginScreen);
 
-        InstructorMain instructorMainScreen = new InstructorMain(screens, cardLayout);
+        InstructorMainScreen instructorMainScreen = new InstructorMainScreen(screens, cardLayout);
         screens.add("InstructorMain", instructorMainScreen);
 
         WelcomeScreen welcomeScreen = new WelcomeScreen(cardLayout, screens);

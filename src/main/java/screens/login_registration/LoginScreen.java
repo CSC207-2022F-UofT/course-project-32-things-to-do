@@ -77,7 +77,7 @@ public class LoginScreen extends JPanel implements ActionListener {
                 if (l.getTypeOfUser().equals("Instructor")) {
                     cardLayout.show(screens, "InstructorMain");
                 } else {
-                    cardLayout.show(screens, "main");
+                    cardLayout.show(screens, "StudentMain");
                 }
             } catch (Exception e) {
                 showMessageDialog(this, e.getMessage());
