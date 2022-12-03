@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Gateway containing the following methods (override in FileCourse)
+ * NOTE: THIS INVOLVES ONLY METHODS REQUIRING ACCESS TO FILECOURSE
  * existsByCourseID: need to check if the course student wants to enrol in actually exists
  * existsByStudent: checks if student username exists in the course's 'students' parameter
  * searchForCourse: find the course object associated with the course id if it exists

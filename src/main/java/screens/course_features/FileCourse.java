@@ -83,7 +83,7 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     }
 
     /**
-     * COURSE CREATION GATEWAY
+     * COURSE CREATION AND ENROLMENT GATEWAY
      * return whether a course exists with the course identifier
      * @param courseIdentifier the course id to check
      */

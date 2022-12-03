@@ -1,12 +1,11 @@
 package use_cases.login_registration.login_usecase;
 
+import entities.CurrentUser;
 import entities.InstructorUser;
-import entities.StudentUser;
 import entities.User;
 import screens.login_registration.LoginFailed;
-import use_cases.login_registration.user_register_usecase.InstructorSaveRequest;
-import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+
 
 import java.time.LocalDateTime;
 
@@ -34,7 +33,7 @@ public class LoginInteractor implements LoginInputBoundary {
      *
      * @param requestModel the Login request (containing the user's input)
      * @return the response to this login request (whether it worked or not)
-     * @throws LoginFailed
+     * @throws LoginFailed if the username doesn't exist or the password is incorrect
      */
     @Override
     public LoginResponseModel create(LoginRequestModel requestModel) throws LoginFailed {
@@ -45,9 +44,19 @@ public class LoginInteractor implements LoginInputBoundary {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        LoginResponseModel loginRes = new LoginResponseModel(requestModel.getName(), now.toString());
 
         this.user = createUser(requestModel);
+
+        //set the program's current user
+        CurrentUser.setCurrentUser(user);
+
+        LoginResponseModel loginRes;
+
+        if (this.user instanceof InstructorUser) {
+            loginRes = new LoginResponseModel(requestModel.getName(), now.toString(), "Instructor");
+        } else {
+            loginRes = new LoginResponseModel(requestModel.getName(), now.toString(), "Student");
+        }
         return loginPresenter.prepareSuccessView(loginRes);
     }
 
@@ -56,20 +65,6 @@ public class LoginInteractor implements LoginInputBoundary {
         // creating a new User object using the information in the UserRegSaveRequest
         UserRegSaveRequest userSave = loginGateway.getAccounts().get(requestModel.getName());
 
-        User user;
-        if (userSave instanceof InstructorSaveRequest) {
-            user = new InstructorUser(userSave.getName(), userSave.getPass());
-            ((InstructorUser) user).setCourses(((InstructorSaveRequest) userSave).getCourses());
-        } else {
-            user = new StudentUser(userSave.getName(), userSave.getPass());
-            ((StudentUser) user).setCourses(((StudentSaveRequest) userSave).getCourses());
-            ((StudentUser) user).setToDoList(((StudentSaveRequest) userSave).getCourses());
-            ((StudentUser) user).setTaskArchive(((StudentSaveRequest) userSave).getTaskArchive());
-            ((StudentUser) user).setInbox(((StudentSaveRequest) userSave).getInbox());
-            ((StudentUser) user).setNotifications(((StudentSaveRequest) userSave).getNotifications());
-            ((StudentUser) user).setDesiredGrades(((StudentSaveRequest) userSave).getDesiredGrades());
-            ((StudentUser) user).setWorkingHours(((StudentSaveRequest) userSave).getWorkingHours());
-        }
-        return user;
+        return userSave.initializeUser();
     }
     }

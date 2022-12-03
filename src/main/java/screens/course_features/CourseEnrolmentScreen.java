@@ -77,19 +77,14 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         // student user decides to cancel course enrolment process
         if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
-            try {
-                // TODO wait actually i don't need to display a message because the screen should close
-                JOptionPane.showMessageDialog(this, "screen should close .....");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-            }
+            screenLayout.show(screens, "StudentMain");
         } else if (evt.getActionCommand().equals("Search")) {
             try {
-                // add student id to Course, alias of course tasks made
-                // TODO send to task creation request model
-                // TODO don't actually know if line below does anything
-                courseEnrolmentController.enrol(courseName.getText(),courseInstructor.getText(), studentID.getText());
+                // add student id to Course
+                // add course tasks to Student's todolist
+                // add course id to Student's courses list
+
+                courseEnrolmentController.enrol(courseName.getText(), courseInstructor.getText(), studentID.getText());
                 JOptionPane.showMessageDialog(this, "Successfully enrolled in course. tasks added.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());

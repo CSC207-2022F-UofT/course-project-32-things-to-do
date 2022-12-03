@@ -36,7 +36,6 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         }
 
         // checks whether the instructor's entered task ids correspond to a task in the taskmap
-        // or not? task ids can just be generated and added to the course tasks parameter
 
         /*
         ArrayList<String> courseTasks = requestModel.getTasks();

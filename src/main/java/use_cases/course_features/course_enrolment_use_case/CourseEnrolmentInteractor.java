@@ -15,13 +15,16 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
     final CourseEnrolmentDsGateway courseEnrolmentDsGateway; // the course
 //    final UserRegGateway userRegGateway; // the student
+    final CourseTasksToStudentTodolistDsGateway tasksToTodolistDsGateway;
     final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary; // the presenter
     private StudentUser student; // for response model
     private Course enrolledCourse; // for response model
 
     public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway,
+                                     CourseTasksToStudentTodolistDsGateway tasksToDodolistDsGateway,
                                      CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary) {
         this.courseEnrolmentDsGateway = courseEnrolmentDsGateway;
+        this.tasksToTodolistDsGateway = tasksToDodolistDsGateway;
 //        this.userRegGateway = userRegGateway;
         this.courseEnrolmentOutputBoundary = courseEnrolmentOutputBoundary;
     }
@@ -65,10 +68,13 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // tasks should be properly initialized sent to student
 
         // get course's tasks by creating an alias of the Courses tasks parameter (needs to be referring to the same tasks)
-        ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
-        ArrayList<String> courseTaskTitlesCopy = courseTaskTitles;
+        ArrayList<String> courseTaskTitlesCopy = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
 
-        // make courseTasks into proper id format: courseTasks_instructorname_coursename, add to an arraylist of Tasks
+        // below: more clearly shows aliasing but warning for redundant variables
+        // ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
+        // ArrayList<String> courseTaskTitlesCopy = courseTaskTitles;
+
+        // make courseTasks into proper id format: courseTasks_instructor_course, add to an arraylist of Tasks
         String instructorName = requestModel.getCourseInstructor();
         String courseName = requestModel.getCourseName();
 
@@ -85,7 +91,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             oldTaskIdMap.put(oldTaskId, taskValue);
         }
 
-        // for each task id : Task pair, change the key name to courseTasks_studentname_coursename, add key-value pair to arraylist
+        // for each task id : Task pair, change the key name to courseTasks_student_course, add key-value pair to arraylist
         // create new arraylist
         HashMap<String, Task> newTaskIdMap = new HashMap<>();
         // iterate over original arraylist and put key-value pair into new arraylist with modified key
@@ -93,8 +99,9 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             // key has old format title_instructor_course
             // want to title, so split by _ which gives 'title', 'instructor', 'course'
             // take first index which is just 'title'
-            // concatenating everything gives title_studentusername_coursename
-            newTaskIdMap.put(entry.getKey().split("_")[0] + "_" + requestModel.getStudentID() + "_" + courseName, (Task) oldTaskIdMap.entrySet());
+            // concatenating everything gives title_student_course
+            newTaskIdMap.put(entry.getKey().split("_")[0] + "_" + requestModel.getStudentID() + "_" + courseName,
+                    (Task) oldTaskIdMap.entrySet());
         }
 
         // add map with new task ids to TaskMap
@@ -108,15 +115,10 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         ArrayList<String> newTaskIds = new ArrayList<>(newTaskIdMap.keySet());
 
         // add new task ids to the student's task list
-//        StudentUser studentEnrolled = FileUser.getAccounts().get(requestModel.getStudentID());
-//
-//        // add course to student's 'courses' parameter? no?
-//        studentEnrolled.addCourse(requestModel.getCourseID());
-//
-//        for (String newTask : newTaskIds) {
-//            studentEnrolled.getToDoList().add(newTask);
-//            // TODO: update and save FileUser
-//        }
+        tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newTaskIds);
+
+        // add course to student's 'courses' parameter
+        tasksToTodolistDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
 
         // create response model, sent to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(

@@ -176,7 +176,7 @@ public class CalendarScreen extends JPanel implements ActionListener {
 
         // Trigger button to return to main dashboard
         if (e.getSource() == exitToMain) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
 
         // Trigger button for changing user's view panel

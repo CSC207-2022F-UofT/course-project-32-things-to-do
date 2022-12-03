@@ -1,17 +1,24 @@
 package screens.login_registration;
-
+import entities.Course;
+import entities.StudentUser;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseTasksToStudentTodolistDsGateway;
 import use_cases.login_registration.login_usecase.LoginGateway;
 import use_cases.login_registration.logout_usecase.LogoutGateway;
 import use_cases.login_registration.user_register_usecase.UserRegGateway;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
+public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseTasksToStudentTodolistDsGateway {
 
-    private final HashMap<String, UserRegSaveRequest> accounts;
+//    private final HashMap<String, UserRegSaveRequest> accounts;
+    private static HashMap<String, UserRegSaveRequest> accounts;
 
     private final String filePath;
 
@@ -22,7 +29,21 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
          */
 
         this.filePath = path;
-        this.accounts = readFile();
+
+        // method that checks if a path or file exists or not and then
+        // writes an empty map to a new file if it doesn't exist
+        // and reads the existing file if it does exist
+
+        if (Files.exists(Path.of(path))) {
+//            this.accounts = readFile();
+            accounts = readFile();
+        } else {
+//            this.accounts = new HashMap<String, UserRegSaveRequest>();
+            accounts = new HashMap<String, UserRegSaveRequest>();
+            save();
+        }
+
+
     }
 
     private HashMap<String, UserRegSaveRequest> readFile() throws IOException, ClassNotFoundException {
@@ -46,10 +67,16 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
 
     private void save() throws IOException {
         /*
-         * Write the new map of usernames to UserRegSaveRequest objects into the User database file.
+         * Write the map of usernames to UserRegSaveRequest objects into the User database file.
          */
 
-        FileOutputStream fileWriter = new FileOutputStream(filePath);
+        FileOutputStream fileWriter;
+//        if (Files.exists(Path.of(filePath))) {
+//            fileWriter = new FileOutputStream(filePath);
+//        } else {
+//            fileWriter = new FileOutputStream("src/main/java/data/users.ser");
+//        }
+        fileWriter = new FileOutputStream(filePath);
         ObjectOutputStream out = new ObjectOutputStream(fileWriter);
         out.writeObject(accounts);
         out.close();
@@ -72,16 +99,32 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
     }
 
     public Map<String, UserRegSaveRequest> getAccounts() {
-        return this.accounts;
+//        return this.accounts;
+        return accounts;
     }
 
-//    /**
-//     * @param name The username of the user
-//     * @return the UserRegSaveRequest object associated with this username.
-//     * Preconditions: name is a key in accounts
-//     */
-//    public UserRegSaveRequest getUserSaveReq(String name) throws KeyException, IOException {
-////        accounts.get(name);
-//        return accounts.get(name);
-//    }
+    /**
+     * For course enrolment use case (course tasks to do list gateway)
+     * Adds the course tasks to the student's to-do list
+     *
+     * @param studentID the username of the student whose parameters are being modified
+     * @param courseTasks the course task ids what will be added to the student's 'to do list' parameter
+     */
+    @Override
+    public void addSaveTasksToTodolist(String studentID, ArrayList<String> courseTasks) {
+//        getAccounts().get(studentID).getToDoList().addAll(courseTasks);
+//        this.save(); // saves the file with new changes
+    }
+
+    /**
+     * For course enrolment use case (course tasks to do list gateway)
+     * Adds the course id to the student's 'courses' parameter
+     * @param studentCourse the course the student enrolled in
+     * @param studentID the username of student enrolled
+     */
+    @Override
+    public void addCourseToStudent(String studentCourse, String studentID) {
+//        getAccounts().get(studentID).getCourses.add(studentCourse);
+//        this.save(); // saves the file with new changes
+    }
 }
