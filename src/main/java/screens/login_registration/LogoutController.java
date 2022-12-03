@@ -1,8 +1,6 @@
 package screens.login_registration;
 
 import use_cases.login_registration.logout_usecase.LogoutInputBoundary;
-import use_cases.login_registration.logout_usecase.LogoutRequestModel;
-import use_cases.login_registration.logout_usecase.LogoutResponseModel;
 
 import java.io.IOException;
 

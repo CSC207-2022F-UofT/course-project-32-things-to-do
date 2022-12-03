@@ -53,10 +53,6 @@ public class RegisterScreen extends JPanel implements ActionListener {
         JLabel title = new JLabel("Register Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-//        JPanel userButtons = new JPanel();
-//        userButtons.add(instructor);
-//        userButtons.add(student);
-
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel("Choose username"), username);
         LabelTextPanel passwordInfo = new LabelTextPanel(
@@ -65,8 +61,6 @@ public class RegisterScreen extends JPanel implements ActionListener {
                 new JLabel("Enter password again"), repeatPassword);
         LabelTextPanel chooseTypeOfUser = new LabelTextPanel(
                 new JLabel("I am a (type 'Instructor' or 'Student')") , typeOfUser);
-//        JLabel chooseTypeOfUser = new JLabel("I am a:");
-//        userButtons.add(chooseTypeOfUser);
 
         JButton signUp = new JButton("Sign up");
         JButton cancel = new JButton("Cancel");
@@ -75,11 +69,8 @@ public class RegisterScreen extends JPanel implements ActionListener {
         buttons.add(signUp);
         buttons.add(cancel);
 
-//        typeOfUser.addActionListener(this);
         signUp.addActionListener(this);
         cancel.addActionListener(this);
-//        instructor.addActionListener(this);
-//        student.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -89,12 +80,7 @@ public class RegisterScreen extends JPanel implements ActionListener {
         this.add(repeatPasswordInfo);
         this.add(chooseTypeOfUser);
         this.add(buttons);
-//        this.add(userButtons);
-
     }
-
-//    private void add(LabelTextPanel usernameInfo) {
-//    }
 
     /**
      * React to a button click that results in event.

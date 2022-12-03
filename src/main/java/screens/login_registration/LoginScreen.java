@@ -49,17 +49,11 @@ public class LoginScreen extends JPanel implements ActionListener {
         logIn.addActionListener(this);
         cancel.addActionListener(this);
 
-//        JPanel main = new JPanel();
-//        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-//        this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(buttons);
-//        this.setContentPane(main);
-//
-//        this.pack();
     }
 
     /**
