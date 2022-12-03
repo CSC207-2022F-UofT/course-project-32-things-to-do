@@ -1,5 +1,7 @@
 package screens;
 
+import screens.login_registration.LogoutController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,13 +26,16 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     CardLayout cardLayout;
     JPanel screens;
 
+    LogoutController logoutController;
+
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public StudentMainScreen(JPanel screens, CardLayout cardLayout) {
+    public StudentMainScreen(JPanel screens, CardLayout cardLayout, LogoutController controller) {
 
         this.cardLayout = cardLayout;
         this.screens = screens;
+        this.logoutController = controller;
 
         // Create label for title of screen
         JLabel title = new JLabel("32 Things To Do");
