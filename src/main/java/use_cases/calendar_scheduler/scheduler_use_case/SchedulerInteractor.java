@@ -8,12 +8,14 @@ import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictO
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
 
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class SchedulerInteractor implements SchedulerInputBoundary {
 
@@ -43,12 +45,12 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
             LocalDateTime endTime = ((Timeblockable) task).getTimeBlock()[1];
             Task conflictingTask = checkTimeConflict(startTime, endTime, allTasks);
 
-            if (conflictingTask != null) {
+            if (conflictingTask != null && !Objects.equals(task.getId(), conflictingTask.getId())) {
                 // Alert user that time conflict exists
                 ScheduleConflictRequestModel conflictRequestModel = new ScheduleConflictRequestModel(conflictingTask);
                 ScheduleConflictResponseModel conflictResponseModel = conflictPresenter.alertConflict(conflictRequestModel);
 
-                // Schedule the conflicting task
+                // Cancel scheduling if user chooses to
                 if (!conflictResponseModel.isScheduleConflict()) {
                     return schedulerOutputBoundary.prepareFailView("Task scheduling failed due to conflict.");
                 }
@@ -103,7 +105,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
     private void schedulePrepTime(StudentUser user, ArrayList<Task> allTasks) {
 
         // Get all available times
-        ArrayList<LocalDateTime[]> availableTimes = getAvailableTimes(user, allTasks);
+        ArrayList<ArrayList<LocalDateTime>> availableTimes = getAvailableTimes(user, allTasks);
         ArrayList<Preparatory> preparatoryTasks = new ArrayList<>();
 
         // Get preparatory tasks sorted by time left
@@ -121,28 +123,45 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
 
             // Schedule prep time
             int i = 0;
-            while (timeRemaining > 0) {
-                LocalDateTime[] availableTime = availableTimes.get(i);
-                long availableDuration = Duration.between(availableTime[0], availableTime[1]).toHours();
-                ArrayList<LocalDateTime[]> prepTimes = new ArrayList<>();
+            ArrayList<ArrayList<LocalDateTime>> prepTimes = new ArrayList<>();
 
+            while (timeRemaining > 0) {
+                // Get next block of available time
+                ArrayList<LocalDateTime> availableTime = availableTimes.get(i);
+                long availableDuration = Duration.between(availableTime.get(0), availableTime.get(1)).toHours();
+
+                // Subtract remaining time needed from block of available time
                 if (timeRemaining < availableDuration) {
-                    LocalDateTime updatedStartTime = availableTime[0].plusHours((long) timeRemaining);
-                    LocalDateTime[] updatedAvailableTime = {updatedStartTime, availableTime[1]};
-                    LocalDateTime[] prepTime = {availableTime[0], updatedStartTime};
+                    LocalDateTime updatedStartTime = availableTime.get(0).plusHours((long) timeRemaining);
+
+                    ArrayList<LocalDateTime> updatedAvailableTime = new ArrayList<>();
+                    updatedAvailableTime.add(updatedStartTime);
+                    updatedAvailableTime.add(availableTime.get(1));
+
+                    ArrayList<LocalDateTime> prepTime = new ArrayList<>();
+                    prepTime.add(availableTime.get(0));
+                    prepTime.add(updatedStartTime);
+
                     prepTimes.add(prepTime);
                     availableTimes.set(i, updatedAvailableTime);
-                } else {
-                    LocalDateTime[] prepTime = {availableTime[0], availableTime[1]};
+                }
+
+                // Remove block of available time from list
+                else {
+                    ArrayList<LocalDateTime> prepTime = new ArrayList<>();
+                    prepTime.add(availableTime.get(0));
+                    prepTime.add(availableTime.get(1));
                     prepTimes.add(prepTime);
                     availableTimes.remove(i);
                     i -= 1;
                 }
-                timeRemaining -= availableDuration;
 
-                preparatoryTask.schedulePrepTime();
+                // Update iterators
+                timeRemaining -= availableDuration;
                 i += 1;
             }
+
+            preparatoryTask.setPrepTimeScheduled(prepTimes);
         }
 
     }
@@ -152,7 +171,7 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
      * @param user - the given StudentUser
      * @param allTasks - the given StudentUser's to-do list
      */
-    private ArrayList<LocalDateTime[]> getAvailableTimes(StudentUser user, ArrayList<Task> allTasks) {
+    private ArrayList<ArrayList<LocalDateTime>> getAvailableTimes(StudentUser user, ArrayList<Task> allTasks) {
 
         // Get all existing time blocks
         ArrayList<LocalDateTime[]> existingTimeBlocks = new ArrayList<>();
@@ -176,11 +195,13 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
 
         // Get all available times
         LocalDateTime currTime = LocalDateTime.now();
-        ArrayList<LocalDateTime[]> availableTimes = new ArrayList<>();
+        ArrayList<ArrayList<LocalDateTime>> availableTimes = new ArrayList<>();
 
         for (LocalDateTime[] block : existingTimeBlocks) {
             if (currTime.isBefore(block[0])) {
-                LocalDateTime[] availableTime = {currTime, block[0]};
+                ArrayList<LocalDateTime> availableTime = new ArrayList<>();
+                availableTime.add(currTime);
+                availableTime.add(block[0]);
                 availableTimes.add(availableTime);
             }
 
