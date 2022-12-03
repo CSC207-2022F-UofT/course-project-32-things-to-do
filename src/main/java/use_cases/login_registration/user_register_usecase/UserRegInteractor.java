@@ -17,24 +17,25 @@ public class UserRegInteractor implements UserRegInputBoundary {
 
     final UserRegPresenter userPresenter;
 
-//    private UserFactory userFactory;
+    final UserFactory userFactory;
 
     private User user;
 
     /**
      * @param gateway the gateway that interacts with the User database
      * @param userRegPresenter the presenter that shows the success or failure of this attempt to register
+     * @param factory the factory that creates Users
      */
-    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter) {
+    public UserRegInteractor(UserRegGateway gateway, UserRegPresenter userRegPresenter, UserFactory factory) {
         this.userGateway = gateway;
         this.userPresenter = userRegPresenter;
-//        this.userFactory = null;
+        this.userFactory = factory;
     }
 
     /**
      * @param request the request to register this user
      * @return the response to whether this request to register was successful
-     * @throws IOException
+     * @throws IOException if anything goes wrong
      */
     @Override
     public UserRegResponse create(UserRegRequest request) throws IOException {
@@ -46,22 +47,37 @@ public class UserRegInteractor implements UserRegInputBoundary {
             return userPresenter.prepareFailView("Enter either 'Instructor' or 'Student'.");
         }
 
-        UserFactory userFactory;
-        if (request.getTypeOfUser().equals("Instructor")) {
-            userFactory = new InstructorUserFactory();
-        } else {
-            userFactory = new StudentUserFactory();
-        }
+        // can make userFactory have a createUser() method that takes in the Name, Pass, and typeOfUser
+        // and creates that type of user (with an if statement)
 
-        User user = userFactory.create(request.getName(), request.getPassword());
+        if (request.getTypeOfUser().equals("Instructor")) {
+            this.user = userFactory.createInstructor(request.getName(), request.getPassword());
+        } else //if (request.getTypeOfUser().equals("Student"))
+             {
+            this.user = userFactory.createStudent(request.getName(), request.getPassword());
+        }
+//        else {
+//            this.user = null;
+//        }
+
         if (!user.checkPassword()) {
             return userPresenter.prepareFailView("Password must be at least 9 characters long");
         }
 
-        this.user = user;
-
         LocalDateTime now = LocalDateTime.now();
 
+        //set the program's currently logged in user
+        CurrentUser.setCurrentUser(user);
+
+        UserRegSaveRequest userModel = getUserRegSaveRequest(now);
+
+        userGateway.save(userModel);
+
+        UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());
+        return userPresenter.prepareSuccessView(accResponseModel);
+    }
+
+    private UserRegSaveRequest getUserRegSaveRequest(LocalDateTime now) {
         UserRegSaveRequest userModel;
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
@@ -72,14 +88,32 @@ public class UserRegInteractor implements UserRegInputBoundary {
         } else {
             userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
         }
+        return userModel;
+    }
 
-        userGateway.save(userModel);
-
-        UserRegResponse accResponseModel = new UserRegResponse(user.getName(), now.toString());
-        return userPresenter.prepareSuccessView(accResponseModel);
+    /**
+     * For testing purposes only!! Do not actually use.
+     * @param now time of creation
+     */
+    public UserRegSaveRequest getUserSaveRequest(LocalDateTime now) {
+        UserRegSaveRequest userModel;
+        if (user instanceof StudentUser) {
+            userModel = new StudentSaveRequest(user.getName(), user.getPass(),
+                    (StudentUser) user, now);
+        } else if (user instanceof InstructorUser) {
+            userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
+                    (InstructorUser) user, now);
+        } else {
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+        }
+        return userModel;
     }
 
     public User getUser() {
-        return this.user;
+        if ((this.user instanceof StudentUser) | (this.user instanceof InstructorUser)) {
+            return this.user;
+        } else {
+            return null;
+        }
     }
 }

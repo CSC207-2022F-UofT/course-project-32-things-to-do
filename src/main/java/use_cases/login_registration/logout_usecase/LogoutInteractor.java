@@ -38,7 +38,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
      * log out into the User database.
      * @param request the request to logout
      * @return the logout response
-     * @throws IOException
+     * @throws IOException if logout fails
      */
     @Override
     public LogoutResponseModel create(LogoutRequestModel request) throws IOException {
@@ -46,6 +46,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
         LocalDateTime now = LocalDateTime.now();
 
         UserRegSaveRequest userModel;
+
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
                     (StudentUser) user, now);
