@@ -1,9 +1,9 @@
 package use_cases.task_management.task_creation_use_case;
 
 import entities.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.task_management.read_write.ReadWriter;
 import use_cases.task_management.read_write.TaskReadWrite;
 
@@ -19,7 +19,7 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
      * Interactor for tasks that are involved with scheduling
      */
     public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, User user, String courseName,
-                                  SchedulerPresenter schedulerOutputBoundary, ScheduleConflictPresenter scheduleConflictOutputBoundary) {
+                                  SchedulerOutputBoundary schedulerOutputBoundary, ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.outputBoundary = outputBoundary;
         this.user = user;
         this.courseName = courseName;

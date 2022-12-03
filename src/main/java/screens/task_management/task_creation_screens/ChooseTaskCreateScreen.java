@@ -7,8 +7,8 @@ import screens.task_management.task_creation_screens.event_creation_screens.Even
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationScreen;
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
 import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
 import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
@@ -27,8 +27,8 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
 
     // for making task creation screens:
     User user;
-    SchedulerPresenter schedulerPresenter;
-    ScheduleConflictPresenter scheduleConflictPresenter;
+    SchedulerOutputBoundary schedulerPresenter;
+    ScheduleConflictOutputBoundary scheduleConflictPresenter;
 
     // for connecting to other screens
     CardLayout cardLayout;
@@ -37,7 +37,7 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     /**
      * the window for choosing which type of Task to create, after selecting "New task"
      */
-    public ChooseTaskCreateScreen(User user, SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+    public ChooseTaskCreateScreen(User user, SchedulerOutputBoundary schedulerPresenter, ScheduleConflictOutputBoundary scheduleConflictPresenter,
                                   JPanel screens, CardLayout cardLayout) {
         this.user = user;
         this.schedulerPresenter = schedulerPresenter;
