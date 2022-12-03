@@ -1,5 +1,7 @@
 package screens;
 
+import entities.StudentUser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,13 +12,12 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     /**
      * The selectable buttons on the main screen
      */
-    JButton toDoList;
+    JButton createTask;
+    JButton todoList;
     JButton calendar;
     JButton progressTracker;
     JButton courses;
     JButton scheduleCT;
-
-    JButton logout;
 
     /**
      * Objects for connecting to the other screens
@@ -24,11 +25,14 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     CardLayout cardLayout;
     JPanel screens;
 
+    StudentUser user;
+
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public StudentMainScreen(JPanel screens, CardLayout cardLayout) {
+    public StudentMainScreen(StudentUser user, JPanel screens, CardLayout cardLayout) {
 
+        this.user = user;
         this.cardLayout = cardLayout;
         this.screens = screens;
 
@@ -37,28 +41,28 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create buttons
-        toDoList = new JButton("New Task");
+        createTask = new JButton("New Task");
+        todoList = new JButton("To Do List");
         calendar = new JButton("Calendar");
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
-        logout = new JButton("Logout");
 
-        toDoList.addActionListener(this);
+        createTask.addActionListener(this);
+        todoList.addActionListener(this);
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
         scheduleCT.addActionListener(this);
-        logout.addActionListener(this);
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
-        buttons.add(toDoList);
+        buttons.add(createTask);
+        buttons.add(todoList);
         buttons.add(calendar);
         buttons.add(progressTracker);
         buttons.add(courses);
         buttons.add(scheduleCT);
-        buttons.add(logout);
 
         // Add all components to the panel
         this.add(title);
@@ -70,7 +74,10 @@ public class StudentMainScreen extends JPanel implements ActionListener {
      * Trigger the corresponding use case upon button click
      */
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == toDoList) {
+        if (evt.getSource() == createTask) {
+            cardLayout.show(screens, "taskCreate");
+        }
+        if (evt.getSource() == todoList) {
             cardLayout.show(screens, "toDoList");
         }
         if (evt.getSource() == calendar) {
@@ -84,9 +91,6 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
-        }
-        if (evt.getSource() == logout) {
-            cardLayout.show(screens, "welcome");
         }
 
     }
