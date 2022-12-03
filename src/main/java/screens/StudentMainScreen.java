@@ -1,9 +1,6 @@
 package screens;
 
 import entities.StudentUser;
-import screens.task_management.todolist_screens.ToDoListPresenter;
-import screens.task_management.todolist_screens.ToDoListScreen;
-import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +12,8 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     /**
      * The selectable buttons on the main screen
      */
-    JButton toDoList;
+    JButton createTask;
+    JButton todoList;
     JButton calendar;
     JButton progressTracker;
     JButton courses;
@@ -43,13 +41,15 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Create buttons
-        toDoList = new JButton("New Task");
+        createTask = new JButton("New Task");
+        todoList = new JButton("To Do List");
         calendar = new JButton("Calendar");
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
 
-        toDoList.addActionListener(this);
+        createTask.addActionListener(this);
+        todoList.addActionListener(this);
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
@@ -57,7 +57,8 @@ public class StudentMainScreen extends JPanel implements ActionListener {
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
-        buttons.add(toDoList);
+        buttons.add(createTask);
+        buttons.add(todoList);
         buttons.add(calendar);
         buttons.add(progressTracker);
         buttons.add(courses);
@@ -73,15 +74,10 @@ public class StudentMainScreen extends JPanel implements ActionListener {
      * Trigger the corresponding use case upon button click
      */
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == toDoList) {
-            ToDoListPresenter toDoListPresenter = new ToDoListPresenter(user); //TODO need Natalie's stuff
-            ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
-            toDoListPresenter.setToDoListInput(toDoListInteractor);
-
-            ToDoListScreen toDoListScreen = new ToDoListScreen(user
-                    , toDoListPresenter, screens, cardLayout);
-            screens.add("toDoList", toDoListScreen);
-
+        if (evt.getSource() == createTask) {
+            cardLayout.show(screens, "taskCreate");
+        }
+        if (evt.getSource() == todoList) {
             cardLayout.show(screens, "toDoList");
         }
         if (evt.getSource() == calendar) {

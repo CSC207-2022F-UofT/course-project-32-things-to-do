@@ -5,5 +5,5 @@ package use_cases.task_management.todolist_use_case;
  */
 
 public interface ToDoListInputBoundary {
-    ToDoListResponseModel getToDoList(ToDoListRequestModel requestModel);
+    ToDoListResponseModel getToDoList();
 }
