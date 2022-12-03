@@ -31,10 +31,10 @@ public class TaskMap implements Serializable {
 
     /**
      * Remove a Task from the TaskMap.txt
-     * @param task - the Task being removed
+     * @param id - the ID of the Task being removed
      */
-    public static void removeTask(Task task) {
-        taskMap.remove(task.getId());
+    public static void removeTask(String id) {
+        taskMap.remove(id);
     }
 
     /**

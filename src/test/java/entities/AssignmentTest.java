@@ -32,34 +32,22 @@ class AssignmentTest {
     }
 
     @Test
-    void getTitle() {
+    void getAndSetTitle() {
         assertEquals(assignment.getTitle(), "a1");
-    }
-
-    @Test
-    void setTitle() {
         assignment.setTitle("just a");
         assertEquals(assignment.getTitle(), "just a");
     }
 
     @Test
-    void getPriority() {
+    void getAndSetPriority() {
         assertEquals(assignment.getPriority(), 1);
-    }
-
-    @Test
-    void setPriority() {
         assignment.setPriority(10);
         assertEquals(assignment.getPriority(), 10);
     }
 
     @Test
-    void getComplete() {
+    void getAndSetComplete() {
         assertFalse(assignment.getComplete());
-    }
-
-    @Test
-    void setComplete() {
         assignment.setComplete();
         assertTrue(assignment.getComplete());
     }
@@ -77,23 +65,15 @@ class AssignmentTest {
     }
 
     @Test
-    void getWeightage() {
+    void getAndSetWeightage() {
         assertEquals(assignment.getWeightage(), 20.0);
-    }
-
-    @Test
-    void setWeightage() {
         assignment.setWeightage(20.1);
         assertEquals(assignment.getWeightage(), 20.1);
     }
 
     @Test
-    void getGradeReceived() {
+    void getAndSetGradeReceived() {
         assertEquals(assignment.getGradeReceived(), -1);
-    }
-
-    @Test
-    void setGradeReceived() {
         assignment.setGradeReceived(100); // my grades frfr
         assertEquals(assignment.getGradeReceived(), 100);
     }
@@ -127,12 +107,8 @@ class AssignmentTest {
     }
 
     @Test
-    void schedulePrepTime() {
-    }
-
-    @Test
     void getPrepTimeScheduled() {
-        assertEquals(0, assignment.getPrepTimeScheduled().size());
+        assertEquals(1, assignment.getPrepTimeScheduled().size());
     }
 
     @Test
