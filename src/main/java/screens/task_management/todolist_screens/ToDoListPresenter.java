@@ -10,24 +10,12 @@ public class ToDoListPresenter  implements ToDoListOutputBoundary {
 
     private ToDoListInputBoundary toDoListInput;
 
-    //TODO private final StudentSaveRequest studentSaveRequest;
-    private final StudentUser studentUser;
-
-    public ToDoListPresenter(StudentUser studentUser) {
-        this.studentUser = studentUser;
-    }
-
     public void setToDoListInput(ToDoListInputBoundary toDoListInput) {
         this.toDoListInput = toDoListInput;
     }
 
-    //TODO need UserSaveRequest from Natalie!!
-    // ProgressTrackerResponseModel getToDoList(UserSaveRequest userSaveRequest) {}
-
     public ToDoListResponseModel getToDoList() {
-        ToDoListRequestModel requestModel = new ToDoListRequestModel(studentUser);
-
-        return toDoListInput.getToDoList(requestModel);
+        return toDoListInput.getToDoList();
     }
 
     @Override
@@ -55,6 +43,11 @@ public class ToDoListPresenter  implements ToDoListOutputBoundary {
 
         return responseModel;
 
+    }
+
+    @Override
+    public ToDoListResponseModel failView(String error) {
+        throw new ToDoListFail(error);
     }
 
 }

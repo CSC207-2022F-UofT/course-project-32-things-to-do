@@ -8,4 +8,5 @@ package use_cases.task_management.todolist_use_case;
 public interface ToDoListOutputBoundary {
     ToDoListResponseModel display(ToDoListResponseModel responseModel);
 
+    ToDoListResponseModel failView(String error);
 }

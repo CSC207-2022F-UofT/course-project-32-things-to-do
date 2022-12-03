@@ -54,25 +54,28 @@ public class ToDoListScreen extends JPanel implements ActionListener {
         JPanel toDoList = new JPanel();
         toDoList.setLayout(new BoxLayout(toDoList, BoxLayout.PAGE_AXIS));
 
-        //TODO problems with student user
-        ToDoListResponseModel rsp = presenter.getToDoList();
-        ArrayList<ArrayList<String>> tasks =  rsp.getToDoListView();
-        //ArrayList<ArrayList<String>> tasks = new ArrayList<>();
+        try {
+            ToDoListResponseModel rsp = presenter.getToDoList();
+            ArrayList<ArrayList<String>> tasks = rsp.getToDoListView();
 
-        for (ArrayList<String> task: tasks) {
-            JButton editDelete = new JButton("Edit/Delete");
-            editDelete.putClientProperty("taskName", task.get(0));
-            editDelete.putClientProperty("taskId", task.get(1));
-            editDelete.putClientProperty("taskType", task.get(2));
+            for (ArrayList<String> task: tasks) {
+                JButton editDelete = new JButton("Edit/Delete");
+                editDelete.putClientProperty("taskName", task.get(0));
+                editDelete.putClientProperty("taskId", task.get(1));
+                editDelete.putClientProperty("taskType", task.get(2));
 
-            editDelete.addActionListener(this);
-            JLabel taskName = new JLabel(task.get(0));
+                editDelete.addActionListener(this);
+                JLabel taskName = new JLabel(task.get(0));
 
-            LabelButtonPanel listItem = new LabelButtonPanel(taskName, editDelete);
-            listItem.setPreferredSize(new Dimension(250, 40));
-            listItem.setAlignmentX(LabelButtonPanel.CENTER_ALIGNMENT);
+                LabelButtonPanel listItem = new LabelButtonPanel(taskName, editDelete);
+                listItem.setPreferredSize(new Dimension(250, 40));
+                listItem.setAlignmentX(LabelButtonPanel.CENTER_ALIGNMENT);
 
-            toDoList.add(listItem);
+                toDoList.add(listItem);
+            }
+
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
         JScrollPane scrollableToDoList = new JScrollPane(toDoList);
@@ -90,7 +93,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
         System.out.println("Click " + evt.getActionCommand());
 
         if (evt.getSource() == back) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         } else {
             JButton taskButton = (JButton) evt.getSource();
             String taskName = (String) taskButton.getClientProperty("taskName");

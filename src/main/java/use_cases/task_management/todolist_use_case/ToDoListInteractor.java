@@ -21,43 +21,46 @@ public class ToDoListInteractor implements ToDoListInputBoundary{
      * For each of the tasks represented in the toDoList instance variable of the logged-in StudentUser, get a list
      * of ToDoListItem items for these tasks (containing the task name, task id and task type) to display on the
      * ToDoListScreen.
-     *
-     * @param requestModel - contains a representation of the logged-in StudentUser
      * @return the list of ToDoListItem items representing the tasks in the student's todo list
      */
     @Override
-    public ToDoListResponseModel getToDoList(ToDoListRequestModel requestModel) {
-
-        //TODO need Natalie's StudentSaveRequest.initializeUser method!!
-        // StudentUser studentUser = requestModel.getStudentSaveRequest.initializeUser();
-
-        StudentUser studentUser = requestModel.getStudentUser();
-
-        ArrayList<String> taskIdList = studentUser.getToDoList();
-        ArrayList<ToDoListItem> toDoList = new ArrayList<>();
-
-        for (String taskId: taskIdList) {
-            //get the Task object for this task from the entity TaskMap static variable
-            Task task = TaskMap.getTaskMap().get(taskId);
-            String taskItemTitle = task.getTitle();
-            String taskItemId = task.getId();
-
-            TaskType taskItemType;
-            if (task instanceof Event) {
-                taskItemType = TaskType.EVENT;
-            } else if (task instanceof Test) {
-                taskItemType = TaskType.TEST;
-            } else if (task instanceof Assignment) {
-                taskItemType = TaskType.ASSIGNMENT;
+    public ToDoListResponseModel getToDoList() {
+        try {
+            StudentUser studentUser;
+            if (CurrentUser.isStudent()) {
+                studentUser = (StudentUser) CurrentUser.getCurrentUser();
             } else {
-                continue; // ignore any other types of tasks
+                throw new RuntimeException("You are not a student!");
             }
 
-            ToDoListItem toDoListItem = new ToDoListItem(taskItemTitle, taskItemId, taskItemType);
-            toDoList.add(toDoListItem);
-        }
+            ArrayList<String> taskIdList = studentUser.getToDoList();
+            ArrayList<ToDoListItem> toDoList = new ArrayList<>();
 
-        return outputBoundary.display(new ToDoListResponseModel(toDoList));
+            for (String taskId : taskIdList) {
+                //get the Task object for this task from the entity TaskMap static variable
+                Task task = TaskMap.getTaskMap().get(taskId);
+                String taskItemTitle = task.getTitle();
+                String taskItemId = task.getId();
+
+                TaskType taskItemType;
+                if (task instanceof Event) {
+                    taskItemType = TaskType.EVENT;
+                } else if (task instanceof Test) {
+                    taskItemType = TaskType.TEST;
+                } else if (task instanceof Assignment) {
+                    taskItemType = TaskType.ASSIGNMENT;
+                } else {
+                    throw new RuntimeException("Some of your tasks are an invalid Task Type!");
+                }
+
+                ToDoListItem toDoListItem = new ToDoListItem(taskItemTitle, taskItemId, taskItemType);
+                toDoList.add(toDoListItem);
+            }
+
+            return outputBoundary.display(new ToDoListResponseModel(toDoList));
+        } catch (Exception e) {
+            return outputBoundary.failView(e.getMessage());
+        }
 
     }
 

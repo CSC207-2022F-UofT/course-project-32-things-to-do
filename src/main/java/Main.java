@@ -5,6 +5,8 @@ import screens.course_progress.*;
 import screens.courses_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -17,6 +19,7 @@ import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import use_cases.task_management.read_write.TaskReadWrite;
+import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,6 +68,8 @@ public class Main {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
 
+        ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
+        ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
@@ -93,6 +98,9 @@ public class Main {
         ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerPresenter, scheduleConflictPresenter,
                 screens, cardLayout);
         screens.add("taskCreate", chooseTask);
+
+        ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user, toDoListPresenter, screens, cardLayout);
+        screens.add("toDoList", toDoListScreen);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
         screens.add("calendar", calendarScreen);
