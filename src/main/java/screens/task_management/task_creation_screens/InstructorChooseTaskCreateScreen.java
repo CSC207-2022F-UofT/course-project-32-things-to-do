@@ -61,7 +61,7 @@ public class InstructorChooseTaskCreateScreen extends JPanel implements ActionLi
     public void actionPerformed(ActionEvent e) {
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
-        TaskMapGateway taskMapGateway = new FileTaskMap("src/java/main/data/TaskMap.txt");
+        TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
                 taskMapGateway, taskCreationOutputBoundary, "none");
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);

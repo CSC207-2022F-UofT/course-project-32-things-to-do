@@ -27,7 +27,7 @@ public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCre
 
         CollaborativeTask collaborativeTask = new CollaborativeTask(requestModel.getTitle(), id, requestModel.getPriority(), requestModel.getRecurring(), requestModel.getFrequency(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), student);
 
-        FileTaskMap trw = new FileTaskMap("src/data/TaskMap");
+        FileTaskMap trw = new FileTaskMap("src/main/java/data/TaskMap");
         trw.save(TaskMap.getTaskMap());
 
         CollaborativeTaskCreationResponseModel collaborativeTaskResponseModel = new CollaborativeTaskCreationResponseModel(requestModel.getTitle(), requestModel.getStartTime(), requestModel.getEndTime(), requestModel.getDeadline(), requestModel.getLeader());

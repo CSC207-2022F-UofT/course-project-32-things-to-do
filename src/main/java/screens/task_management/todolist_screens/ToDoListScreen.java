@@ -102,7 +102,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
 
             // create use case components
             TaskEditPresenter taskEditPresenter = new TaskEditResponseFormatter();
-            TaskMapGateway taskMapGateway = new FileTaskMap("src/java/data/TaskMap.txt");
+            TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
             TaskEditInputBoundary taskEditInteractor = new TaskEditInteractor(taskMapGateway, taskEditPresenter);
             EventEditController eventEditController = new EventEditController(taskEditInteractor);
             AssignmentEditController assignmentEditController = new AssignmentEditController(taskEditInteractor);
