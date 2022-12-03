@@ -101,7 +101,7 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
             // return to main screen
-            screenLayout.show(screens, "StudentMain");
+            screenLayout.show(screens, "InstructorMain");
         }
     }
 }

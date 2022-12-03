@@ -18,7 +18,7 @@ class AssignmentInfoRetrieverTest {
         assignment = new Assignment(
                 "title", "id", 1, date, 20.0);
 
-        assignmentInfo = new AssignmentInfoRetriever(assignment);
+        assignmentInfo = new AssignmentInfoRetriever("id");
     }
 
     @Test

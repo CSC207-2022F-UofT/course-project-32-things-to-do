@@ -18,7 +18,7 @@ class EventInfoRetrieverTest {
         event = new Event(
                 "title", "id", 1, startDate, endDate, false, "");
 
-        eventInfo = new EventInfoRetriever(event);
+        eventInfo = new EventInfoRetriever("id");
     }
 
     @Test

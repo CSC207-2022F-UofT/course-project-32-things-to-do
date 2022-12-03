@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
+public class StudentChooseTaskCreateScreen extends JPanel implements ActionListener {
     // selectable buttons on screen
     JButton event = new JButton("New event");
     JButton assignment = new JButton("New assignment");
@@ -37,8 +37,8 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
      * @param screens - rest of screens in the program
      * @param cardLayout - for switching between screens
      */
-    public ChooseTaskCreateScreen(SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
-                                  JPanel screens, CardLayout cardLayout) {
+    public StudentChooseTaskCreateScreen(SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+                                         JPanel screens, CardLayout cardLayout) {
         this.schedulerPresenter = schedulerPresenter;
         this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
@@ -93,13 +93,13 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
         } else if (e.getActionCommand().equals("New assignment")) { // create and go to assignment screen
             AssignmentCreationScreen assignmentCreationScreen = new AssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
 
-            screens.add("assignment", assignmentCreationScreen);
-            cardLayout.show(screens, "assignment");
+            screens.add("studentAssignment", assignmentCreationScreen);
+            cardLayout.show(screens, "studentAssignment");
         } else { // create and go to test screen
             TestCreationScreen testCreationScreen = new TestCreationScreen(testCreationController, screens, cardLayout);
 
-            screens.add("test", testCreationScreen);
-            cardLayout.show(screens, "test");
+            screens.add("studentTest", testCreationScreen);
+            cardLayout.show(screens, "studentTest");
         }
     }
 }

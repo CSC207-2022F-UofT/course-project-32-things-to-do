@@ -17,7 +17,7 @@ class TestInfoRetrieverTest {
         LocalDateTime endTime = LocalDateTime.of(2022, 12, 2, 13, 0);
         test = new entities.Test("title", "id", 10, startTime, endTime, 30.0);
 
-        testInfo = new TestInfoRetriever(test);
+        testInfo = new TestInfoRetriever("id");
     }
 
     @Test

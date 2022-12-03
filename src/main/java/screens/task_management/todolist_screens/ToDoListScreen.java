@@ -91,7 +91,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
             screenLayout.show(screens, "StudentMain");
         } else {
             JButton taskButton = (JButton) evt.getSource();
-            String taskName = (String) taskButton.getClientProperty("taskName");
+            //String taskName = (String) taskButton.getClientProperty("taskName");
             String taskId = (String) taskButton.getClientProperty("taskId");
             String taskType = (String) taskButton.getClientProperty("taskType");
 

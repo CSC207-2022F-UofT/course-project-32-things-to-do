@@ -68,7 +68,7 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
      */
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == taskCreate) {
-            cardLayout.show(screens, "taskCreate");
+            cardLayout.show(screens, "instructorTaskCreate");
         }
         if (evt.getSource() == calendar) {
             cardLayout.show(screens, "calendar");
