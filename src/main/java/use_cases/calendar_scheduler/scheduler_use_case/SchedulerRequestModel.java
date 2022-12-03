@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class SchedulerRequestModel {
 
     private Task task;
-    private ArrayList<Task> allTasks;
     private StudentUser user;
 
     /**
@@ -19,7 +18,6 @@ public class SchedulerRequestModel {
     public SchedulerRequestModel(Task task, StudentUser user) {
 
         this.task = task;
-        this.allTasks = allTasks;
         this.user = user;
     }
 
@@ -29,14 +27,6 @@ public class SchedulerRequestModel {
 
     public void setTask(Task task) {
         this.task = task;
-    }
-
-    public ArrayList<Task> getAllTasks() {
-        return allTasks;
-    }
-
-    public void setAllTasks(ArrayList<Task> allTasks) {
-        this.allTasks = allTasks;
     }
 
     public StudentUser getUser() {

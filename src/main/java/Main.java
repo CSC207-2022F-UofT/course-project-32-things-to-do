@@ -68,7 +68,6 @@ public class Main {
         ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
         ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
 
-        SchedulerOutputBoundary schedulerOutputBoundary = new SchedulerPresenter();
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
@@ -92,8 +91,7 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerOutputBoundary, scheduleConflictOutputBoundary,
-                screens, cardLayout);
+        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, scheduleConflictOutputBoundary, screens, cardLayout);
         screens.add("taskCreate", chooseTask);
 
         ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user, toDoListPresenter, screens, cardLayout);
@@ -112,7 +110,7 @@ public class Main {
         screens.add("course", courseCreationScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
-        screens.add("main", studentMainScreen);
+        screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
         screens.add("register", registerScreen);

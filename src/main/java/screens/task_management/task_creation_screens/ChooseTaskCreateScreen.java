@@ -27,7 +27,6 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
 
     // for making task creation screens:
     User user;
-    SchedulerOutputBoundary schedulerPresenter;
     ScheduleConflictOutputBoundary scheduleConflictPresenter;
 
     // for connecting to other screens
@@ -37,10 +36,9 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     /**
      * the window for choosing which type of Task to create, after selecting "New task"
      */
-    public ChooseTaskCreateScreen(User user, SchedulerOutputBoundary schedulerPresenter, ScheduleConflictOutputBoundary scheduleConflictPresenter,
+    public ChooseTaskCreateScreen(User user, ScheduleConflictOutputBoundary scheduleConflictPresenter,
                                   JPanel screens, CardLayout cardLayout) {
         this.user = user;
-        this.schedulerPresenter = schedulerPresenter;
         this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
         this.screens = screens;
@@ -80,8 +78,7 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, user, "none",
-                schedulerPresenter, scheduleConflictPresenter);
+                taskCreationOutputBoundary, user, "none", scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
         TestCreationController testCreationController = new TestCreationController(taskInteractor);

@@ -19,11 +19,11 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
      * Interactor for tasks that are involved with scheduling
      */
     public TaskCreationInteractor(TaskCreationOutputBoundary outputBoundary, User user, String courseName,
-                                  SchedulerOutputBoundary schedulerOutputBoundary, ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
+                                  ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.outputBoundary = outputBoundary;
         this.user = user;
         this.courseName = courseName;
-        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary, schedulerOutputBoundary);
+        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary);
     }
 
     /**
@@ -84,10 +84,19 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             newTask = new Test(requestModel.getTitle(), id, requestModel.getPriority(),
                     request.getStartTime(), request.getEndTime(), request.getWeightage());
         }
-        // save Task to TaskMap and student's to-do list (if applicable)
-        TaskMap.addTask(id, newTask);
+
+        // Schedule task if user is a student
         if (user instanceof StudentUser) {
-            ((StudentUser)user).addTaskToList(id);
+            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(newTask, (StudentUser) user);
+            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
+
+            if (!schedulerResponseModel.isScheduleCancel()) {
+                TaskMap.addTask(id, newTask);
+                ((StudentUser)user).addTaskToList(id);
+            }
+        } else {
+            // save Task to TaskMap
+            TaskMap.addTask(id, newTask);
         }
 
         // save TaskMap to file:

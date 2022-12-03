@@ -6,32 +6,21 @@ import java.util.ArrayList;
 
 public class SchedulerResponseModel {
 
-    private ArrayList<Task> allTasks;
-    private Task task;
+    private boolean scheduleCancel;
 
     /**
      * Create a response model for the scheduling use case
-     * @param task - the given task
-     * @param allTasks - the user's to-do list
+     * @param scheduleCancel - whether the user wants to cancel scheduling
      */
-    public SchedulerResponseModel(Task task, ArrayList<Task> allTasks) {
-        this.allTasks = allTasks;
-        this.task = task;
+    public SchedulerResponseModel(boolean scheduleCancel) {
+        this.scheduleCancel = scheduleCancel;
     }
 
-    public ArrayList<Task> getAllTasks() {
-        return allTasks;
+    public boolean isScheduleCancel() {
+        return scheduleCancel;
     }
 
-    public void setAllTasks(ArrayList<Task> allTasks) {
-        this.allTasks = allTasks;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
+    public void setScheduleCancel(boolean scheduleCancel) {
+        this.scheduleCancel = scheduleCancel;
     }
 }
