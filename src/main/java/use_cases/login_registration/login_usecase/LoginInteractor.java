@@ -1,5 +1,6 @@
 package use_cases.login_registration.login_usecase;
 
+import entities.CurrentUser;
 import entities.InstructorUser;
 import entities.User;
 import screens.login_registration.LoginFailed;
@@ -45,6 +46,9 @@ public class LoginInteractor implements LoginInputBoundary {
         LocalDateTime now = LocalDateTime.now();
 
         this.user = createUser(requestModel);
+
+        //set the program's current user
+        CurrentUser.setCurrentUser(user);
 
         LoginResponseModel loginRes;
 

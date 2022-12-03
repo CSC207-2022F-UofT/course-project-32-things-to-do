@@ -109,7 +109,7 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "main");
+            screenLayout.show(screens, "StudentMain");
         }
         // recurring checkbox pressed/unpressed
         else {

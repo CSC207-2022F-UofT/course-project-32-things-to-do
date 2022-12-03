@@ -65,6 +65,7 @@ public class Main {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
 
+
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
@@ -114,7 +115,7 @@ public class Main {
         LoginScreen loginScreen = new LoginScreen(loginController, cardLayout, screens);
         screens.add("login", loginScreen);
 
-        InstructorMain instructorMainScreen = new InstructorMain(screens, cardLayout);
+        InstructorMainScreen instructorMainScreen = new InstructorMainScreen(screens, cardLayout);
         screens.add("InstructorMain", instructorMainScreen);
 
         WelcomeScreen welcomeScreen = new WelcomeScreen(cardLayout, screens);
