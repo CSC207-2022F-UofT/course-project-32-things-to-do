@@ -24,8 +24,7 @@ public abstract class CourseTrackerInteractor {
             try {
                 return Double.parseDouble(string);
             } catch(Exception e) {
-                throw new RuntimeException("Entered input is invalid. It should be a (decimal) number " +
-                        "with no special characters.");
+                throw new RuntimeException("Entered input is invalid. It should be a (decimal) number.");
             }
         }
     }

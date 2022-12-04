@@ -62,7 +62,7 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener, Pro
         JTextArea instructions3details = new JTextArea(1,20);
         instructions3details.setText(" Find out the required (average) grade of some ungraded target task(s) " +
                 "given your goal/predicted grades for the rest of your ungraded tasks.\nInput should be in the " +
-                "following example form:\n'89, *96, 77.7, 36, *97'\nwhere '*' indicates your goal grade in the " +
+                "following example form:\n'89,*96,77.7,36,*97'\nwhere '*' indicates your goal grade in the " +
                 "course. The program will take the value of the LAST * value if they are different.\nAlso note that" +
                 "total task weightage per course should be 100%.");
         instructions3details.setEditable(false);

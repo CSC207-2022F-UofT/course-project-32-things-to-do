@@ -82,8 +82,7 @@ public class ProgressTrackerTest {
             }
             @Override
             public void failView(String error) {
-                assertEquals("Entered input is invalid. It should be a (decimal) " +
-                                "number with no special characters.", error);
+                assertEquals("Entered input is invalid. It should be a (decimal) number.", error);
             }
         };
         ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);

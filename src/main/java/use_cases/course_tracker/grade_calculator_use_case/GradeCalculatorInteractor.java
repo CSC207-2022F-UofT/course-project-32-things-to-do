@@ -119,7 +119,7 @@ public class GradeCalculatorInteractor extends CourseTrackerInteractor implement
                 dummyTask.setComplete();
                 dummyTask.setGradeReceived(ungradedTaskToGrade.get(task.getTitle()));
                 studentCourseTasksCopy.add(dummyTask);
-            } else if (targetTasksTitles.contains(task.getTitle())) {
+            } else {
                 //leave target tasks as "ungraded" with gradeReceived set to -1 as default
                 //all other tasks are added as they are
                 studentCourseTasksCopy.add(task);
