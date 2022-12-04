@@ -115,10 +115,18 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         ArrayList<String> newTaskIds = new ArrayList<>(newTaskIdMap.keySet());
 
         // add new task ids to the student's task list
-        tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newTaskIds);
+        try {
+            tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newTaskIds);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // add course to student's 'courses' parameter
-        tasksToTodolistDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
+        try {
+            tasksToTodolistDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         // create response model, sent to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(

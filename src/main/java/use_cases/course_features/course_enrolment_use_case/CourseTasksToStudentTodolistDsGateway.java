@@ -4,6 +4,7 @@ package use_cases.course_features.course_enrolment_use_case;
 
 import entities.StudentUser;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,6 @@ import java.util.ArrayList;
  */
 public interface CourseTasksToStudentTodolistDsGateway {
 //    public StudentUser searchForStudent(String studentIdentifier);
-    public void addSaveTasksToTodolist(String studentID, ArrayList<String> courseTasks);
-    public void addCourseToStudent(String studentCourse, String studentID);
+    public void addSaveTasksToTodolist(String studentID, ArrayList<String> courseTasks) throws IOException;
+    public void addCourseToStudent(String studentCourse, String studentID) throws IOException;
 }
