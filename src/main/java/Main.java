@@ -81,7 +81,7 @@ public class Main {
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
         ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor, user);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor);
 
         CourseCreationDsGateway course;
         try {

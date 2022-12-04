@@ -13,16 +13,12 @@ public class ScheduleCTController {
 
     final ScheduleCTInputBoundary scheduleInput;
 
-    private final Object studentUser;
-
     /**
      * Constructor for ScheduleCTController
      * @param scheduleInput - the scheduleCTInputBoundary
-     * @param studentUser - the current student user logged in
      */
-    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput, Object studentUser) {
+    public ScheduleCTController(ScheduleCTInputBoundary scheduleInput) {
         this.scheduleInput = scheduleInput;
-        this.studentUser = studentUser;
     }
 
     /**
@@ -34,7 +30,7 @@ public class ScheduleCTController {
      * @param endTime   - the string representation of the end date and time the user wants to schedule
      */
     public void isConflict(String taskName, String startTime, String endTime) {
-        ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime, studentUser);
+        ScheduleCTRequestModel inputData = new ScheduleCTRequestModel(taskName, startTime, endTime);
         scheduleInput.schedule(inputData);
     }
 }

@@ -30,7 +30,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
 
         CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), taskHashMap);
 
-        StudentUser currentUser = (StudentUser) requestModel.getStudentUser();
+        StudentUser currentUser = (StudentUser) CurrentUser.getCurrentUser();
 
         if (currentUser != task.getLeader()) {
             return scheduleCTOutputBoundary.prepareFailView("User is not the leader. " +
