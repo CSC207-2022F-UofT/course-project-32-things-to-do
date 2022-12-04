@@ -396,20 +396,4 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         String formattedEnd = end.format(formatter);
         return formattedStart + " to " + formattedEnd;
     }
-
-    /**
-     * Turn all objects into tasks (by casting them) in the hash map
-     * @param objectHashMap - the hash map that maps strings to objects
-     * @return the same hash map but they are task objects instead
-     */
-    public HashMap<String, Task> objectToTask(HashMap<String, Object> objectHashMap) {
-
-        HashMap<String, Task> taskHashMap = new HashMap<>();
-
-        for (String key: objectHashMap.keySet()) {
-            Task task = (Task) objectHashMap.get(key);
-            taskHashMap.put(key, task);
-        }
-        return taskHashMap;
-    }
 }
