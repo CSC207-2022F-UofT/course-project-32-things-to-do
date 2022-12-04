@@ -40,9 +40,6 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
             //query aggregate task map for all of this student's tasks in this course
             ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);
 
-            //collect all the tasks that are still ungraded
-            ArrayList<String> ungradedTasks = getUngradedTasks(studentCourseTasks);
-
             //if a newGrade was inputted, mutate the corresponding task object
             if (newGrade != -1) {
                 setTaskGrade(studentCourseTasks, progressTrackerRequestModel.getNewGradeTaskName(), newGrade);
@@ -65,6 +62,9 @@ public class ProgressTrackerInteractor implements ProgressTrackerInputBoundary{
             } else {
                 requiredAverage = -1; //no goal grade inputted yet!!
             }
+
+            //collect all the tasks that are still ungraded
+            ArrayList<String> ungradedTasks = getUngradedTasks(studentCourseTasks);
 
             ProgressTrackerResponseModel responseModel = new ProgressTrackerResponseModel(courseProgress, mockGrade,
                     requiredAverage, ungradedTasks);

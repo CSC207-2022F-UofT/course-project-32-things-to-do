@@ -33,6 +33,13 @@ public class CourseMap implements Serializable {
         return true;
     }
 
+    /**
+     * Initialize static courseMap variable to empty HashMap to avoid NullPointerExceptions
+     */
+    public static void initializeEmpty() {
+        courseMap = new HashMap<>();
+    }
+
     public void save() {
 
     }
