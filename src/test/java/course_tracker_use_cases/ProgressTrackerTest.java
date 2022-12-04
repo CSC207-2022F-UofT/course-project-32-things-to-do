@@ -2,7 +2,7 @@ package course_tracker_use_cases;
 
 import entities.*;
 import org.junit.jupiter.api.Test;
-import screens.course_progress.ProgressTrackerPresenter;
+import screens.course_tracker.ProgressTrackerPresenter;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInteractor;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
@@ -57,6 +57,9 @@ public class ProgressTrackerTest {
 
     }
 
+    /**
+     * Helper function to clean up all the static variables
+     */
     void tearDown() {
         CurrentUser.setCurrentUser(null);
         TaskMap.setTaskMap(null);

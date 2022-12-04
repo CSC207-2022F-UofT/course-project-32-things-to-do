@@ -1,4 +1,4 @@
-package screens.course_progress;
+package screens.course_tracker;
 
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerOutputBoundary;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
@@ -7,7 +7,6 @@ import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRespons
  * Presenter for the Progress Tracker Use Case
  * Implements the Output Boundary as part of the dependency inversion
  */
-
 public class ProgressTrackerPresenter implements ProgressTrackerOutputBoundary {
 
     final ProgressTrackerViewBoundary viewBoundary;
@@ -40,9 +39,9 @@ public class ProgressTrackerPresenter implements ProgressTrackerOutputBoundary {
         }
 
         ProgressTrackerViewModel viewModel = new ProgressTrackerViewModel(displayString.toString(),
-                responseModel.getUngradedTasks(), mockGrade);
+                responseModel.getUngradedTasks());
 
-        viewBoundary.dispaly(viewModel);
+        viewBoundary.display(viewModel);
 
     }
 

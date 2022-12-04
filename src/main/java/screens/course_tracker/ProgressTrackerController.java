@@ -1,4 +1,4 @@
-package screens.course_progress;
+package screens.course_tracker;
 
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInputBoundary;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
@@ -7,7 +7,6 @@ import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequest
  * Controller for the Progress Tracker Use Case
  * Located in the Interface Adapter Layer, triggers the Interactor
  */
-
 public class ProgressTrackerController {
 
     final ProgressTrackerInputBoundary progressInput;

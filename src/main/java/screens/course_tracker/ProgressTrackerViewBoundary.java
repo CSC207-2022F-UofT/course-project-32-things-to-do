@@ -1,10 +1,9 @@
-package screens.course_progress;
+package screens.course_tracker;
 
 /**
  * ViewBoundary interface for the presenter to view dependency inversion
  * This interface is located in the controller/presenter layer
  */
-
 public interface ProgressTrackerViewBoundary {
-    void dispaly(ProgressTrackerViewModel viewModel);
+    void display(ProgressTrackerViewModel viewModel);
 }

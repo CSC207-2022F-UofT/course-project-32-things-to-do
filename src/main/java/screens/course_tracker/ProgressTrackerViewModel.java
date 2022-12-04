@@ -1,4 +1,4 @@
-package screens.course_progress;
+package screens.course_tracker;
 
 import java.util.ArrayList;
 
@@ -6,18 +6,14 @@ import java.util.ArrayList;
  * Data object for presenter to view dependency inversion
  * ViewModel is located in the controller/presenter layer
  */
-
 public class ProgressTrackerViewModel {
     private final String displayString;
 
     private final ArrayList<String> ungradedTasks;
 
-    private final double mockGrade;
-
-    public ProgressTrackerViewModel(String displayString, ArrayList<String> ungradedTasks, double mockGrade) {
+    public ProgressTrackerViewModel(String displayString, ArrayList<String> ungradedTasks) {
         this.displayString = displayString;
         this.ungradedTasks = ungradedTasks;
-        this.mockGrade = mockGrade;
     }
 
     public String getDisplayString() {
@@ -28,7 +24,4 @@ public class ProgressTrackerViewModel {
         return ungradedTasks;
     }
 
-    public double getMockGrade() {
-        return mockGrade;
-    }
 }

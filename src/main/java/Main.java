@@ -1,13 +1,16 @@
 import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
-import screens.course_progress.*;
+import screens.course_tracker.*;
 import screens.courses_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
 import screens.task_management.todolist_screens.ToDoListPresenter;
 import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInputBoundary;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorOutputBoundary;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
@@ -79,6 +82,10 @@ public class Main {
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
+        GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
+        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
+        GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
+
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
@@ -110,6 +117,7 @@ public class Main {
         screens.add("scheduleCT", scheduleCTScreen);
 
         progressTrackerScreen.setProgressTrackerController(trackerController);
+        progressTrackerScreen.setGradeCalculatorController(gradeController);
         screens.add("tracker", progressTrackerScreen);
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
