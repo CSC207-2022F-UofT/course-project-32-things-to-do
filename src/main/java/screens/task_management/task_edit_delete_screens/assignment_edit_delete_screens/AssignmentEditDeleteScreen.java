@@ -74,7 +74,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         LabelTextPanel dueDayInfo = new LabelTextPanel(
                 new JLabel("Enter new Assignment due date (yyyy-MM-dd):"), dueDay);
         LabelTextPanel dueTimeInfo = new LabelTextPanel(
-                new JLabel("Enter new Assignment due time (hh:mm, 24 hour time):"), dueTime);
+                new JLabel("Enter new Assignment due time (hh:mm, 24 hour):"), dueTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter new Assignment weightage (double, don't include %):"), weightage);
         LabelTextPanel timeNeededInfo = new LabelTextPanel(
@@ -135,7 +135,7 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                         valTimeNeeded, valTimeSpent);
 
                 // notify user of success and return to main screen
-                showMessageDialog(this, "Assignment edited successfully"); // todo customize this message
+                showMessageDialog(this, "Assignment edited successfully");
                 screenLayout.show(screens, "StudentMain");
             }
             // Assignment being deleted

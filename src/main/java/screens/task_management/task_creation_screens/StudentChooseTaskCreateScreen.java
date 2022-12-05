@@ -2,11 +2,11 @@ package screens.task_management.task_creation_screens;
 
 import screens.task_management.FileTaskMap;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
-import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationScreen;
+import screens.task_management.task_creation_screens.assignment_creation_screens.StudentAssignmentCreationScreen;
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationScreen;
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
-import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
+import screens.task_management.task_creation_screens.test_creation_screens.StudentTestCreationScreen;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
 import use_cases.task_management.read_write.TaskMapGateway;
@@ -75,9 +75,6 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Cancel")) { // go back to main
-            cardLayout.show(screens, "StudentMain");
-        }
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
         TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
@@ -94,15 +91,17 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
             screens.add("event", eventCreationScreen);
             cardLayout.show(screens, "event");
         } else if (e.getActionCommand().equals("New assignment")) { // create and go to assignment screen
-            AssignmentCreationScreen assignmentCreationScreen = new AssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
+            StudentAssignmentCreationScreen assignmentCreationScreen = new StudentAssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
 
             screens.add("studentAssignment", assignmentCreationScreen);
             cardLayout.show(screens, "studentAssignment");
-        } else { // create and go to test screen
-            TestCreationScreen testCreationScreen = new TestCreationScreen(testCreationController, screens, cardLayout);
+        } else if (e.getActionCommand().equals("New test")){ // create and go to test screen
+            StudentTestCreationScreen testCreationScreen = new StudentTestCreationScreen(testCreationController, screens, cardLayout);
 
             screens.add("studentTest", testCreationScreen);
             cardLayout.show(screens, "studentTest");
+        } else { // cancel button pressed
+            cardLayout.show(screens, "StudentMain");
         }
     }
 }

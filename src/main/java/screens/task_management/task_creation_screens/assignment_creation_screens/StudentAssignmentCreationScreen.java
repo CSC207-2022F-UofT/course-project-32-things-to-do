@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-public class AssignmentCreationScreen extends JPanel implements ActionListener {
+public class StudentAssignmentCreationScreen extends JPanel implements ActionListener {
     // text fields
     JTextField title = new JTextField(15);
     JTextField priority = new JTextField(15);
@@ -31,7 +31,7 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
      * @param screens - the rest of the screens in the program
      * @param screenLayout - for switching between screens
      */
-    public AssignmentCreationScreen(AssignmentCreationController assignmentController, JPanel screens, CardLayout screenLayout) {
+    public StudentAssignmentCreationScreen(AssignmentCreationController assignmentController, JPanel screens, CardLayout screenLayout) {
         this.assignmentController = assignmentController;
         this.screens = screens;
         this.screenLayout = screenLayout;
@@ -48,7 +48,7 @@ public class AssignmentCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel dueDayInfo = new LabelTextPanel(
                 new JLabel("Enter Assignment due date (yyyy-MM-dd):"), dueDay);
         LabelTextPanel dueTimeInfo = new LabelTextPanel(
-                new JLabel("Enter Assignment due time (hh:mm):"), dueTime);
+                new JLabel("Enter Assignment due time (hh:mm, 24 hour):"), dueTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter Assignment weightage (double, don't include %):"), weightage);
 
