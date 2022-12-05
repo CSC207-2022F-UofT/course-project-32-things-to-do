@@ -1,13 +1,13 @@
-package screens.courses_features;
+package screens.course_features;
 
 // Interface adapters layer
 
-import use_cases.course_features.course_creation_use_case.CourseCreationPresenter;
+import use_cases.course_features.course_creation_use_case.CourseCreationOutputBoundary;
 import use_cases.course_features.course_creation_use_case.CourseCreationResponseModel;
 
 import javax.swing.*;
 
-public class CourseCreationResponseFormatter implements CourseCreationPresenter {
+public class CourseCreationPresenter implements CourseCreationOutputBoundary {
 
     /**
      * Alert user to course creation success
@@ -15,7 +15,6 @@ public class CourseCreationResponseFormatter implements CourseCreationPresenter 
      */
     @Override
     public CourseCreationResponseModel prepareSuccessView(CourseCreationResponseModel response) {
-
         JOptionPane.showMessageDialog(null, "New course created!");
         return response;
     }
