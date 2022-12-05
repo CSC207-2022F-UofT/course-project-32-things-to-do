@@ -1,13 +1,10 @@
 package entities;
 
-import use_cases.task_management.read_write.ReadWriter;
-
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class TaskMap implements Serializable {
-    private static HashMap taskMap;
+    private static HashMap<String, Task> taskMap;
 
     /**
      * Find a Task using its unique ID
@@ -17,60 +14,63 @@ public class TaskMap implements Serializable {
      * @return - the Task corresponding to the ID
      */
     public static Task findTask(String id) {
-        return (Task) taskMap.get(id);
+        return taskMap.get(id);
     }
 
     /**
-     * Add a Task to the TaskMap
+     * Add a Task to the TaskMap.txt
      * @param id - the ID of the Task
      * @param task - the Task associated with the ID
-     * @return - whether the key-value pair has been added successfully
      */
-    public static boolean addTask(String id, Task task) {
-        if (taskMap.containsKey(id)) return false; // 2 Tasks with same ID
-
+    public static void addTask(String id, Task task) {
         taskMap.put(id, task);
-        return true;
     }
 
     /**
-     * Remove a Task from the TaskMap
-     * @param task - the Task being removed
+     * Remove a Task from the TaskMap.txt
+     * @param id - the ID of the Task being removed
      */
-    public static void removeTask(Task task) {
-        taskMap.remove(task.getId());
+    public static void removeTask(String id) {
+        taskMap.remove(id);
     }
 
     /**
      * Get the full task map
      * @return - the task map
      */
-    public static HashMap getTaskMap() {
+    public static HashMap<String, Task> getTaskMap() {
         return taskMap;
     }
 
     /**
-     * Saves the taskMap to a file
-     * @param rw - ReadWriter object saving the taskMap
+     * Set the full task map
+     * @param tasksMap - the HashMap<String, Task> to set taskMap to
      */
-    public static void saveToFile(ReadWriter rw) {
-        try {
-            rw.saveToFile(taskMap);
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-
+    public static void setTaskMap(HashMap<String, Task> tasksMap) {
+        taskMap = tasksMap;
     }
 
-    /**
-     * Loads the taskMap from a file
-     * @param rw - ReadWriter object reading the TaskMap
-     */
-    public static void load(ReadWriter rw) {
-        try {
-            taskMap = (HashMap) rw.readFromFile();
-        } catch(Exception e) {
-            System.out.println(e);
-        }
-    }
+//    /**
+//     * Saves the taskMap to a file
+//     * @param rw - ReadWriter object saving the taskMap
+//     */
+//    public static void saveToFile(TaskMapGateway rw) {
+//        try {
+//            rw.saveToFile(taskMap);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * Loads the taskMap from a file
+//     * @param rw - ReadWriter object reading the TaskMap.txt
+//     */
+//    public static void load(TaskMapGateway rw) {
+//        try {
+//            taskMap = (HashMap<String, Task>) rw.readFromFile();
+//        } catch(Exception e) {
+//            setTaskMap(new HashMap<>());
+//        }
+//    }
 }

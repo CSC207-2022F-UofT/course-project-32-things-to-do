@@ -3,8 +3,6 @@ package entities;
 import java.time.LocalDateTime;
 public class Event extends Task implements Timeblockable {
     private boolean recurring;
-    // private LocalDateTime endRecurringBy;
-    // ^ implement later mayhaps
     private String frequency;
 
     // Timeblockable attributes
@@ -30,7 +28,6 @@ public class Event extends Task implements Timeblockable {
         this.endTime = endTime;
         this.recurring = recurring;
         this.frequency = frequency;
-
         scheduleTimeBlock();
     }
 
@@ -43,6 +40,7 @@ public class Event extends Task implements Timeblockable {
     public void setRecurring(boolean recurring, String frequency) {
         this.recurring = recurring;
         if (recurring) this.frequency = frequency;
+        else this.frequency = "";
     }
 
     /**

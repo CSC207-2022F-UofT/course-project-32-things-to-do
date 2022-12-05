@@ -20,7 +20,7 @@ public class CurrentUser {
      * Return true if the currently logged-in user is a StudentUser, false if null or a different user
      * @return boolean representing whether the current user is a student
      */
-    public boolean isStudent() {
+    public static boolean isStudent() {
         if (currentUser != null) {
             return currentUser instanceof StudentUser;
         } else {
@@ -32,7 +32,7 @@ public class CurrentUser {
      * Return true if the currently logged-in user is an InstructorUser, false if null or a different user
      * @return boolean representing whether the current user is an instructor
      */
-    public boolean isInstructor() {
+    public static boolean isInstructor() {
         if (currentUser != null) {
             return currentUser instanceof InstructorUser;
         } else {

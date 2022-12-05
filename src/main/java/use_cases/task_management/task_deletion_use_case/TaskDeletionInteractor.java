@@ -1,29 +1,34 @@
 package use_cases.task_management.task_deletion_use_case;
 
+import entities.CurrentUser;
+import entities.StudentUser;
 import entities.TaskMap;
-import use_cases.task_management.read_write.TaskReadWrite;
-
+import use_cases.task_management.read_write.TaskMapGateway;
 public class TaskDeletionInteractor implements TaskDeletionInputBoundary {
+    final TaskMapGateway taskMapGateway;
     final TaskDeletionPresenter presenter;
-    public TaskDeletionInteractor(TaskDeletionPresenter presenter) {
+    public TaskDeletionInteractor(TaskMapGateway taskMapGateway, TaskDeletionPresenter presenter) {
+        this.taskMapGateway = taskMapGateway;
         this.presenter = presenter;
     }
+    /**
+     * Attempt to delete a Task
+     * @param requestModel - request model for deletion
+     * @return - response model
+     */
     @Override
-    public TaskDeletionResponseModel deleteStudentTask(TaskDeletionRequestModel requestModel) {
-        requestModel.getStudent().removeTaskFromList(requestModel.getTask().getTitle());
-        requestModel.getStudent().addTaskToArchive(requestModel.getTask().getTitle());
+    public TaskDeletionResponseModel delete(TaskDeletionRequestModel requestModel) {
+        // remove the Task
+        ((StudentUser) CurrentUser.getCurrentUser()).removeTaskFromList(requestModel.getTaskId());
+        ((StudentUser) CurrentUser.getCurrentUser()).addTaskToArchive(requestModel.getTaskId());
 
-        TaskReadWrite trw = new TaskReadWrite("src/data/TaskMap");
-        TaskMap.saveToFile(trw);
+        // save changes
+        taskMapGateway.save(TaskMap.getTaskMap());
 
-        TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(requestModel.getTask().getTitle());
-        return presenter.prepareSuccessView(responseModel);
-    }
-    public TaskDeletionResponseModel deleteCourseTask(TaskDeletionRequestModel requestModel) {
-        requestModel.getCourse().removeTask(requestModel.getTask());
-        TaskMap.removeTask(requestModel.getTask());
+        // create response model
+        TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(TaskMap.findTask(requestModel.getTaskId()).getTitle(), requestModel.getTaskId());
 
-        TaskDeletionResponseModel responseModel = new TaskDeletionResponseModel(requestModel.getTask().getTitle());
+        // indicate success
         return presenter.prepareSuccessView(responseModel);
     }
 }

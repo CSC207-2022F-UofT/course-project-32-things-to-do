@@ -4,7 +4,7 @@ import screens.calendar_scheduler.*;
 import screens.course_progress.*;
 import screens.courses_features.*;
 import screens.login_registration.*;
-import screens.task_management.event_creation_screens.*;
+import screens.task_management.task_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -20,7 +20,7 @@ import use_cases.login_registration.logout_usecase.LogoutInputBoundary;
 import use_cases.login_registration.logout_usecase.LogoutInteractor;
 import use_cases.login_registration.logout_usecase.LogoutPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.event_creation_use_case.*;
+import screens.task_management.FileTaskMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +37,11 @@ public class Main {
         JPanel screens = new JPanel(cardLayout);
         application.add(screens);
 
+        //create readwriter - read in TaskMap from file upon program start
+        FileTaskMap taskReadWrite = new FileTaskMap("src/main/java/data/TaskMap.txt");
+        TaskMap.setTaskMap(taskReadWrite.load());
+
         // Get objects from database
-        HashMap<String, Task> allTasks = new HashMap<>();
         HashMap<String, User> allUsers = new HashMap<>();
         HashMap<String, Course> allCourses = new HashMap<>();
 
@@ -54,24 +57,31 @@ public class Main {
         LoginPresenter loginPresenter = new LoginResponseFormatter();
         LoginInputBoundary loginInteractor = new LoginInteractor(loginUser, loginPresenter);
         LoginController loginController = new LoginController(loginInteractor);
+        //
 
+        // initialize User based on whether they log in or register
+        // if you don't register, then you are logging in:
+
+        // delete once everyone's stuff is resolved
+        User user;
+        if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
+                (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
+            user = ((UserRegInteractor) userInteractor).getUser();
+        } else {
+            user = ((LoginInteractor) loginInteractor).getUser();
+        }
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-//        EventCreationPresenter eventPresenter = new EventCreationResponseFormatter();
-//        EventCreationInputBoundary eventInteractor = new EventCreationInteractor(eventPresenter, (StudentUser) user,
-//                schedulerPresenter, scheduleConflictPresenter);
-//        EventCreationController eventCreationController = new EventCreationController(eventInteractor);
-//
-//        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
-//        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
-//        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", allTasks, allUsers, allCourses);
-//
-//        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
-//        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
-//        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-//        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, allTasks, (StudentUser) user);
+        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
+        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
+
+        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
+        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
+        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
 
         CourseCreationDsGateway course;
         try {
@@ -91,17 +101,21 @@ public class Main {
         //
 
         // Build the GUI
-//        EventCreationScreen taskScreen = new EventCreationScreen(eventCreationController, screens, cardLayout);
-//        screens.add("toDoList", taskScreen);
-//
-//        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, allTasks, screens, cardLayout);
-//        screens.add("calendar", calendarScreen);
-//
-//        ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
-//        screens.add("scheduleCT", scheduleCTScreen);
-//
-//        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
-//        screens.add("tracker", progressTrackerScreen);
+        StudentChooseTaskCreateScreen chooseStudentTask = new StudentChooseTaskCreateScreen(schedulerPresenter, scheduleConflictPresenter,
+                screens, cardLayout);
+        screens.add("studentTaskCreate", chooseStudentTask);
+
+        InstructorChooseTaskCreateScreen chooseInstructortask = new InstructorChooseTaskCreateScreen(screens, cardLayout);
+        screens.add("instructorTaskCreate", chooseInstructortask);
+
+        CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
+        screens.add("calendar", calendarScreen);
+
+        ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
+        screens.add("scheduleCT", scheduleCTScreen);
+
+        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
+        screens.add("tracker", progressTrackerScreen);
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
         screens.add("course", courseCreationScreen);

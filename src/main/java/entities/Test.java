@@ -53,7 +53,8 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
      * @param endTime - the end of the new time block
      */
     public void setTimeBlock(LocalDateTime startTime, LocalDateTime endTime) {
-
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     /**
