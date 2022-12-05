@@ -28,11 +28,18 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
     JPanel screens;
     CardLayout screenLayout;
 
+    /**
+     * A screen for making (instructor) Tests
+     * @param testController - controller for calling Task creation use case
+     * @param screens - rest of screens in the program
+     * @param screenLayout - for switching between screens
+     */
     public InstructorTestCreationScreen(TestCreationController testController, JPanel screens, CardLayout screenLayout) {
         this.testController = testController;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
+        // set the title of the screen
         JLabel screenTitle = new JLabel("Test Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -86,16 +93,19 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
                 // set weightage value to value in the box or 0 if blank
                 double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 
+                // create the Test
                 testController.create(title.getText(), 0, startDate, endDate, valWeightage);
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Test Created Successfully");
                 screenLayout.show(screens, "InstructorMain");
-            } catch (Exception e) {
+            } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
+            // return to main screen
             screenLayout.show(screens, "InstructorMain");
         }
     }

@@ -27,11 +27,18 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
     JPanel screens;
     CardLayout screenLayout;
 
+    /**
+     * A screen for Assignment creation (instructors)
+     * @param assignmentController - controller which calls the use case which creates the Assignment
+     * @param screens - all screens in the program
+     * @param screenLayout - for switching between screens
+     */
     public InstructorAssignmentCreationScreen(AssignmentCreationController assignmentController, JPanel screens, CardLayout screenLayout) {
         this.assignmentController = assignmentController;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
+        // set the title of the screen
         JLabel screenTitle = new JLabel("Assignment Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -41,7 +48,7 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
         LabelTextPanel dueDayInfo = new LabelTextPanel(
                 new JLabel("Enter Assignment due date (yyyy-MM-dd):"), dueDay);
         LabelTextPanel dueTimeInfo = new LabelTextPanel(
-                new JLabel("Enter Assignment due time (hh:mm):"), dueTime);
+                new JLabel("Enter Assignment due time (hh:mm, 24 hour):"), dueTime);
         LabelTextPanel weightInfo = new LabelTextPanel(
                 new JLabel("Enter Assignment weightage (double, don't include %):"), weightage);
 
@@ -81,16 +88,19 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
                 // set weightage to value in the box or 0.0 if blank
                 double valWeightage = weightage.getText().equals("") ? 0.0 : Double.parseDouble(weightage.getText());
 
+                // create the Assignment
                 assignmentController.create(title.getText(), 0, dueDate, valWeightage);
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment Created Successfully");
-                screenLayout.show(screens, "InstructorMain");
-            } catch (Exception e) {
+                screenLayout.show(screens, "StudentMain");
+            } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
+            // return to main screen
             screenLayout.show(screens, "InstructorMain");
         }
     }

@@ -1,8 +1,5 @@
 package entities;
 
-import use_cases.task_management.read_write.ReadWriter;
-
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -31,10 +28,10 @@ public class TaskMap implements Serializable {
 
     /**
      * Remove a Task from the TaskMap.txt
-     * @param task - the Task being removed
+     * @param id - the ID of the Task being removed
      */
-    public static void removeTask(Task task) {
-        taskMap.remove(task.getId());
+    public static void removeTask(String id) {
+        taskMap.remove(id);
     }
 
     /**
@@ -53,27 +50,27 @@ public class TaskMap implements Serializable {
         taskMap = tasksMap;
     }
 
-    /**
-     * Saves the taskMap to a file
-     * @param rw - ReadWriter object saving the taskMap
-     */
-    public static void saveToFile(ReadWriter rw) {
-        try {
-            rw.saveToFile(taskMap);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Loads the taskMap from a file
-     * @param rw - ReadWriter object reading the TaskMap.txt
-     */
-    public static void load(ReadWriter rw) {
-        try {
-            taskMap = (HashMap<String, Task>) rw.readFromFile();
-        } catch(Exception e) {
-            setTaskMap(new HashMap<>());
-        }
-    }
+//    /**
+//     * Saves the taskMap to a file
+//     * @param rw - ReadWriter object saving the taskMap
+//     */
+//    public static void saveToFile(TaskMapGateway rw) {
+//        try {
+//            rw.saveToFile(taskMap);
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
+//
+//    /**
+//     * Loads the taskMap from a file
+//     * @param rw - ReadWriter object reading the TaskMap.txt
+//     */
+//    public static void load(TaskMapGateway rw) {
+//        try {
+//            taskMap = (HashMap<String, Task>) rw.readFromFile();
+//        } catch(Exception e) {
+//            setTaskMap(new HashMap<>());
+//        }
+//    }
 }
