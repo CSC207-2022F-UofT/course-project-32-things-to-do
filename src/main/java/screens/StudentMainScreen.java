@@ -1,6 +1,6 @@
 package screens;
 
-import entities.StudentUser;
+import screens.login_registration.LogoutController;
 import screens.task_management.todolist_screens.ToDoListPresenter;
 import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.task_management.todolist_use_case.ToDoListInteractor;
@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class StudentMainScreen extends JPanel implements ActionListener {
 
@@ -22,22 +24,24 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     JButton courses;
     JButton scheduleCT;
 
+    JButton logout;
+
     /**
      * Objects for connecting to the other screens
      */
     CardLayout cardLayout;
     JPanel screens;
 
-    StudentUser user;
+    LogoutController logoutController;
 
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public StudentMainScreen(StudentUser user, JPanel screens, CardLayout cardLayout) {
+    public StudentMainScreen(JPanel screens, CardLayout cardLayout, LogoutController controller) {
 
-        this.user = user;
         this.cardLayout = cardLayout;
         this.screens = screens;
+        this.logoutController = controller;
 
         // Create label for title of screen
         JLabel title = new JLabel("32 Things To Do");
@@ -50,6 +54,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
         scheduleCT = new JButton("Schedule Collaborative Task");
+        logout = new JButton("Logout");
 
         createTask.addActionListener(this);
         todoList.addActionListener(this);
@@ -57,6 +62,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
         scheduleCT.addActionListener(this);
+        logout.addActionListener(this);
 
         // Create panel for buttons
         JPanel buttons = new JPanel();
@@ -66,6 +72,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         buttons.add(progressTracker);
         buttons.add(courses);
         buttons.add(scheduleCT);
+        buttons.add(logout);
 
         // Add all components to the panel
         this.add(title);
@@ -103,5 +110,15 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
         }
+        if (evt.getSource() == logout) {
+            try {
+                logoutController.create();
+                showMessageDialog(this, "Successfully logged out");
+                cardLayout.show(screens, "welcome");
+            } catch (Exception e) {
+                showMessageDialog(this, "Logout failed");
+            }
+        }
+
     }
 }

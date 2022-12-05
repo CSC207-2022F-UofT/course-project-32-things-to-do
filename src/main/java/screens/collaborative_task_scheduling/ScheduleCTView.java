@@ -1,5 +1,7 @@
 package screens.collaborative_task_scheduling;
 
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTResponseModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,20 +28,22 @@ public class ScheduleCTView extends JPanel implements ScheduleCTViewInterface, A
 
     /**
      * Method implemented from PresentOutputInterface which presents the dates the user wishes to schedule
-     * @param scheduleCTFormatter - a ScheduleCTFormatter which stores the dates to present
+     * @param responseModel - a ScheduleCTResponseModel which stores the dates to present
      */
     @Override
-    public void present(ScheduleCTFormatter scheduleCTFormatter) {
-        ArrayList<String> dateTimes = scheduleCTFormatter.getScheduledDateTimes();
+    public void present(ScheduleCTResponseModel responseModel) {
+        ArrayList<String> dateTimes = responseModel.getScheduledTimes();
 
         JLabel title = new JLabel("Scheduled Times");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel labels = new JPanel();
+        this.add(title);
 
         for (String timeBlock : dateTimes) {
+            JPanel timeLabel = new JPanel();
             JLabel time = new JLabel(timeBlock);
-            labels.add(time);
+            timeLabel.add(time);
+            this.add(timeLabel);
         }
 
         JPanel separateNote = new JPanel();
@@ -55,8 +59,6 @@ public class ScheduleCTView extends JPanel implements ScheduleCTViewInterface, A
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(labels);
         this.add(separateNote);
         this.add(buttons);
     }

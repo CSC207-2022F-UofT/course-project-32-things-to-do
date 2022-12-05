@@ -19,6 +19,10 @@ import use_cases.login_registration.login_usecase.LoginGateway;
 import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
+import use_cases.login_registration.logout_usecase.LogoutGateway;
+import use_cases.login_registration.logout_usecase.LogoutInputBoundary;
+import use_cases.login_registration.logout_usecase.LogoutInteractor;
+import use_cases.login_registration.logout_usecase.LogoutPresenter;
 import use_cases.login_registration.user_register_usecase.*;
 import screens.task_management.FileTaskMap;
 
@@ -84,10 +88,10 @@ public class Main {
         GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
-        ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
-        ScheduleCTOutputBoundary scheduleCTOutputBoundary = new ScheduleCTPresenter(presentOutputInterface);
-        ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
-        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
+        ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
+        ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
+        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
+        ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor);
 
         // Adding in course creation use case
         CourseCreationDsGateway courseCreate = new FileCourse("src/main/java/data/courses.ser");
@@ -102,6 +106,12 @@ public class Main {
         CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(enrolCourse, tasksToTodolist, enrolmentPresenter);
         CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
+        // Adding in logout use case
+        LogoutGateway logoutUser = new FileUser("src/main/java/data/users.ser");
+        LogoutInputBoundary logoutInteractor = new LogoutInteractor(logoutUser);
+        LogoutController logoutController = new LogoutController(logoutInteractor);
+        //
+
         // Build the GUI
         StudentChooseTaskCreateScreen chooseStudentTask = new StudentChooseTaskCreateScreen(schedulerPresenter, scheduleConflictPresenter,
                 screens, cardLayout);
@@ -115,6 +125,7 @@ public class Main {
 
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);
+        screens.add("scheduleCTView", (Component) scheduleCTOutputView);
 
         progressTrackerScreen.setProgressTrackerController(trackerController);
         progressTrackerScreen.setGradeCalculatorController(gradeController);
@@ -126,7 +137,7 @@ public class Main {
         CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolmentController, screens, cardLayout);
         screens.add("courseEnrol", courseEnrolmentScreen);
 
-        StudentMainScreen studentMainScreen = new StudentMainScreen((StudentUser)user, screens, cardLayout);
+        StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout, logoutController);
         screens.add("StudentMain", studentMainScreen);
 
         RegisterScreen registerScreen = new RegisterScreen(userRegisterController, cardLayout, screens);
@@ -135,7 +146,7 @@ public class Main {
         LoginScreen loginScreen = new LoginScreen(loginController, cardLayout, screens);
         screens.add("login", loginScreen);
 
-        InstructorMainScreen instructorMainScreen = new InstructorMainScreen(screens, cardLayout);
+        InstructorMainScreen instructorMainScreen = new InstructorMainScreen(screens, cardLayout, logoutController);
         screens.add("InstructorMain", instructorMainScreen);
 
         WelcomeScreen welcomeScreen = new WelcomeScreen(cardLayout, screens);
