@@ -1,6 +1,5 @@
 package screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens;
 
-import entities.StudentUser;
 import screens.LabelTextPanel;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import use_cases.task_management.task_edit_use_case.AssignmentDisplayer;
@@ -25,9 +24,6 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
     JTextField timeNeeded;
     JTextField timeSpent;
 
-    // todo: this needs to leave
-    StudentUser student;
-
     // controllers
     AssignmentEditController assignmentEditController;
     TaskDeletionController taskDeletionController;
@@ -40,19 +36,23 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
     AssignmentDisplayer assignmentInfo;
 
     /**
-     * a screen for editing/deleting an Assignment
+     * A screen for editing/deleting an Assignment
+     * @param assignmentEditController - controller for calling the edit use case
+     * @param taskDeletionController - controller for calling the delete use case
+     * @param screens - rest of screens in program
+     * @param screenLayout - for switching between screens
+     * @param assignmentInfo - for accessing the information of the Assignment
      */
     public AssignmentEditDeleteScreen(
-            StudentUser student,
             AssignmentEditController assignmentEditController, TaskDeletionController taskDeletionController,
             JPanel screens, CardLayout screenLayout, AssignmentDisplayer assignmentInfo) {
-        this.student = student;
         this.assignmentEditController = assignmentEditController;
         this.taskDeletionController = taskDeletionController;
         this.screens = screens;
         this.screenLayout = screenLayout;
         this.assignmentInfo = assignmentInfo;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Assignment Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -112,6 +112,10 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
         this.add(buttons);
     }
 
+    /**
+     * React to button clicks
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -130,18 +134,22 @@ public class AssignmentEditDeleteScreen extends JPanel implements ActionListener
                 assignmentEditController.edit(valComplete, assignmentInfo.getId(), valPriority, valDueDate, valWeightage,
                         valTimeNeeded, valTimeSpent);
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment edited successfully"); // todo customize this message
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
             // Assignment being deleted
             else if (e.getActionCommand().equals("Delete")) {
-                taskDeletionController.delete(student, assignmentInfo.getId());
+                // delete the Assignment
+                taskDeletionController.delete(assignmentInfo.getId());
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment deleted successfully");
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
             // Cancel button pressed
             else {
+                // return to to-do list screen
                 screenLayout.show(screens, "toDoList");
             }
         } catch (Exception ex) {

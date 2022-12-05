@@ -5,8 +5,6 @@ import screens.course_tracker.*;
 import screens.courses_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
-import screens.task_management.todolist_screens.ToDoListPresenter;
-import screens.task_management.todolist_screens.ToDoListScreen;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInputBoundary;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
@@ -21,8 +19,7 @@ import use_cases.login_registration.login_usecase.LoginInputBoundary;
 import use_cases.login_registration.login_usecase.LoginInteractor;
 import use_cases.login_registration.login_usecase.LoginPresenter;
 import use_cases.login_registration.user_register_usecase.*;
-import use_cases.task_management.read_write.TaskReadWrite;
-import use_cases.task_management.todolist_use_case.ToDoListInteractor;
+import screens.task_management.FileTaskMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,8 +37,8 @@ public class Main {
         application.add(screens);
 
         //create readwriter - read in TaskMap from file upon program start
-        TaskReadWrite taskReadWrite = new TaskReadWrite("src/main/java/data/TaskMap.txt");
-        TaskMap.load(taskReadWrite);
+        FileTaskMap taskReadWrite = new FileTaskMap("src/main/java/data/TaskMap.txt");
+        TaskMap.setTaskMap(taskReadWrite.load());
 
         // Get objects from database
         HashMap<String, User> allUsers = new HashMap<>();
@@ -63,6 +60,8 @@ public class Main {
 
         // initialize User based on whether they log in or register
         // if you don't register, then you are logging in:
+
+        // delete once everyone's stuff is resolved
         User user;
         if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
                 (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
@@ -70,9 +69,6 @@ public class Main {
         } else {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
-
-        ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
-        ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
 
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
@@ -103,12 +99,12 @@ public class Main {
         CourseCreationController courseCreationController = new CourseCreationController(interactor);
 
         // Build the GUI
-        ChooseTaskCreateScreen chooseTask = new ChooseTaskCreateScreen(user, schedulerPresenter, scheduleConflictPresenter,
+        StudentChooseTaskCreateScreen chooseStudentTask = new StudentChooseTaskCreateScreen(schedulerPresenter, scheduleConflictPresenter,
                 screens, cardLayout);
-        screens.add("taskCreate", chooseTask);
+        screens.add("studentTaskCreate", chooseStudentTask);
 
-        ToDoListScreen toDoListScreen = new ToDoListScreen((StudentUser) user, toDoListPresenter, screens, cardLayout);
-        screens.add("toDoList", toDoListScreen);
+        InstructorChooseTaskCreateScreen chooseInstructortask = new InstructorChooseTaskCreateScreen(screens, cardLayout);
+        screens.add("instructorTaskCreate", chooseInstructortask);
 
         CalendarScreen calendarScreen = new CalendarScreen((StudentUser) user, TaskMap.getTaskMap(), screens, cardLayout);
         screens.add("calendar", calendarScreen);
