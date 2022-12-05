@@ -26,16 +26,8 @@ public class CourseCreationResponseModel {
     public String getCourseID() {
         return courseID;
     }
-    public void setCourseID() {
-        this.courseID = courseID;
-    }
     public ArrayList<String> getTasks() {
         return tasks;
-    }
-
-    // i don't think this is needed
-    public void setTasks() {
-        this.tasks = tasks;
     }
 }
 
