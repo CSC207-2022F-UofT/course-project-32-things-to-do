@@ -1,5 +1,6 @@
 package use_cases.login_registration.logout_usecase;
 
+import entities.CurrentUser;
 import entities.InstructorUser;
 import entities.StudentUser;
 import entities.User;
@@ -18,31 +19,24 @@ public class LogoutInteractor implements LogoutInputBoundary {
      */
     final LogoutGateway userGateway;
 
-    final LogoutPresenter userPresenter;
-
-    final User user;
+    private User user;
 
     /**
      * @param gateway the logout gateway (which interacts with the User database)
-     * @param logoutPresenter the logout presenter
-     * @param u the User that is logging out
      */
-    public LogoutInteractor(LogoutGateway gateway, LogoutPresenter logoutPresenter, User u) {
+    public LogoutInteractor(LogoutGateway gateway) {
         this.userGateway = gateway;
-        this.userPresenter = logoutPresenter;
-        this.user = u;
+        this.user = CurrentUser.getCurrentUser();
     }
 
     /**
      * Save a new UserRegSaveRequest which contains all of the information in the User that is trying to
      * log out into the User database.
-     * @param request the request to logout
-     * @return the logout response
      * @throws IOException if logout fails
      */
     @Override
-    public LogoutResponseModel create(LogoutRequestModel request) throws IOException {
-
+    public void create() throws IOException {
+        this.user = CurrentUser.getCurrentUser();
         LocalDateTime now = LocalDateTime.now();
 
         UserRegSaveRequest userModel;
@@ -58,8 +52,5 @@ public class LogoutInteractor implements LogoutInputBoundary {
         }
 
         userGateway.save(userModel);
-
-        LogoutResponseModel accResponseModel = new LogoutResponseModel(user.getName(), now.toString());
-        return userPresenter.prepareSuccessView(accResponseModel);
     }
 }
