@@ -86,6 +86,7 @@ public class ScheduleCTScreen extends JPanel implements ActionListener {
         } else if (evt.getActionCommand().equals("Schedule")) {
             try {
                 scheduleCTController.isConflict(taskTitle.getText(), startTime.getText(), endTime.getText());
+                screenLayout.show(screens, "scheduleCTView");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
