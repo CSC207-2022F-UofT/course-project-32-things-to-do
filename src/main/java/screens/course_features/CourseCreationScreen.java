@@ -1,4 +1,4 @@
-package screens.courses_features;
+package screens.course_features;
 
 // Framework / Drivers layer
 
@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CourseCreationScreen extends JPanel implements ActionListener {
     /** the course name chosen by InstructorUser */
@@ -18,7 +20,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
     JTextField courseInstructor = new JTextField(15);
 
     /** title of task */
-    JTextField taskName = new JTextField(15);
+    JTextField taskNames = new JTextField(15);
 
     /** the controller */
     CourseCreationController courseCreationController;
@@ -47,12 +49,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
         LabelTextPanel taskNameInfo = new LabelTextPanel(
-                new JLabel("Enter task title"), taskName);
-
-        // to do:
-        // need the option to input more than one task at a time
-        // can just separate by commas (ie. user enters -- task 1, task 2, task 3)
-        // or can have a '+' button that creates a new text panel for a new task
+                new JLabel("Enter task title(s), separated by a comma"), taskNames);
 
         // buttons
         JButton cancel = new JButton("Cancel");
@@ -77,20 +74,31 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
 
     /**
      * React to a button click which triggers the corresponding use case
+     * have to keep try catch, or else error messages won't show up
+     * NEED TO FIX THIS!!!
+     * 1. loop through tasks + append
      */
     @Override
     public void actionPerformed(ActionEvent evt) {
         // instructor decides to cancel the course creation process
         if (evt.getActionCommand().equals("Cancel")) {
-            screenLayout.show(screens, "StudentMain");
+            screenLayout.show(screens, "InstructorMain");
         } else if (evt.getActionCommand().equals("Save")) {
             try {
-                // initialize new Arraylist and add task
-                ArrayList<String> tasks = new ArrayList<>();
-                tasks.add(taskName.getText());
+                // tasksNames right now is an arraylist of ONE string with the string being "task1, task2"
+                // split string so that each task is a string
+                String[] tasksSplit = taskNames.getText().split(",");
+                List<String> taskArrayList;
+                taskArrayList = Arrays.asList(tasksSplit);
+
+                // tasklist should be arraylist ["task1", "task2"]
+                // add all strings to arraylist 'tasks'
+                ArrayList<String> tasks = new ArrayList<>(taskArrayList);
+
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);
-                JOptionPane.showMessageDialog(this, "Course successful created.");
+                JOptionPane.showMessageDialog(
+                        this, "Course" + courseName.getText() + "and tasks" + tasks + "successfully created.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }

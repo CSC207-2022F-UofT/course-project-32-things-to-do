@@ -1,4 +1,4 @@
-package screens.courses_features;
+package screens.course_features;
 
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentInputBoundary;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentRequestModel;
@@ -10,11 +10,10 @@ public class CourseEnrolmentController {
         this.enrolmentInput = enrolmentGateway;
     }
 
-    CourseEnrolmentResponseModel create(String courseID, String instructorID, String studentID) {
+    CourseEnrolmentResponseModel enrol(String courseID, String instructorID, String studentID) {
         CourseEnrolmentRequestModel requestModel = new CourseEnrolmentRequestModel(
                 courseID, instructorID, studentID);
 
-        return enrolmentInput.create(requestModel);
+        return enrolmentInput.enrol(requestModel);
     }
-
 }

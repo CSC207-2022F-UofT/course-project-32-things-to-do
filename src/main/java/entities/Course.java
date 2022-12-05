@@ -1,12 +1,13 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * entity layer
  */
 
-public class Course {
+public class Course implements Serializable {
     /**
      * class for Course entity with private instance variables
      * using StudentUser, InstructorUser, and Task entities
@@ -16,7 +17,8 @@ public class Course {
     private String courseID;
     private ArrayList<String> students; // stores the IDs of students enrolled in the course
     private ArrayList<String> tasks;  // stores the IDs of the course's tasks
-    private Boolean published;
+//    private Boolean published;
+    private boolean courseIsValid; // for unit testing
 
     /**
      * Creates a new Course with a course name, instructor name, and a list of tasks
@@ -30,8 +32,8 @@ public class Course {
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;
         this.tasks = tasks;
-        this.students = new ArrayList<String>();
-        this.published = false;  // course creation, default set to not yet published
+        this.students = new ArrayList<>();
+//        this.published = false;  // course creation, default set to not yet published
     }
 
     /*
@@ -48,21 +50,31 @@ public class Course {
     }
 
     public ArrayList<String> getStudents() {
-        return new ArrayList<String>(this.students);
+        return new ArrayList<>(this.students);
+    }
+    /* add a new student id to the arraylist of student id strings, no return */
+    public void addStudent(String studentID) {
+        this.students.add(studentID);
     }
 
-    /*
-    arraylist of all the task ids associated with a course
-     */
     public ArrayList<String> getTasks() {
-        return new ArrayList<String>(this.tasks);
+        return new ArrayList<>(this.tasks);
     }
-    public Boolean getPublished() {
-        return published;
+    /* new task added to course (input from instructor user) */
+    public void addTask(String taskID) {
+        this.tasks.add(taskID);
+    }
+
+//    public Boolean getPublished() {
+//        return published;
+//    }
+    public boolean courseIsValid() {
+        return !(courseName.equals("") || courseInstructor.equals("") || tasks.isEmpty());
     }
 
     /*
     setters
+    don't think any setters are needed...
      */
     public void setCourseName(String courseName) {
         this.courseName = courseName;
@@ -74,10 +86,10 @@ public class Course {
         this.courseID = courseID;
     }
     public void setStudents(ArrayList<String> students) {
-        this.students = new ArrayList<String>(students);
+        this.students = new ArrayList<>(students);
     }
     public void setTasks(ArrayList<String> tasks) {
-        this.tasks = new ArrayList<String>(tasks);
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
@@ -87,7 +99,7 @@ public class Course {
     public void removeTask(Task task) {
         this.tasks.remove(task.getId());
     }
-    public void setPublished(Boolean published) {
-        this.published = published;
-    }
+//    public void setPublished(Boolean published) {
+//        this.published = published;
+//    }
 }

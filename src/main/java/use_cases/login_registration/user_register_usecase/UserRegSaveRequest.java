@@ -48,6 +48,7 @@ public class UserRegSaveRequest implements Serializable {
         return creationTime;
     }
 
+
     /**
      * @return a User based on the information stored in this UserRegSaveRequest object
      * Default is StudentUser

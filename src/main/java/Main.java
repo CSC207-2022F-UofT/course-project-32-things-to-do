@@ -2,10 +2,11 @@ import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
 import screens.course_progress.*;
-import screens.courses_features.*;
+import screens.course_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
@@ -83,16 +84,18 @@ public class Main {
         ScheduleCTInputBoundary scheduleCTInputBoundary = new ScheduleCTInteractor(scheduleCTOutputBoundary);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInputBoundary, TaskMap.getTaskMap(), (StudentUser) user);
 
-        CourseCreationDsGateway course;
-        try {
-            course = new FileCourse("./src/main/java/data/courses.csv");
-        } catch (IOException e) {
-            throw new RuntimeException("Could not create file.");
-        }
-        CourseCreationPresenter presenter = new CourseCreationResponseFormatter();
-        CourseMap courseMap = new CourseMap();
-        CourseCreationInputBoundary interactor = new CourseCreationInteractor(course, presenter, courseMap);
-        CourseCreationController courseCreationController = new CourseCreationController(interactor);
+        // Adding in course creation use case
+        CourseCreationDsGateway courseCreate = new FileCourse("src/main/java/data/courses.ser");
+        CourseCreationOutputBoundary coursePresenter = new CourseCreationPresenter();
+        CourseCreationInputBoundary courseInteractor = new CourseCreationInteractor(courseCreate, coursePresenter);
+        CourseCreationController courseController = new CourseCreationController(courseInteractor);
+
+        // Adding in course enrolment use case
+        CourseEnrolmentDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
+        CourseTasksToStudentTodolistDsGateway tasksToTodolist = new FileUser("src/main/java/data/users.ser");
+        CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
+        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(enrolCourse, tasksToTodolist, enrolmentPresenter);
+        CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
         // Adding in logout use case
         LogoutGateway logoutUser = new FileUser("src/main/java/data/users.ser");
@@ -117,8 +120,11 @@ public class Main {
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
         screens.add("tracker", progressTrackerScreen);
 
-        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseCreationController, screens, cardLayout);
-        screens.add("course", courseCreationScreen);
+        CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseController, screens, cardLayout);
+        screens.add("courseCreate", courseCreationScreen);
+
+        CourseEnrolmentScreen courseEnrolmentScreen = new CourseEnrolmentScreen(enrolmentController, screens, cardLayout);
+        screens.add("courseEnrol", courseEnrolmentScreen);
 
         StudentMainScreen studentMainScreen = new StudentMainScreen(screens, cardLayout, logoutController);
         screens.add("StudentMain", studentMainScreen);
