@@ -24,11 +24,15 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
      * The main controller of this interactor that calls the helper methods
      */
     @Override
-    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel, HashMap<String, Task> hashMap) {
+    public ScheduleCTResponseModel schedule(ScheduleCTRequestModel requestModel) {
 
-        CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), hashMap);
+        HashMap<String, Task> taskHashMap =  TaskMap.getTaskMap();
 
-        if (requestModel.getStudentUser() != task.getLeader()) {
+        CollaborativeTask task = getTaskObjectFromName(requestModel.getTaskName(), taskHashMap);
+
+        StudentUser currentUser = (StudentUser) CurrentUser.getCurrentUser();
+
+        if (currentUser != task.getLeader()) {
             return scheduleCTOutputBoundary.prepareFailView("User is not the leader. " +
                     "You do not have scheduling access");
         }
@@ -42,7 +46,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         LocalDateTime endTime = convertStringToLocalDateTime(requestModel.getEndTime());
 
         for (StudentUser user : users) {
-            ArrayList<Task> userTasks = getAllTaskFromIdExceptOne(task, user, hashMap);
+            ArrayList<Task> userTasks = getAllTaskFromIdExceptOne(task, user, taskHashMap);
             // isUserAvailableAtDateTime returns false if not available
             // if isUserAvailableAtDateTime is false, add it to the list of unavailable users
             if (!isUserAvailableAtDateTime(user, userTasks, startTime, endTime)) {
@@ -64,7 +68,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
                 formattedDateTimes.add(formattedTimeBlock);
             }
 
-            ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(false, formattedDateTimes);
+            ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(formattedDateTimes);
             scheduleCTResponseModel.setTimesToSchedule(dates);
             task.setTimeBlocks(dates);
 
@@ -95,36 +99,40 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         LocalDateTime currStart = startTime;
         LocalDateTime currEnd = endTime;
 
-        if (frequency.equals("daily")) {
-            while (currEnd.plusDays(1).isBefore(deadline)) {
-                ArrayList<LocalDateTime> date = new ArrayList<>();
-                currStart = currStart.plusDays(1);
-                currEnd = currEnd.plusDays(1);
+        switch (frequency) {
+            case "daily":
+                while (currEnd.plusDays(1).isBefore(deadline)) {
+                    ArrayList<LocalDateTime> date = new ArrayList<>();
+                    currStart = currStart.plusDays(1);
+                    currEnd = currEnd.plusDays(1);
 
-                date.add(currStart);
-                date.add(currEnd);
-                times.add(date);
-            }
-        } else if (frequency.equals("weekly")) {
-            while (currEnd.plusWeeks(1).isBefore(deadline)) {
-                ArrayList<LocalDateTime> date = new ArrayList<>();
-                currStart = currStart.plusWeeks(1);
-                currEnd = currEnd.plusWeeks(1);
+                    date.add(currStart);
+                    date.add(currEnd);
+                    times.add(date);
+                }
+                break;
+            case "weekly":
+                while (currEnd.plusWeeks(1).isBefore(deadline)) {
+                    ArrayList<LocalDateTime> date = new ArrayList<>();
+                    currStart = currStart.plusWeeks(1);
+                    currEnd = currEnd.plusWeeks(1);
 
-                date.add(currStart);
-                date.add(currEnd);
-                times.add(date);
-            }
-        } else if (frequency.equals("monthly")) {
-            while (currEnd.plusMonths(1).isBefore(deadline)) {
-                ArrayList<LocalDateTime> date = new ArrayList<>();
-                currStart = currStart.plusMonths(1);
-                currEnd = currEnd.plusMonths(1);
+                    date.add(currStart);
+                    date.add(currEnd);
+                    times.add(date);
+                }
+                break;
+            case "monthly":
+                while (currEnd.plusMonths(1).isBefore(deadline)) {
+                    ArrayList<LocalDateTime> date = new ArrayList<>();
+                    currStart = currStart.plusMonths(1);
+                    currEnd = currEnd.plusMonths(1);
 
-                date.add(currStart);
-                date.add(currEnd);
-                times.add(date);
-            }
+                    date.add(currStart);
+                    date.add(currEnd);
+                    times.add(date);
+                }
+                break;
         }
         return times;
     }
@@ -208,20 +216,31 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
 
         boolean is_test_free = givenTime(timeBlockStart, timeBlockEnd, start, end);
 
-        ArrayList<ArrayList<LocalDateTime>> prepTime = test.getPrepTimeScheduled();
+        return prepTimeFree(start, end, is_test_free, test.getPrepTimeScheduled());
+    }
 
-        if (prepTime != null){
-            for (ArrayList<LocalDateTime> prep : prepTime) {
+    /**
+     * Helper method to help determine if task is free
+     * @param start - the start date and time of the time the user wants to schedule
+     * @param end - the end date and time of the time the user wants to schedule
+     * @param is_free - whether the task conflicts or not
+     * @param prepTimeScheduled - the associated time blocks with a task
+     * @return whether the time blocks conflict or not
+     */
+    private boolean prepTimeFree(LocalDateTime start, LocalDateTime end, boolean is_free, ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled) {
+
+        if (prepTimeScheduled != null){
+            for (ArrayList<LocalDateTime> prep : prepTimeScheduled) {
                 LocalDateTime prepStart = prep.get(0);
                 LocalDateTime prepEnd = prep.get(1);
 
                 // if there is a conflict
                 if (!givenTime(prepStart, prepEnd, start, end)) {
-                    is_test_free = false;
+                    is_free = false;
                 }
             }
         }
-        return is_test_free;
+        return is_free;
     }
 
     /**
@@ -235,18 +254,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
     public boolean assignmentFree(Assignment assignment, LocalDateTime start, LocalDateTime end) {
 
         boolean is_assignment_free = true;
-        ArrayList<ArrayList<LocalDateTime>> prepTime = assignment.getPrepTimeScheduled();
-
-        if (prepTime != null) {
-            for (ArrayList<LocalDateTime> prep : prepTime) {
-                LocalDateTime prepStart = prep.get(0);
-                LocalDateTime prepEnd = prep.get(1);
-                if (!givenTime(prepStart, prepEnd, start, end)) {
-                    is_assignment_free = false;
-                }
-            }
-        }
-        return is_assignment_free;
+        return prepTimeFree(start, end, is_assignment_free, assignment.getPrepTimeScheduled());
     }
 
     /**
@@ -260,17 +268,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
     public boolean collaborativeTaskFree(CollaborativeTask collaborativeTask, LocalDateTime start, LocalDateTime end) {
         boolean is_collaborative_task_free = true;
 
-        ArrayList<ArrayList<LocalDateTime>> meetingTimes = collaborativeTask.getTimeBlocks();
-        if (meetingTimes != null) {
-            for (ArrayList<LocalDateTime> timeBlock : meetingTimes) {
-                LocalDateTime timeStart = timeBlock.get(0);
-                LocalDateTime timeEnd = timeBlock.get(1);
-                if (!givenTime(timeStart, timeEnd, start, end)) {
-                    is_collaborative_task_free = false;
-                }
-            }
-        }
-        return is_collaborative_task_free;
+        return prepTimeFree(start, end, is_collaborative_task_free, collaborativeTask.getTimeBlocks());
     }
 
     /**
@@ -306,7 +304,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
             // if timeBlockEnd is equal to workingHoursEnd
         } else if (timeBlockEnd.getHour() == workingHoursEnd.getHour()) {
             return false;
-        // if timeBlockStart is equal to workingHoursStart
+            // if timeBlockStart is equal to workingHoursStart
         } else return timeBlockStart.getHour() != workingHoursStart.getHour();
     }
 
@@ -398,5 +396,4 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         String formattedEnd = end.format(formatter);
         return formattedStart + " to " + formattedEnd;
     }
-
 }
