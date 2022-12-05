@@ -1,5 +1,7 @@
 package use_cases.course_tracker.progress_tracker_use_case;
 
+import java.util.ArrayList;
+
 /**
  * Response Model for the Progress Tracker Use Case
  * Acts as the output data object in the use case layer
@@ -13,13 +15,14 @@ public class ProgressTrackerResponseModel {
 
     private final double requiredAverage;
 
-    String displayString;
+    private final ArrayList<String> ungradedTasks;
 
-    public ProgressTrackerResponseModel(double courseProgress, double mockGrade, double requiredAverage) {
+    public ProgressTrackerResponseModel(double courseProgress, double mockGrade, double requiredAverage,
+                                        ArrayList<String> ungradedTasks) {
         this.courseProgress = courseProgress;
         this.mockGrade = mockGrade;
         this.requiredAverage = requiredAverage;
-        this.displayString = "";
+        this.ungradedTasks = ungradedTasks;
     }
 
     public double getCourseProgress() {
@@ -34,11 +37,8 @@ public class ProgressTrackerResponseModel {
         return requiredAverage;
     }
 
-    public String getDisplayString() {
-        return displayString;
+    public ArrayList<String> getUngradedTasks() {
+        return ungradedTasks;
     }
 
-    public void setDisplayString(String displayString) {
-        this.displayString = displayString;
-    }
 }

@@ -6,7 +6,7 @@ package use_cases.course_tracker.progress_tracker_use_case;
  */
 
 public interface ProgressTrackerOutputBoundary {
-    ProgressTrackerResponseModel display(ProgressTrackerResponseModel responseModel);
+    void format(ProgressTrackerResponseModel responseModel);
 
-    ProgressTrackerResponseModel failView(String error);
+    void failView(String error);
 }
