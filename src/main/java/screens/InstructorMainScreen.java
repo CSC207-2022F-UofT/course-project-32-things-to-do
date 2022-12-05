@@ -1,9 +1,17 @@
 package screens;
 
+import screens.login_registration.LoginFailed;
+import screens.login_registration.LogoutController;
+import screens.login_registration.LogoutFailed;
+import use_cases.login_registration.login_usecase.LoginResponseModel;
+import use_cases.login_registration.logout_usecase.LogoutResponseModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 public class InstructorMainScreen extends JPanel implements ActionListener {
 
@@ -24,13 +32,16 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
     CardLayout cardLayout;
     JPanel screens;
 
+    LogoutController logoutController;
+
     /**
      * The window of the main screen with buttons connecting to each use case
      */
-    public InstructorMainScreen(JPanel screens, CardLayout cardLayout) {
+    public InstructorMainScreen(JPanel screens, CardLayout cardLayout, LogoutController controller) {
 
         this.cardLayout = cardLayout;
         this.screens = screens;
+        this.logoutController = controller;
 
         // Create label for title of screen
         JLabel title = new JLabel("32 Things To Do");
@@ -40,13 +51,11 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
         taskCreate = new JButton("New Task");
         calendar = new JButton("Calendar");
         courses = new JButton("Courses");
-//        scheduleCT = new JButton("Schedule Collaborative Task");
         logout = new JButton("Logout");
 
         taskCreate.addActionListener(this);
         calendar.addActionListener(this);
         courses.addActionListener(this);
-//        scheduleCT.addActionListener(this);
         logout.addActionListener(this);
 
         // Create panel for buttons
@@ -54,7 +63,6 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
         buttons.add(taskCreate);
         buttons.add(calendar);
         buttons.add(courses);
-//        buttons.add(scheduleCT);
         buttons.add(logout);
 
         // Add all components to the panel
@@ -77,11 +85,16 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
         if (evt.getSource() == courses) {
             cardLayout.show(screens, "course");
         }
-//        if (evt.getSource() == scheduleCT) {
-//            cardLayout.show(screens, "scheduleCT");
-//        }
+
         if (evt.getSource() == logout) {
-            cardLayout.show(screens, "welcome");
+            try {
+                logoutController.create();
+                showMessageDialog(this, "Successfully logged out");
+                cardLayout.show(screens, "welcome");
+            } catch (Exception e) {
+                showMessageDialog(this, "Logout failed");
+            }
+
         }
 
     }

@@ -49,17 +49,11 @@ public class LoginScreen extends JPanel implements ActionListener {
         logIn.addActionListener(this);
         cancel.addActionListener(this);
 
-//        JPanel main = new JPanel();
-//        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-//        this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(buttons);
-//        this.setContentPane(main);
-//
-//        this.pack();
     }
 
     /**
@@ -73,7 +67,7 @@ public class LoginScreen extends JPanel implements ActionListener {
             try {
                 LoginResponseModel l = loginController.create(username.getText(),
                         String.valueOf(password.getPassword()));
-                showMessageDialog(this, "% logged in.".format(username.getText()));
+                showMessageDialog(this, "Successfully logged in.");
                 if (l.getTypeOfUser().equals("Instructor")) {
                     cardLayout.show(screens, "InstructorMain");
                 } else {

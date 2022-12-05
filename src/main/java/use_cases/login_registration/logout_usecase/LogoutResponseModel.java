@@ -22,12 +22,4 @@ public class LogoutResponseModel {
 
     public void setName(String username) { this.name = username; }
 
-    public String getLogoutTime() {
-        return logoutTime;
-    }
-
-    public void setLogoutTime(String TimeOfLogout) {
-        this.logoutTime = TimeOfLogout;
-    }
-
 }
