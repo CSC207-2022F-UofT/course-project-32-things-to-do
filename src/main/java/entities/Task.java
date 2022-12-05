@@ -93,11 +93,4 @@ public abstract class Task implements Serializable {
     public void setComplete() {
         this.complete = true;
     }
-
-    /**
-     * Save the Task to the taskMap
-     */
-    public void save() {
-        TaskMap.addTask(this.id, this);
-    }
 }

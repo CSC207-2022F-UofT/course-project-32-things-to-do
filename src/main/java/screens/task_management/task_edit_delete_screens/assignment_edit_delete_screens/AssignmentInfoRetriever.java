@@ -1,18 +1,22 @@
-package use_cases.task_management.task_edit_use_case;
+package screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens;
 
 import entities.Assignment;
+import entities.TaskMap;
+import use_cases.task_management.task_edit_use_case.AssignmentDisplayer;
 
 import java.time.LocalDateTime;
 
 public class AssignmentInfoRetriever implements AssignmentDisplayer {
     private final Assignment assignment;
+    private final String id;
 
     /**
      * An object that retrieves the info of an Assignment to be displayed in edit screens
-     * @param assignment - the Assignment whose info is being displayed
+     * @param id - ID for the Assignment whose info is being displayed
      */
-    public AssignmentInfoRetriever(Assignment assignment) {
-        this.assignment = assignment;
+    public AssignmentInfoRetriever(String id) {
+        this.assignment = (Assignment) TaskMap.findTask(id);
+        this.id = id;
     }
     @Override
     public String getTitle() {
@@ -21,7 +25,7 @@ public class AssignmentInfoRetriever implements AssignmentDisplayer {
 
     @Override
     public String getId() {
-        return assignment.getId();
+        return this.id;
     }
 
     @Override

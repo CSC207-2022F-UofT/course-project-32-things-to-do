@@ -1,15 +1,27 @@
 package use_cases.task_management.task_edit_use_case;
 
 import entities.*;
+import use_cases.task_management.read_write.TaskMapGateway;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
+    private final TaskMapGateway taskMapGateway;
     private final TaskEditPresenter presenter;
-    private final StudentUser student;
+    private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
-    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student) {
+    /**
+     * An interactor for editing Tasks
+     * @param presenter - displays success/fail views
+     */
+    public TaskEditInteractor (TaskMapGateway taskMapGateway, TaskEditPresenter presenter) {
+        this.taskMapGateway = taskMapGateway;
         this.presenter = presenter;
-        this.student = student;
     }
+    /**
+     * Attempt to edit a Task
+     * @param requestModel - the request model of the Task being edited
+     * @param type - type of Task
+     * @return - response model
+     */
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
         if (type.equals("Event")) { // Event being edited
@@ -57,8 +69,12 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             student.removeTaskFromList(requestModel.getId());
             student.addTaskToArchive(requestModel.getId());
         }
+
+        // save changes
+        taskMapGateway.save(TaskMap.getTaskMap());
+
         TaskEditResponseModel response = new TaskEditResponseModel(
-                TaskMap.findTask(requestModel.getId()).getTitle(), type);
+                TaskMap.findTask(requestModel.getId()).getTitle(), requestModel.getId(), type);
         return presenter.prepareSuccessView(response);
     }
 }

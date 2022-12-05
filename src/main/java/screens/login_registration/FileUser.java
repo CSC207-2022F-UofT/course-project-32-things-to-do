@@ -43,8 +43,6 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
             accounts = new HashMap<String, UserRegSaveRequest>();
             save();
         }
-
-
     }
 
     private HashMap<String, UserRegSaveRequest> readFile() throws IOException, ClassNotFoundException {

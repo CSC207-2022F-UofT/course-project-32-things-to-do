@@ -1,6 +1,6 @@
 package screens.task_management.task_creation_screens;
 
-import entities.User;
+import screens.task_management.FileTaskMap;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
 import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationScreen;
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
@@ -9,16 +9,15 @@ import screens.task_management.task_creation_screens.test_creation_screens.TestC
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationScreen;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
-import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
-import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
-import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
+import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.task_creation_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
+public class StudentChooseTaskCreateScreen extends JPanel implements ActionListener {
     // selectable buttons on screen
     JButton event = new JButton("New event");
     JButton assignment = new JButton("New assignment");
@@ -26,7 +25,6 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     JButton cancel = new JButton("Cancel");
 
     // for making task creation screens:
-    User user;
     SchedulerPresenter schedulerPresenter;
     ScheduleConflictPresenter scheduleConflictPresenter;
 
@@ -35,11 +33,14 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     JPanel screens;
 
     /**
-     * the window for choosing which type of Task to create, after selecting "New task"
+     * The window for deciding which Task to create, after clicking the "New task" button
+     * @param schedulerPresenter - todo
+     * @param scheduleConflictPresenter - todo
+     * @param screens - rest of screens in the program
+     * @param cardLayout - for switching between screens
      */
-    public ChooseTaskCreateScreen(User user, SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
-                                  JPanel screens, CardLayout cardLayout) {
-        this.user = user;
+    public StudentChooseTaskCreateScreen(SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+                                         JPanel screens, CardLayout cardLayout) {
         this.schedulerPresenter = schedulerPresenter;
         this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
@@ -75,12 +76,13 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Cancel")) { // go back to main
-            cardLayout.show(screens, "main");
+            cardLayout.show(screens, "StudentMain");
         }
         // create use case components for task creation
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
+        TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskCreationOutputBoundary, user, "none",
+                taskMapGateway, taskCreationOutputBoundary, "none",
                 schedulerPresenter, scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
@@ -94,13 +96,13 @@ public class ChooseTaskCreateScreen extends JPanel implements ActionListener {
         } else if (e.getActionCommand().equals("New assignment")) { // create and go to assignment screen
             AssignmentCreationScreen assignmentCreationScreen = new AssignmentCreationScreen(assignmentCreationController, screens, cardLayout);
 
-            screens.add("assignment", assignmentCreationScreen);
-            cardLayout.show(screens, "assignment");
+            screens.add("studentAssignment", assignmentCreationScreen);
+            cardLayout.show(screens, "studentAssignment");
         } else { // create and go to test screen
             TestCreationScreen testCreationScreen = new TestCreationScreen(testCreationController, screens, cardLayout);
 
-            screens.add("test", testCreationScreen);
-            cardLayout.show(screens, "test");
+            screens.add("studentTest", testCreationScreen);
+            cardLayout.show(screens, "studentTest");
         }
     }
 }

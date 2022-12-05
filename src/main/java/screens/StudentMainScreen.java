@@ -1,6 +1,9 @@
 package screens;
 
 import entities.StudentUser;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import screens.task_management.todolist_screens.ToDoListScreen;
+import use_cases.task_management.todolist_use_case.ToDoListInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,9 +78,17 @@ public class StudentMainScreen extends JPanel implements ActionListener {
      */
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == createTask) {
-            cardLayout.show(screens, "taskCreate");
+            cardLayout.show(screens, "studentTaskCreate");
         }
         if (evt.getSource() == todoList) {
+            // create to-do list screen (so it refreshes)
+            ToDoListPresenter toDoListPresenter = new ToDoListPresenter();
+            ToDoListInteractor toDoListInteractor = new ToDoListInteractor(toDoListPresenter);
+            toDoListPresenter.setToDoListInput(toDoListInteractor);
+
+            ToDoListScreen toDoListScreen = new ToDoListScreen(toDoListPresenter, screens, cardLayout);
+            screens.add("toDoList", toDoListScreen);
+
             cardLayout.show(screens, "toDoList");
         }
         if (evt.getSource() == calendar) {
@@ -92,7 +103,5 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
         }
-
     }
-
 }
