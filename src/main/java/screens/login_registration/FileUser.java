@@ -1,16 +1,22 @@
 package screens.login_registration;
+import entities.Course;
+import entities.StudentUser;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseTasksToStudentTodolistDsGateway;
 import use_cases.login_registration.login_usecase.LoginGateway;
 import use_cases.login_registration.logout_usecase.LogoutGateway;
+import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
 import use_cases.login_registration.user_register_usecase.UserRegGateway;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
+public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseTasksToStudentTodolistDsGateway {
 
 //    private final HashMap<String, UserRegSaveRequest> accounts;
     private static HashMap<String, UserRegSaveRequest> accounts;
@@ -96,4 +102,32 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
         return accounts;
     }
 
+    /**
+     * For course enrolment use case (course tasks to do list gateway)
+     * Adds the course tasks to the student's to-do list
+     *
+     * @param studentID the username of the student whose parameters are being modified
+     * @param courseTasks the course task ids what will be added to the student's 'to do list' parameter
+     */
+    @Override
+    public void addSaveTasksToTodolist(String studentID, ArrayList<String> courseTasks) throws IOException {
+        UserRegSaveRequest username = getAccounts().get(studentID);
+        // casting to student save request
+        ((StudentSaveRequest) username).getToDoList().addAll(courseTasks);
+        this.save(); // saves the file with new changes
+    }
+
+    /**
+     * For course enrolment use case (course tasks to do list gateway)
+     * Adds the course id to the student's 'courses' parameter
+     * @param studentCourse the course the student enrolled in
+     * @param studentID the username of student enrolled
+     */
+    @Override
+    public void addCourseToStudent(String studentCourse, String studentID) throws IOException {
+        UserRegSaveRequest courseInStudent = getAccounts().get(studentID);
+        // casting to student save request
+        ((StudentSaveRequest) courseInStudent).getCourses().add(studentCourse);
+        this.save(); // saves the file with new changes
+    }
 }

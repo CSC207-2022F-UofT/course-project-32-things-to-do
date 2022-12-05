@@ -4,16 +4,18 @@ package use_cases.course_features.course_creation_use_case;
 
 import entities.*;
 
+import java.io.IOException;
+
 public class CourseCreationInteractor implements CourseCreationInputBoundary {
     final CourseCreationDsGateway courseCreationDSGateway;
-    final CourseCreationPresenter courseCreationPresenter;
-    final CourseMap courseMap;
+    // this is called in filecourse, where stuff is added / modified in the database
+    final CourseCreationOutputBoundary courseCreationOutputBoundary;
+    private Course course; // for response model
 
-    public CourseCreationInteractor(CourseCreationDsGateway courseCreationDSGateway, CourseCreationPresenter courseCreationPresenter,
-                                    CourseMap courseMap) {
+    public CourseCreationInteractor(CourseCreationDsGateway courseCreationDSGateway,
+                                    CourseCreationOutputBoundary courseCreationOutputBoundary) {
         this.courseCreationDSGateway = courseCreationDSGateway;
-        this.courseCreationPresenter = courseCreationPresenter;
-        this.courseMap = courseMap;
+        this.courseCreationOutputBoundary = courseCreationOutputBoundary;
     }
 
     /**
@@ -25,29 +27,43 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
 
         // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("") || requestModel.getTasks().isEmpty()) {
-            return courseCreationPresenter.prepareFailView("Please fill in all required information.");
+            return courseCreationOutputBoundary.prepareFailView("Please fill in all required information.");
         }
 
-        // Note: Jonathan - no need to check the type of User, students and instructors
-        // would have different views because they are in different use cases
-        // checks whether the course id is already in the CourseMap (course already exists)
+        // checks whether the course id is already in the database / hashmap
         if (courseCreationDSGateway.existsByCourseID(requestModel.getCourseID())) {
-            return courseCreationPresenter.prepareFailView("Course already exists.");
+            return courseCreationOutputBoundary.prepareFailView("Course already exists.");
         }
+
+        // checks whether the instructor's entered task ids correspond to a task in the taskmap
+
+        /*
+        ArrayList<String> courseTasks = requestModel.getTasks();
+        for (String task : courseTasks) {
+            if (TaskMap.findTask(task) == null) {
+                return courseCreationOutputBoundary.prepareFailView("one of the IDs does not correspond with a task.");
+            }
+        }
+         */
+
 
         // checks passed; course can be created
 
         // create a new course
-        Course course = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
-        CourseMap.addCourse(requestModel.getCourseID(), course);
+        Course courseModel = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
+        try {
+            courseCreationDSGateway.saveCourse(courseModel);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-        // course successfully created and saved
-        CourseCreationRequestModel courseCreationModel = new CourseCreationRequestModel(course.getCourseName(), course.getCourseInstructor(), course.getTasks());
-        courseCreationDSGateway.saveCourse(courseCreationModel);
-
-        // course sent to presenter
+        // create response model, sent to presenter
         CourseCreationResponseModel courseResponseModel = new CourseCreationResponseModel(
-                course.getCourseID(), course.getTasks());
-        return courseCreationPresenter.prepareSuccessView(courseResponseModel);
+                courseModel.getCourseID(), courseModel.getTasks());
+        return courseCreationOutputBoundary.prepareSuccessView(courseResponseModel);
+    }
+
+    public Course getCourse() {
+        return this.course;
     }
 }

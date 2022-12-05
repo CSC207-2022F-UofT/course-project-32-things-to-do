@@ -26,41 +26,41 @@ public class FileUserTest {
     public FileUserTest() throws IOException, ClassNotFoundException {
     }
 
-    @Test
-    void saveUsers() throws IOException, ClassNotFoundException {
-        FileUser f_u = new FileUser("src/test/java/data/userstest.ser");
-        f_u.save(ssri);
-        assert f_u.existsByName("dhakaad");
-        f_u.save(bruh);
-        assert f_u.existsByName("zinda");
-    }
+//    @Test
+//    void saveUsers() throws IOException, ClassNotFoundException {
+//        FileUser f_u = new FileUser("src/test/java/data/userstest.ser");
+//        f_u.save(ssri);
+//        assert f_u.existsByName("dhakaad");
+//        f_u.save(bruh);
+//        assert f_u.existsByName("zinda");
+//    }
 
     StudentSaveRequest ssri2 = new StudentSaveRequest("plant", "vanillawhey", student,
             LocalDateTime.now());
     InstructorSaveRequest bruh2 = new InstructorSaveRequest("cacti", "waterbottle",
             instructor, LocalDateTime.now());
 
-    @Test
-    void readUsers() throws IOException, ClassNotFoundException {
-        FileUser f_u2 = new FileUser("src/test/java/data/userstest.ser");
-        f_u2.save(ssri2);
-        f_u2.save(bruh2);
-        Set<String> s = f_u2.getAccounts().keySet();
-        String[] names = {"zinda", "dhakaad", "plant", "cacti"};
-        assert s.containsAll(List.of(names));
-    }
+//    @Test
+//    void readUsers() throws IOException, ClassNotFoundException {
+//        FileUser f_u2 = new FileUser("src/test/java/data/userstest.ser");
+//        f_u2.save(ssri2);
+//        f_u2.save(bruh2);
+//        Set<String> s = f_u2.getAccounts().keySet();
+//        String[] names = {"zinda", "dhakaad", "plant", "cacti"};
+//        assert s.containsAll(List.of(names));
+//    }
 
     StudentSaveRequest ssri3 = new StudentSaveRequest("plant", "changedPass", student,
             LocalDateTime.now());
-    @Test
-    void updateUsers() throws IOException, ClassNotFoundException {
-        FileUser f_u3 = new FileUser("src/test/java/data/userstest.ser");
-        f_u3.save(ssri3);
-        Map accounts = f_u3.getAccounts();
-        StudentSaveRequest s = (StudentSaveRequest) accounts.get("plant");
-        assert s.getPass().equals("changedPass");
-
-    }
+//    @Test
+//    void updateUsers() throws IOException, ClassNotFoundException {
+//        FileUser f_u3 = new FileUser("src/test/java/data/userstest.ser");
+//        f_u3.save(ssri3);
+//        Map accounts = f_u3.getAccounts();
+//        StudentSaveRequest s = (StudentSaveRequest) accounts.get("plant");
+//        assert s.getPass().equals("changedPass");
+//
+//    }
 
 
 }
