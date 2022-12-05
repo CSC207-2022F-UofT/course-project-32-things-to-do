@@ -1,18 +1,24 @@
-package use_cases.task_management.task_edit_use_case;
+package screens.task_management.task_edit_delete_screens.event_edit_delete_screens;
 
 import entities.Event;
+import entities.TaskMap;
+import use_cases.task_management.task_edit_use_case.EventDisplayer;
 
 import java.time.LocalDateTime;
 
 public class EventInfoRetriever implements EventDisplayer {
     private final Event event;
+    private final String id;
     /**
      * An object that retrieves the info of an Event to be displayed in edit screens
-     * @param event - the Event whose info is being displayed
+     * @param id - ID of the Event whose info is being displayed
      */
-    public EventInfoRetriever(Event event) {
-        this.event = event;
+    public EventInfoRetriever(String id) {
+        this.event = (Event) TaskMap.findTask(id);
+        this.id = id;
     }
+
+    // Event getters
     @Override
     public String getTitle() {
         return event.getTitle();
@@ -20,7 +26,7 @@ public class EventInfoRetriever implements EventDisplayer {
 
     @Override
     public String getId() {
-        return event.getId();
+        return this.id;
     }
 
     @Override

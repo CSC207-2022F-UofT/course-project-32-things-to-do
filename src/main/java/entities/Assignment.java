@@ -12,7 +12,7 @@ public class Assignment extends Task implements Gradable, Preparatory {
     // Preparatory
     private double timeSpent = 0;
     private double timeNeeded = 0;
-    private ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled;
+    private ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled = new ArrayList<>();
 
     private LocalDateTime dueDate;
 

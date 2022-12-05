@@ -1,23 +1,17 @@
 package use_cases.task_management.task_deletion_use_case;
 
-import entities.Course;
-import entities.StudentUser;
-import entities.Task;
-
 public class TaskDeletionRequestModel {
-    //private String studentId;
-    private StudentUser student;
-    private String taskId;
+    private final String taskId;
 
-    // for student tasks
-    public TaskDeletionRequestModel(StudentUser student, String taskId) {
-        this.student = student;
+    /**
+     * A request model for Task deletion
+     * @param taskId - the ID of the Task
+     */
+    public TaskDeletionRequestModel(String taskId) {
         this.taskId = taskId;
     }
 
-    public StudentUser getStudent() {
-        return this.student;
-    }
+    // getters
     public String getTaskId() {
         return this.taskId;
     }

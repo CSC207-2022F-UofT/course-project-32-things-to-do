@@ -1,6 +1,5 @@
 package screens.task_management.task_edit_delete_screens.test_edit_delete_screens;
 
-import entities.StudentUser;
 import screens.LabelTextPanel;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import use_cases.task_management.task_edit_use_case.TestDisplayer;
@@ -26,8 +25,6 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
     JTextField timeNeeded;
     JTextField timeSpent;
 
-    StudentUser student;
-
     // controllers
     TestEditController testEditController;
     TaskDeletionController taskDeletionController;
@@ -36,18 +33,27 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
     JPanel screens;
     CardLayout screenLayout;
 
+    // for getting the info about a Test
     TestDisplayer testInfo;
 
-    public TestEditDeleteScreen(StudentUser student,
+    /**
+     * A screen for editing/deleting a Test
+     * @param testEditController - controller for editing
+     * @param taskDeletionController - controller for deleting
+     * @param screens - rest of screens in the program
+     * @param screenLayout - for switching between screens
+     * @param testInfo - for accessing info about a test
+     */
+    public TestEditDeleteScreen(
                                 TestEditController testEditController, TaskDeletionController taskDeletionController,
                                 JPanel screens, CardLayout screenLayout, TestDisplayer testInfo) {
-        this.student = student;
         this.testEditController = testEditController;
         this.taskDeletionController = taskDeletionController;
         this.screens = screens;
         this.screenLayout = screenLayout;
         this.testInfo = testInfo;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Test Edit/Delete Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -111,6 +117,10 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
         this.add(buttons);
     }
 
+    /**
+     * React to button clicks
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -133,15 +143,16 @@ public class TestEditDeleteScreen extends JPanel implements ActionListener {
 
                 // update user and return to main list page
                 showMessageDialog(this, "Test edited successfully."); // todo customize this message
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             } else if (e.getActionCommand().equals("Delete")) { // Test being deleted
-                taskDeletionController.delete(student, testInfo.getId());
+                // delete Test
+                taskDeletionController.delete(testInfo.getId());
 
                 // update user and return to to-do list page
                 showMessageDialog(this, "Test deleted successfully.");
                 screenLayout.show(screens, "toDoList");
             } else { // Test is racist
-                screenLayout.show(screens, "main");
+                screenLayout.show(screens, "StudentMain");
             }
         } catch (Exception ex) {
             showMessageDialog(this, ex.getMessage());
