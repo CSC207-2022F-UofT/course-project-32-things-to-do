@@ -3,7 +3,7 @@ package use_cases.course_features.course_enrolment_use_case;
 // Use case layer
 
 
-public interface CourseEnrolmentPresenter {
+public interface CourseEnrolmentOutputBoundary {
 
     /**
      * Alerts student user that course enrolment is successful
