@@ -2,7 +2,9 @@ package course_tracker_use_cases;
 
 import entities.*;
 import org.junit.jupiter.api.Test;
+import screens.course_features.InMemoryCourse;
 import screens.course_tracker.GradeCalculatorPresenter;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorRequestModel;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorResponseModel;
@@ -13,6 +15,8 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GradeCalculatorTest {
+
+    CourseEnrolmentDsGateway courseAccess;
 
     /**
      * Helper function to set up all the static variables
@@ -48,11 +52,9 @@ public class GradeCalculatorTest {
         TaskMap.setTaskMap(tasks);
 
         Course course1 = new Course("testCourse", "", new ArrayList<>());
-        ArrayList<String> courses = new ArrayList<>();
-        courses.add(course1.getCourseID());
-        student.setCourses(courses);
-        CourseMap.initializeEmpty();
-        CourseMap.addCourse(course1.getCourseID(), course1);
+        HashMap<String, Course> courses = new HashMap<>();
+        courses.put(course1.getCourseID(), course1);
+        this.courseAccess = new InMemoryCourse(courses);
 
     }
 
@@ -62,7 +64,6 @@ public class GradeCalculatorTest {
     void tearDown() {
         CurrentUser.setCurrentUser(null);
         TaskMap.setTaskMap(null);
-        CourseMap.initializeEmpty();
     }
 
     /**
@@ -86,7 +87,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -124,7 +125,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -162,7 +163,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -200,7 +201,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -238,7 +239,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -276,7 +277,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();
@@ -314,7 +315,7 @@ public class GradeCalculatorTest {
                 return null;
             }
         };
-        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter);
+        GradeCalculatorInteractor interactor = new GradeCalculatorInteractor(presenter, courseAccess);
 
         //prepare input data
         ArrayList<String> ungradedTasks = new ArrayList<>();

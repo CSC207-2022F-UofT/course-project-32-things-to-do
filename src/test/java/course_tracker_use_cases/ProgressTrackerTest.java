@@ -2,7 +2,9 @@ package course_tracker_use_cases;
 
 import entities.*;
 import org.junit.jupiter.api.Test;
+import screens.course_features.InMemoryCourse;
 import screens.course_tracker.ProgressTrackerPresenter;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInteractor;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
@@ -14,6 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ProgressTrackerTest {
+
+    CourseEnrolmentDsGateway courseAccess;
+
     /**
      * Helper function to set up all the static variables
      */
@@ -49,12 +54,9 @@ public class ProgressTrackerTest {
         TaskMap.setTaskMap(tasks);
 
         Course course1 = new Course("testCourse", "", new ArrayList<>());
-        ArrayList<String> courses = new ArrayList<>();
-        courses.add(course1.getCourseID());
-        student.setCourses(courses);
-        CourseMap.initializeEmpty();
-        CourseMap.addCourse(course1.getCourseID(), course1);
-
+        HashMap<String, Course> courses = new HashMap<>();
+        courses.put(course1.getCourseID(), course1);
+        this.courseAccess = new InMemoryCourse(courses);
     }
 
     /**
@@ -63,7 +65,6 @@ public class ProgressTrackerTest {
     void tearDown() {
         CurrentUser.setCurrentUser(null);
         TaskMap.setTaskMap(null);
-        CourseMap.initializeEmpty();
     }
 
     /**
@@ -85,7 +86,7 @@ public class ProgressTrackerTest {
                 assertEquals("Entered input is invalid. It should be a (decimal) number.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse", "",
@@ -117,7 +118,7 @@ public class ProgressTrackerTest {
                 assertEquals("None of your enrolled courses match that course name.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("csc207", "",
@@ -153,7 +154,7 @@ public class ProgressTrackerTest {
                 fail("Test failure is unexpected.");
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",
@@ -189,7 +190,7 @@ public class ProgressTrackerTest {
                 fail("Test failure is unexpected.");
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",
@@ -222,7 +223,7 @@ public class ProgressTrackerTest {
                 assertEquals("The required average for that goal grade is greater than 100.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",

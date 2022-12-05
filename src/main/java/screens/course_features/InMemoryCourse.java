@@ -14,7 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentDsGateway {
-    private final Map<String, Course> courses = new HashMap<>();
+    private Map<String, Course> courses;
+
+    public InMemoryCourse() {
+        this.courses = new HashMap<>();
+    }
+
+    public InMemoryCourse(Map<String, Course> courses) {
+        this.courses = courses;
+    }
 
     // populate
 
@@ -55,6 +63,6 @@ public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentD
      */
     @Override
     public void saveCourse(Course requestModel) {
-        System.out.println("Save " + requestModel.getCourseID());
+        courses.put(requestModel.getCourseID(), requestModel);
     }
 }

@@ -4,6 +4,7 @@ import entities.Assignment;
 import entities.CurrentUser;
 import entities.Gradable;
 import entities.Task;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
 
 import java.util.ArrayList;
@@ -16,10 +17,13 @@ import java.util.HashMap;
 public class GradeCalculatorInteractor extends CourseTrackerInteractor implements GradeCalculatorInputBoundary{
 
     private final GradeCalculatorOutputBoundary presenter;
+    private final CourseEnrolmentDsGateway courseAccess;
     private final ArrayList<String> targetTasksTitles = new ArrayList<>();
     private Double targetCourseGrade;
 
-    public GradeCalculatorInteractor(GradeCalculatorOutputBoundary presenter) {
+    public GradeCalculatorInteractor(GradeCalculatorOutputBoundary presenter,
+                                     CourseEnrolmentDsGateway courseAccess) {
+        this.courseAccess = courseAccess;
         this.presenter = presenter;
     }
 
@@ -51,7 +55,7 @@ public class GradeCalculatorInteractor extends CourseTrackerInteractor implement
             }
 
             //retrieve course ID based on inputted course name
-            String courseID = courseNameToID(courseName);
+            String courseID = courseNameToID(courseName, courseAccess);
 
             //query aggregate task map for all of this student's tasks in this course
             ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);

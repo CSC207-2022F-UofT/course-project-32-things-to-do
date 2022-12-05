@@ -1,6 +1,7 @@
 package use_cases.course_tracker.progress_tracker_use_case;
 
 import entities.*;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
 
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ import java.util.HashMap;
  */
 public class ProgressTrackerInteractor extends CourseTrackerInteractor implements ProgressTrackerInputBoundary{
 
-    final ProgressTrackerOutputBoundary outputBoundary;
-
-    public ProgressTrackerInteractor(ProgressTrackerOutputBoundary outputBoundary) {
+    private final ProgressTrackerOutputBoundary outputBoundary;
+    private final CourseEnrolmentDsGateway courseAccess;
+    public ProgressTrackerInteractor(ProgressTrackerOutputBoundary outputBoundary,
+                                     CourseEnrolmentDsGateway courseAccess) {
+        this.courseAccess = courseAccess;
         this.outputBoundary = outputBoundary;
     }
 
@@ -36,7 +39,7 @@ public class ProgressTrackerInteractor extends CourseTrackerInteractor implement
             double newGoalGrade = stringToDouble(progressTrackerRequestModel.getNewGoalGrade());
 
             //retrieve course ID based on inputted course name
-            String courseID = courseNameToID(courseName);
+            String courseID = courseNameToID(courseName, courseAccess);
 
             //query aggregate task map for all of this student's tasks in this course
             ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);

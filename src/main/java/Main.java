@@ -2,7 +2,7 @@ import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
 import screens.course_tracker.*;
-import screens.courses_features.*;
+import screens.course_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
@@ -74,13 +74,14 @@ public class Main {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
+        CourseEnrolmentDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
         GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
-        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
+        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
         ScheduleCTViewInterface presentOutputInterface = new ScheduleCTView(cardLayout, screens);
