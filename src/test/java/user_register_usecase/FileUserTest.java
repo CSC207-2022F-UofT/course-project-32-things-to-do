@@ -1,3 +1,5 @@
+package user_register_usecase;
+
 import entities.InstructorUser;
 import entities.StudentUser;
 import org.junit.jupiter.api.Test;
