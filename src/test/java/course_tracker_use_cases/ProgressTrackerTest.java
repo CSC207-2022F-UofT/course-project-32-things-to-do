@@ -9,6 +9,7 @@ import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInterac
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,9 +55,12 @@ public class ProgressTrackerTest {
         TaskMap.setTaskMap(tasks);
 
         Course course1 = new Course("testCourse", "", new ArrayList<>());
-        HashMap<String, Course> courses = new HashMap<>();
-        courses.put(course1.getCourseID(), course1);
-        this.courseAccess = new InMemoryCourse(courses);
+        HashMap<String, Course> courseMap = new HashMap<>();
+        courseMap.put(course1.getCourseID(), course1);
+        this.courseAccess = new InMemoryCourse(courseMap);
+        ArrayList<String> courseList = new ArrayList<>();
+        courseList.add("testCourse");
+        ((StudentUser) CurrentUser.getCurrentUser()).setCourses(courseList);
     }
 
     /**

@@ -52,9 +52,12 @@ public class GradeCalculatorTest {
         TaskMap.setTaskMap(tasks);
 
         Course course1 = new Course("testCourse", "", new ArrayList<>());
-        HashMap<String, Course> courses = new HashMap<>();
-        courses.put(course1.getCourseID(), course1);
-        this.courseAccess = new InMemoryCourse(courses);
+        HashMap<String, Course> courseMap = new HashMap<>();
+        courseMap.put(course1.getCourseID(), course1);
+        this.courseAccess = new InMemoryCourse(courseMap);
+        ArrayList<String> courseList = new ArrayList<>();
+        courseList.add("testCourse");
+        ((StudentUser) CurrentUser.getCurrentUser()).setCourses(courseList);
 
     }
 
@@ -131,7 +134,7 @@ public class GradeCalculatorTest {
         ArrayList<String> ungradedTasks = new ArrayList<>();
         ungradedTasks.add("testAssignment2");
         ungradedTasks.add("testTest1");
-        ungradedTasks.add("testTest2");
+            ungradedTasks.add("testTest2");
         GradeCalculatorRequestModel request = new GradeCalculatorRequestModel("testCourse",
                 "77,89,90", ungradedTasks);
 
