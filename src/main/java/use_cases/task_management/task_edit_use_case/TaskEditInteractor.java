@@ -1,24 +1,27 @@
 package use_cases.task_management.task_edit_use_case;
 
 import entities.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerRequestModel;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerResponseModel;
+import use_cases.task_management.read_write.TaskMapGateway;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
+    private final TaskMapGateway taskMapGateway;
     private final TaskEditPresenter presenter;
-    private final StudentUser student;
+    private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
-    // for connecting to Scheduler use case
-    private SchedulerInteractor scheduler;
-
-    public TaskEditInteractor (TaskEditPresenter presenter, StudentUser student,
-                               ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
+    /**
+     * An interactor for editing Tasks
+     * @param presenter - displays success/fail views
+     */
+    public TaskEditInteractor (TaskMapGateway taskMapGateway, TaskEditPresenter presenter) {
+        this.taskMapGateway = taskMapGateway;
         this.presenter = presenter;
-        this.student = student;
-        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary);
     }
+    /**
+     * Attempt to edit a Task
+     * @param requestModel - the request model of the Task being edited
+     * @param type - type of Task
+     * @return - response model
+     */
     @Override
     public TaskEditResponseModel edit(TaskEditRequestModel requestModel, String type) {
         if (type.equals("Event")) { // Event being edited
@@ -28,8 +31,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             event.setPriority(requestModel.getPriority());
             // change event time block
             event.setTimeBlock(request.getStartTime(), request.getEndTime());
-            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(event, student);
-            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
             // change event recurring value + frequency (if applicable)
             event.setRecurring(request.getRecurring(), request.getFrequency());
 
@@ -54,8 +55,6 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             test.setPriority(requestModel.getPriority());
             // change test time block
             test.setTimeBlock(request.getStartTime(), request.getEndTime());
-            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(test, student);
-            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
             // change test weightage
             test.setWeightage(request.getWeightage());
             // change time needed to study for test
@@ -70,8 +69,12 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             student.removeTaskFromList(requestModel.getId());
             student.addTaskToArchive(requestModel.getId());
         }
+
+        // save changes
+        taskMapGateway.save(TaskMap.getTaskMap());
+
         TaskEditResponseModel response = new TaskEditResponseModel(
-                TaskMap.findTask(requestModel.getId()).getTitle(), type);
+                TaskMap.findTask(requestModel.getId()).getTitle(), requestModel.getId(), type);
         return presenter.prepareSuccessView(response);
     }
 }
