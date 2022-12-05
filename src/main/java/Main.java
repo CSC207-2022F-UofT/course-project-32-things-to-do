@@ -1,11 +1,14 @@
 import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
-import screens.course_progress.*;
+import screens.course_tracker.*;
 import screens.course_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInputBoundary;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
+import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorOutputBoundary;
 import use_cases.course_features.course_enrolment_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
@@ -75,9 +78,15 @@ public class Main {
         SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
         ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
 
-        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter();
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter);
-        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor, user, "", TaskMap.getTaskMap(), allUsers, allCourses);
+        CourseEnrolmentDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
+        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
+        ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess);
+        ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
+
+        GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
+        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
+        GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
@@ -118,7 +127,8 @@ public class Main {
         screens.add("scheduleCT", scheduleCTScreen);
         screens.add("scheduleCTView", (Component) scheduleCTOutputView);
 
-        ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(trackerController);
+        progressTrackerScreen.setProgressTrackerController(trackerController);
+        progressTrackerScreen.setGradeCalculatorController(gradeController);
         screens.add("tracker", progressTrackerScreen);
 
         CourseCreationScreen courseCreationScreen = new CourseCreationScreen(courseController, screens, cardLayout);

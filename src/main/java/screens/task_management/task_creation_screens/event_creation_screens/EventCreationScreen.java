@@ -49,13 +49,13 @@ public class EventCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel prioInfo = new LabelTextPanel(
                 new JLabel("Enter event priority (integer)"), priority);
         LabelTextPanel dateInfo = new LabelTextPanel(
-                new JLabel("Enter event start date (yyyy-MM-dd)"), date);
+                new JLabel("Enter event date (yyyy-MM-dd)"), date);
         LabelTextPanel startTimeInfo = new LabelTextPanel(
-                new JLabel("Enter event start time (hh:mm)"), startTime);
+                new JLabel("Enter event start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endTimeInfo = new LabelTextPanel(
-                new JLabel("Enter event end time (hh:mm)"), endTime);
+                new JLabel("Enter event end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel frequencyInfo = new LabelTextPanel(
-                new JLabel("Enter frequency of event"), frequency);
+                new JLabel("Enter frequency of event (one of \"monthly\", \"weekly\", \"daily\")"), frequency);
         frequency.setEnabled(false);
 
         // finish and cancel buttons

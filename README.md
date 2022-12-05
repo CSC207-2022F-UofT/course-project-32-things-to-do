@@ -26,21 +26,42 @@ The user can access all features of the program through the main dashboard.
 ![](images/dashboard_screen.png)
 
 ## To-Do List Task Creation
+If the user clicks on the `New Task` button, one of two things will occur:
+- If the user is an instructor, they will have a choice between creating a new assignment, new test, or returning to their main screen (`Cancel` button).
+  ![](images/instructor_choose_task.png)
+- If the user is a student, they will have a choice between creating a new event, new assignment, new test, or returning to their main screen (`Cancel`).
+  (image)
+  ![](images/student_choose_task.png)
+Once they select a task to create, the user will be brought to one of the task creation screens, where they will be prompted to fill in the required information fields.
+- For event creation, the user must fill in the title, date, start time, end time, indicate whether the event is recurring, and if so, the frequency of the event (must be one of "monthly", "weekly", "daily").
+  - The priority field is optional, and its value will automatically set to 0 if the field is left blank.
+  ![](images/event_creation.png)
+- For assignment creation, the user must fill in a title, due date, and due time.
+  - The priority value is once again optional, and instructors are not prompted to input an assignment's priority.
+  - The weightage value is optional for both instructors and students, and will be automatically set to 0 if left blank
+  ![](images/student_assignment_creation.png)
+- For test creation, the user must fill in a title, date, start time and end time.
+  - Again, priority is optional, and instructors are not prompted to input a test's priority
+  - Weightage is once again optional for both instructors and students.
+  ![](images/student_test_creation.png)
 
-If the user clicks on the `New Task` button, the screen for creating a new task will be displayed.
-On this screen, the user can add, delete and edit the tasks in their to-do list.
+If all required fields are filled in the correct format, a new task should be created of whatever type, with an automatically generated ID based on the task's title, user's name, and course ID (only applicable if it is a course task). The task is then saved to the task map, TaskMap.txt file, and student's to-do list (if applicable) immediately.
 
-To create tasks, the user must fill in the required fields _(for events the format for start and end date is actually yyyy-MM-ddThh:mm:ss, current prompt is incorrect)_ and click `Submit`. 
-If the formatting is correct and nothing is left blank (except the `priority` field), it should create a new task of whatever type, generate an ID based on the student's name and course ID (if it is a course task), and save it to the task map and TaskMap file immediately.
-
-![](images/event_creation_screen.png)
-
-To delete a task _(UI not yet implemented)_, the user must click a task to view its info and then click the `Delete` button _(not yet implemented)_. 
-This will remove the task from the student's to-do list and move it into their archive, while remaining in the task map.
-
-For editing _(UI not yet implemented)_, the user must click a task to view its info click the `Edit` button.
-A screen similar to the create screen should appear, allowing the user to change any info about the task. 
-If a section is left blank, no changes will be made.
+## To-Do List Screen
+If a student clicks on the `To Do List` button, they will be brought to a screen displaying the titles of all of their tasks, with accompanying `Edit/Delete` buttons.
+![](images/todo_list_screen.png)
+- Clicking any of those buttons will bring the student to the task's respective edit/delete screen.
+  - If the task is an event, the edit/delete screen will look almost identical to the creation screen, except with a new checkbox to mark the event as complete, a disabled title field, and pre-filled values in the others.
+    ![](images/event_edit_delete.png)
+  - If the task is an assignment, the edit/delete screen will look similar to the creation screen, but with the "Mark task complete?" checkbox, disabled title field, prefilled values, and 2 new input fields to indicate time needed to complete the assignment, and time already spent on the assignment.
+    ![](images/assignment_edit_delete.png)
+  - If the task is a test, the edit/delete screen will also look similar to the creation screen, but with the same new features as other task edit/delete screens, and the new input fields for time needed and time already spent.
+    ![](images/test_edit_delete.png)
+  Once the student fills in the task's new information and presses the `Finish` button, the existing task will be updated to reflect those changes. Any fields left blank result in an unchanged value.
+  - If the task is marked as complete, in addition to editing, the task will also be removed from the student's to-do list and into their task archive. 
+  If the student presses the `Delete` button, the task will be removed from their to-do list and moved to their archive
+  Pressing the `Cancel` button will return the student to their to-do list screen.
+- Clicking the `Return` button will return the student to their dashboard
 
 ## Personal Calendar
 
