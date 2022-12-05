@@ -27,11 +27,19 @@ public class EventCreationScreen extends JPanel implements ActionListener {
     JPanel screens;
     CardLayout screenLayout;
 
+    /**
+     * A screen for Event creation
+     * @param controller - the controller which calls the use case for creation
+     * @param screens - rest of screens in the program
+     * @param screenLayout - for switching between screens
+     */
+
     public EventCreationScreen(EventCreationController controller, JPanel screens, CardLayout screenLayout) {
         this.eventCreationController = controller;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
+        // set screen title
         JLabel screenTitle = new JLabel("Event Creation Screen");
         screenTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -98,21 +106,26 @@ public class EventCreationScreen extends JPanel implements ActionListener {
                 // get the start and end date+times and parse them
                 LocalDateTime startDate = LocalDateTime.parse(date.getText() + "T" + startTime.getText());
                 LocalDateTime endDate = LocalDateTime.parse(date.getText() + "T" + endTime.getText());
+
+                // create the Event
                 eventCreationController.create(title.getText(), valPriority,
                         startDate, endDate, valRecurring, valFrequency);
 
+                // notify user of success and return to main screen
                 showMessageDialog(this, "Event Created Successfully");
-                screenLayout.show(screens, "main");
-            } catch (Exception e) {
+                screenLayout.show(screens, "StudentMain");
+            } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }
         }
         // if "Cancel" button pressed
         else if (evt.getActionCommand().equals("Cancel")) {
+            // return to main screen
             screenLayout.show(screens, "StudentMain");
         }
         // recurring checkbox pressed/unpressed
         else {
+            // enable/disable frequency text field depending on state of recurring
             frequency.setEnabled(recurring.isSelected());
         }
     }

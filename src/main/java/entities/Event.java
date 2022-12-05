@@ -40,6 +40,7 @@ public class Event extends Task implements Timeblockable {
     public void setRecurring(boolean recurring, String frequency) {
         this.recurring = recurring;
         if (recurring) this.frequency = frequency;
+        else this.frequency = "";
     }
 
     /**

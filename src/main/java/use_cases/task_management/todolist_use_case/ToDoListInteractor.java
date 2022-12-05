@@ -38,7 +38,7 @@ public class ToDoListInteractor implements ToDoListInputBoundary{
 
             for (String taskId : taskIdList) {
                 //get the Task object for this task from the entity TaskMap static variable
-                Task task = TaskMap.getTaskMap().get(taskId);
+                Task task = TaskMap.findTask(taskId);
                 String taskItemTitle = task.getTitle();
                 String taskItemId = task.getId();
 
