@@ -57,8 +57,8 @@ public class ToDoListScreen extends JPanel implements ActionListener {
         toDoList.setLayout(new BoxLayout(toDoList, BoxLayout.PAGE_AXIS));
 
         try {
-            ToDoListResponseModel rsp = presenter.getToDoList();
-            ArrayList<ArrayList<String>> tasks = rsp.getToDoListView();
+
+            ArrayList<ArrayList<String>> tasks = presenter.getToDoList();
 
             for (ArrayList<String> task: tasks) {
                 JButton editDelete = new JButton("Edit/Delete");
