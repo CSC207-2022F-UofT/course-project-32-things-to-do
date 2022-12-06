@@ -5,7 +5,9 @@ import entities.StudentUser;
 import entities.TaskMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import screens.calendar_scheduler.ScheduleConflictPresenter;
 import screens.task_management.InMemoryTaskMap;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.time.LocalDateTime;
@@ -55,7 +57,8 @@ class TaskCreationInteractorTest {
         };
         AssignmentCreationRequestModel aRequest = new AssignmentCreationRequestModel("title", 0, LocalDateTime.of(2022, 12, 3, 12, 0), 20.5);
 
-        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none");
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
+        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none", scheduleConflictOutputBoundary);
 
         interactor.create(aRequest, "Assignment");
     }
@@ -96,7 +99,8 @@ class TaskCreationInteractorTest {
                 "title", 10, LocalDateTime.of(2022, 12, 2, 12, 0),
                 LocalDateTime.of(2022, 12, 2, 13, 0), 0);
 
-        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none");
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
+        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none", scheduleConflictOutputBoundary);
 
         interactor.create(tRequest, "Test");
     }
@@ -138,7 +142,8 @@ class TaskCreationInteractorTest {
                 LocalDateTime.of(2022, 12, 2, 13, 0),
                 false, "");
 
-        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none");
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
+        TaskCreationInputBoundary interactor = new TaskCreationInteractor(taskMapGateway, outputBoundary, "none", scheduleConflictOutputBoundary);
 
         interactor.create(eRequest, "Event");
     }
