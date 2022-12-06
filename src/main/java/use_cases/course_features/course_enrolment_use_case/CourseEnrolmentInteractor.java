@@ -7,6 +7,7 @@ import screens.login_registration.FileUser;
 import use_cases.login_registration.user_register_usecase.UserRegGateway;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,39 +85,44 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             courseTaskId.add(taskTitleToId);
         }
 
-        // get task id : task object pairs from taskmap, save to old task id map
+        // find + get taskId-taskValue pairs from TaskMap, save to (temporary) oldTaskIdMap
         HashMap<String, Task> oldTaskIdMap = new HashMap<>();
         for (String oldTaskId : courseTaskId) {
-            Task taskValue = TaskMap.findTask(oldTaskId);
-            oldTaskIdMap.put(oldTaskId, taskValue);
+            Task taskValue = TaskMap.findTask(oldTaskId); // gets value from key
+            oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
         // for each task id : Task pair, change the key name to courseTasks_student_course, add key-value pair to arraylist
-        // create new arraylist
-        HashMap<String, Task> newTaskIdMap = new HashMap<>();
-        // iterate over original arraylist and put key-value pair into new arraylist with modified key
-        for (HashMap.Entry<String, Task> entry : oldTaskIdMap.entrySet()) {
-            // key has old format title_instructor_course
-            // want to title, so split by _ which gives 'title', 'instructor', 'course'
-            // take first index which is just 'title'
-            // concatenating everything gives title_student_course
-            newTaskIdMap.put(entry.getKey().split("_")[0] + "_" + requestModel.getStudentID() + "_" + courseName,
-                    (Task) oldTaskIdMap.entrySet());
+        HashMap<String, Task> newTaskIdMap = new HashMap<>(); // initialize new TaskIdMap
+
+        // create 2 parallel arraylists, one for keys, one for values
+        ArrayList<String> oldKeys = courseTaskId; // could also do (ArrayList) oldTaskIdMap.keySet()
+        ArrayList<Task> values = (ArrayList) oldTaskIdMap.entrySet();
+
+        ArrayList<String> newKeys = new ArrayList<>();
+        // change key name from title_instructor_course to title_student_course
+        for (String taskId :oldKeys) {
+            // change key name from title_inst_course to title_student_course
+            String newKey = taskId.replace(requestModel.getCourseInstructor(), requestModel.getStudentID());
+            newKeys.add(newKey);
         }
 
-        // add map with new task ids to TaskMap
+        // newKeys and values should be of equal length with each index referring to a pair
+        // ie. newKey[0], values[0] should be the old Task object but with the new course task id name!
+
+        // iterate through one of the arraylists (let's do keys)
+        for (int i = 0; i <= newKeys.size(); i++) {
+            // add key-value pairs to newTaskIdMap
+            newTaskIdMap.put(newKeys.get(i), values.get(i));
+        }
+
+        // add all newTaskIdMap key-value pairs to TaskMap
         // TODO: read file, make edits, then save changes
-        for (Map.Entry<String, Task> entry : newTaskIdMap.entrySet()) {
-            TaskMap.addTask(entry.getKey(), entry.getValue());
-        }
+        TaskMap.addTasks(newTaskIdMap);
 
-        // take the keys of the key-value pair and add to student's to do list
-        // get the set of all keys of the new task id map and add to arraylist of strings
-        ArrayList<String> newTaskIds = new ArrayList<>(newTaskIdMap.keySet());
-
-        // add new task ids to the student's task list
+        // add new task ids to the student's to-do list (of task ids)
         try {
-            tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newTaskIds);
+            tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newKeys);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
