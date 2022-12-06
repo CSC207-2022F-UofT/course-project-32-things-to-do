@@ -111,9 +111,6 @@ public class Main {
         InstructorChooseTaskCreateScreen chooseInstructortask = new InstructorChooseTaskCreateScreen(screens, cardLayout);
         screens.add("instructorTaskCreate", chooseInstructortask);
 
-        CalendarScreen calendarScreen = new CalendarScreen(screens, cardLayout);
-        screens.add("calendar", calendarScreen);
-
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);
         screens.add("scheduleCTView", (Component) scheduleCTOutputView);

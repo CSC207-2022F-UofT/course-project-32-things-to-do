@@ -2,6 +2,7 @@ package use_cases.task_management.todolist_use_case;
 
 import entities.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -41,19 +42,31 @@ public class ToDoListInteractor implements ToDoListInputBoundary{
                 Task task = TaskMap.findTask(taskId);
                 String taskItemTitle = task.getTitle();
                 String taskItemId = task.getId();
+                LocalDateTime startTime = null;
+                LocalDateTime endTime = null;
+                boolean recurring = false;
+                String frequency = null;
 
                 TaskType taskItemType;
                 if (task instanceof Event) {
                     taskItemType = TaskType.EVENT;
+                    LocalDateTime[] timeBlock = ((Event) task).getTimeBlock();
+                    startTime = timeBlock[0];
+                    endTime = timeBlock[1];
+                    recurring = ((Event) task).getRecurring();
+                    frequency = ((Event) task).getFrequency();
                 } else if (task instanceof Test) {
                     taskItemType = TaskType.TEST;
+                    LocalDateTime[] timeBlock = ((Test) task).getTimeBlock();
+                    startTime = timeBlock[0];
+                    endTime = timeBlock[1];
                 } else if (task instanceof Assignment) {
                     taskItemType = TaskType.ASSIGNMENT;
                 } else {
                     throw new RuntimeException("Some of your tasks are an invalid Task Type!");
                 }
 
-                ToDoListItem toDoListItem = new ToDoListItem(taskItemTitle, taskItemId, taskItemType);
+                ToDoListItem toDoListItem = new ToDoListItem(taskItemTitle, taskItemId, taskItemType, startTime, endTime, recurring, frequency);
                 toDoList.add(toDoListItem);
             }
 

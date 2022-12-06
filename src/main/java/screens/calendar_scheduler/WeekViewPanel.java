@@ -13,10 +13,11 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WeekViewPanel extends JPanel {
 
-    public WeekViewPanel(LocalDate date, StudentUser user, ArrayList<Task> allTasks) {
+    public WeekViewPanel(LocalDate date, ArrayList<ArrayList<String>> allTasks) {
 
         // Get date details
         int day = date.getDayOfMonth();
@@ -125,33 +126,63 @@ public class WeekViewPanel extends JPanel {
         }
 
         // Create task panels
-        for (Task task : allTasks) {
-            if (task instanceof Timeblockable ) {
+        for (ArrayList<String> task : allTasks) {
+            if (!Objects.equals(task.get(1), "Assignment")) {
 
-                LocalDateTime taskStartTime = ((Timeblockable) task).getTimeBlock()[0];
-                LocalDateTime taskEndTime = ((Timeblockable) task).getTimeBlock()[1];
+                ArrayList<LocalDateTime> startTimes = new ArrayList<>();
+                ArrayList<LocalDateTime> endTimes = new ArrayList<>();
+                LocalDateTime taskStartTime = LocalDateTime.parse(task.get(2));
+                LocalDateTime taskEndTime = LocalDateTime.parse(task.get(3));
 
                 TemporalField field = WeekFields.of(Locale.US).dayOfWeek();
                 LocalDate startOfWeek = date.with(field, 1);
 
-                if (taskStartTime.compareTo(startOfWeek.atStartOfDay()) <= 0
-                        && startOfWeek.atStartOfDay().compareTo(taskStartTime.plusWeeks(1)) < 0) {
-                    GridBagConstraints c = new GridBagConstraints();
-                    JPanel taskPanel = new JPanel();
-                    taskPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    taskPanel.setBackground(Color.PINK);
-                    JLabel taskLabel = new JLabel(task.getTitle());
-                    taskPanel.add(taskLabel);
+                // Convert recurring tasks into multiple start/end times
+                if (Objects.equals(task.get(4), "true")) {
+                    if (Objects.equals(task.get(5), "daily")) {
+                        LocalDateTime dateIterator = taskStartTime;
+                        while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
+                            startTimes.add(dateIterator);
+                            dateIterator = dateIterator.plusDays(1);
+                        }
+                    } else if (Objects.equals(task.get(5), "weekly")) {
+                        LocalDateTime dateIterator = taskStartTime;
+                        while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
+                            startTimes.add(dateIterator);
+                            dateIterator = dateIterator.plusWeeks(1);
+                        }
+                    } else {
+                        LocalDateTime dateIterator = taskStartTime;
+                        while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
+                            startTimes.add(dateIterator);
+                            dateIterator = dateIterator.plusMonths(1);
+                        }
+                    }
+                } else {
+                    startTimes.add(taskStartTime);
+                    endTimes.add(taskEndTime);
+                }
 
-                    int taskStartHour = taskStartTime.getHour();
-                    int taskEndHour = taskEndTime.getHour();
-                    c.gridy = taskStartHour - startTimeHour;
-                    c.gridheight = taskEndHour - taskStartTime.getHour();
+                for (int i = 0; i < startTimes.size(); i++) {
+                    if (startTimes.get(i).compareTo(startOfWeek.atStartOfDay()) <= 0
+                            && startOfWeek.atStartOfDay().compareTo(startTimes.get(i).plusWeeks(1)) < 0) {
+                        GridBagConstraints c = new GridBagConstraints();
+                        JPanel taskPanel = new JPanel();
+                        taskPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                        taskPanel.setBackground(Color.PINK);
+                        JLabel taskLabel = new JLabel(task.get(0));
+                        taskPanel.add(taskLabel);
 
-                    int taskDayOfWeek = taskStartTime.getDayOfWeek().getValue();
-                    c.gridx = taskDayOfWeek + 1;
+                        int taskStartHour = startTimes.get(i).getHour();
+                        int taskEndHour = endTimes.get(i).getHour();
+                        c.gridy = taskStartHour - startTimeHour;
+                        c.gridheight = taskEndHour - startTimes.get(i).getHour();
 
-                    datePanel.add(taskPanel, c);
+                        int taskDayOfWeek = startTimes.get(i).getDayOfWeek().getValue();
+                        c.gridx = taskDayOfWeek + 1;
+
+                        datePanel.add(taskPanel, c);
+                    }
                 }
             }
         }

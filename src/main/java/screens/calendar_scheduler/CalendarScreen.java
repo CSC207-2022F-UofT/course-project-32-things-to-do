@@ -4,6 +4,8 @@ import entities.CurrentUser;
 import entities.StudentUser;
 import entities.Task;
 import entities.TaskMap;
+import screens.task_management.todolist_screens.ToDoListPresenter;
+import use_cases.task_management.todolist_use_case.ToDoListResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,30 +35,19 @@ public class CalendarScreen extends JPanel implements ActionListener {
     JPanel screens;
     CardLayout screenLayout;
 
-    /**
-     * The current entities
-     */
-    StudentUser user;
-    ArrayList<Task> allTasks;
+    CalendarPresenter presenter;
 
     /**
      * The window of the screen for the Calendar view
      */
-    public CalendarScreen(JPanel screens, CardLayout screenLayout) {
+    public CalendarScreen(JPanel screens, CardLayout screenLayout, CalendarPresenter presenter) {
 
-        this.user = (StudentUser) CurrentUser.getCurrentUser();
+        this.presenter = presenter;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
-        // Get the user's existing tasks
-        ArrayList<String> taskIDs = user.getToDoList();
-        ArrayList<Task> allTasks = new ArrayList<>();
-        for (String taskID : taskIDs) {
-            //get the Task object for this task from the entity TaskMap static variable
-            Task existingTask = TaskMap.getTaskMap().get(taskID);
-            allTasks.add(existingTask);
-        }
-        this.allTasks = allTasks;
+        ToDoListResponseModel responseModel = presenter.getToDoList();
+        ArrayList<ArrayList<String>> taskList = responseModel.getToDoListView();
 
         // Create label for title of screen
         JLabel title = new JLabel("Calendar");
@@ -76,11 +67,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
         LocalDate currDate = LocalDate.now();
         cardLayout = new CardLayout();
         viewPanel = new JPanel(cardLayout);
-        DayViewPanel dayViewPanel = new DayViewPanel(currDate, this.user, this.allTasks);
+        DayViewPanel dayViewPanel = new DayViewPanel(currDate, taskList);
         viewPanel.add("day", dayViewPanel);
-        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, this.user, this.allTasks);
+        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, taskList);
         viewPanel.add("week", weekViewPanel);
-        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, this.allTasks);
+        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, taskList);
         viewPanel.add("month", monthViewPanel);
 
 

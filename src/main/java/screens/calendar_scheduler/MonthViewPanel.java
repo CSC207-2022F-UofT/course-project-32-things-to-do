@@ -7,13 +7,15 @@ import entities.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MonthViewPanel extends JPanel {
 
-    public MonthViewPanel(LocalDate date, ArrayList<Task> allTasks) {
+    public MonthViewPanel(LocalDate date, ArrayList<ArrayList<String>> allTasks) {
 
         // Get date details
         int month = date.getMonthValue() - 1;
@@ -78,14 +80,14 @@ public class MonthViewPanel extends JPanel {
                 int testCount = 0;
                 int eventCount = 0;
 
-                for (Task task : allTasks) {
-                    if (task instanceof Assignment) {
+                for (ArrayList<String> task : allTasks) {
+                    if (Objects.equals(task.get(1), "Assignment")) {
                         assignmentCount += 1;
                     }
-                    if (task instanceof Test) {
+                    if (Objects.equals(task.get(1), "Test")) {
                         testCount += 1;
                     }
-                    if (task instanceof Event) {
+                    if (Objects.equals(task.get(1), "Event")) {
                         eventCount += 1;
                     }
                 }
