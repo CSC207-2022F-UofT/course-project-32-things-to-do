@@ -105,8 +105,8 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         if (evt.getSource() == calendar) {
             // Refresh calendar screen
             CalendarPresenter calendarPresenter = new CalendarPresenter();
-            WorkingHoursController workingHoursController = new WorkingHoursController();
             WorkingHoursPresenter workingHoursPresenter = new WorkingHoursPresenter();
+            WorkingHoursController workingHoursController = new WorkingHoursController();
             ToDoListInteractor toDoListInteractor = new ToDoListInteractor(calendarPresenter);
             calendarPresenter.setToDoListInput(toDoListInteractor);
 
