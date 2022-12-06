@@ -1,10 +1,10 @@
 package use_cases.task_management.task_creation_use_case;
 
 import entities.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.task_management.read_write.TaskMapGateway;
+
 public class TaskCreationInteractor implements TaskCreationInputBoundary {
     private final TaskMapGateway taskMapRepository;
     private final TaskCreationOutputBoundary outputBoundary;
@@ -19,15 +19,14 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
      * @param taskMapRepository - for saving the task to a file
      * @param outputBoundary - the output boundary for displaying results
      * @param courseName - the name of the course the Task is for, or "none"
-     * @param schedulerPresenter - todo
-     * @param scheduleConflictPresenter - todo
+     * @param scheduleConflictOutputBoundary - output boundary for the scheduling conflict use case
      */
     public TaskCreationInteractor(TaskMapGateway taskMapRepository, TaskCreationOutputBoundary outputBoundary, String courseName,
-                                  SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter) {
+                                  ScheduleConflictOutputBoundary scheduleConflictOutputBoundary) {
         this.taskMapRepository = taskMapRepository;
         this.outputBoundary = outputBoundary;
         this.courseName = courseName;
-        this.scheduler = new SchedulerInteractor(scheduleConflictPresenter, schedulerPresenter);
+        this.scheduler = new SchedulerInteractor(scheduleConflictOutputBoundary);
     }
 
     /**
@@ -64,8 +63,8 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             // check if frequency is valid (if recurring is checked)
             if (request.getRecurring() &&
                     !(request.getFrequency().equals("daily")
-                    || request.getFrequency().equals("weekly")
-                    || request.getFrequency().equals("monthly"))) {
+                            || request.getFrequency().equals("weekly")
+                            || request.getFrequency().equals("monthly"))) {
                 return outputBoundary.prepareFailView("Please enter a valid frequency (\"daily\", \"weekly\", \"monthly\" accepted)");
             }
             // check if times are valid (start time < end time)
@@ -88,10 +87,19 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             newTask = new Test(requestModel.getTitle(), id, requestModel.getPriority(),
                     request.getStartTime(), request.getEndTime(), request.getWeightage());
         }
-        // save Task to TaskMap and student's to-do list (if applicable)
-        TaskMap.addTask(id, newTask);
+
+        // Schedule task if user is a student
         if (user instanceof StudentUser) {
-            ((StudentUser)user).addTaskToList(id);
+            SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(newTask, (StudentUser) user);
+            SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
+
+            if (!schedulerResponseModel.isScheduleCancel()) {
+                TaskMap.addTask(id, newTask);
+                ((StudentUser)user).addTaskToList(id);
+            }
+        } else {
+            // save Task to TaskMap
+            TaskMap.addTask(id, newTask);
         }
 
         // save TaskMap to file:

@@ -1,8 +1,6 @@
 package screens.calendar_scheduler;
 
-import entities.StudentUser;
-import entities.Task;
-import entities.Timeblockable;
+import entities.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +16,7 @@ import java.util.Locale;
 
 public class WeekViewPanel extends JPanel {
 
-    public WeekViewPanel(LocalDate date, ArrayList<Task> allTasks, StudentUser user) {
+    public WeekViewPanel(LocalDate date, StudentUser user, ArrayList<Task> allTasks) {
 
         // Get date details
         int day = date.getDayOfMonth();

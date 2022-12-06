@@ -18,7 +18,7 @@ import java.util.Locale;
 
 public class DayViewPanel extends JPanel {
 
-    public DayViewPanel(LocalDate date, ArrayList<Task> allTasks, StudentUser user) {
+    public DayViewPanel(LocalDate date, StudentUser user, ArrayList<Task> allTasks) {
 
         // Get date details
         int day = date.getDayOfMonth();

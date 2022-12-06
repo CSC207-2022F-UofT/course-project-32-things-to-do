@@ -1,6 +1,6 @@
 package use_cases.calendar_scheduler.schedule_conflict_use_case;
 
-public interface ScheduleConflictPresenter {
+public interface ScheduleConflictOutputBoundary {
 
     /**
      * Alert the user to a scheduling conflict

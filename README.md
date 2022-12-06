@@ -76,9 +76,6 @@ By default, the weekly view is displayed, but the user can change the view throu
 The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
 The `Home` button redirects the user back to the main dashboard.
 
-_Not yet implemented (extending on what is currently working in the MVP feature):_
-- The ability to manually select prep time for a Preparatory Task
-
 ## Scheduling Collaborative Tasks
 
 If the user clicks on the `Scheduling CT` button, the screen to schedule a collaborative task will be displayed.
