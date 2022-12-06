@@ -13,8 +13,9 @@ public class CalendarPresenter implements ToDoListOutputBoundary {
         this.toDoListInput = toDoListInput;
     }
 
-    public ToDoListResponseModel getToDoList() {
-        return toDoListInput.getToDoList();
+    public ArrayList<ArrayList<String>> getToDoList() {
+        ToDoListResponseModel responseModel = toDoListInput.getToDoList();
+        return responseModel.getToDoListView();
     }
 
     @Override

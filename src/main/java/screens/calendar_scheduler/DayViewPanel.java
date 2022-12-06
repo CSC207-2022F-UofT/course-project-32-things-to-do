@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Objects;
 
 public class DayViewPanel extends JPanel {
 
-    public DayViewPanel(LocalDate date, ArrayList<ArrayList<String>> allTasks) {
+    public DayViewPanel(LocalDate date, ArrayList<ArrayList<String>> allTasks, WorkingHoursPresenter workingHoursPresenter) {
 
         // Get date details
         int day = date.getDayOfMonth();
@@ -27,14 +28,12 @@ public class DayViewPanel extends JPanel {
 
         // Get working hours
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime startTime = LocalTime.parse("07:00", formatter);
-        LocalTime endTime = LocalTime.parse("23:00", formatter);
-        if (user != null) {
-            ArrayList<LocalTime> workingHours = user.getWorkingHours();
-            if (workingHours.size() != 0) {
-                startTime = workingHours.get(0);
-                endTime = workingHours.get(1);
-            }
+        LocalTime workingStartTime = LocalTime.parse("07:00", formatter);
+        LocalTime workingEndTime = LocalTime.parse("23:00", formatter);
+        ArrayList<LocalTime> workingHours = workingHoursPresenter.getWorkingHours();
+        if (workingHours != null) {
+            workingStartTime = workingHours.get(0);
+            workingEndTime = workingHours.get(1);
         }
 
         // Create title panel
@@ -85,14 +84,14 @@ public class DayViewPanel extends JPanel {
         datePanel.add(dayPanel, dayConstraint);
 
         // Create hour panels
-        int startTimeHour = startTime.getHour();
-        int endTimeHour = endTime.getHour();
+        int workingStartTimeHour = workingStartTime.getHour();
+        int workingEndTimeHour = workingEndTime.getHour();
         ArrayList<String> hours = new ArrayList<>();
         hours.add("");
-        for (int i = startTimeHour; i <= endTimeHour; i++) {
+        for (int i = workingStartTimeHour; i <= workingEndTimeHour; i++) {
             hours.add(Integer.toString(i));
         }
-        for (int i = 0; i <= endTimeHour - startTimeHour; i++) {
+        for (int i = 0; i <= workingEndTimeHour - workingStartTimeHour; i++) {
             GridBagConstraints c = new GridBagConstraints();
             JPanel hourPanel = new JPanel();
             hourPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -111,6 +110,7 @@ public class DayViewPanel extends JPanel {
                 ArrayList<LocalDateTime> endTimes = new ArrayList<>();
                 LocalDateTime taskStartTime = LocalDateTime.parse(task.get(2));
                 LocalDateTime taskEndTime = LocalDateTime.parse(task.get(3));
+                long taskDuration = ChronoUnit.MINUTES.between(taskStartTime, taskEndTime);
 
                 TemporalField field = WeekFields.of(Locale.US).dayOfWeek();
                 LocalDate startOfWeek = date.with(field, 1);
@@ -121,18 +121,21 @@ public class DayViewPanel extends JPanel {
                         LocalDateTime dateIterator = taskStartTime;
                         while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
                             startTimes.add(dateIterator);
+                            endTimes.add(dateIterator.plusMinutes(taskDuration));
                             dateIterator = dateIterator.plusDays(1);
                         }
                     } else if (Objects.equals(task.get(5), "weekly")) {
                         LocalDateTime dateIterator = taskStartTime;
                         while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
                             startTimes.add(dateIterator);
+                            endTimes.add(dateIterator.plusMinutes(taskDuration));
                             dateIterator = dateIterator.plusWeeks(1);
                         }
                     } else {
                         LocalDateTime dateIterator = taskStartTime;
                         while (dateIterator.isBefore(taskStartTime.plusYears(1))) {
                             startTimes.add(dateIterator);
+                            endTimes.add(dateIterator.plusMinutes(taskDuration));
                             dateIterator = dateIterator.plusMonths(1);
                         }
                     }
@@ -142,8 +145,8 @@ public class DayViewPanel extends JPanel {
                 }
 
                 for (int i = 0; i < startTimes.size(); i++) {
-                    if (startTimes.get(i).compareTo(startOfWeek.atStartOfDay()) <= 0
-                            && startOfWeek.atStartOfDay().compareTo(startTimes.get(i).plusWeeks(1)) < 0) {
+                    if (startTimes.get(i).isAfter(date.atStartOfDay())
+                            && startTimes.get(i).isBefore(date.plusDays(1).atStartOfDay())) {
                         GridBagConstraints c = new GridBagConstraints();
                         JPanel taskPanel = new JPanel();
                         taskPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -153,8 +156,9 @@ public class DayViewPanel extends JPanel {
 
                         int taskStartHour = startTimes.get(i).getHour();
                         int taskEndHour = endTimes.get(i).getHour();
-                        c.gridy = taskStartHour - startTimeHour;
-                        c.gridheight = taskEndHour - startTimes.get(i).getHour();
+
+                        c.gridy = taskStartHour - workingStartTimeHour +2;
+                        c.gridheight = taskEndHour - taskStartHour;
 
                         int taskDayOfWeek = startTimes.get(i).getDayOfWeek().getValue();
                         c.gridx = taskDayOfWeek + 1;
