@@ -44,9 +44,9 @@ class WorkingHoursInteractorTest {
         };
 
         // Create interactor and test entities
-        WorkingHoursInteractor interactor = new WorkingHoursInteractor();
         StudentUser user = new StudentUser("testUser", "testPassword");
         CurrentUser.setCurrentUser(user);
+        WorkingHoursInteractor interactor = new WorkingHoursInteractor();
 
         ArrayList<LocalTime> workingHours = new ArrayList<>();
         workingHours.add(LocalTime.parse("08:00"));
