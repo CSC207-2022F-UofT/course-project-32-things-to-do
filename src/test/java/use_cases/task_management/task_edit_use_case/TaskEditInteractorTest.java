@@ -6,7 +6,11 @@ import entities.StudentUser;
 import entities.TaskMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import screens.calendar_scheduler.ScheduleConflictPresenter;
 import screens.task_management.InMemoryTaskMap;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
 import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.time.LocalDateTime;
@@ -73,10 +77,19 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
+
         TaskEditRequestModel aRequest = new AssignmentEditRequestModel("a", false, 0,
                 LocalDateTime.of(2022, 12, 3, 12, 0), 30.0, 10, 2);
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(aRequest, "Assignment");
     }
@@ -117,10 +130,19 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
+
         TaskEditRequestModel aRequestComp = new AssignmentEditRequestModel("a", true, 0,
                 startTime, 30.0, 10, 2);
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(aRequestComp, "Assignment");
     }
@@ -165,10 +187,18 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
+
         TaskEditRequestModel tRequest = new TestEditRequestModel("t", false, 0,
                 startTime, endTime, 30.0, 10, 2);
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(tRequest, "Test");
     }
@@ -209,10 +239,18 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
         TaskEditRequestModel tRequestComp = new TestEditRequestModel("t", true, 0,
                 startTime, endTime, 30.0, 10, 2);
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(tRequestComp, "Test");
     }
@@ -256,10 +294,19 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
+
         TaskEditRequestModel eRequest = new EventEditRequestModel("e", false, 0,
                 startTime, endTime, false, "");
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(eRequest, "Event");
     }
@@ -300,10 +347,18 @@ class TaskEditInteractorTest {
                 return null;
             }
         };
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+            @Override
+            public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
+                ScheduleConflictResponseModel conflictResponseModel = new ScheduleConflictResponseModel(false);
+                return conflictResponseModel;
+            }
+        };
+
         TaskEditRequestModel eRequestComp = new EventEditRequestModel("e", true, 0,
                 startTime, endTime, false, "");
 
-        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter);
+        TaskEditInputBoundary interactor = new TaskEditInteractor(taskMapGateway, presenter, scheduleConflictOutputBoundary);
 
         interactor.edit(eRequestComp, "Event");
     }
