@@ -7,8 +7,8 @@ import screens.task_management.task_creation_screens.event_creation_screens.Even
 import screens.task_management.task_creation_screens.event_creation_screens.EventCreationScreen;
 import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
 import screens.task_management.task_creation_screens.test_creation_screens.StudentTestCreationScreen;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.task_management.read_write.TaskMapGateway;
 import use_cases.task_management.task_creation_use_case.*;
 
@@ -25,8 +25,7 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
     JButton cancel = new JButton("Cancel");
 
     // for making task creation screens:
-    SchedulerPresenter schedulerPresenter;
-    ScheduleConflictPresenter scheduleConflictPresenter;
+    ScheduleConflictOutputBoundary scheduleConflictPresenter;
 
     // for connecting to other screens
     CardLayout cardLayout;
@@ -34,14 +33,12 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
 
     /**
      * The window for deciding which Task to create, after clicking the "New task" button
-     * @param schedulerPresenter - todo
-     * @param scheduleConflictPresenter - todo
+     * @param scheduleConflictPresenter - output boundary for the scheduling conflict use case
      * @param screens - rest of screens in the program
      * @param cardLayout - for switching between screens
      */
-    public StudentChooseTaskCreateScreen(SchedulerPresenter schedulerPresenter, ScheduleConflictPresenter scheduleConflictPresenter,
+    public StudentChooseTaskCreateScreen(ScheduleConflictOutputBoundary scheduleConflictPresenter,
                                          JPanel screens, CardLayout cardLayout) {
-        this.schedulerPresenter = schedulerPresenter;
         this.scheduleConflictPresenter = scheduleConflictPresenter;
         this.cardLayout = cardLayout;
         this.screens = screens;
@@ -79,8 +76,7 @@ public class StudentChooseTaskCreateScreen extends JPanel implements ActionListe
         TaskCreationOutputBoundary taskCreationOutputBoundary = new TaskCreationResponseFormatter();
         TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskCreationInputBoundary taskInteractor = new TaskCreationInteractor(
-                taskMapGateway, taskCreationOutputBoundary, "none",
-                schedulerPresenter, scheduleConflictPresenter);
+                taskMapGateway, taskCreationOutputBoundary, "none", scheduleConflictPresenter);
         EventCreationController eventCreationController = new EventCreationController(taskInteractor);
         AssignmentCreationController assignmentCreationController = new AssignmentCreationController(taskInteractor);
         TestCreationController testCreationController = new TestCreationController(taskInteractor);

@@ -6,23 +6,15 @@ import screens.course_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
 import use_cases.course_features.course_creation_use_case.*;
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInputBoundary;
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorOutputBoundary;
+import use_cases.course_tracker.grade_calculator_use_case.*;
 import use_cases.course_features.course_enrolment_use_case.*;
 import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictPresenter;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerPresenter;
-import use_cases.login_registration.login_usecase.LoginGateway;
-import use_cases.login_registration.login_usecase.LoginInputBoundary;
-import use_cases.login_registration.login_usecase.LoginInteractor;
-import use_cases.login_registration.login_usecase.LoginPresenter;
-import use_cases.login_registration.logout_usecase.LogoutGateway;
-import use_cases.login_registration.logout_usecase.LogoutInputBoundary;
-import use_cases.login_registration.logout_usecase.LogoutInteractor;
-import use_cases.login_registration.logout_usecase.LogoutPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
+import use_cases.login_registration.login_usecase.*;
+import use_cases.login_registration.logout_usecase.*;
 import use_cases.login_registration.user_register_usecase.*;
 import screens.task_management.FileTaskMap;
 
@@ -75,8 +67,7 @@ public class Main {
             user = ((LoginInteractor) loginInteractor).getUser();
         }
 
-        SchedulerPresenter schedulerPresenter = new SchedulerResponseFormatter();
-        ScheduleConflictPresenter scheduleConflictPresenter = new ScheduleConflictResponseFormatter();
+        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
         CourseEnrolmentDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
@@ -113,7 +104,7 @@ public class Main {
         //
 
         // Build the GUI
-        StudentChooseTaskCreateScreen chooseStudentTask = new StudentChooseTaskCreateScreen(schedulerPresenter, scheduleConflictPresenter,
+        StudentChooseTaskCreateScreen chooseStudentTask = new StudentChooseTaskCreateScreen(scheduleConflictOutputBoundary,
                 screens, cardLayout);
         screens.add("studentTaskCreate", chooseStudentTask);
 

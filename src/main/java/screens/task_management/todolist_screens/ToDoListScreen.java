@@ -1,5 +1,6 @@
 package screens.task_management.todolist_screens;
 
+import screens.calendar_scheduler.ScheduleConflictPresenter;
 import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import screens.task_management.task_edit_delete_screens.TaskDeletionResponseFormatter;
 import screens.task_management.task_edit_delete_screens.TaskEditResponseFormatter;
@@ -13,6 +14,7 @@ import screens.task_management.task_edit_delete_screens.test_edit_delete_screens
 import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.TestEditDeleteScreen;
 import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.TestInfoRetriever;
 import screens.task_management.FileTaskMap;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
 import use_cases.task_management.read_write.TaskMapGateway;
 import use_cases.task_management.task_deletion_use_case.TaskDeletionInputBoundary;
 import use_cases.task_management.task_deletion_use_case.TaskDeletionInteractor;
@@ -101,9 +103,10 @@ public class ToDoListScreen extends JPanel implements ActionListener {
             String taskType = (String) taskButton.getClientProperty("taskType");
 
             // create use case components
+            ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
             TaskEditPresenter taskEditPresenter = new TaskEditResponseFormatter();
             TaskMapGateway taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
-            TaskEditInputBoundary taskEditInteractor = new TaskEditInteractor(taskMapGateway, taskEditPresenter);
+            TaskEditInputBoundary taskEditInteractor = new TaskEditInteractor(taskMapGateway, taskEditPresenter, scheduleConflictOutputBoundary);
             EventEditController eventEditController = new EventEditController(taskEditInteractor);
             AssignmentEditController assignmentEditController = new AssignmentEditController(taskEditInteractor);
             TestEditController testEditController = new TestEditController(taskEditInteractor);
