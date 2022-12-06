@@ -114,7 +114,7 @@ _Not yet implemented (extending on what is currently working in the MVP feature)
 - displaying a list of tasks in a course upon student entering a course name
 - second part of user story in blueprint which allows users to play around with different scenarios for worst/best case final grades. This part of the program calculates the required average for a given assignment or test
 
-## Course Enrolment/Creation
+## Course Creation/Enrolment
 
 If the user clicks on the `Courses` button, the screen for course enrolment (`StudentUser` only) and course creation (`InstructorUser` only) will be displayed.
 On this screen, the user can either enrol in a course or create a course, depending on their type.
