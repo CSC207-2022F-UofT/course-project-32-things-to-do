@@ -25,6 +25,8 @@ The user can access all features of the program through the main dashboard.
 
 ![](images/dashboard_screen.png)
 
+To log out, the user can click the `Logout` button and will be taken back to the Welcome page, where they can log in or sign up a new User.
+
 ## To-Do List Task Creation
 
 If the user clicks on the `New Task` button, the screen for creating a new task will be displayed.

@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseTasksToStudentTodolistDsGateway {
 
-//    private final HashMap<String, UserRegSaveRequest> accounts;
     private static HashMap<String, UserRegSaveRequest> accounts;
 
     private final String filePath;
