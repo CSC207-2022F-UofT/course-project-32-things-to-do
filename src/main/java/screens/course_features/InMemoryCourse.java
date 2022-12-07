@@ -4,7 +4,6 @@ package screens.course_features;
 
 import entities.Course;
 import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-import use_cases.course_features.course_creation_use_case.CourseCreationRequestModel;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 
 
@@ -13,8 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * gateway for testing purposes
+ */
 public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentDsGateway {
-    private Map<String, Course> courses;
+    private Map<String, Course> courses = new HashMap<>();
 
     public InMemoryCourse() {
         this.courses = new HashMap<>();
