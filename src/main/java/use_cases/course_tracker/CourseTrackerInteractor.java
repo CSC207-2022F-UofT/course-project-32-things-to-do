@@ -41,7 +41,8 @@ public abstract class CourseTrackerInteractor {
         ArrayList<String> allCourseIDs = ((StudentUser) CurrentUser.getCurrentUser()).getCourses();
 
         for (String courseID: allCourseIDs) {
-            if (courseAccess.searchForCourse(courseID).getCourseName().equals(courseName)) {
+            if (courseAccess.searchForCourse(courseID) != null &&
+                    courseAccess.searchForCourse(courseID).getCourseName().equals(courseName)) {
                 return courseID;
             }
         }
@@ -53,17 +54,17 @@ public abstract class CourseTrackerInteractor {
     /**
      * Return all Task tasks for given courseID and studentUser that implement Gradable
      *
-     * @param courseID a String representing the course ID of the given course
+     * @param courseName a String representing the course name of the given course
      * @return a list of all the student's Gradable tasks in the given course
      */
-    protected ArrayList<Task> getStudentCourseTasks(String courseID) {
+    protected ArrayList<Task> getStudentCourseTasks(String courseName) {
         StudentUser studentUser = (StudentUser) CurrentUser.getCurrentUser();
         HashMap<String, Task> allTasks = TaskMap.getTaskMap();
 
         ArrayList<Task> studentCourseTasks = new ArrayList<>();
 
         for (String mapKey: allTasks.keySet()) {
-            if (mapKey.contains(courseID) && mapKey.contains(studentUser.getName())) {
+            if (mapKey.contains(courseName) && mapKey.contains(studentUser.getName())) {
                 if (allTasks.get(mapKey) instanceof Gradable) {
                     studentCourseTasks.add(allTasks.get(mapKey));
                 }

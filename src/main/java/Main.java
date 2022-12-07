@@ -76,7 +76,7 @@ public class Main {
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
         GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
-        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
+        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
