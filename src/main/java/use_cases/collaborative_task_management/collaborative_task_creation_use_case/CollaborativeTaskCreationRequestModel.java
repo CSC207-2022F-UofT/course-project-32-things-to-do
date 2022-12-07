@@ -1,10 +1,12 @@
 package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
 
-import entities.CollaborativeTask;
 import entities.StudentUser;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+/**
+ * Request Model for the Collaborative Task Creation Use Case
+ * Acts as the input data object in the use case layer
+ */
 
 public class CollaborativeTaskCreationRequestModel {
     private final String title;
@@ -16,6 +18,17 @@ public class CollaborativeTaskCreationRequestModel {
     private final LocalDateTime deadline;
     private final StudentUser leader;
 
+    /**
+     * A request model for Collaborative Task creation
+     * @param title - the title of the Collaborative task
+     * @param priority - the priority of the Collaborative Task
+     * @param recurring - whether the Collaborative Task is recurring
+     * @param frequency - the Collaborative Task's frequency (if recurring)
+     * @param startTime - the Collaborative Task's start time
+     * @param endTime - the Collaborative Task's end time
+     * @param deadline - the Collaborative Task's deadline
+     * @param leader - the Collaborative Task's leader
+     */
     public CollaborativeTaskCreationRequestModel(String title, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, StudentUser leader) {
         this.title = title;
         this.priority = priority;
