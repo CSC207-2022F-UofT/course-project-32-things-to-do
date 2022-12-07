@@ -105,7 +105,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
             cardLayout.show(screens, "tracker");
         }
         if (evt.getSource() == courses) {
-            cardLayout.show(screens, "course");
+            cardLayout.show(screens, "courseEnrol");
         }
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");
