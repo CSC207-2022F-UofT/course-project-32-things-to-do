@@ -37,6 +37,8 @@ public class LoginInteractor implements LoginInputBoundary {
      */
     @Override
     public LoginResponseModel create(LoginRequestModel requestModel) throws LoginFailed {
+
+        // check if the username exists and if the associated password is correct
         if (!loginGateway.existsByName(requestModel.getName())) {
             return loginPresenter.prepareFailView("Username does not exist");
         } else if (!loginGateway.passOf(requestModel.getName()).equals(requestModel.getPass())) {
@@ -51,7 +53,7 @@ public class LoginInteractor implements LoginInputBoundary {
         CurrentUser.setCurrentUser(user);
 
         LoginResponseModel loginRes;
-
+        // create a new response based on the information provided in the request
         if (this.user instanceof InstructorUser) {
             loginRes = new LoginResponseModel(requestModel.getName(), now.toString(), "Instructor");
         } else {
@@ -60,6 +62,8 @@ public class LoginInteractor implements LoginInputBoundary {
         return loginPresenter.prepareSuccessView(loginRes);
     }
 
+    // create a user based on the login request model (search the database and initialize a new User with
+    // the same information stored)
     private User createUser(LoginRequestModel requestModel) {
 
         // creating a new User object using the information in the UserRegSaveRequest

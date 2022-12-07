@@ -27,6 +27,9 @@ public class LoginResponseModel {
 
     public String getTypeOfUser() { return typeOfUser; }
 
+    /**
+     * @param s the type of User that this user is (either a student or an instructor)
+     */
     public void setTypeOfUser(String s) {
         if (s.equals("Instructor") | s.equals("Student")) {
             this.typeOfUser = s;

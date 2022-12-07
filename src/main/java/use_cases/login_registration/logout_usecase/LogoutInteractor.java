@@ -41,6 +41,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
 
         UserRegSaveRequest userModel;
 
+        // Initialize a new UserRegSaveRequest based on the type of User in the request
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
                     (StudentUser) user, now);
@@ -51,6 +52,8 @@ public class LogoutInteractor implements LogoutInputBoundary {
             userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
         }
 
+        // Save the UserRegSaveRequest object containing all the info from this session
+        // into the database
         userGateway.save(userModel);
     }
 }
