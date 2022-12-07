@@ -12,7 +12,6 @@ import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
-import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.login_registration.login_usecase.*;
 import use_cases.login_registration.logout_usecase.*;
 import use_cases.login_registration.user_register_usecase.*;
@@ -69,7 +68,7 @@ public class Main {
 
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
-        CourseEnrolmentDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
+        CourseEnrolmentCourseDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
         ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess);
@@ -91,10 +90,12 @@ public class Main {
         CourseCreationController courseController = new CourseCreationController(courseInteractor);
 
         // Adding in course enrolment use case
-        CourseEnrolmentDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
-        CourseTasksToStudentTodolistDsGateway tasksToTodolist = new FileUser("src/main/java/data/users.ser");
+        CourseEnrolmentCourseDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
+        CourseEnrolmentUserDsGateway enrolUser = new FileUser("src/main/java/data/users.ser");
+        CourseEnrolmentTaskDsGateway enrolTasks = new FileTaskMap("src/main/java/data/taskmap.ser");
         CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
-        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(enrolCourse, tasksToTodolist, enrolmentPresenter);
+        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(
+                enrolUser, enrolCourse, enrolTasks, enrolmentPresenter);
         CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
         // Adding in logout use case

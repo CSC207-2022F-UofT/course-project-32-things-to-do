@@ -1,12 +1,16 @@
 package screens.task_management;
 
 import entities.Task;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentTaskDsGateway;
+import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
+import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FileTaskMap implements TaskMapGateway {
+public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway {
     String path;
     HashMap<String, Task> taskMap = new HashMap<>();
     public FileTaskMap(String path) {
@@ -59,5 +63,22 @@ public class FileTaskMap implements TaskMapGateway {
     @Override
     public boolean existsById(String id) {
         return taskMap.containsKey(id);
+    }
+
+    /**
+     * For Course enrolment use case
+     * returns the task object based on the task id
+     * @param taskId the unique id (key) of the task
+     * @return
+     */
+    @Override
+    public Task getTask(String taskId) {
+        return taskMap.get(taskId);
+    }
+
+    @Override
+    public void saveNewMaptoMap(HashMap<String, Task> newMap) {
+        taskMap.putAll(newMap);
+        save(taskMap);
     }
 }

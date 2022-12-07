@@ -1,7 +1,7 @@
 package use_cases.course_tracker;
 
 import entities.*;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public abstract class CourseTrackerInteractor {
      * @param courseName a String representing the name of the student's course
      * @return the course ID of the student's course
      */
-    protected String courseNameToID(String courseName, CourseEnrolmentDsGateway courseAccess) {
+    protected String courseNameToID(String courseName, CourseEnrolmentCourseDsGateway courseAccess) {
 
         ArrayList<String> allCourseIDs = ((StudentUser) CurrentUser.getCurrentUser()).getCourses();
 

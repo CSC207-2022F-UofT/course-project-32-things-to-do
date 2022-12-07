@@ -24,7 +24,7 @@ public class CourseCreationControllerTest {
             }
 
             @Override
-            public void saveCourse(Course requestModel) throws IOException {
+            public void save(Course requestModel) throws IOException {
 
             }
         };
