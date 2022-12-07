@@ -19,7 +19,9 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     final CourseTasksToStudentTodolistDsGateway tasksToTodolistDsGateway;
     final CourseEnrolmentOutputBoundary courseEnrolmentOutputBoundary; // the presenter
     private StudentUser student; // for response model
-    private Course enrolledCourse; // for response model
+    private Course course; // for response model
+
+    private Task tasks; // for response model
 
     public CourseEnrolmentInteractor(CourseEnrolmentDsGateway courseEnrolmentDsGateway,
                                      CourseTasksToStudentTodolistDsGateway tasksToDodolistDsGateway,
@@ -44,7 +46,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         }
 
         // checks if given course id is in the map of existing courses
-        if (courseEnrolmentDsGateway.existsByCourseID(requestModel.getCourseID())) {
+        if (!courseEnrolmentDsGateway.existsByCourseID(requestModel.getCourseID())) {
             return courseEnrolmentOutputBoundary.prepareFailView("Entered information does not correspond to an existing course.");
         }
 
@@ -69,18 +71,23 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // tasks should be properly initialized sent to student
 
         // get course's tasks by creating an alias of the Courses tasks parameter (needs to be referring to the same tasks)
-        ArrayList<String> courseTaskTitlesCopy = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
+//        ArrayList<String> courseTaskTitlesCopy = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
 
-        // below: more clearly shows aliasing but warning for redundant variables
-        // ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
-        // ArrayList<String> courseTaskTitlesCopy = courseTaskTitles;
+        /** THIS IS MOVED TO COURSE CREATION USE CASE UNDER GETTASKS METHOD IN REQUEST MODEL BC I AM DUMB*/
+//        String tasksOneString = courseTaskTitlesCopy.get(0);
+//        ArrayList<String> goodCourseTasks = new ArrayList<>();
+//        for (String tasksSplit : tasksOneString.split(",")) {
+//            goodCourseTasks.add(tasksSplit);
+//        }
 
         // make courseTasks into proper id format: courseTasks_instructor_course, add to an arraylist of Tasks
         String instructorName = requestModel.getCourseInstructor();
         String courseName = requestModel.getCourseName();
+        ArrayList<String> courseTaskTitles = courseEnrolmentDsGateway.courseTasks(courseEnrolmentDsGateway.searchForCourse(requestModel.getCourseID()));
 
+        // generates the existing task id from the task title
         ArrayList<String> courseTaskId = new ArrayList<>();
-        for (String taskTitleToId : courseTaskTitlesCopy) {
+        for (String taskTitleToId : courseTaskTitles) {
             taskTitleToId = taskTitleToId + "_" + instructorName + "_" + courseName;
             courseTaskId.add(taskTitleToId);
         }
@@ -92,7 +99,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
-        // for each task id : Task pair, change the key name to courseTasks_student_course, add key-value pair to arraylist
+        // for each taskId-Task pair, change the key name to courseTaskTitle_student_course, add key-value pair to arraylist
         HashMap<String, Task> newTaskIdMap = new HashMap<>(); // initialize new TaskIdMap
 
         // create 2 parallel arraylists, one for keys, one for values
@@ -121,12 +128,14 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         TaskMap.addTasks(newTaskIdMap);
 
         // add new task ids to the student's to-do list (of task ids)
+        // need to be initializing Task (check creation interactor) // or maybe not, may not be npe
         try {
             tasksToTodolistDsGateway.addSaveTasksToTodolist(requestModel.getStudentID(), newKeys);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        // Need to be initializing 'student', but also taken care of ...
         // add course to student's 'courses' parameter
         try {
             tasksToTodolistDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
@@ -134,9 +143,12 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             throw new RuntimeException(e);
         }
 
+        // need to be initializing 'course'
         // create response model, sent to presenter
+        Course enrolledCourse = new Course(
+                requestModel.getCourseID(), requestModel.getCourseInstructor(), courseTaskTitles);
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
-                student.getName(), enrolledCourse.getCourseID(), courseTaskTitlesCopy);
+                requestModel.getStudentID(), enrolledCourse.getCourseID(), enrolledCourse.getTasks());
 
         return courseEnrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
     }

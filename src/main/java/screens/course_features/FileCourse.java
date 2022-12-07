@@ -127,7 +127,7 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     @Override
     public void saveStudentToCourse(String studentID, String courseID) throws IOException {
         courses.get(courseID).getStudents().add(studentID);
-        saveCourse();
+        saveCourse(); // TODO: not working? might need to initialize students arraylist size is still 0 ...
 
     }
 

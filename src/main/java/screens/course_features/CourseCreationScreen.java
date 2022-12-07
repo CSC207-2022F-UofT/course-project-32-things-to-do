@@ -49,7 +49,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
         LabelTextPanel taskNameInfo = new LabelTextPanel(
-                new JLabel("Enter task title(s), separated by a comma"), taskNames);
+                new JLabel("Enter task title(s), separated by a comma with no space"), taskNames);
 
         // buttons
         JButton cancel = new JButton("Cancel");
@@ -98,7 +98,7 @@ public class CourseCreationScreen extends JPanel implements ActionListener {
                 courseCreationController.create(courseName.getText(), courseInstructor.getText(),
                         tasks);
                 JOptionPane.showMessageDialog(
-                        this, "Course" + courseName.getText() + "and tasks" + tasks + "successfully created.");
+                        this, "Course: " + courseName.getText() + " and tasks: " + tasks + " successfully created.");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
