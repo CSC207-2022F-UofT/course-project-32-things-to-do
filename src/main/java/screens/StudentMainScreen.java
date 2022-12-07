@@ -1,5 +1,9 @@
 package screens;
 
+import screens.calendar_scheduler.WorkingHoursController;
+import screens.calendar_scheduler.CalendarPresenter;
+import screens.calendar_scheduler.CalendarScreen;
+import screens.calendar_scheduler.WorkingHoursPresenter;
 import screens.login_registration.LogoutController;
 import screens.task_management.todolist_screens.ToDoListPresenter;
 import screens.task_management.todolist_screens.ToDoListScreen;
@@ -99,6 +103,17 @@ public class StudentMainScreen extends JPanel implements ActionListener {
             cardLayout.show(screens, "toDoList");
         }
         if (evt.getSource() == calendar) {
+            // Refresh calendar screen
+            CalendarPresenter calendarPresenter = new CalendarPresenter();
+            WorkingHoursPresenter workingHoursPresenter = new WorkingHoursPresenter();
+            WorkingHoursController workingHoursController = new WorkingHoursController();
+            ToDoListInteractor toDoListInteractor = new ToDoListInteractor(calendarPresenter);
+            calendarPresenter.setToDoListInput(toDoListInteractor);
+
+            CalendarScreen calendarScreen = new CalendarScreen(screens, cardLayout, calendarPresenter,
+                    workingHoursController, workingHoursPresenter);
+            screens.add("calendar", calendarScreen);
+
             cardLayout.show(screens, "calendar");
         }
         if (evt.getSource() == progressTracker) {
