@@ -1,4 +1,4 @@
-package scheduler_use_case;
+package calendar_scheduler_use_case;
 
 import entities.*;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import screens.calendar_scheduler.ScheduleConflictPresenter;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 import use_cases.calendar_scheduler.scheduler_use_case.*;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ class SchedulerInteractorTest  {
     @Test
     void testConflictSchedule() {
 
-        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+        ScheduleConflictOutputBoundary scheduleConflictPresenter = new ScheduleConflictPresenter() {
             @Override
             public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel requestModel) {
                 assertEquals("testEvent1", requestModel.getConflictingTask().getTitle());
@@ -31,7 +30,7 @@ class SchedulerInteractorTest  {
         };
 
         // Create interactor and test entities
-        SchedulerInputBoundary interactor = new SchedulerInteractor(scheduleConflictOutputBoundary);
+        SchedulerInputBoundary interactor = new SchedulerInteractor(scheduleConflictPresenter);
         StudentUser user = new StudentUser("testUser", "testPassword");
 
         Event event1 = new Event("testEvent1", "testid1", 0, LocalDateTime.of(2022, 12, 10, 14, 0),
@@ -55,7 +54,7 @@ class SchedulerInteractorTest  {
     @Test
     void testPrepTimeScheduling() {
         // Create anonymous implementing class for the output boundary
-        ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
+        ScheduleConflictOutputBoundary scheduleConflictPresenter = new ScheduleConflictPresenter() {
             @Override
             public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel requestModel) {
                 ScheduleConflictResponseModel responseModel = new ScheduleConflictResponseModel(false);
@@ -64,7 +63,7 @@ class SchedulerInteractorTest  {
         };
 
         // Create interactor and test entities
-        SchedulerInputBoundary interactor = new SchedulerInteractor(scheduleConflictOutputBoundary);
+        SchedulerInputBoundary interactor = new SchedulerInteractor(scheduleConflictPresenter);
         StudentUser user = new StudentUser("testUser", "testPassword");
         LocalDateTime currDateTime = LocalDateTime.now();
 
@@ -101,6 +100,8 @@ class SchedulerInteractorTest  {
         prepTime.add(prepEnd);
 
         expectedPrepTime.add(prepTime);
+        System.out.println(expectedPrepTime);
+        System.out.println((assignment.getPrepTimeScheduled()));
 
         assertEquals(expectedPrepTime, (assignment.getPrepTimeScheduled()));
     }

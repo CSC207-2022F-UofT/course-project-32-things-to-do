@@ -1,9 +1,6 @@
 package screens.calendar_scheduler;
 
-import entities.CurrentUser;
-import entities.StudentUser;
-import entities.Task;
-import entities.TaskMap;
+import use_cases.task_management.todolist_use_case.ToDoListResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +9,6 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class CalendarScreen extends JPanel implements ActionListener {
@@ -33,30 +28,23 @@ public class CalendarScreen extends JPanel implements ActionListener {
     JPanel screens;
     CardLayout screenLayout;
 
-    /**
-     * The current entities
-     */
-    StudentUser user;
-    ArrayList<Task> allTasks;
+    CalendarPresenter presenter;
+    WorkingHoursController workingHoursController;
+    WorkingHoursPresenter workingHoursPresenter;
 
     /**
      * The window of the screen for the Calendar view
      */
-    public CalendarScreen(JPanel screens, CardLayout screenLayout) {
+    public CalendarScreen(JPanel screens, CardLayout screenLayout, CalendarPresenter presenter,
+                          WorkingHoursController workingHoursController, WorkingHoursPresenter workingHoursPresenter) {
 
-        this.user = (StudentUser) CurrentUser.getCurrentUser();
+        this.presenter = presenter;
+        this.workingHoursController = workingHoursController;
+        this.workingHoursPresenter = workingHoursPresenter;
         this.screens = screens;
         this.screenLayout = screenLayout;
 
-        // Get the user's existing tasks
-        ArrayList<String> taskIDs = user.getToDoList();
-        ArrayList<Task> allTasks = new ArrayList<>();
-        for (String taskID : taskIDs) {
-            //get the Task object for this task from the entity TaskMap static variable
-            Task existingTask = TaskMap.getTaskMap().get(taskID);
-            allTasks.add(existingTask);
-        }
-        this.allTasks = allTasks;
+        ArrayList<ArrayList<String>> taskList = presenter.getToDoList();
 
         // Create label for title of screen
         JLabel title = new JLabel("Calendar");
@@ -76,11 +64,11 @@ public class CalendarScreen extends JPanel implements ActionListener {
         LocalDate currDate = LocalDate.now();
         cardLayout = new CardLayout();
         viewPanel = new JPanel(cardLayout);
-        DayViewPanel dayViewPanel = new DayViewPanel(currDate, this.user, this.allTasks);
+        DayViewPanel dayViewPanel = new DayViewPanel(currDate, taskList, this.workingHoursPresenter);
         viewPanel.add("day", dayViewPanel);
-        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, this.user, this.allTasks);
+        WeekViewPanel weekViewPanel = new WeekViewPanel(currDate, taskList, this.workingHoursPresenter);
         viewPanel.add("week", weekViewPanel);
-        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, this.allTasks);
+        MonthViewPanel monthViewPanel = new MonthViewPanel(currDate, taskList);
         viewPanel.add("month", monthViewPanel);
 
 
@@ -118,7 +106,8 @@ public class CalendarScreen extends JPanel implements ActionListener {
             // Get current working hours
             LocalTime currStartTime;
             LocalTime currEndTime;
-            ArrayList<LocalTime> currWorkingHours = user.getWorkingHours();
+            ArrayList<LocalTime> currWorkingHours = workingHoursPresenter.getWorkingHours();
+
             if (currWorkingHours.size() == 0) {
                 currStartTime = LocalTime.now();
                 currEndTime = LocalTime.now();
@@ -181,7 +170,8 @@ public class CalendarScreen extends JPanel implements ActionListener {
             ArrayList<LocalTime> workingHours = new ArrayList<>();
             workingHours.add(LocalTime.of(startHour, startMinute));
             workingHours.add(LocalTime.of(endHour, endMinute));
-            this.user.setWorkingHours(workingHours);
+
+            this.workingHoursController.setWorkingHours(workingHours);
         }
 
         // Trigger button to return to main dashboard
