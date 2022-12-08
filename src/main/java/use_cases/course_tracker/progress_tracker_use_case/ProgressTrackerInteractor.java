@@ -42,7 +42,7 @@ public class ProgressTrackerInteractor extends CourseTrackerInteractor implement
             String courseID = courseNameToID(courseName, courseAccess);
 
             //query aggregate task map for all of this student's tasks in this course
-            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);
+            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseName);
 
             //if a newGrade was inputted, mutate the corresponding task object
             if (newGrade != -1) {

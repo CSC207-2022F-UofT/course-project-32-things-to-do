@@ -100,8 +100,6 @@ class SchedulerInteractorTest  {
         prepTime.add(prepEnd);
 
         expectedPrepTime.add(prepTime);
-        System.out.println(expectedPrepTime);
-        System.out.println((assignment.getPrepTimeScheduled()));
 
 //        assertEquals(expectedPrepTime, (assignment.getPrepTimeScheduled()));
     }
