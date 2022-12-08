@@ -1,5 +1,7 @@
 package screens.collaborative_task_management.collaborative_task_edit_delete_screens;
 
+import entities.CollaborativeTask;
+import entities.TaskMap;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditRequestModel;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditInputBoundary;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditResponseModel;
@@ -29,7 +31,7 @@ public class CollaborativeTaskEditController {
      * @return - response model (input boundary will indicate success/failure)
      */
     public CollaborativeTaskEditResponseModel edit(boolean complete, String id, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) throws IOException{
-        CollaborativeTaskEditRequestModel requestModel = new CollaborativeTaskEditRequestModel(id, complete, priority, recurring, frequency, startTime, endTime, deadline);
+        CollaborativeTaskEditRequestModel requestModel = new CollaborativeTaskEditRequestModel(id, complete, priority, recurring, frequency, startTime, endTime, deadline, ((CollaborativeTask) TaskMap.findTask(id)).getLeader());
         return input.edit(requestModel);
     }
 }
