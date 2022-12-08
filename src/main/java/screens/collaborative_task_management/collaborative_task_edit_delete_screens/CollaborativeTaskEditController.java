@@ -5,18 +5,20 @@ import entities.TaskMap;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditRequestModel;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditInputBoundary;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditResponseModel;
+import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
+import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class CollaborativeTaskEditController {
-    final CollaborativeTaskEditInputBoundary input;
+    final TaskEditInputBoundary input;
 
     /**
      * A controller for interacting with the Collaborative Task edit use case
      * @param input - the input boundary for editing
      */
-    public CollaborativeTaskEditController(CollaborativeTaskEditInputBoundary input) { this.input = input; }
+    public CollaborativeTaskEditController(TaskEditInputBoundary input) { this.input = input; }
 
     /**
      * Attempt to edit a Collaborative Task
@@ -30,8 +32,8 @@ public class CollaborativeTaskEditController {
      * @param deadline - the Collaborative Task's deadline
      * @return - response model (input boundary will indicate success/failure)
      */
-    public CollaborativeTaskEditResponseModel edit(boolean complete, String id, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) throws IOException{
+    public TaskEditResponseModel edit(boolean complete, String id, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) throws IOException{
         CollaborativeTaskEditRequestModel requestModel = new CollaborativeTaskEditRequestModel(id, complete, priority, recurring, frequency, startTime, endTime, deadline, ((CollaborativeTask) TaskMap.findTask(id)).getLeader());
-        return input.edit(requestModel);
+        return input.edit(requestModel, "Collaborative");
     }
 }

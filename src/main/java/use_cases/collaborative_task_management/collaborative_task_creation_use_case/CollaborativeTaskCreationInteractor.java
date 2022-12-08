@@ -11,7 +11,6 @@ import use_cases.task_management.read_write.TaskMapGateway;
 public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCreationInputBoundary {
     private final TaskMapGateway taskMapRepository;
     private final CollaborativeTaskCreationOutputBoundary outputBoundary;
-    private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
     /**
      * Interactor for Collaborative Task.
@@ -29,6 +28,8 @@ public class CollaborativeTaskCreationInteractor implements CollaborativeTaskCre
      * @return - response model after Collaborative Task is created
      */
     public CollaborativeTaskCreationResponseModel create(CollaborativeTaskCreationRequestModel requestModel) {
+        StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
+        if(requestModel.getTitle() == null || requestModel.getStartTime() == null || requestModel.getEndTime() == null) return outputBoundary.prepareFailView("Please fill all fields!");
         if (requestModel.getTitle().equals("")) return outputBoundary.prepareFailView("Please enter a title.");
         String id = requestModel.getTitle() + "_" + student.getName() + "_collaborative";
         if (TaskMap.findTask(id) != null) return outputBoundary.prepareFailView("Please enter a unique title.");

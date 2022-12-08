@@ -39,7 +39,7 @@ public class CollaborativeTaskCreateScreen extends JPanel implements ActionListe
         LabelTextPanel frequencyInfo = new LabelTextPanel(new JLabel("Enter frequency of collaborative event (\"daily\", \"weekly\", \"monthly\")"), frequency);
         frequency.setEnabled(false);
         LabelTextPanel startDateInfo = new LabelTextPanel(new JLabel("Enter collaborative task start date (yyyy-mm-dd)"), startDate);
-        LabelTextPanel startTimeInfo = new LabelTextPanel(new JLabel("Enter collaborative task start time (hh:mm, 24 hour)"), startDate);
+        LabelTextPanel startTimeInfo = new LabelTextPanel(new JLabel("Enter collaborative task start time (hh:mm, 24 hour)"), startTime);
         LabelTextPanel endDateInfo = new LabelTextPanel(new JLabel("Enter collaborative task end date (yyyy-mm-dd)"), endDate);
         LabelTextPanel endTimeInfo = new LabelTextPanel(new JLabel("Enter collaborative task end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel deadlineDateInfo = new LabelTextPanel(new JLabel("Enter collaborative task deadline date (yyyy-mm-dd)"), deadlineDate);

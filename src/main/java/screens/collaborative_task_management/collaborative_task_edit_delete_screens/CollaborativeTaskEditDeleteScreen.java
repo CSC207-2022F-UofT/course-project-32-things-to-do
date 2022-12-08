@@ -1,5 +1,6 @@
 package screens.collaborative_task_management.collaborative_task_edit_delete_screens;
 
+import screens.task_management.task_edit_delete_screens.TaskDeletionController;
 import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskDisplayer;
 
 import screens.LabelTextPanel;
@@ -23,9 +24,11 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
     JTextField endTime;
     JTextField deadlineDate;
     JTextField deadlineTime;
+    JTextField leader;
+    JTextField invite;
 
     CollaborativeTaskEditController collaborativeTaskEditController;
-    CollaborativeTaskDeletionController collaborativeTaskDeletionController;
+    TaskDeletionController taskDeletionController;
 
     JPanel screens;
     CardLayout screenLayout;
@@ -35,14 +38,14 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
     /**
      * A screen for editing/deleting an Event
      * @param collaborativeTaskEditController - controller for editing use case
-     * @param collaborativeTaskDeletionController - controller for deleting use case
+     * @param taskDeletionController - controller for deleting tasks
      * @param screens - rest of screens in the program
      * @param screenLayout - for switching between screens
      * @param collaborativeTaskInfo - to access info about a Collaborative Task
      */
-    public CollaborativeTaskEditDeleteScreen(CollaborativeTaskEditController collaborativeTaskEditController, CollaborativeTaskDeletionController collaborativeTaskDeletionController, JPanel screens, CardLayout screenLayout, CollaborativeTaskDisplayer collaborativeTaskInfo) {
+    public CollaborativeTaskEditDeleteScreen(CollaborativeTaskEditController collaborativeTaskEditController, TaskDeletionController taskDeletionController, JPanel screens, CardLayout screenLayout, CollaborativeTaskDisplayer collaborativeTaskInfo) {
         this.collaborativeTaskEditController = collaborativeTaskEditController;
-        this.collaborativeTaskDeletionController = collaborativeTaskDeletionController;
+        this.taskDeletionController = taskDeletionController;
         this.screens = screens;
         this.screenLayout = screenLayout;
         this.collaborativeTaskInfo = collaborativeTaskInfo;
@@ -61,7 +64,8 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
         endTime = new JTextField(collaborativeTaskInfo.getEndTime().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
         deadlineDate = new JTextField(collaborativeTaskInfo.getDeadline().format(DateTimeFormatter.ISO_LOCAL_DATE), 15);
         deadlineTime = new JTextField(collaborativeTaskInfo.getDeadline().format(DateTimeFormatter.ISO_LOCAL_TIME), 15);
-
+        leader = new JTextField(collaborativeTaskInfo.getLeader().getName(), 15);
+        invite = new JTextField("", 15);
 
         LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("Collaborative Task title"), title);
         LabelTextPanel priorityInfo = new LabelTextPanel(new JLabel("Enter new collaborative task priority (integer)"), priority);
@@ -73,15 +77,19 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
         LabelTextPanel endTimeInfo = new LabelTextPanel(new JLabel("Enter new collaborative task end time (hh:mm, 24 hour)"), endTime);
         LabelTextPanel deadlineDateInfo = new LabelTextPanel(new JLabel("Enter new collaborative task deadline date (yyyy-mm-dd)"), deadlineDate);
         LabelTextPanel deadlineTimeInfo = new LabelTextPanel(new JLabel("Enter new collaborative task deadline time (hh:mm, 24 hour)"), deadlineTime);
+        LabelTextPanel leaderInfo = new LabelTextPanel(new JLabel("Enter a replacement leader's name"), leader);
+        LabelTextPanel inviteInfo = new LabelTextPanel(new JLabel("Enter the name of a student you want to join this task, then click the invite button"), invite);
 
         JButton finish = new JButton("Finish");
         JButton delete = new JButton("Delete");
         JButton cancel = new JButton("Cancel");
+        JButton inviteButton = new JButton("Invite");
 
         JPanel buttons = new JPanel();
         buttons.add(finish);
         buttons.add(delete);
         buttons.add(cancel);
+        buttons.add(inviteButton);
 
         finish.addActionListener(this);
         delete.addActionListener(this);
@@ -103,6 +111,8 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
         this.add(endTimeInfo);
         this.add(deadlineDateInfo);
         this.add(deadlineTimeInfo);
+        this.add(leaderInfo);
+        this.add(inviteInfo);
         this.add(buttons);
     }
 
@@ -126,7 +136,7 @@ public class CollaborativeTaskEditDeleteScreen extends JPanel implements ActionL
                 screenLayout.show(screens, "StudentMain");
             }
             else if (evt.getActionCommand().equals("Delete")){
-                collaborativeTaskDeletionController.delete(collaborativeTaskInfo.getId());
+                taskDeletionController.delete(collaborativeTaskInfo.getId());
                 showMessageDialog(this, "Collaborative Task Deleted Successfully");
                 screenLayout.show(screens, "StudentMain");
             }
