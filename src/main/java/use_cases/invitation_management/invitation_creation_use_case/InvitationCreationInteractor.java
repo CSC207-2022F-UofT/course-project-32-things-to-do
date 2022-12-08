@@ -19,6 +19,8 @@ public class InvitationCreationInteractor implements InvitationCreationInputBoun
     /**
      * Interactor for Invitation Creation.
      * @param outputBoundary - the output boundary for displaying results.
+     * @param userGateway - the gateway that interacts with the User Database.
+     * @param accounts - a transient data storage class that contains the same information as a User
      */
     public InvitationCreationInteractor(InvitationCreationOuputBoundary outputBoundary, UserRegGateway userGateway, HashMap<String, UserRegSaveRequest> accounts) {
         this.outputBoundary = outputBoundary;
@@ -27,7 +29,7 @@ public class InvitationCreationInteractor implements InvitationCreationInputBoun
     }
 
     /**
-     * Create an Invitation
+     * Attempt to create an Invitation
      * @param requestModel - request model for Invitation
      * @return - response model after Invitation is created
      */
@@ -43,6 +45,7 @@ public class InvitationCreationInteractor implements InvitationCreationInputBoun
         receiver.getInbox().add(newInvitation);
 
         collaborativeTask.getPendingTeammates().add(receiver);
+        collaborativeTask.getDeclinedTeammates().remove(receiver);
 
         // display success to user
         InvitationCreationResponseModel response = new InvitationCreationResponseModel(requestModel.getRecieverUsername(), requestModel.getCollaborativeId());
