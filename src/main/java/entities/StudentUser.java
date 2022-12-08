@@ -1,6 +1,5 @@
 package entities;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -14,12 +13,12 @@ public class StudentUser implements User {
     public StudentUser(String name, String password) {
         this.name = name;
         this.password = password;
-        this.toDoList = new ArrayList<String>();
-        this.taskArchive = new ArrayList<String>();
-        this.courses = new ArrayList<String>();
-        this.inbox = new ArrayList();
-        this.notifications = new ArrayList<String>();
-        this.desiredGrades = new HashMap<String, Double>();
+        this.toDoList = new ArrayList<>();
+        this.taskArchive = new ArrayList<>();
+        this.courses = new ArrayList<>();
+        this.inbox = new ArrayList<>();
+        this.notifications = new ArrayList<>();
+        this.desiredGrades = new HashMap<>();
     }
 
     private final String name;
@@ -92,31 +91,19 @@ public class StudentUser implements User {
 
     public void setCourses(ArrayList<String> c) { this.courses = c; }
 
-    private ArrayList inbox ; // once Invitation class is up, make it an ArrayList of Invitations
+    private ArrayList<Invitation> inbox ; // once Invitation class is up, make it an ArrayList of Invitations
 
-    public ArrayList getInbox() {
+    public ArrayList<Invitation> getInbox() {
 
         return this.inbox;
     }
 
-    public void addInvitation(String invite) {
-        this.inbox.add(invite);
-    }
-
-    public void removeInvitation(String invite) {
-        this.inbox.remove(invite);
-    }
-
-    public void setInbox(ArrayList i) { this.inbox = i; }
+    public void setInbox(ArrayList<Invitation> i) { this.inbox = i; }
 
     private ArrayList<String> notifications;
 
     public ArrayList<String> getNotifications() {
         return this.notifications;
-    }
-
-    public void addNotification(String notification) {
-        this.notifications.add(notification);
     }
 
     public void setNotifications(ArrayList<String> n) { this.notifications = n; }

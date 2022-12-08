@@ -10,11 +10,11 @@ public class InstructorSaveRequest extends UserRegSaveRequest {
      * A transient data storage class that contains the same information as an InstructorUser
      */
 
-    private String name;
+    private final String name;
 
-    private String password;
+    private final String password;
 
-    private LocalDateTime creationTime;
+    private final LocalDateTime creationTime;
 
     private final ArrayList<String> courses;
 

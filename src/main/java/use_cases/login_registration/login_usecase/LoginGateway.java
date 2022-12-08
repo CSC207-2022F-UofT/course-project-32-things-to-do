@@ -19,8 +19,7 @@ public interface LoginGateway {
     String passOf(String name);
 
     /**
-     * @return a Map that maps the usernames of all users in the User Database to UserRegSaveRequest objects, which
-     * store the same information as each type of user.
+     * @return a Map that maps the usernames of all users in the User Database to UserRegSaveRequest objects
      */
     Map<String, UserRegSaveRequest> getAccounts();
 
