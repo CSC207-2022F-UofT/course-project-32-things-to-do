@@ -39,24 +39,24 @@ class CourseEnrolmentInteractorTest {
         Assignment a1 = new Assignment("a1", "a1_paul_csc207", null, 0.1);
         Assignment a2 = new Assignment("a2", "a2_paul_csc207", null, 0.1);
 //        entities.Test tt1 = new entities.Test(
-//                "tt1", "tt1_inst1_course1", null, null, 0.1);
+//                "tt1", "tt1_paul_csc207", null, null, 0.1);
 
         HashMap<String, Task> taskmapbefore = new HashMap<>();
-        taskmapbefore.put("a1_inst1_course1", a1);
-        taskmapbefore.put("a2_inst1_course1", a2);
-//        taskmapbefore.put("tt1_inst1_course1", tt1);
+        taskmapbefore.put("a1_paul_csc207", a1);
+        taskmapbefore.put("a2_paul_csc207", a2);
+//        taskmapbefore.put("tt1_paul_csc207", tt1);
         TaskMap.setTaskMap(taskmapbefore);
 
+        // list of task  titles for course creation
+        ArrayList<String> taskList = new ArrayList<>();
+        taskList.add("a1");
+        taskList.add("a2");
+
         // create course that instructor makes, populate with tasks
-        Course coursebefore = new Course("csc207", "paul", new ArrayList<>());
+        Course coursebefore = new Course("csc207", "paul", taskList);
         HashMap<String, Course> coursemapbefore = new HashMap<>();
         coursemapbefore.put(coursebefore.getCourseID(), coursebefore);
         this.courseAccess = new InMemoryCourse(coursemapbefore);
-        ArrayList<String> courselistbefore = new ArrayList<>();
-        courselistbefore.add("a1_inst1_course1");
-        courselistbefore.add("a2_inst1_course1");
-//        courselistbefore.add("tt1_inst1_course1");
-        ((StudentUser) CurrentUser.getCurrentUser()).setCourses(courselistbefore);
 
         taskAccess = new InMemoryTaskMap();
         taskAccess.saveNewMaptoMap(TaskMap.getTaskMap());
@@ -87,10 +87,12 @@ class CourseEnrolmentInteractorTest {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
-                // TODO: assertEquals and more
+                // TODO this is the bug i had while testing screens too
+                // go to course map, get course entity associated with
+                assertTrue(courseAccess.searchForCourse(responseModel.getCourseID()).getStudents().contains("julie"));
+                assertEquals("julie", CurrentUser.getCurrentUser().getName());
                 return null;
             }
-
             @Override
             public CourseEnrolmentResponseModel prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
@@ -99,7 +101,7 @@ class CourseEnrolmentInteractorTest {
         };
 
         CourseEnrolmentRequestModel request = new CourseEnrolmentRequestModel(
-                "course1", "inst1");
+                "csc207", "paul");
         CourseEnrolmentInputBoundary interactor = new CourseEnrolmentInteractor(
                 courseAccess, taskAccess, outputBoundary);
 
@@ -125,7 +127,8 @@ class CourseEnrolmentInteractorTest {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
-                // TODO: assertEquals and more
+                assertEquals(",", responseModel.getTasks());
+                // go to taskmap, check if ids contain key tasks
                 return null;
             }
 
@@ -137,7 +140,7 @@ class CourseEnrolmentInteractorTest {
         };
 
         CourseEnrolmentRequestModel request = new CourseEnrolmentRequestModel(
-                "course1", "inst1");
+                "csc207", "paul");
         CourseEnrolmentInputBoundary interactor = new CourseEnrolmentInteractor(
                 courseAccess, taskAccess, outputBoundary);
 
@@ -173,7 +176,7 @@ class CourseEnrolmentInteractorTest {
         };
 
         CourseEnrolmentRequestModel request = new CourseEnrolmentRequestModel(
-                "course1", "inst1");
+                "csc207", "paul");
         CourseEnrolmentInputBoundary interactor = new CourseEnrolmentInteractor(
                 courseAccess, taskAccess, outputBoundary);
 
@@ -208,7 +211,7 @@ class CourseEnrolmentInteractorTest {
         };
 
         CourseEnrolmentRequestModel request = new CourseEnrolmentRequestModel(
-                "course1", "inst1");
+                "csc207", "paul");
         CourseEnrolmentInputBoundary interactor = new CourseEnrolmentInteractor(
                 courseAccess, taskAccess, outputBoundary);
 
