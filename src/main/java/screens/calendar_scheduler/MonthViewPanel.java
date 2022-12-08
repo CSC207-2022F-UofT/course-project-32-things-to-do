@@ -3,6 +3,7 @@ package screens.calendar_scheduler;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
@@ -56,6 +57,7 @@ public class MonthViewPanel extends JPanel {
         int limit = 42;
 
         while (iterator.getTimeInMillis() < maximum.getTimeInMillis()) {
+
             int iterMonth = iterator.get(Calendar.MONTH);
             int iterYear = iterator.get(Calendar.YEAR);
 
@@ -75,14 +77,18 @@ public class MonthViewPanel extends JPanel {
                 int eventCount = 0;
 
                 for (ArrayList<String> task : allTasks) {
-                    if (Objects.equals(task.get(1), "Assignment")) {
-                        assignmentCount += 1;
-                    }
-                    if (Objects.equals(task.get(1), "Test")) {
-                        testCount += 1;
-                    }
-                    if (Objects.equals(task.get(1), "Event")) {
-                        eventCount += 1;
+                    LocalDateTime taskStartTime = LocalDateTime.parse(task.get(2));
+                    int taskDay = taskStartTime.getDayOfMonth();
+                    if (iterDay == taskDay) {
+                        if (Objects.equals(task.get(1), "Assignment")) {
+                            assignmentCount += 1;
+                        }
+                        if (Objects.equals(task.get(1), "Test")) {
+                            testCount += 1;
+                        }
+                        if (Objects.equals(task.get(1), "Event")) {
+                            eventCount += 1;
+                        }
                     }
                 }
 
