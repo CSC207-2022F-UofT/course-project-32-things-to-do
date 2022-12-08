@@ -9,7 +9,6 @@ public interface UserRegInputBoundary {
     /**
      * @param request the request to register this user
      * @return the response to this request to register the user
-     * @throws IOException
      */
     UserRegResponse create(UserRegRequest request) throws IOException;
 

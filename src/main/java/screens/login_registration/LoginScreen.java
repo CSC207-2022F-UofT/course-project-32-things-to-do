@@ -1,7 +1,7 @@
 package screens.login_registration;
 
 import screens.LabelTextPanel;
-import use_cases.login_registration.login_usecase.LoginResponseModel;
+import use_cases.login_registration.login_usecase.*;
 
 import javax.swing.*;
 import java.awt.*;

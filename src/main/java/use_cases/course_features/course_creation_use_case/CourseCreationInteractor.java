@@ -35,17 +35,6 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
             return courseCreationOutputBoundary.prepareFailView("Course already exists.");
         }
 
-        // checks whether the instructor's entered task ids correspond to a task in the taskmap
-
-        /*
-        ArrayList<String> courseTasks = requestModel.getTasks();
-        for (String task : courseTasks) {
-            if (TaskMap.findTask(task) == null) {
-                return courseCreationOutputBoundary.prepareFailView("one of the IDs does not correspond with a task.");
-            }
-        }
-         */
-
 
         // checks passed; course can be created
 

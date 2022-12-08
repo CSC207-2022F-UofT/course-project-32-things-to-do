@@ -3,7 +3,7 @@ package use_cases.task_management.task_creation_use_case;
 import entities.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 import use_cases.calendar_scheduler.scheduler_use_case.*;
-import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.read_write.*;
 
 public class TaskCreationInteractor implements TaskCreationInputBoundary {
     private final TaskMapGateway taskMapRepository;

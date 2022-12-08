@@ -2,8 +2,7 @@ package screens.course_features;
 
 // Interfaces adapters layer
 
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentOutputBoundary;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentResponseModel;
+import use_cases.course_features.course_enrolment_use_case.*;
 
 import javax.swing.*;
 

@@ -1,14 +1,10 @@
 package use_cases.calendar_scheduler.working_hours_use_case;
 
-import entities.CurrentUser;
-import entities.StudentUser;
-
-import java.time.LocalTime;
-import java.util.ArrayList;
+import entities.*;
 
 public class WorkingHoursInteractor implements WorkingHoursInputBoundary {
 
-    private StudentUser user;
+    private final StudentUser user;
 
     public WorkingHoursInteractor() {
         this.user = (StudentUser) CurrentUser.getCurrentUser();
@@ -20,7 +16,6 @@ public class WorkingHoursInteractor implements WorkingHoursInputBoundary {
     }
 
     public WorkingHoursResponseModel getWorkingHours() {
-        WorkingHoursResponseModel responseModel = new WorkingHoursResponseModel(user.getWorkingHours());
-        return responseModel;
+        return new WorkingHoursResponseModel(user.getWorkingHours());
     }
 }

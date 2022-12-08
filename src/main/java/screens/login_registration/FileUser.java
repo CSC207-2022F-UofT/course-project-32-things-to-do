@@ -1,11 +1,9 @@
 package screens.login_registration;
-import entities.StudentUser;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentUserDsGateway;
-import use_cases.login_registration.login_usecase.LoginGateway;
-import use_cases.login_registration.logout_usecase.LogoutGateway;
-import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
-import use_cases.login_registration.user_register_usecase.UserRegGateway;
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+
+import use_cases.course_features.course_enrolment_use_case.*;
+import use_cases.login_registration.login_usecase.*;
+import use_cases.login_registration.logout_usecase.*;
+import use_cases.login_registration.user_register_usecase.*;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -35,7 +33,7 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
         if (Files.exists(Path.of(path))) {
             accounts = readFile();
         } else {
-            accounts = new HashMap<String, UserRegSaveRequest>();
+            accounts = new HashMap<>();
             save();
         }
     }
@@ -93,7 +91,6 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
         return accounts.get(name).getPass();
     }
 
-    @Override
     public Map<String, UserRegSaveRequest> getAccounts() {
         return accounts;
     }

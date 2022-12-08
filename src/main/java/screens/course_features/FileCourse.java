@@ -1,8 +1,8 @@
 package screens.course_features;
 
-import entities.Course;
-import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
+import entities.*;
+import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.*;
 
 import java.io.*;
 import java.nio.file.Files;

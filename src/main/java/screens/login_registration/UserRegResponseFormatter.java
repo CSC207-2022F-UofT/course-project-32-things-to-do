@@ -1,7 +1,6 @@
 package screens.login_registration;
 
-import use_cases.login_registration.user_register_usecase.UserRegPresenter;
-import use_cases.login_registration.user_register_usecase.UserRegResponse;
+import use_cases.login_registration.user_register_usecase.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

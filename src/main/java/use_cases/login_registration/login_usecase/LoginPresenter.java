@@ -1,6 +1,6 @@
 package use_cases.login_registration.login_usecase;
 
-import screens.login_registration.LoginFailed;
+import screens.login_registration.*;
 
 public interface LoginPresenter {
 

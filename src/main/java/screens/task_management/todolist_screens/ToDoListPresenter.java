@@ -1,7 +1,5 @@
 package screens.task_management.todolist_screens;
 
-import entities.StudentUser;
-import use_cases.task_management.todolist_use_case.TaskType;
 import use_cases.task_management.todolist_use_case.*;
 
 import java.util.ArrayList;

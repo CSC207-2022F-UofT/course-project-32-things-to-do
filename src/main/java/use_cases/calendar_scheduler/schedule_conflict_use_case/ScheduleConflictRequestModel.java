@@ -1,10 +1,10 @@
 package use_cases.calendar_scheduler.schedule_conflict_use_case;
 
-import entities.Task;
+import entities.*;
 
 public class ScheduleConflictRequestModel {
 
-    private Task conflictingTask;
+    private final Task conflictingTask;
 
     /**
      * Request model for the schedule conflict use case
@@ -18,7 +18,4 @@ public class ScheduleConflictRequestModel {
         return conflictingTask;
     }
 
-    public void setConflictingTask(Task conflictingTask) {
-        this.conflictingTask = conflictingTask;
-    }
 }

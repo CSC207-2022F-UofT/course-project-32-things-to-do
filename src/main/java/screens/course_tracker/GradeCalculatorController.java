@@ -1,7 +1,6 @@
 package screens.course_tracker;
 
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInputBoundary;
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorRequestModel;
+import use_cases.course_tracker.grade_calculator_use_case.*;
 
 import java.util.ArrayList;
 

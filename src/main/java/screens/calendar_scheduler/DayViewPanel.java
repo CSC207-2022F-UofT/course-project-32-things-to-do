@@ -1,9 +1,5 @@
 package screens.calendar_scheduler;
 
-import entities.StudentUser;
-import entities.Task;
-import entities.Timeblockable;
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.DayOfWeek;
@@ -15,7 +11,6 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 public class DayViewPanel extends JPanel {
@@ -111,9 +106,6 @@ public class DayViewPanel extends JPanel {
                 LocalDateTime taskStartTime = LocalDateTime.parse(task.get(2));
                 LocalDateTime taskEndTime = LocalDateTime.parse(task.get(3));
                 long taskDuration = ChronoUnit.MINUTES.between(taskStartTime, taskEndTime);
-
-                TemporalField field = WeekFields.of(Locale.US).dayOfWeek();
-                LocalDate startOfWeek = date.with(field, 1);
 
                 // Convert recurring tasks into multiple start/end times
                 if (Objects.equals(task.get(4), "true")) {

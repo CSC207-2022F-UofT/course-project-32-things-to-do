@@ -99,7 +99,7 @@ public class InstructorTestCreationScreen extends JPanel implements ActionListen
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Test Created Successfully");
                 screenLayout.show(screens, "InstructorMain");
-            } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
+            } catch (Exception e) { // if anything goes wrong in the input (e.g. parsing error)
                 showMessageDialog(this, e.getMessage());
             }
         }

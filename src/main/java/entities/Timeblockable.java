@@ -17,9 +17,8 @@ public interface Timeblockable {
 
     /**
      * Schedule a time block for the user
-     * @return - whether the time block has been successfully scheduled
      */
-    boolean scheduleTimeBlock();
+    void scheduleTimeBlock();
 
     /**
      * Remove a time block from the user's schedule

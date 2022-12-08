@@ -1,11 +1,9 @@
 package use_cases.task_management.task_edit_use_case;
 
 import entities.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerInteractor;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerRequestModel;
-import use_cases.calendar_scheduler.scheduler_use_case.SchedulerResponseModel;
-import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.calendar_scheduler.scheduler_use_case.*;
+import use_cases.task_management.read_write.*;
 
 public class TaskEditInteractor implements TaskEditInputBoundary {
     private final TaskMapGateway taskMapGateway;
@@ -13,7 +11,7 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
     private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
     // for connecting to Scheduler use case
-    private SchedulerInteractor scheduler;
+    private final SchedulerInteractor scheduler;
 
     /**
      * An interactor for editing Tasks

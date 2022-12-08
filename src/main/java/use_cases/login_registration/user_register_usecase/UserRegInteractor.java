@@ -83,7 +83,7 @@ public class UserRegInteractor implements UserRegInputBoundary {
             userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
                     (InstructorUser) user, now);
         } else {
-            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), now);
         }
         return userModel;
     }
@@ -101,7 +101,7 @@ public class UserRegInteractor implements UserRegInputBoundary {
             userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
                     (InstructorUser) user, now);
         } else {
-            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), now);
         }
         return userModel;
     }

@@ -1,7 +1,7 @@
 package use_cases.course_tracker;
 
 import entities.*;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
+import use_cases.course_features.course_enrolment_use_case.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
