@@ -33,7 +33,7 @@ public class CollaborativeTaskEditController {
      * @return - response model (input boundary will indicate success/failure)
      */
     public TaskEditResponseModel edit(boolean complete, String id, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) throws IOException{
-        CollaborativeTaskEditRequestModel requestModel = new CollaborativeTaskEditRequestModel(id, complete, priority, recurring, frequency, startTime, endTime, deadline, ((CollaborativeTask) TaskMap.findTask(id)).getLeader());
+        CollaborativeTaskEditRequestModel requestModel = new CollaborativeTaskEditRequestModel(id, complete, priority, recurring, frequency, startTime, endTime, deadline, ((CollaborativeTask) TaskMap.findTask(id)).getLeader().getName());
         return input.edit(requestModel, "Collaborative");
     }
 }
