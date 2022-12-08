@@ -1,6 +1,5 @@
 package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
 
-import entities.StudentUser;
 import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
 
 import java.time.LocalDateTime;
@@ -16,7 +15,7 @@ public class CollaborativeTaskEditRequestModel extends TaskEditRequestModel {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final LocalDateTime deadline;
-    private final StudentUser leader;
+    private final String leaderName;
 
     /**
      * A request model for editing Collaborative Tasks.
@@ -28,16 +27,16 @@ public class CollaborativeTaskEditRequestModel extends TaskEditRequestModel {
      * @param startTime - the start time of the Collaborative Task
      * @param endTime - the end time of the Collaborative Task
      * @param deadline - the Collaborative Task's deadline
-     * @param leader - the Collaborative Task's leader
+     * @param leaderName - the Collaborative Task's leader's name
      */
-    public CollaborativeTaskEditRequestModel(String id, boolean complete, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, StudentUser leader) {
+    public CollaborativeTaskEditRequestModel(String id, boolean complete, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, String leaderName) {
         super(id, complete, priority);
         this.recurring = recurring;
         this.frequency = frequency;
         this.startTime = startTime;
         this.endTime = endTime;
         this.deadline = deadline;
-        this.leader = leader;
+        this.leaderName = leaderName;
     }
 
     public boolean getRecurring() {
@@ -60,7 +59,7 @@ public class CollaborativeTaskEditRequestModel extends TaskEditRequestModel {
         return this.deadline;
     }
 
-    public StudentUser getLeader() {
-        return this.leader;
+    public String getLeader() {
+        return this.leaderName;
     }
 }
