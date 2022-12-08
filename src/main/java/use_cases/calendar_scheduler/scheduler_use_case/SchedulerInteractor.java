@@ -86,8 +86,8 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
                 LocalDateTime existingEndTime = ((Timeblockable) existingTask).getTimeBlock()[1];
 
                 // Check if start or end time of task falls between start and end times of existingTask
-                if ((startTime.isAfter(existingStartTime) && startTime.isBefore(existingEndTime)) ||
-                        (endTime.isAfter(existingStartTime) && endTime.isBefore(existingEndTime))) {
+                if ((!startTime.isBefore(existingStartTime) && !startTime.isAfter(existingEndTime)) ||
+                        (!endTime.isBefore(existingStartTime) && !endTime.isAfter(existingEndTime))) {
 
                     return existingTask;
                 }
