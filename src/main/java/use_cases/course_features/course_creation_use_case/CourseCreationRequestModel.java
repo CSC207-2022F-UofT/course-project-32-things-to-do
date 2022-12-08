@@ -10,6 +10,7 @@ package use_cases.course_features.course_creation_use_case;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CourseCreationRequestModel {
     private final String courseName;
@@ -49,9 +50,7 @@ public class CourseCreationRequestModel {
 
         String taskOneString = tasks.get(0); // only one element in arraylist
         ArrayList<String> courseTasksSplit = new ArrayList<>();
-        for (String tasksSplit : taskOneString.split(",")) {
-            courseTasksSplit.add(tasksSplit);
-        }
+        Collections.addAll(courseTasksSplit, taskOneString.split(","));
         return courseTasksSplit;
     }
 }

@@ -2,7 +2,7 @@ package use_cases.course_features.course_creation_use_case;
 
 // Use case layer
 
-import entities.Course;
+import entities.*;
 
 import java.io.IOException;
 

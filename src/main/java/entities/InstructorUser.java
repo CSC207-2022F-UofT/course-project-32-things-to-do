@@ -10,7 +10,7 @@ public class InstructorUser implements User {
     public InstructorUser(String name, String password) {
         this.name = name;
         this.password = password;
-        this.courses = new ArrayList<String>();
+        this.courses = new ArrayList<>();
     }
 
     private final String name;
@@ -47,10 +47,6 @@ public class InstructorUser implements User {
         return this.courses;
     }
 
-    public void addCourse(String course) {
-        this.courses.add(course);
-    }
-
-    public void setCourses(ArrayList<String> c) { this.courses = c; };
+    public void setCourses(ArrayList<String> c) { this.courses = c; }
 
 }

@@ -7,7 +7,7 @@
 Start up the program by running the `Main.java` class in the `src/main/java` directory.
 Upon launching the program, a welcome screen with two buttons, `Sign Up` and `Log In`, appears.
 
-![](images/welcome_screen.png)
+![](resources/images/welcome_screen.png)
 
 If the user is already registered, they should click `Log In`.
 They will be redirected to a login screen where they must enter their username and password into the corresponding fields.
@@ -17,48 +17,48 @@ If the user has not already registered, they should click `Sign Up`.
 They will enter a username and a password (twice), then "Instructor" or "Student" depending on their role.
 If the password meets the requirements and the username is not taken, then they will be taken to the dashboard screen.
 
-![](images/register_screen.png)
+![](resources/images/register_screen.png)
 
 ## Main Dashboard
 
 The user can access all features of the program through the main dashboard.
 
-![](images/dashboard_screen.png)
+![](resources/images/dashboard_screen.png)
 
 To log out, the user can click the `Logout` button and will be taken back to the Welcome page, where they can log in or sign up a new User.
 
 ## To-Do List Task Creation
 If the user clicks on the `New Task` button, one of two things will occur:
 - If the user is an instructor, they will have a choice between creating a new assignment, new test, or returning to their main screen (`Cancel` button).
-  ![](images/instructor_choose_task.png)
+  ![](resources/images/instructor_choose_task.png)
 - If the user is a student, they will have a choice between creating a new event, new assignment, new test, or returning to their main screen (`Cancel`).
   (image)
-  ![](images/student_choose_task.png)
+  ![](resources/images/student_choose_task.png)
 Once they select a task to create, the user will be brought to one of the task creation screens, where they will be prompted to fill in the required information fields.
 - For event creation, the user must fill in the title, date, start time, end time, indicate whether the event is recurring, and if so, the frequency of the event (must be one of "monthly", "weekly", "daily").
   - The priority field is optional, and its value will automatically set to 0 if the field is left blank.
-  ![](images/event_creation.png)
+  ![](resources/images/event_creation.png)
 - For assignment creation, the user must fill in a title, due date, and due time.
   - The priority value is once again optional, and instructors are not prompted to input an assignment's priority.
   - The weightage value is optional for both instructors and students, and will be automatically set to 0 if left blank
-  ![](images/student_assignment_creation.png)
+  ![](resources/images/student_assignment_creation.png)
 - For test creation, the user must fill in a title, date, start time and end time.
   - Again, priority is optional, and instructors are not prompted to input a test's priority
   - Weightage is once again optional for both instructors and students.
-  ![](images/student_test_creation.png)
+  ![](resources/images/student_test_creation.png)
 
 If all required fields are filled in the correct format, a new task should be created of whatever type, with an automatically generated ID based on the task's title, user's name, and course ID (only applicable if it is a course task). The task is then saved to the task map, TaskMap.txt file, and student's to-do list (if applicable) immediately.
 
 ## To-Do List Screen
 If a student clicks on the `To Do List` button, they will be brought to a screen displaying the titles of all of their tasks, with accompanying `Edit/Delete` buttons.
-![](images/todo_list_screen.png)
+![](resources/images/todo_list_screen.png)
 - Clicking any of those buttons will bring the student to the task's respective edit/delete screen.
   - If the task is an event, the edit/delete screen will look almost identical to the creation screen, except with a new checkbox to mark the event as complete, a disabled title field, and pre-filled values in the others.
-    ![](images/event_edit_delete.png)
+    ![](resources/images/event_edit_delete.png)
   - If the task is an assignment, the edit/delete screen will look similar to the creation screen, but with the "Mark task complete?" checkbox, disabled title field, prefilled values, and 2 new input fields to indicate time needed to complete the assignment, and time already spent on the assignment.
-    ![](images/assignment_edit_delete.png)
+    ![](resources/images/assignment_edit_delete.png)
   - If the task is a test, the edit/delete screen will also look similar to the creation screen, but with the same new features as other task edit/delete screens, and the new input fields for time needed and time already spent.
-    ![](images/test_edit_delete.png)
+    ![](resources/images/test_edit_delete.png)
   Once the student fills in the task's new information and presses the `Finish` button, the existing task will be updated to reflect those changes. Any fields left blank result in an unchanged value.
   - If the task is marked as complete, in addition to editing, the task will also be removed from the student's to-do list and into their task archive. 
   If the student presses the `Delete` button, the task will be removed from their to-do list and moved to their archive
@@ -73,7 +73,7 @@ On this screen, the user's upcoming tasks will be displayed in either a daily, w
 Both the daily and the weekly view display any tasks in the user's to-do list that have a timeblock, while the monthly view displays the number of tasks that are due (in the case of Assignments) and that are occurring (in the case of Events and Tests) on each day of the month.
 By default, the weekly view is displayed, but the user can change the view through the dropdown menu below the title.
 
-![](images/calendar_screen.png)
+![](resources/images/calendar_screen.png)
 
 The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
 The `Home` button redirects the user back to the main dashboard.
@@ -83,7 +83,7 @@ The `Home` button redirects the user back to the main dashboard.
 If the user clicks on the `Scheduling CT` button, the screen to schedule a collaborative task will be displayed.
 On this screen, the user can schedule a collaborative task.
 
-![](images/scheduling_ct.png)
+![](resources/images/scheduling_ct.png)
 
 To schedule a collaborative task, the user must input the name of the task, as well as the time block 
 (start time and end time) in the format yyyy-MM-dd hh:mm.
@@ -102,7 +102,7 @@ If the user clicks on the `Progress Tracker` button, the screen for tracking the
 On this screen, the user can calculate their academic statistics for a course they are enrolled in. 
 This is a feature for students only.
 
-![](images/course_tracker_screen.png)
+![](resources/images/course_tracker_screen.png)
 
 Progress Tracker 
 A student enters the name of a course they are enrolled in. User clicks button `Calculate Grades and Progress` and sees their course progress (sum % weightage of completed tasks), mock grade (weighted grade from graded assessments), and their required average in remaining ungraded tasks (if a grade goal has been entered before). 
@@ -126,7 +126,7 @@ On this screen, the user can either enrol in a course or create a course, depend
 **Course creation:**
 Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and a task _(in future implementation they would be able to add more than one task)_.
 
-![](images/course_creation_screen.png)
+![](resources/images/course_creation_screen.png)
 
 If the instructor clicks the `Create` button, the program will check whether the course already exists in the CourseMap and if all required fields are filled out.
 If any of checks failed, an error message will pop up.

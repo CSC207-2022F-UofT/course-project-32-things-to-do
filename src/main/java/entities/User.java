@@ -1,7 +1,5 @@
 package entities;
 
-import java.io.Serializable;
-
 // Entity
 public interface User {
 
@@ -12,6 +10,6 @@ public interface User {
 
     String getName();
 
-    public String getPass();
+    String getPass();
 
 }

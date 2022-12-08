@@ -1,8 +1,6 @@
 package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
 
-import entities.CollaborativeTask;
-import entities.StudentUser;
-import entities.TaskMap;
+import entities.*;
 import screens.task_management.FileTaskMap;
 
 import java.io.IOException;

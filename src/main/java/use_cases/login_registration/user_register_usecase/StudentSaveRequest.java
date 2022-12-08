@@ -1,9 +1,7 @@
 package use_cases.login_registration.user_register_usecase;
 
-import entities.Invitation;
-import entities.StudentUser;
+import entities.*;
 
-import javax.management.Notification;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,8 +15,6 @@ public class StudentSaveRequest extends UserRegSaveRequest {
     private final String name;
 
     private final String password;
-
-    private final LocalDateTime creationTime;
 
     private final ArrayList<String> toDoList;
 
@@ -41,10 +37,9 @@ public class StudentSaveRequest extends UserRegSaveRequest {
      * @param creationTime the time at which this StudentUser was created or saved
      */
     public StudentSaveRequest(String name, String password, StudentUser student, LocalDateTime creationTime) {
-        super(name, password, student, creationTime);
+        super(name, password, creationTime);
         this.name = name;
         this.password = password;
-        this.creationTime = creationTime;
         this.toDoList = student.getToDoList();
         this.taskArchive = student.getTaskArchive();
         this.courses = student.getCourses();

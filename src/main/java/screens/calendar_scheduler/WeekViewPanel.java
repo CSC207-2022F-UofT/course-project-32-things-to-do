@@ -1,7 +1,5 @@
 package screens.calendar_scheduler;
 
-import entities.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;

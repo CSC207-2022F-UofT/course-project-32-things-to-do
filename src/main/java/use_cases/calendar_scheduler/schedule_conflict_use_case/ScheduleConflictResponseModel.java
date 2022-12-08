@@ -2,7 +2,7 @@ package use_cases.calendar_scheduler.schedule_conflict_use_case;
 
 public class ScheduleConflictResponseModel {
 
-    private boolean scheduleWithConflict;
+    private final boolean scheduleWithConflict;
 
     /**
      * Response model for the schedule conflict use case
@@ -16,7 +16,4 @@ public class ScheduleConflictResponseModel {
         return scheduleWithConflict;
     }
 
-    public void setScheduleWithConflict(boolean scheduleWithConflict) {
-        this.scheduleWithConflict = scheduleWithConflict;
-    }
 }

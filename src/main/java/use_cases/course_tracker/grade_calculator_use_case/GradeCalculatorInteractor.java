@@ -1,10 +1,7 @@
 package use_cases.course_tracker.grade_calculator_use_case;
 
-import entities.Assignment;
-import entities.CurrentUser;
-import entities.Gradable;
-import entities.Task;
-import use_cases.course_tracker.CourseTrackerInteractor;
+import entities.*;
+import use_cases.course_tracker.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,7 +99,7 @@ public class GradeCalculatorInteractor extends CourseTrackerInteractor implement
     }
 
     /**
-     * Create a duplicate of the given studenCourseTasks, except replacing any tasks that are ungraded (and are NOT
+     * Create a duplicate of the given studentCourseTasks, except replacing any tasks that are ungraded (and are NOT
      * target tasks) with a dummy task object containing only the title, gradeReceived and gradeWeightage.
      *
      * @param studentCourseTasks the logged-in student's tasks in the given course

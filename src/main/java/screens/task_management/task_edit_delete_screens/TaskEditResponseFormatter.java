@@ -1,7 +1,6 @@
 package screens.task_management.task_edit_delete_screens;
 
-import use_cases.task_management.task_edit_use_case.TaskEditPresenter;
-import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
+import use_cases.task_management.task_edit_use_case.*;
 
 public class TaskEditResponseFormatter implements TaskEditPresenter {
     /**

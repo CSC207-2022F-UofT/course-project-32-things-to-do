@@ -1,7 +1,6 @@
 package screens.task_management.task_edit_delete_screens;
 
-import use_cases.task_management.task_deletion_use_case.TaskDeletionPresenter;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionResponseModel;
+import use_cases.task_management.task_deletion_use_case.*;
 
 public class TaskDeletionResponseFormatter implements TaskDeletionPresenter {
     /**

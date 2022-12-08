@@ -1,6 +1,6 @@
 package use_cases.task_management.read_write;
 
-import entities.Task;
+import entities.*;
 
 import java.util.HashMap;
 

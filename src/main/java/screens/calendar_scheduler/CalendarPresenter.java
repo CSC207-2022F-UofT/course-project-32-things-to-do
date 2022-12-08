@@ -1,6 +1,6 @@
 package screens.calendar_scheduler;
 
-import screens.task_management.todolist_screens.ToDoListFail;
+import screens.task_management.todolist_screens.*;
 import use_cases.task_management.todolist_use_case.*;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class CalendarPresenter implements ToDoListOutputBoundary {
         // Iterate through each task in to-do list
         for (ToDoListItem item : responseModel.getToDoList()) {
 
-            // Intialise task item array
+            // Initialise task item array
             ArrayList<String> taskItem = new ArrayList<>();
 
             // Get title, task type, start time, end time, recurrence and frequency of task item
