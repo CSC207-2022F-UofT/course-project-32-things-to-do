@@ -3,7 +3,7 @@ package screens;
 import javax.swing.*;
 
 /**
- * UI helper class, couples Jlabel with JTextField
+ * UI helper class, couples JLabel with JTextField
  * (in View layer)
  */
 

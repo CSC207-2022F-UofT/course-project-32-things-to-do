@@ -1,7 +1,6 @@
 package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
 
-import entities.CollaborativeTask;
-import entities.StudentUser;
+import entities.*;
 
 import java.time.LocalDateTime;
 

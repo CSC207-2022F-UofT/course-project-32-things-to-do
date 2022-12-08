@@ -2,11 +2,11 @@ package entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.*;
 
 public class Assignment extends Task implements Gradable, Preparatory {
     // Gradable attributes
-    private double weightage = 0;
+    private double weightage;
     private double gradeReceived = -1; // the grade the user receives, -1 if not yet received
 
     // Preparatory

@@ -1,10 +1,8 @@
 package use_cases.login_registration.login_usecase;
 
-import entities.CurrentUser;
-import entities.InstructorUser;
-import entities.User;
-import screens.login_registration.LoginFailed;
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+import entities.*;
+import screens.login_registration.*;
+import use_cases.login_registration.user_register_usecase.*;
 
 
 import java.time.LocalDateTime;

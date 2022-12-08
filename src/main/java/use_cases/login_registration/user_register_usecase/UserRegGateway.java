@@ -16,8 +16,4 @@ public interface UserRegGateway {
 
     void save(UserRegSaveRequest requestModel) throws IOException;
 
-    /**
-     * @return The map of usernames to UserRegSaveRequest objects
-     */
-    Map<String, UserRegSaveRequest> getAccounts();
 }

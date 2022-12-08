@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class WorkingHoursResponseModel {
 
-    private ArrayList<LocalTime> workingHours;
+    private final ArrayList<LocalTime> workingHours;
 
     public WorkingHoursResponseModel(ArrayList<LocalTime> workingHours) {
 

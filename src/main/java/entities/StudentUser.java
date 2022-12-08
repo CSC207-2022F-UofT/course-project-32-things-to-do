@@ -85,10 +85,6 @@ public class StudentUser implements User {
         return this.courses;
     }
 
-    public void addCourse(String course) {
-        this.courses.add(course);
-    }
-
     public void setCourses(ArrayList<String> c) { this.courses = c; }
 
     private ArrayList<Invitation> inbox ; // once Invitation class is up, make it an ArrayList of Invitations
@@ -113,10 +109,6 @@ public class StudentUser implements User {
     public Map<String, Double> getDesiredGrades() {
 
         return this.desiredGrades;
-    }
-
-    public void addDesiredGrade(String course, Double grade) {
-        this.desiredGrades.put(course, grade);
     }
 
     public void setDesiredGrades(Map<String, Double> m) {

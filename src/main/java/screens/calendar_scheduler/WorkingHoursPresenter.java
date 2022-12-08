@@ -1,13 +1,10 @@
 package screens.calendar_scheduler;
 
-import use_cases.calendar_scheduler.working_hours_use_case.WorkingHoursInteractor;
-import use_cases.calendar_scheduler.working_hours_use_case.WorkingHoursOutputBoundary;
-import use_cases.calendar_scheduler.working_hours_use_case.WorkingHoursResponseModel;
+import use_cases.calendar_scheduler.working_hours_use_case.*;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-;
 public class WorkingHoursPresenter implements WorkingHoursOutputBoundary {
 
     @Override

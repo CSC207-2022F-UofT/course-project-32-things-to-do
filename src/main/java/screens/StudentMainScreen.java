@@ -1,13 +1,9 @@
 package screens;
 
-import screens.calendar_scheduler.WorkingHoursController;
-import screens.calendar_scheduler.CalendarPresenter;
-import screens.calendar_scheduler.CalendarScreen;
-import screens.calendar_scheduler.WorkingHoursPresenter;
-import screens.login_registration.LogoutController;
-import screens.task_management.todolist_screens.ToDoListPresenter;
-import screens.task_management.todolist_screens.ToDoListScreen;
-import use_cases.task_management.todolist_use_case.ToDoListInteractor;
+import screens.calendar_scheduler.*;
+import screens.login_registration.*;
+import screens.task_management.todolist_screens.*;
+import use_cases.task_management.todolist_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;

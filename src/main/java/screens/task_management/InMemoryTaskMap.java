@@ -1,7 +1,7 @@
 package screens.task_management;
 
-import entities.Task;
-import use_cases.task_management.read_write.TaskMapGateway;
+import entities.*;
+import use_cases.task_management.read_write.*;
 
 import java.util.HashMap;
 

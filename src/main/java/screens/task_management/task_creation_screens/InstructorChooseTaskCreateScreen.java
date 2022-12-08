@@ -1,10 +1,8 @@
 package screens.task_management.task_creation_screens;
 
 import screens.task_management.FileTaskMap;
-import screens.task_management.task_creation_screens.assignment_creation_screens.AssignmentCreationController;
-import screens.task_management.task_creation_screens.assignment_creation_screens.InstructorAssignmentCreationScreen;
-import screens.task_management.task_creation_screens.test_creation_screens.InstructorTestCreationScreen;
-import screens.task_management.task_creation_screens.test_creation_screens.TestCreationController;
+import screens.task_management.task_creation_screens.assignment_creation_screens.*;
+import screens.task_management.task_creation_screens.test_creation_screens.*;
 import use_cases.task_management.read_write.TaskMapGateway;
 import use_cases.task_management.task_creation_use_case.*;
 

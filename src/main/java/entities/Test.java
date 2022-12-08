@@ -3,7 +3,7 @@ package entities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.*;
 
 public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     // Timeblockable attributes
@@ -67,10 +67,8 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
 
     /**
      * Schedule a time block for the user
-     * @return - whether the time block has been successfully scheduled
      */
-    public boolean scheduleTimeBlock() {
-        return true;
+    public void scheduleTimeBlock() {
     }
 
     /**

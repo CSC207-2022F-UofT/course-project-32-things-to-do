@@ -1,10 +1,6 @@
 package screens.task_management.task_edit_delete_screens;
 
-import use_cases.task_management.task_deletion_use_case.TaskDeletionRequestModel;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionResponseModel;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionInputBoundary;
-
-import java.io.IOException;
+import use_cases.task_management.task_deletion_use_case.*;
 
 public class TaskDeletionController {
     final TaskDeletionInputBoundary input;
@@ -19,14 +15,14 @@ public class TaskDeletionController {
 
     /**
      * Attempt to delete a Task
+     *
      * @param taskId - the ID of the Task
-     * @return - response model (input boundary will indicate success/failure)
      */
-    public TaskDeletionResponseModel delete(String taskId) {
+    public void delete(String taskId) {
         // create request model
         TaskDeletionRequestModel requestModel = new TaskDeletionRequestModel(taskId);
 
         // delete Task
-        return input.delete(requestModel);
+        input.delete(requestModel);
     }
 }

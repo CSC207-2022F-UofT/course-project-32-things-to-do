@@ -1,7 +1,5 @@
 package screens.calendar_scheduler;
 
-import use_cases.task_management.todolist_use_case.ToDoListResponseModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
