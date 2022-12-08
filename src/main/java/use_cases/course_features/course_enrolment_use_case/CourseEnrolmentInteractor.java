@@ -69,7 +69,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         ArrayList<String> courseTaskIDs = new ArrayList<>();
         for (String taskTitleToId : courseTaskTitles) {
-            taskTitleToId = taskTitleToId + "_" + instructorName + "_" + courseName;
+            taskTitleToId = taskTitleToId + "_" + instructorName + "_none";
             courseTaskIDs.add(taskTitleToId);
         }
 
@@ -84,8 +84,16 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // iterate through courseTaskIDs, get corresponding Task object, add to arraylist
         ArrayList<Task> values = new ArrayList<>();
         for (String key: courseTaskIDs) {
-            Task value = oldTaskIdMap.get(key);
-            values.add(value);
+            Task oldValue = oldTaskIdMap.get(key);
+            // makes a copy of the old value based on its Task type
+            Task newValue;
+            if (oldValue instanceof Test) {
+                newValue = ((Test) oldValue).getTestCopy();
+                values.add(newValue);
+            } else if (oldValue instanceof Assignment) {
+                newValue = ((Assignment) oldValue).getAssignmentCopy();
+                values.add(newValue);
+            }
         }
 
         // make newKeys with task id to title_student_course
@@ -93,14 +101,18 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // change key name from title_instructor_course to title_student_course
         for (String taskId : courseTaskIDs) {
             // change key name from title_inst_course to title_student_course
-            String newKey = taskId.replace(requestModel.getCourseInstructor(), currentUser.getName());
-            newKeys.add(newKey);
+            String newKey = taskId.replace(
+                    requestModel.getCourseInstructor() + "_none",
+                    currentUser.getName() + "_" + courseName);
+            newKeys.add(newKey); // a1_paul_none --> a1_julie_csc207
         }
 
         // add newKeys and values as a key-value pair to a temporary new map
         HashMap<String, Task> newTaskIdMap = new HashMap<>();
         for (int i = 0; i < newKeys.size(); i++) {
             // add key-value pairs to newTaskIdMap
+            // initialize the key of the new task copy (currently is initialized to an empty string)
+            values.get(i).setId(newKeys.get(i));
             newTaskIdMap.put(newKeys.get(i), values.get(i));
         }
 

@@ -146,4 +146,12 @@ public class Assignment extends Task implements Gradable, Preparatory {
     public LocalDateTime getDueDate() {
         return this.dueDate;
     }
+
+    /**
+     * For course enrolment use case
+     * @return a copy of the assignment
+     */
+    public Assignment getAssignmentCopy() {
+        return new Assignment(getTitle(), "", dueDate, weightage);
+    }
 }
