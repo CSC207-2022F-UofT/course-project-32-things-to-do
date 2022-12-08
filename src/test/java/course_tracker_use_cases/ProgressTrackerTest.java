@@ -4,10 +4,12 @@ import entities.*;
 import org.junit.jupiter.api.Test;
 import screens.course_features.InMemoryCourse;
 import screens.course_tracker.ProgressTrackerPresenter;
+import screens.task_management.InMemoryTaskMap;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInteractor;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
+import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProgressTrackerTest {
 
     CourseEnrolmentCourseDsGateway courseAccess;
+
+    TaskMapGateway taskAccess;
 
     /**
      * Helper function to set up all the static variables
@@ -61,6 +65,9 @@ public class ProgressTrackerTest {
         ArrayList<String> courseList = new ArrayList<>();
         courseList.add("testCourse");
         ((StudentUser) CurrentUser.getCurrentUser()).setCourses(courseList);
+
+        taskAccess = new InMemoryTaskMap();
+        taskAccess.save(TaskMap.getTaskMap());
     }
 
     /**
@@ -90,7 +97,7 @@ public class ProgressTrackerTest {
                 assertEquals("Entered input is invalid. It should be a (decimal) number.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess, taskAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse", "",
@@ -122,7 +129,7 @@ public class ProgressTrackerTest {
                 assertEquals("None of your enrolled courses match that course name.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess, taskAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("csc207", "",
@@ -158,7 +165,7 @@ public class ProgressTrackerTest {
                 fail("Test failure is unexpected.");
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess, taskAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",
@@ -188,13 +195,16 @@ public class ProgressTrackerTest {
                 assertEquals(74.05, responseModel.getMockGrade(), 0.01);
                 assertEquals(88.92, responseModel.getRequiredAverage(), 0.01);
                 assertEquals(1, responseModel.getUngradedTasks().size());
+                assertEquals(70.8,
+                        ((entities.Test) ((HashMap<String, Task>) taskAccess.load())
+                                .get("testTest2_testStudent_testCourse")).getGradeReceived());
             }
             @Override
             public void failView(String error) {
                 fail("Test failure is unexpected.");
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess, taskAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",
@@ -227,7 +237,7 @@ public class ProgressTrackerTest {
                 assertEquals("The required average for that goal grade is greater than 100.", error);
             }
         };
-        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess);
+        ProgressTrackerInteractor interactor = new ProgressTrackerInteractor(presenter, courseAccess, taskAccess);
 
         //prepare input data
         ProgressTrackerRequestModel request = new ProgressTrackerRequestModel("testCourse",

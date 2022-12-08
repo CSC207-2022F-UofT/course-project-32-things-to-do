@@ -3,6 +3,7 @@ package use_cases.course_tracker.progress_tracker_use_case;
 import entities.*;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
+import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,9 +17,12 @@ public class ProgressTrackerInteractor extends CourseTrackerInteractor implement
 
     private final ProgressTrackerOutputBoundary outputBoundary;
     private final CourseEnrolmentCourseDsGateway courseAccess;
+
+    private final TaskMapGateway tasksAccess;
     public ProgressTrackerInteractor(ProgressTrackerOutputBoundary outputBoundary,
-                                     CourseEnrolmentCourseDsGateway courseAccess) {
+                                     CourseEnrolmentCourseDsGateway courseAccess, TaskMapGateway tasksAccess) {
         this.courseAccess = courseAccess;
+        this.tasksAccess = tasksAccess;
         this.outputBoundary = outputBoundary;
     }
 
@@ -140,6 +144,7 @@ public class ProgressTrackerInteractor extends CourseTrackerInteractor implement
             if (task.getTitle().equals(newGradeTaskName)) {
                 if (TaskMap.findTask(task.getId()).getComplete()) {
                     ((Gradable) TaskMap.findTask(task.getId())).setGradeReceived(newGrade);
+                    tasksAccess.save(TaskMap.getTaskMap());
                     return;
                 } else {
                     throw new RuntimeException("Set this task to 'Complete' before adding its grade.");

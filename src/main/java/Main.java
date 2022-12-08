@@ -69,9 +69,11 @@ public class Main {
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
         CourseEnrolmentCourseDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
+        FileTaskMap taskAccess = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess);
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess,
+                taskAccess);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
         GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
