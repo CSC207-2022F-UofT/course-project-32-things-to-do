@@ -3,7 +3,6 @@ package use_cases.login_registration.user_register_usecase;
 import entities.Invitation;
 import entities.StudentUser;
 
-import javax.management.Notification;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;

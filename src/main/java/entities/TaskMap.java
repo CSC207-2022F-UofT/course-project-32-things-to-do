@@ -29,6 +29,7 @@ public class TaskMap implements Serializable {
 
     public static void addTasks(Map newTasks) {
         taskMap.putAll(newTasks);
+
     }
 
     /**

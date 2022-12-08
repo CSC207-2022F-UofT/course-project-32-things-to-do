@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Implementation of the business logic on the entities
+ */
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
-    final CourseEnrolmentUserDsGateway userDsGateway;
+//    final CourseEnrolmentUserDsGateway userDsGateway;
     final CourseEnrolmentCourseDsGateway courseDsGateway;
     final CourseEnrolmentTaskDsGateway taskDsGateway;
     final CourseEnrolmentOutputBoundary enrolmentOutputBoundary;
@@ -17,21 +20,27 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     private Course course; // for response model
     private Task tasks; // for response model
 
-    public CourseEnrolmentInteractor(CourseEnrolmentUserDsGateway userDsGateway,
-                                     CourseEnrolmentCourseDsGateway courseDsGateway,
+    public CourseEnrolmentInteractor(CourseEnrolmentCourseDsGateway courseDsGateway,
                                      CourseEnrolmentTaskDsGateway taskDsGateway,
                                      CourseEnrolmentOutputBoundary enrolmentOutputBoundary) {
-        this.userDsGateway = userDsGateway;
+//        this.userDsGateway = userDsGateway;
         this.courseDsGateway = courseDsGateway;
         this.taskDsGateway = taskDsGateway;
         this.enrolmentOutputBoundary = enrolmentOutputBoundary;
     }
 
+    /**
+     * the main controller of the interactor that will be calling the helper methods
+     */
     @Override
     public CourseEnrolmentResponseModel enrol(CourseEnrolmentRequestModel requestModel) {
+        // initialization
+        // TODO: might be illegal, can't call screen? -> HashMap<String, Task> taskHashMap = TaskMap.getTaskMap();
+        // TODO: currentuser set to null rn because did not run from main --> DO INTERACTOR TEST PLS
+        StudentUser currentUser = (StudentUser) CurrentUser.getCurrentUser();
+
         // At least one field left blank
-        if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")
-                || requestModel.getStudentID().equals("")) {
+        if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")) {
             return enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
         }
 
@@ -46,7 +55,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         // add student id to Course parameter 'students'
         try {
-            courseDsGateway.saveStudentToCourse(requestModel.getStudentID(), requestModel.getCourseID());
+            courseDsGateway.saveStudentToCourse(currentUser.getName(), requestModel.getCourseID());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +79,8 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // for each id in courseTaskIDs, get Task associated with it, save to temp map
         HashMap<String, Task> oldTaskIdMap = new HashMap<>();
         for (String oldTaskId : courseTaskIDs) {
-            Task taskValue = taskDsGateway.getTask(oldTaskId); // gets value from key
+            Task taskValue = TaskMap.getTaskMap().get(oldTaskId); // gets value from key
+            // TODO: gateway way / Task taskValue = taskDsGateway.getTask(oldTaskId); // gets value from key
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
@@ -83,52 +93,40 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             Task value = oldTaskIdMap.get(key);
             values.add(value);
         }
-//        ArrayList<Task> values = (ArrayList<Task>) oldTaskIdMap.entrySet();
 
         // make newKeys with task id to title_student_course
         ArrayList<String> newKeys = new ArrayList<>();
         // change key name from title_instructor_course to title_student_course
         for (String taskId : oldKeys) {
             // change key name from title_inst_course to title_student_course
-            String newKey = taskId.replace(requestModel.getCourseInstructor(), requestModel.getStudentID());
+            String newKey = taskId.replace(requestModel.getCourseInstructor(), currentUser.getName());
             newKeys.add(newKey);
         }
 
-        // add newKeys and values as a key-value pair to a temp new map
+        // add newKeys and values as a key-value pair to a temporary new map
         HashMap<String, Task> newTaskIdMap = new HashMap<>();
         for (int i = 0; i < newKeys.size(); i++) {
             // add key-value pairs to newTaskIdMap
             newTaskIdMap.put(newKeys.get(i), values.get(i));
         }
 
-        // add newTaskIdMap to FileTaskMap
+        // add newTaskIdMap to FileTaskMap, method saves the task map
         taskDsGateway.saveNewMaptoMap(newTaskIdMap);
 
-        // 3. user gateway
+        // 3. current user stuff TODO: NOT user gateway
 
         // add course id to student's 'courses' parameter
-        try {
-            userDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        currentUser.getCourses().add(requestModel.getCourseID());
 
         // add arraylist newKeys to student's to do list
-        try {
-            userDsGateway.addTasksToTodolist(requestModel.getStudentID(), newKeys);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        currentUser.getToDoList().addAll(newKeys);
 
-        // saving changes
-        // TODO: no need because individual method calls already saves?
+        // saving changes TODO: no need to save if current user doesn't log out / close program?
 
         // create response model, send to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
-                requestModel.getStudentID(), requestModel.getCourseID(), newKeys);
+                requestModel.getCourseID(), newKeys);
 
         return enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
-
-
     }
 }

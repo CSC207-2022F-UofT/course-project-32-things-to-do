@@ -10,9 +10,9 @@ public class CourseEnrolmentController {
         this.enrolmentInput = enrolmentGateway;
     }
 
-    CourseEnrolmentResponseModel enrol(String courseID, String instructorID, String studentID) {
+    CourseEnrolmentResponseModel enrol(String courseID, String instructorID) {
         CourseEnrolmentRequestModel requestModel = new CourseEnrolmentRequestModel(
-                courseID, instructorID, studentID);
+                courseID, instructorID);
 
         return enrolmentInput.enrol(requestModel);
     }

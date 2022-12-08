@@ -94,11 +94,10 @@ public class Main {
 
         // Adding in course enrolment use case
         CourseEnrolmentCourseDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
-        CourseEnrolmentUserDsGateway enrolUser = new FileUser("src/main/java/data/users.ser");
         CourseEnrolmentTaskDsGateway enrolTasks = new FileTaskMap("src/main/java/data/TaskMap.txt");
         CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
         CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(
-                enrolUser, enrolCourse, enrolTasks, enrolmentPresenter);
+                enrolCourse, enrolTasks, enrolmentPresenter);
         CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
         // Adding in logout use case

@@ -1,6 +1,7 @@
 package screens.task_management;
 
 import entities.Task;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentTaskDsGateway;
 import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 /**
  * TaskMapGateway for testing purposes
  */
-public class InMemoryTaskMap implements TaskMapGateway {
+public class InMemoryTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway {
     HashMap<String, Task> taskMap = new HashMap<>();
 
     /**
@@ -36,5 +37,24 @@ public class InMemoryTaskMap implements TaskMapGateway {
     @Override
     public boolean existsById(String id) {
         return taskMap.containsKey(id);
+    }
+
+    /**
+     * course enrolment use case (for interactor test)
+     * @param taskID the unique id of the task
+     */
+    @Override
+    public Task getTask(String taskID) {
+        return taskMap.get(taskID);
+    }
+
+    /**
+     * course enrolment use case (for interactor test)
+     * @param newMap the map of the "new" tasks (new key, same value)
+     */
+    @Override
+    public void saveNewMaptoMap(HashMap<String, Task> newMap) {
+        taskMap.putAll(newMap);
+
     }
 }

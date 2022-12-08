@@ -45,8 +45,8 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
                 new JLabel("Enter course name"), courseName);
         LabelTextPanel courseInstructorInfo = new LabelTextPanel(
                 new JLabel("Enter instructor name"), courseInstructor);
-        LabelTextPanel studentIDInfo = new LabelTextPanel(
-                new JLabel("Enter your username"), studentID);
+//        LabelTextPanel studentIDInfo = new LabelTextPanel(
+//                new JLabel("Enter your username"), studentID);
 
         // buttons
         JButton cancel = new JButton("Cancel");
@@ -65,7 +65,7 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
         this.add(title);
         this.add(courseNameInfo);
         this.add(courseInstructorInfo);
-        this.add(studentIDInfo);
+//        this.add(studentIDInfo);
         this.add(buttons);
     }
 
@@ -84,8 +84,10 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
                 // add course tasks to Student's todolist
                 // add course id to Student's courses list
 
-                courseEnrolmentController.enrol(courseName.getText(), courseInstructor.getText(), studentID.getText());
-                JOptionPane.showMessageDialog(this, "Successfully enrolled in course. tasks added.");
+                courseEnrolmentController.enrol(courseName.getText(), courseInstructor.getText());
+                JOptionPane.showMessageDialog(this,
+                        "Successfully enrolled in course " + courseName.getText() + " with instructor" +
+                                courseInstructor.getText() + ". Check your to-do list for the course tasks!");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }

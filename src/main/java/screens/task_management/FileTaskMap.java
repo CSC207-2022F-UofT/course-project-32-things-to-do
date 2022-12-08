@@ -73,11 +73,20 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
      * @param taskId the unique id (key) of the task
      * @return
      */
+
+    /**
+     * For course enrolment use case, get a Task based on task id
+     * @param taskId - the uniqueid of the task
+     */
     @Override
     public Task getTask(String taskId) {
         return taskMap.get(taskId);
     }
 
+    /**
+     * For course enrolment use case, added temporary map of new tasks to TaskMap
+     * @param newMap the temporary map of 'cloned' course tasks with student username in id
+     */
     @Override
     public void saveNewMaptoMap(HashMap<String, Task> newMap) {
         taskMap.putAll(newMap);
