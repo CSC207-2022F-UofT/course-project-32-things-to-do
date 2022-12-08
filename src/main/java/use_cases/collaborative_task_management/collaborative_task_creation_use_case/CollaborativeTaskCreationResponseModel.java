@@ -9,6 +9,7 @@ public class CollaborativeTaskCreationResponseModel {
     private final String title;
     private final String id;
     final String type = "Collaborative";
+
     /**
      * A response model for successful Collaborative task creation.
      * @param title - the title of the Collaborative Task

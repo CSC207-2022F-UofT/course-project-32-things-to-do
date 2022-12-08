@@ -15,5 +15,7 @@ public interface CollaborativeTaskDisplayer {
     LocalDateTime getEndTime();
     LocalDateTime getDeadline();
     ArrayList<StudentUser> getTeammates();
+    ArrayList<StudentUser> getPendingTeammates();
+    ArrayList<StudentUser> getDeclinedTeammates();
     StudentUser getLeader();
 }

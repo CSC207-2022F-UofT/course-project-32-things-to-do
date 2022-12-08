@@ -1,5 +1,10 @@
 package use_cases.collaborative_task_management.collaborative_task_deletion_use_case;
 
+/**
+ * Response Model for the Collaborative Task Deletion Use Case
+ * Acts as the output data object in the use case layer
+ */
+
 public class CollaborativeTaskDeletionResponseModel {
     private final String title;
     private final String id;

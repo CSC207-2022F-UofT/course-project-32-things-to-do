@@ -23,58 +23,20 @@ public class Invitation {
      * Accept or decline an invitation.
      * @param accepted - the receiver's answer to the invitation.
      */
-    protected void setStatus(boolean accepted){
-        if(accepted){
-            this.status = "Accepted";
-        }
-        else{
-            this.status = "Declined";
-        }
+    public void setStatus(boolean accepted){
+        if(accepted){ this.status = "Accepted"; }
+        else{ this.status = "Declined"; }
     }
 
-    /**
-     * @return the invitation's status ("Pending", "Accepted", or "Declined")
-     */
-    protected String getStatus(){
+    public String getStatus(){
         return this.status;
     }
 
-    /**
-     * @return the Collaborative Task to which the invitation is referring to.
-     */
-    protected CollaborativeTask getCollaborativeTask(){
+    public CollaborativeTask getCollaborativeTask(){
         return this.collaborativeTask;
     }
 
-    /**
-     * @return the sender of the invitation.
-     */
-    protected StudentUser getSender(){
-        return this.sender;
-    }
+    public StudentUser getSender(){ return this.sender; }
 
-    /**
-     * @return the receiver of the invitation,
-     */
-    protected StudentUser getReceiver(){
-        return this.receiver;
-    }
-
-    /**
-     *
-     * Cancel an Invitation by removing it from a user's inbox.
-     * @return - whether the Invitation has been successfully canceled.
-     */
-    protected boolean cancel() {
-        return true;
-    }
-
-    /**
-     * Send an Invitation by adding it to a user's inbox.
-     * @return - whether the Collaborative Task has been successfully sent.
-     */
-    protected boolean send() {
-        return true;
-    }
-
+    public StudentUser getReceiver(){ return this.receiver; }
 }

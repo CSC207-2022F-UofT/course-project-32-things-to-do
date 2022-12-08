@@ -13,7 +13,7 @@ public class CollaborativeTaskDeletionController {
      * A controller for interacting with the Collaborative Task deletion use case
      * @param input - input boundary for deletion
      */
-    public CollaborativeTaskDeletionController(CollaborativeTaskDeletionInputBoundary input) { this.input = input};
+    public CollaborativeTaskDeletionController(CollaborativeTaskDeletionInputBoundary input) { this.input = input; };
 
     /**
      * Attempt to delete a Collaborative Task

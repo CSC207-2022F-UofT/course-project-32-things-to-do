@@ -5,9 +5,20 @@ import entities.StudentUser;
 import entities.TaskMap;
 import use_cases.task_management.read_write.TaskMapGateway;
 
+/**
+ * Collaborative Task Deletion Use Case Interactor (use case layer)
+ * Implements business logic on entities
+ */
+
 public class CollaborativeTaskDeletionInteractor implements CollaborativeTaskDeletionInputBoundary {
     final TaskMapGateway taskMapGateway;
     final CollaborativeTaskDeletionPresenter presenter;
+
+    /**
+     * Interactor for Collaborative Task Deletion.
+     * @param taskMapGateway - the gateway that interacts with the TaskMap Database.
+     * @param presenter - displays success/fail views
+     */
     public CollaborativeTaskDeletionInteractor(TaskMapGateway taskMapGateway, CollaborativeTaskDeletionPresenter presenter) {
         this.taskMapGateway = taskMapGateway;
         this.presenter = presenter;
