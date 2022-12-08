@@ -15,5 +15,5 @@ import java.io.IOException;
 public interface CourseCreationDsGateway {
     boolean existsByCourseID(String courseIdentifier);
 
-    void saveCourse(Course requestModel) throws IOException;
+    void save(Course requestModel) throws IOException;
 }

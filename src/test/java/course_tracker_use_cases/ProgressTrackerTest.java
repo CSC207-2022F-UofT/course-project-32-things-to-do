@@ -4,7 +4,7 @@ import entities.*;
 import org.junit.jupiter.api.Test;
 import screens.course_features.InMemoryCourse;
 import screens.course_tracker.ProgressTrackerPresenter;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInteractor;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
 import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerResponseModel;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProgressTrackerTest {
 
-    CourseEnrolmentDsGateway courseAccess;
+    CourseEnrolmentCourseDsGateway courseAccess;
 
     /**
      * Helper function to set up all the static variables

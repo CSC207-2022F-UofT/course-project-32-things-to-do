@@ -4,8 +4,7 @@ package screens.course_features;
 
 import entities.Course;
 import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-import use_cases.course_features.course_creation_use_case.CourseCreationRequestModel;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 
 
 import java.io.IOException;
@@ -13,8 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentDsGateway {
-    private Map<String, Course> courses;
+/**
+ * gateway for testing purposes
+ */
+public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentCourseDsGateway {
+    private Map<String, Course> courses = new HashMap<>();
 
     public InMemoryCourse() {
         this.courses = new HashMap<>();
@@ -27,6 +29,7 @@ public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentD
     // populate
 
     /**
+     * Creation + Enrolment use case
      * @param identifier the course's course id
      * @return whether the course exists
      */
@@ -38,11 +41,21 @@ public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentD
     public Map<String, Course> getCourses() {
         return this.courses;
     }
+
+    /**
+     * enrolment use case
+     * @param courseIdentifier -
+     */
     @Override
     public Course searchForCourse(String courseIdentifier) {
         return courses.get(courseIdentifier);
     }
 
+    /**
+     * enrolment use case
+     * @param courseID -
+     * @param studentIdentifier -
+     */
     @Override
     public boolean existsStudentInCourse(String courseID, String studentIdentifier) {
         return courses.get(courseID).getStudents().contains(studentIdentifier);
@@ -54,15 +67,15 @@ public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentD
     }
 
     @Override
-    public ArrayList<String> courseTasks(Course requestModel) {
-        return requestModel.getTasks();
+    public ArrayList<String> getCourseTasks(String courseID) {
+        return courses.get(courseID).getTasks();
     }
 
     /**
      * @param requestModel the data to save
      */
     @Override
-    public void saveCourse(Course requestModel) {
+    public void save(Course requestModel) {
         courses.put(requestModel.getCourseID(), requestModel);
     }
 }

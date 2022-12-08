@@ -1,8 +1,6 @@
 package screens.login_registration;
-import entities.Course;
 import entities.StudentUser;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
-import use_cases.course_features.course_enrolment_use_case.CourseTasksToStudentTodolistDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentUserDsGateway;
 import use_cases.login_registration.login_usecase.LoginGateway;
 import use_cases.login_registration.logout_usecase.LogoutGateway;
 import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseTasksToStudentTodolistDsGateway {
+public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseEnrolmentUserDsGateway {
 
 //    private final HashMap<String, UserRegSaveRequest> accounts;
     private static HashMap<String, UserRegSaveRequest> accounts;
@@ -102,6 +100,7 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
         return accounts;
     }
 
+
     /**
      * For course enrolment use case (course tasks to do list gateway)
      * Adds the course tasks to the student's to-do list
@@ -110,24 +109,30 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
      * @param courseTasks the course task ids what will be added to the student's 'to do list' parameter
      */
     @Override
-    public void addSaveTasksToTodolist(String studentID, ArrayList<String> courseTasks) throws IOException {
-        UserRegSaveRequest username = getAccounts().get(studentID);
+    public void addTasksToTodolist(String studentID, ArrayList<String> courseTasks) throws IOException {
         // casting to student save request
-        ((StudentSaveRequest) username).getToDoList().addAll(courseTasks);
-        this.save(); // saves the file with new changes
+        ((StudentSaveRequest) accounts.get(studentID)).getToDoList().addAll(courseTasks);
+        save();
+        // in interactor, update CurrentUser
+        // make a new StudentSaveRequest with CurrentUser
+        // call Gateway.save(StudentSaveRequest)
     }
 
     /**
      * For course enrolment use case (course tasks to do list gateway)
      * Adds the course id to the student's 'courses' parameter
-     * @param studentCourse the course the student enrolled in
+     * @param courseID the course the student enrolled in
      * @param studentID the username of student enrolled
      */
     @Override
-    public void addCourseToStudent(String studentCourse, String studentID) throws IOException {
-        UserRegSaveRequest courseInStudent = getAccounts().get(studentID);
+    public void addCourseToStudent(String courseID, String studentID) throws IOException {
         // casting to student save request
-        ((StudentSaveRequest) courseInStudent).getCourses().add(studentCourse);
-        this.save(); // saves the file with new changes
+        // initialize current
+//        StudentUser s = accounts.get(studentID);
+        ((StudentSaveRequest) accounts.get(studentID)).getCourses().add(courseID);
+        save();
+        // if adding
+//         StudentUser s = (StudentUser) CurrentUser.getCurrentUser()
+//         s.addCourse
     }
 }
