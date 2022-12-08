@@ -1,7 +1,7 @@
 package use_cases.course_tracker.progress_tracker_use_case;
 
 import entities.*;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import java.util.HashMap;
 public class ProgressTrackerInteractor extends CourseTrackerInteractor implements ProgressTrackerInputBoundary{
 
     private final ProgressTrackerOutputBoundary outputBoundary;
-    private final CourseEnrolmentDsGateway courseAccess;
+    private final CourseEnrolmentCourseDsGateway courseAccess;
     public ProgressTrackerInteractor(ProgressTrackerOutputBoundary outputBoundary,
-                                     CourseEnrolmentDsGateway courseAccess) {
+                                     CourseEnrolmentCourseDsGateway courseAccess) {
         this.courseAccess = courseAccess;
         this.outputBoundary = outputBoundary;
     }

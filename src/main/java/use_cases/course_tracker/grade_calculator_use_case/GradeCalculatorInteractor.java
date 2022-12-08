@@ -4,7 +4,6 @@ import entities.Assignment;
 import entities.CurrentUser;
 import entities.Gradable;
 import entities.Task;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
 
 import java.util.ArrayList;

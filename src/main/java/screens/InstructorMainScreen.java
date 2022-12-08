@@ -83,7 +83,7 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
         }
 
         if (evt.getSource() == courses) {
-            cardLayout.show(screens, "course");
+            cardLayout.show(screens, "courseCreate");
         }
 
         if (evt.getSource() == logout) {

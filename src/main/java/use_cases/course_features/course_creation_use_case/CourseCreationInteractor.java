@@ -52,7 +52,7 @@ public class CourseCreationInteractor implements CourseCreationInputBoundary {
         // create a new course
         Course courseModel = new Course(requestModel.getCourseName(), requestModel.getCourseInstructor(), requestModel.getTasks());
         try {
-            courseCreationDSGateway.saveCourse(courseModel);
+            courseCreationDSGateway.save(courseModel);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

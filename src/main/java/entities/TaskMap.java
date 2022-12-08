@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TaskMap implements Serializable {
     private static HashMap<String, Task> taskMap;
@@ -24,6 +25,10 @@ public class TaskMap implements Serializable {
      */
     public static void addTask(String id, Task task) {
         taskMap.put(id, task);
+    }
+
+    public static void addTasks(Map newTasks) {
+        taskMap.putAll(newTasks);
     }
 
     /**
