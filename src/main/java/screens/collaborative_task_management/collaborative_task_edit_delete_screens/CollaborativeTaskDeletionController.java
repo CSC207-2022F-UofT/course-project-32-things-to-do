@@ -4,8 +4,6 @@ import use_cases.collaborative_task_management.collaborative_task_deletion_use_c
 import use_cases.collaborative_task_management.collaborative_task_deletion_use_case.CollaborativeTaskDeletionResponseModel;
 import use_cases.collaborative_task_management.collaborative_task_deletion_use_case.CollaborativeTaskDeletionInputBoundary;
 
-import java.io.IOException;
-
 public class CollaborativeTaskDeletionController {
     final CollaborativeTaskDeletionInputBoundary input;
 
