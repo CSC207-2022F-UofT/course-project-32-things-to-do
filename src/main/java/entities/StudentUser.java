@@ -99,14 +99,6 @@ public class StudentUser implements User {
         return this.inbox;
     }
 
-//    public void addInvitation(String invite) {
-//        this.inbox.add(invite);
-//    }
-
-    public void removeInvitation(String invite) {
-        this.inbox.remove(invite);
-    }
-
     public void setInbox(ArrayList<Invitation> i) { this.inbox = i; }
 
     private ArrayList<String> notifications;
