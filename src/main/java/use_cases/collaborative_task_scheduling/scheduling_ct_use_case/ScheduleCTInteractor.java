@@ -15,9 +15,12 @@ import java.util.HashMap;
 
 public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
     private final ScheduleCTOutputBoundary scheduleCTOutputBoundary;
+    final ScheduleCTDSGateway scheduleCTDSGateway;
 
-    public ScheduleCTInteractor(ScheduleCTOutputBoundary scheduleCTOutputBoundary) {
+    public ScheduleCTInteractor(ScheduleCTOutputBoundary scheduleCTOutputBoundary,
+                                ScheduleCTDSGateway scheduleCTDSGateway) {
         this.scheduleCTOutputBoundary = scheduleCTOutputBoundary;
+        this.scheduleCTDSGateway = scheduleCTDSGateway;
     }
 
     /**
@@ -71,6 +74,9 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
             ScheduleCTResponseModel scheduleCTResponseModel = new ScheduleCTResponseModel(formattedDateTimes);
             scheduleCTResponseModel.setTimesToSchedule(dates);
             task.setTimeBlocks(dates);
+
+            // updating the task map with the updated task
+            scheduleCTDSGateway.updateTaskMap(task.getId(), task);
 
             return scheduleCTOutputBoundary.prepareNoConflictView(scheduleCTResponseModel);
             // branches into else when there is a conflict

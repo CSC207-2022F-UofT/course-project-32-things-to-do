@@ -78,9 +78,10 @@ public class Main {
         GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
+        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
-        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
+        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter, scheduleCTDSGateway);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor);
 
         // Adding in course creation use case
@@ -92,7 +93,7 @@ public class Main {
         // Adding in course enrolment use case
         CourseEnrolmentCourseDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
         CourseEnrolmentUserDsGateway enrolUser = new FileUser("src/main/java/data/users.ser");
-        CourseEnrolmentTaskDsGateway enrolTasks = new FileTaskMap("src/main/java/data/taskmap.ser");
+        CourseEnrolmentTaskDsGateway enrolTasks = new FileTaskMap("src/main/java/data/TaskMap.txt");
         CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
         CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(
                 enrolUser, enrolCourse, enrolTasks, enrolmentPresenter);

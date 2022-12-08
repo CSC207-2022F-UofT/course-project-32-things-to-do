@@ -1,6 +1,8 @@
 package screens.task_management;
 
+import entities.CollaborativeTask;
 import entities.Task;
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTDSGateway;
 import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentTaskDsGateway;
 import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
@@ -10,7 +12,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway {
+public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway, ScheduleCTDSGateway {
     String path;
     HashMap<String, Task> taskMap = new HashMap<>();
     public FileTaskMap(String path) {
@@ -79,6 +81,18 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
     @Override
     public void saveNewMaptoMap(HashMap<String, Task> newMap) {
         taskMap.putAll(newMap);
+        save(taskMap);
+    }
+
+    /**
+     * For Schedule Collaborative Tasks use case, updates the task map
+     * @param taskID - the unique id of the task
+     * @param updatedTask - the updated task object
+     */
+    @Override
+    public void updateTaskMap(String taskID, CollaborativeTask updatedTask) {
+        taskMap.remove(taskID);
+        taskMap.put(updatedTask.getId(), updatedTask);
         save(taskMap);
     }
 }
