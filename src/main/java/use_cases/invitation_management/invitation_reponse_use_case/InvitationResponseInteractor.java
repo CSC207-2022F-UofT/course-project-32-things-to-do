@@ -36,7 +36,7 @@ public class InvitationResponseInteractor implements InvitationResponseInputBoun
                 else{
                     collaborativeTask.getPendingTeammates().remove(receiver);
                     collaborativeTask.getTeammates().add(receiver);
-                    receiver.getToDoList().add(collaborativeTask.getId());
+                    receiver.addTaskToList(collaborativeTask.getId());
 //                    Already in TaskMap
 //                    TaskMap.addTask(collaborativeTask.getId(), collaborativeTask);
                 }

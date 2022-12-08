@@ -1,13 +1,17 @@
 package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
 
 import entities.StudentUser;
+import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class CollaborativeTaskEditRequestModel {
-    private final String id;
-    private final boolean complete;
-    private final int priority;
+/**
+ * Request Model for the Collaborative Task Edit Use Case
+ * Acts as the input data object in the use case layer
+ */
+
+public class CollaborativeTaskEditRequestModel extends TaskEditRequestModel {
     private final boolean recurring;
     private final String frequency;
     private final LocalDateTime startTime;
@@ -30,9 +34,7 @@ public class CollaborativeTaskEditRequestModel {
      * @param leader - the Collaborative Task's leader
      */
     public CollaborativeTaskEditRequestModel(String id, boolean complete, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, ArrayList<StudentUser> teammates, StudentUser leader) {
-        this.id = id;
-        this.complete = complete;
-        this.priority = priority;
+        super(id, complete, priority);
         this.recurring = recurring;
         this.frequency = frequency;
         this.startTime = startTime;
@@ -40,16 +42,6 @@ public class CollaborativeTaskEditRequestModel {
         this.deadline = deadline;
         this.teammates = teammates;
         this.leader = leader;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public boolean isComplete() { return this.complete; }
-
-    public int getPriority() {
-        return this.priority;
     }
 
     public boolean getRecurring() {
