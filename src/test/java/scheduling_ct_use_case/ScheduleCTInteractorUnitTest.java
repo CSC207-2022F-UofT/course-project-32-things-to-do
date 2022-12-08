@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import screens.collaborative_task_scheduling.ScheduleCTPresenter;
 import screens.collaborative_task_scheduling.ScheduleCTView;
 import screens.collaborative_task_scheduling.ScheduleCTViewInterface;
+import screens.task_management.FileTaskMap;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import entities.*;
 
@@ -21,7 +22,9 @@ class ScheduleCTInteractorUnitTest {
     JPanel screens = new JPanel();
     ScheduleCTViewInterface view = new ScheduleCTView(cardLayout, screens);
     ScheduleCTOutputBoundary presenter = new ScheduleCTPresenter(view);
-    ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter);
+
+    ScheduleCTDSGateway gateway = new FileTaskMap("src/main/java/data/taskmap.ser");
+    ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter, gateway);
 
     @Test
     public void convertLocalDateTimeToStringTest() {

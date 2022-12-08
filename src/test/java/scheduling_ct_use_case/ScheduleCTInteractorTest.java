@@ -3,6 +3,7 @@ package scheduling_ct_use_case;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import screens.collaborative_task_scheduling.*;
+import screens.task_management.FileTaskMap;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import entities.*;
 
@@ -170,7 +171,8 @@ class ScheduleCTInteractorTest {
             }
         };
 
-        ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter);
+        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/taskmap.ser");
+        ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter, scheduleCTDSGateway);
 
         // MAKING INPUT DATA
         // INPUT INTO THE USER INTERFACE SCREEN

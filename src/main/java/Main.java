@@ -78,9 +78,10 @@ public class Main {
         GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
+        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/taskmap.ser");
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
-        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
+        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter, scheduleCTDSGateway);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor);
 
         // Adding in course creation use case
