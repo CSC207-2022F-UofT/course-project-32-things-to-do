@@ -171,7 +171,7 @@ class ScheduleCTInteractorTest {
             }
         };
 
-        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/taskmap.ser");
+        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter, scheduleCTDSGateway);
 
         // MAKING INPUT DATA

@@ -23,7 +23,7 @@ class ScheduleCTInteractorUnitTest {
     ScheduleCTViewInterface view = new ScheduleCTView(cardLayout, screens);
     ScheduleCTOutputBoundary presenter = new ScheduleCTPresenter(view);
 
-    ScheduleCTDSGateway gateway = new FileTaskMap("src/main/java/data/taskmap.ser");
+    ScheduleCTDSGateway gateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
     ScheduleCTInteractor interactor = new ScheduleCTInteractor(presenter, gateway);
 
     @Test
