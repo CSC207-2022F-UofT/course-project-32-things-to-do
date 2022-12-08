@@ -22,6 +22,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
     JButton calendar;
     JButton progressTracker;
     JButton courses;
+    JButton createCT;
     JButton scheduleCT;
 
     JButton logout;
@@ -53,6 +54,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         calendar = new JButton("Calendar");
         progressTracker = new JButton("Progress Tracker");
         courses = new JButton("Courses");
+        createCT = new JButton("New Collaborative Task");
         scheduleCT = new JButton("Schedule Collaborative Task");
         logout = new JButton("Logout");
 
@@ -61,6 +63,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         calendar.addActionListener(this);
         progressTracker.addActionListener(this);
         courses.addActionListener(this);
+        createCT.addActionListener(this);
         scheduleCT.addActionListener(this);
         logout.addActionListener(this);
 
@@ -71,6 +74,7 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         buttons.add(calendar);
         buttons.add(progressTracker);
         buttons.add(courses);
+        buttons.add(createCT);
         buttons.add(scheduleCT);
         buttons.add(logout);
 
@@ -117,6 +121,9 @@ public class StudentMainScreen extends JPanel implements ActionListener {
         }
         if (evt.getSource() == courses) {
             cardLayout.show(screens, "courseEnrol");
+        }
+        if (evt.getSource() == createCT) {
+            cardLayout.show(screens, "createCT");
         }
         if (evt.getSource() == scheduleCT) {
             cardLayout.show(screens, "scheduleCT");

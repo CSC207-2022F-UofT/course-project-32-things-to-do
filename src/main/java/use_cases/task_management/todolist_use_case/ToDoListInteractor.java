@@ -62,6 +62,12 @@ public class ToDoListInteractor implements ToDoListInputBoundary{
                     endTime = timeBlock[1];
                 } else if (task instanceof Assignment) {
                     taskItemType = TaskType.ASSIGNMENT;
+                } else if (task instanceof CollaborativeTask) {
+                    startTime = ((CollaborativeTask) task).getStartTime();
+                    endTime = ((CollaborativeTask) task).getEndTime();
+                    recurring = ((CollaborativeTask) task).getRecurring();
+                    frequency = ((CollaborativeTask) task).getFrequency();
+                    taskItemType = TaskType.COLLABORATIVE;
                 } else {
                     throw new RuntimeException("Some of your tasks are an invalid Task Type!");
                 }
