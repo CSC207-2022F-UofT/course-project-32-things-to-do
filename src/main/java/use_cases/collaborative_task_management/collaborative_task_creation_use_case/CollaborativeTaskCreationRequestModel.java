@@ -1,5 +1,7 @@
 package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
 
+import use_cases.task_management.task_creation_use_case.TaskCreationRequestModel;
+
 import java.time.LocalDateTime;
 
 /**
@@ -7,9 +9,7 @@ import java.time.LocalDateTime;
  * Acts as the input data object in the use case layer
  */
 
-public class CollaborativeTaskCreationRequestModel {
-    private final String title;
-    private final int priority;
+public class CollaborativeTaskCreationRequestModel extends TaskCreationRequestModel {
     private final boolean recurring;
     private final String frequency;
     private final LocalDateTime startTime;
@@ -27,21 +27,12 @@ public class CollaborativeTaskCreationRequestModel {
      * @param deadline - the Collaborative Task's deadline
      */
     public CollaborativeTaskCreationRequestModel(String title, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) {
-        this.title = title;
-        this.priority = priority;
+        super(title, priority);
         this.recurring = recurring;
         this.frequency = frequency;
         this.startTime = startTime;
         this.endTime = endTime;
         this.deadline = deadline;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public int getPriority() {
-        return this.priority;
     }
 
     public boolean getRecurring() {
