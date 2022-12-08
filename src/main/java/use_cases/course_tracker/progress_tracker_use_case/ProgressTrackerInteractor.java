@@ -96,7 +96,7 @@ public class ProgressTrackerInteractor extends CourseTrackerInteractor implement
 
         for (Task task: courseTasks) {
             if (task.getComplete()) {
-                completedWeightage += ((Gradable) task).getWeightage();
+                completedWeightage += ((Gradable) task).getWeightage() / 100;
             }
         }
 

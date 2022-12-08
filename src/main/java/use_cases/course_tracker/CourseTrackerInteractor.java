@@ -88,8 +88,8 @@ public abstract class CourseTrackerInteractor {
 
         for (Task task: courseTasks) {
             if (((Gradable) task).getGradeReceived() != -1) {
-                mockGrade += ((Gradable) task).getWeightage() * ((Gradable) task).getGradeReceived();
-                gradedWeightage += ((Gradable) task).getWeightage();
+                mockGrade += (((Gradable) task).getWeightage() / 100) * ((Gradable) task).getGradeReceived();
+                gradedWeightage += ((Gradable) task).getWeightage() / 100;
             }
         }
 
@@ -120,7 +120,7 @@ public abstract class CourseTrackerInteractor {
 
             for (Task task: courseTasks) {
                 if (((Gradable) task).getGradeReceived() == -1) {
-                    ungradedWeight += ((Gradable) task).getWeightage();
+                    ungradedWeight += ((Gradable) task).getWeightage() / 100;
                 }
             }
 
