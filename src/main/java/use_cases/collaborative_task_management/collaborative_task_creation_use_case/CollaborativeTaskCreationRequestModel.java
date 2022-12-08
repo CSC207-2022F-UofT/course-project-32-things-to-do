@@ -1,6 +1,5 @@
 package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
 
-import entities.StudentUser;
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +15,6 @@ public class CollaborativeTaskCreationRequestModel {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final LocalDateTime deadline;
-    private final StudentUser leader;
 
     /**
      * A request model for Collaborative Task creation
@@ -27,9 +25,8 @@ public class CollaborativeTaskCreationRequestModel {
      * @param startTime - the Collaborative Task's start time
      * @param endTime - the Collaborative Task's end time
      * @param deadline - the Collaborative Task's deadline
-     * @param leader - the Collaborative Task's leader
      */
-    public CollaborativeTaskCreationRequestModel(String title, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, StudentUser leader) {
+    public CollaborativeTaskCreationRequestModel(String title, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline) {
         this.title = title;
         this.priority = priority;
         this.recurring = recurring;
@@ -37,7 +34,6 @@ public class CollaborativeTaskCreationRequestModel {
         this.startTime = startTime;
         this.endTime = endTime;
         this.deadline = deadline;
-        this.leader = leader;
     }
 
     public String getTitle() {
@@ -66,9 +62,5 @@ public class CollaborativeTaskCreationRequestModel {
 
     public LocalDateTime getDeadline() {
         return this.deadline;
-    }
-
-    public StudentUser getLeader() {
-        return this.leader;
     }
 }

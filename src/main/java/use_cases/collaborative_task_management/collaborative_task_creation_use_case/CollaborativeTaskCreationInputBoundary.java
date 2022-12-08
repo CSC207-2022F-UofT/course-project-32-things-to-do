@@ -6,5 +6,5 @@ public interface CollaborativeTaskCreationInputBoundary {
      * @param requestModel - the request model for creation
      * @return - response model
      */
-    CollaborativeTaskCreationInputBoundary create(CollaborativeTaskCreationRequestModel requestModel);
+    CollaborativeTaskCreationResponseModel create(CollaborativeTaskCreationRequestModel requestModel);
 }
