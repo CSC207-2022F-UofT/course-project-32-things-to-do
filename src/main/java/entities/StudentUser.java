@@ -1,6 +1,5 @@
 package entities;
 
-import javax.management.Notification;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -17,7 +16,7 @@ public class StudentUser implements User {
         this.toDoList = new ArrayList<>();
         this.taskArchive = new ArrayList<>();
         this.courses = new ArrayList<>();
-        this.inbox = new ArrayList<Invitation>();
+        this.inbox = new ArrayList<>();
         this.notifications = new ArrayList<>();
         this.desiredGrades = new HashMap<>();
     }
@@ -105,10 +104,6 @@ public class StudentUser implements User {
 
     public ArrayList<String> getNotifications() {
         return this.notifications;
-    }
-
-    public void addNotification(String notification) {
-        this.notifications.add(notification);
     }
 
     public void setNotifications(ArrayList<String> n) { this.notifications = n; }
