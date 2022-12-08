@@ -96,6 +96,8 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             if (!schedulerResponseModel.isScheduleCancel()) {
                 TaskMap.addTask(id, newTask);
                 ((StudentUser)user).addTaskToList(id);
+            } else {
+                return outputBoundary.prepareFailView("Scheduling cancelled!");
             }
         } else {
             // save Task to TaskMap

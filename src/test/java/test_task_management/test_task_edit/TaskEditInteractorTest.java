@@ -184,7 +184,7 @@ class TaskEditInteractorTest {
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter() {
             @Override
             public ScheduleConflictResponseModel alertConflict(ScheduleConflictRequestModel conflictRequestModel) {
-                return new ScheduleConflictResponseModel(false);
+                return new ScheduleConflictResponseModel(true);
             }
         };
 
