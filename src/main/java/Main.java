@@ -20,7 +20,6 @@ import screens.task_management.FileTaskMap;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
 
@@ -36,15 +35,11 @@ public class Main {
         FileTaskMap taskReadWrite = new FileTaskMap("src/main/java/data/TaskMap.txt");
         TaskMap.setTaskMap(taskReadWrite.load());
 
-        // Get objects from database
-        HashMap<String, User> allUsers = new HashMap<>();
-        HashMap<String, Course> allCourses = new HashMap<>();
-
         // Create the components for injection into the use cases
         UserRegGateway regUser = new FileUser("src/main/java/data/users.ser");
         UserFactory fac = new GeneralUserFactory();
         UserRegPresenter userPresenter = new UserRegResponseFormatter();
-        UserRegInputBoundary userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
+        UserRegInteractor userInteractor = new UserRegInteractor(regUser, userPresenter, fac);
         UserRegController userRegisterController = new UserRegController(userInteractor);
 
         // Adding in login use case
@@ -52,19 +47,6 @@ public class Main {
         LoginPresenter loginPresenter = new LoginResponseFormatter();
         LoginInputBoundary loginInteractor = new LoginInteractor(loginUser, loginPresenter);
         LoginController loginController = new LoginController(loginInteractor);
-        //
-
-        // initialize User based on whether they log in or register
-        // if you don't register, then you are logging in:
-
-        // delete once everyone's stuff is resolved
-        User user;
-        if ((((UserRegInteractor) userInteractor).getUser() instanceof StudentUser) |
-                (((UserRegInteractor) userInteractor).getUser() instanceof InstructorUser)) {
-            user = ((UserRegInteractor) userInteractor).getUser();
-        } else {
-            user = ((LoginInteractor) loginInteractor).getUser();
-        }
 
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 

@@ -1,6 +1,6 @@
 package use_cases.collaborative_task_scheduling.scheduling_ct_use_case;
 
-import entities.CollaborativeTask;
+import entities.*;
 
 /**
  * Gateway includes methods overridden in in FileTaskMap

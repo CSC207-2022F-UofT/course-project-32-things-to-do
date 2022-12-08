@@ -55,28 +55,4 @@ public class TaskMap implements Serializable {
     public static void setTaskMap(HashMap<String, Task> tasksMap) {
         taskMap = tasksMap;
     }
-
-//    /**
-//     * Saves the taskMap to a file
-//     * @param rw - ReadWriter object saving the taskMap
-//     */
-//    public static void saveToFile(TaskMapGateway rw) {
-//        try {
-//            rw.saveToFile(taskMap);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//
-//    /**
-//     * Loads the taskMap from a file
-//     * @param rw - ReadWriter object reading the TaskMap.txt
-//     */
-//    public static void load(TaskMapGateway rw) {
-//        try {
-//            taskMap = (HashMap<String, Task>) rw.readFromFile();
-//        } catch(Exception e) {
-//            setTaskMap(new HashMap<>());
-//        }
-//    }
 }

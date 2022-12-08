@@ -7,11 +7,11 @@ public class UserRegRequest {
      * A request to register a new user with this name and password (from user input).
      */
 
-    private String name;
+    private final String name;
 
-    private String password;
+    private final String password;
 
-    private String reenterPassword;
+    private final String reenterPassword;
 
     private String typeOfUser;
 
@@ -30,18 +30,9 @@ public class UserRegRequest {
 
     String getName() { return name; }
 
-    void setName(String name) {
-        this.name = name; }
-
     String getPassword() { return password; }
 
-    void setPassword(String password) {
-        this.password = password; }
-
     public String getReenterPassword() { return reenterPassword; }
-
-    public void setReenterPassword(String reenterPassword) {
-        this.reenterPassword = reenterPassword; }
 
     String getTypeOfUser() { return typeOfUser; }
 

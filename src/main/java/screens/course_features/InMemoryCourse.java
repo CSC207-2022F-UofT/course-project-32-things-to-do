@@ -2,12 +2,10 @@ package screens.course_features;
 
 // not needed for functionality, only for testing
 
-import entities.Course;
-import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
+import entities.*;
+import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.*;
 
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +14,7 @@ import java.util.Map;
  * gateway for testing purposes
  */
 public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentCourseDsGateway {
-    private Map<String, Course> courses = new HashMap<>();
+    private final Map<String, Course> courses;
 
     public InMemoryCourse() {
         this.courses = new HashMap<>();
@@ -62,7 +60,7 @@ public class InMemoryCourse implements CourseCreationDsGateway, CourseEnrolmentC
     }
 
     @Override
-    public void saveStudentToCourse(String studentID, String courseID) throws IOException {
+    public void saveStudentToCourse(String studentID, String courseID) {
         courses.get(courseID).getStudents().add(studentID);
     }
 

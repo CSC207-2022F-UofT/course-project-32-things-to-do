@@ -2,8 +2,7 @@ package screens.course_features;
 
 // Interface adapters layer
 
-import use_cases.course_features.course_creation_use_case.CourseCreationOutputBoundary;
-import use_cases.course_features.course_creation_use_case.CourseCreationResponseModel;
+import use_cases.course_features.course_creation_use_case.*;
 
 import javax.swing.*;
 

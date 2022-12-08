@@ -1,8 +1,6 @@
 package screens.login_registration;
 
-import use_cases.login_registration.login_usecase.LoginInputBoundary;
-import use_cases.login_registration.login_usecase.LoginRequestModel;
-import use_cases.login_registration.login_usecase.LoginResponseModel;
+import use_cases.login_registration.login_usecase.*;
 
 // Interface adapters layer
 

@@ -1,6 +1,6 @@
 package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
 
-import entities.StudentUser;
+import entities.*;
 
 public class CollaborativeTaskEditInteractor implements CollaborativeTaskEditInputBoundary {
     private final CollaborativeTaskEditPresenter presenter;

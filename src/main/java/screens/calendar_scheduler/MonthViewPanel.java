@@ -1,13 +1,7 @@
 package screens.calendar_scheduler;
 
-import entities.Assignment;
-import entities.Event;
-import entities.Task;
-import entities.Test;
-
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;

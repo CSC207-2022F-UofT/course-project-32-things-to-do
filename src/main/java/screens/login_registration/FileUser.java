@@ -1,15 +1,12 @@
 package screens.login_registration;
-import entities.StudentUser;
-import use_cases.login_registration.login_usecase.LoginGateway;
-import use_cases.login_registration.logout_usecase.LogoutGateway;
-import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
-import use_cases.login_registration.user_register_usecase.UserRegGateway;
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+
+import use_cases.login_registration.login_usecase.*;
+import use_cases.login_registration.logout_usecase.*;
+import use_cases.login_registration.user_register_usecase.*;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +31,7 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
         if (Files.exists(Path.of(path))) {
             accounts = readFile();
         } else {
-            accounts = new HashMap<String, UserRegSaveRequest>();
+            accounts = new HashMap<>();
             save();
         }
     }
@@ -92,44 +89,7 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway {
         return accounts.get(name).getPass();
     }
 
-    @Override
     public Map<String, UserRegSaveRequest> getAccounts() {
         return accounts;
     }
-
-
-//    /**
-//     * For course enrolment use case (course tasks to do list gateway)
-//     * Adds the course tasks to the student's to-do list
-//     *
-//     * @param studentID the username of the student whose parameters are being modified
-//     * @param courseTasks the course task ids what will be added to the student's 'to do list' parameter
-//     */
-//    @Override
-//    public void addTasksToTodolist(String studentID, ArrayList<String> courseTasks) throws IOException {
-//        // casting to student save request
-//        ((StudentSaveRequest) accounts.get(studentID)).getToDoList().addAll(courseTasks);
-//        save();
-//        // in interactor, update CurrentUser
-//        // make a new StudentSaveRequest with CurrentUser
-//        // call Gateway.save(StudentSaveRequest)
-//    }
-
-//    /**
-//     * For course enrolment use case (course tasks to do list gateway)
-//     * Adds the course id to the student's 'courses' parameter
-//     * @param courseID the course the student enrolled in
-//     * @param studentID the username of student enrolled
-//     */
-//    @Override
-//    public void addCourseToStudent(String courseID, String studentID) throws IOException {
-//        // casting to student save request
-//        // initialize current
-////        StudentUser s = accounts.get(studentID);
-//        ((StudentSaveRequest) accounts.get(studentID)).getCourses().add(courseID);
-//        save();
-//        // if adding
-////         StudentUser s = (StudentUser) CurrentUser.getCurrentUser()
-////         s.addCourse
-//    }
 }

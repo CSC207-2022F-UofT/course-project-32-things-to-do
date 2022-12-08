@@ -98,7 +98,7 @@ public class StudentAssignmentCreationScreen extends JPanel implements ActionLis
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment Created Successfully");
                 screenLayout.show(screens, "StudentMain");
-            } catch (Exception e) { // if there are any detectable errors in the input (eg parsing errors)
+            } catch (Exception e) { // if there are any detectable errors in the input (e.g. parsing errors)
                 showMessageDialog(this, e.getMessage());
             }
         }

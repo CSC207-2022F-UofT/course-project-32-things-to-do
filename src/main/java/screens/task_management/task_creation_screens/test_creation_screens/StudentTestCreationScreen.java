@@ -103,7 +103,7 @@ public class StudentTestCreationScreen extends JPanel implements ActionListener 
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Test Created Successfully");
                 screenLayout.show(screens, "StudentMain");
-            } catch (Exception e) { // if there are any input issues (eg parsing)
+            } catch (Exception e) { // if there are any input issues (e.g. parsing)
                 showMessageDialog(this, e.getMessage());
             }
         }

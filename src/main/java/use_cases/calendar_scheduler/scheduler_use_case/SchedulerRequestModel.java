@@ -1,9 +1,6 @@
 package use_cases.calendar_scheduler.scheduler_use_case;
 
-import entities.StudentUser;
-import entities.Task;
-
-import java.util.ArrayList;
+import entities.*;
 
 public class SchedulerRequestModel {
 

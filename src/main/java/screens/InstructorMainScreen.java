@@ -1,10 +1,6 @@
 package screens;
 
-import screens.login_registration.LoginFailed;
-import screens.login_registration.LogoutController;
-import screens.login_registration.LogoutFailed;
-import use_cases.login_registration.login_usecase.LoginResponseModel;
-import use_cases.login_registration.logout_usecase.LogoutResponseModel;
+import screens.login_registration.*;
 
 import javax.swing.*;
 import java.awt.*;

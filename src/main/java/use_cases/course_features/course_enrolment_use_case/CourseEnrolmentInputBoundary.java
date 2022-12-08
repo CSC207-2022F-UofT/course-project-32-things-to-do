@@ -11,5 +11,5 @@ public interface CourseEnrolmentInputBoundary {
      * the method in the use case interactor that does the entire enrolment process
      * @param requestModel the request model (information inputted by user)
      */
-    CourseEnrolmentResponseModel enrol(CourseEnrolmentRequestModel requestModel);
+    void enrol(CourseEnrolmentRequestModel requestModel);
 }

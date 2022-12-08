@@ -1,8 +1,7 @@
 package screens.task_management.task_edit_delete_screens.test_edit_delete_screens;
 
-import entities.TaskMap;
-import entities.Test;
-import use_cases.task_management.task_edit_use_case.TestDisplayer;
+import entities.*;
+import use_cases.task_management.task_edit_use_case.*;
 
 import java.time.LocalDateTime;
 

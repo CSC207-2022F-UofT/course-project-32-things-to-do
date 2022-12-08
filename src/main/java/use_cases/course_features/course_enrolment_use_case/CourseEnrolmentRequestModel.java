@@ -21,7 +21,6 @@ public class CourseEnrolmentRequestModel {
         this.courseName = courseName;
         this.courseInstructor = courseInstructor;
         this.courseID = courseName + courseInstructor;
-//        this.studentID = studentID;
     }
 
     public String getCourseName() {

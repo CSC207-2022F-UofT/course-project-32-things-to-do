@@ -1,15 +1,11 @@
 package screens.task_management;
 
-import entities.CollaborativeTask;
-import entities.Task;
-import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTDSGateway;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentTaskDsGateway;
-import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
-import use_cases.task_management.read_write.TaskMapGateway;
+import entities.*;
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.*;
+import use_cases.task_management.read_write.*;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway, ScheduleCTDSGateway {
@@ -56,7 +52,7 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        taskMap = new HashMap<String, Task>();
+        taskMap = new HashMap<>();
         this.taskMap = taskMap;
 
         return taskMap;
@@ -71,7 +67,7 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
      * For Course enrolment use case
      * returns the task object based on the task id
      * @param taskId the unique id (key) of the task
-     * @return
+     * @return task
      */
 
     /**

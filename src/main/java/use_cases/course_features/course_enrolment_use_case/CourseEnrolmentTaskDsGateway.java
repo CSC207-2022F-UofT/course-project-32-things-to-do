@@ -1,6 +1,6 @@
 package use_cases.course_features.course_enrolment_use_case;
 
-import entities.Task;
+import entities.*;
 
 import java.util.HashMap;
 

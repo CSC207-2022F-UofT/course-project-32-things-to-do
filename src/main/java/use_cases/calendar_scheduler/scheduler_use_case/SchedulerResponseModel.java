@@ -1,9 +1,5 @@
 package use_cases.calendar_scheduler.scheduler_use_case;
 
-import entities.Task;
-
-import java.util.ArrayList;
-
 public class SchedulerResponseModel {
 
     private boolean scheduleCancel;

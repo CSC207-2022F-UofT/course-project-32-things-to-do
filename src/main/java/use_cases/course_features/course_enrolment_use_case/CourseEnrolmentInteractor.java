@@ -12,18 +12,13 @@ import java.util.HashMap;
  * Implementation of the business logic on the entities
  */
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
-//    final CourseEnrolmentUserDsGateway userDsGateway;
     final CourseEnrolmentCourseDsGateway courseDsGateway;
     final CourseEnrolmentTaskDsGateway taskDsGateway;
     final CourseEnrolmentOutputBoundary enrolmentOutputBoundary;
-    private StudentUser student; // for response model
-    private Course course; // for response model
-    private Task tasks; // for response model
 
     public CourseEnrolmentInteractor(CourseEnrolmentCourseDsGateway courseDsGateway,
                                      CourseEnrolmentTaskDsGateway taskDsGateway,
                                      CourseEnrolmentOutputBoundary enrolmentOutputBoundary) {
-//        this.userDsGateway = userDsGateway;
         this.courseDsGateway = courseDsGateway;
         this.taskDsGateway = taskDsGateway;
         this.enrolmentOutputBoundary = enrolmentOutputBoundary;
@@ -33,7 +28,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
      * the main controller of the interactor that will be calling the helper methods
      */
     @Override
-    public CourseEnrolmentResponseModel enrol(CourseEnrolmentRequestModel requestModel) {
+    public void enrol(CourseEnrolmentRequestModel requestModel) {
         // initialization
         // TODO: might be illegal, can't call screen? -> HashMap<String, Task> taskHashMap = TaskMap.getTaskMap();
         // TODO: currentuser set to null rn because did not run from main --> DO INTERACTOR TEST PLS
@@ -41,12 +36,14 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")) {
-            return enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
+            enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
+            return;
         }
 
         // checks if given course id is in the map of existing courses
         if (!courseDsGateway.existsByCourseID(requestModel.getCourseID())) {
-            return enrolmentOutputBoundary.prepareFailView("Entered information does not correspond to an existing course.");
+            enrolmentOutputBoundary.prepareFailView("Entered information does not correspond to an existing course.");
+            return;
         }
 
         // all checks passed; background work for enrolment starts to happen
@@ -84,12 +81,9 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
-        // create 2 parallel arraylists, one stores task ids, one stores Task objects
-        ArrayList<String> oldKeys = courseTaskIDs; // could also do (ArrayList) oldTaskIdMap.keySet()
-
-        // iterate through oldKeys, get corresponding Task object, add to arraylist
+        // iterate through courseTaskIDs, get corresponding Task object, add to arraylist
         ArrayList<Task> values = new ArrayList<>();
-        for (String key: oldKeys) {
+        for (String key: courseTaskIDs) {
             Task value = oldTaskIdMap.get(key);
             values.add(value);
         }
@@ -97,7 +91,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // make newKeys with task id to title_student_course
         ArrayList<String> newKeys = new ArrayList<>();
         // change key name from title_instructor_course to title_student_course
-        for (String taskId : oldKeys) {
+        for (String taskId : courseTaskIDs) {
             // change key name from title_inst_course to title_student_course
             String newKey = taskId.replace(requestModel.getCourseInstructor(), currentUser.getName());
             newKeys.add(newKey);
@@ -127,6 +121,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
                 requestModel.getCourseID(), newKeys);
 
-        return enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
+        enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
+
     }
 }
