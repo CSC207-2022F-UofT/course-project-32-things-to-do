@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LoginResponseFormatter implements LoginPresenter {
+    /**
+     * @param response the login response model
+     * @return a successful login response or a failed login response
+     */
     @Override
     public LoginResponseModel prepareSuccessView(LoginResponseModel response) {
         LocalDateTime responseTime = LocalDateTime.parse(response.getLoginTime());

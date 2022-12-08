@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UserRegResponseFormatter implements UserRegPresenter {
 
+    // if user creation was successful
     @Override
     public UserRegResponse prepareSuccessView(UserRegResponse response) {
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
@@ -17,6 +18,7 @@ public class UserRegResponseFormatter implements UserRegPresenter {
         return response;
     }
 
+    // if the user already exists or the password is not valid
     @Override
     public UserRegResponse prepareFailView(String error) {
         throw new UserCreationFailed(error);

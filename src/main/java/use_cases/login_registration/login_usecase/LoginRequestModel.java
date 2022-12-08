@@ -5,9 +5,9 @@ public class LoginRequestModel {
     /**
      * A login request that contains the user's input for name and password
      */
-    private String name;
+    private final String name;
 
-    private String password;
+    private final String password;
 
     /**
      * @param name the entered username
@@ -20,12 +20,6 @@ public class LoginRequestModel {
 
     public String getName() { return name; }
 
-    void setName(String name) { this.name = name; }
-
     public String getPass() { return password; }
-
-    void setPass(String pass) {
-        this.password = pass;
-    }
 
 }

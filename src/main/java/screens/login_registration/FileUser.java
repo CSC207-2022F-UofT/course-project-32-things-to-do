@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, CourseEnrolmentUserDsGateway {
 
-//    private final HashMap<String, UserRegSaveRequest> accounts;
     private static HashMap<String, UserRegSaveRequest> accounts;
 
     private final String filePath;
@@ -34,10 +33,8 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
         // and reads the existing file if it does exist
 
         if (Files.exists(Path.of(path))) {
-//            this.accounts = readFile();
             accounts = readFile();
         } else {
-//            this.accounts = new HashMap<String, UserRegSaveRequest>();
             accounts = new HashMap<String, UserRegSaveRequest>();
             save();
         }
@@ -67,13 +64,14 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
          * Write the map of usernames to UserRegSaveRequest objects into the User database file.
          */
 
+        // check if file exists already and if it doesn't, open a new file
         FileOutputStream fileWriter;
-//        if (Files.exists(Path.of(filePath))) {
-//            fileWriter = new FileOutputStream(filePath);
-//        } else {
-//            fileWriter = new FileOutputStream("src/main/java/data/users.ser");
-//        }
-        fileWriter = new FileOutputStream(filePath);
+        if (Files.exists(Path.of(filePath))) {
+            fileWriter = new FileOutputStream(filePath);
+        } else {
+            fileWriter = new FileOutputStream("src/main/java/data/users.ser");
+        }
+//        fileWriter = new FileOutputStream(filePath);
         ObjectOutputStream out = new ObjectOutputStream(fileWriter);
         out.writeObject(accounts);
         out.close();
@@ -95,8 +93,8 @@ public class FileUser implements UserRegGateway, LoginGateway, LogoutGateway, Co
         return accounts.get(name).getPass();
     }
 
+    @Override
     public Map<String, UserRegSaveRequest> getAccounts() {
-//        return this.accounts;
         return accounts;
     }
 

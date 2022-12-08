@@ -31,6 +31,8 @@ public class LoginScreen extends JPanel implements ActionListener {
         this.cardLayout = cardLayout;
         this.screens = screens;
 
+        // Add titles and text panels
+
         JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -39,6 +41,7 @@ public class LoginScreen extends JPanel implements ActionListener {
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), password);
 
+        // add login and cancel buttons
         JButton logIn = new JButton("Log in");
         JButton cancel = new JButton("Cancel");
 
@@ -46,9 +49,11 @@ public class LoginScreen extends JPanel implements ActionListener {
         buttons.add(logIn);
         buttons.add(cancel);
 
+        // make the login and cancel buttons do something when clicked
         logIn.addActionListener(this);
         cancel.addActionListener(this);
 
+        // add all the components to the same screen
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(usernameInfo);
@@ -74,8 +79,11 @@ public class LoginScreen extends JPanel implements ActionListener {
                     cardLayout.show(screens, "StudentMain");
                 }
             } catch (Exception e) {
-                showMessageDialog(this, e.getMessage());
+                showMessageDialog(this, "Login failed: username does not exist or " +
+                        "password is incorrect");
             } catch (LoginFailed e) {
+                showMessageDialog(this, "Login failed: username does not exist or " +
+                        "password is incorrect");
                 throw new RuntimeException(e);
             }
         }

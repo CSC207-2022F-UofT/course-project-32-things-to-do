@@ -25,6 +25,8 @@ The user can access all features of the program through the main dashboard.
 
 ![](images/dashboard_screen.png)
 
+To log out, the user can click the `Logout` button and will be taken back to the Welcome page, where they can log in or sign up a new User.
+
 ## To-Do List Task Creation
 If the user clicks on the `New Task` button, one of two things will occur:
 - If the user is an instructor, they will have a choice between creating a new assignment, new test, or returning to their main screen (`Cancel` button).

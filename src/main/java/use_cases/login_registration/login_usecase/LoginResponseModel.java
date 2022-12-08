@@ -27,12 +27,6 @@ public class LoginResponseModel {
 
     public String getTypeOfUser() { return typeOfUser; }
 
-    public void setTypeOfUser(String s) {
-        if (s.equals("Instructor") | s.equals("Student")) {
-            this.typeOfUser = s;
-        }
-    }
-
     public String getLoginTime() {
         return loginTime;
     }

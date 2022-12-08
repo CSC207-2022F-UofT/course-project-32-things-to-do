@@ -12,6 +12,7 @@ public class LogoutController {
         this.interactor = accGateway;
     }
 
+    // the method to logout
     public void create() throws IOException {
         interactor.create();
     }
