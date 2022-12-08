@@ -65,7 +65,6 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
         this.add(title);
         this.add(courseNameInfo);
         this.add(courseInstructorInfo);
-//        this.add(studentIDInfo);
         this.add(buttons);
     }
 
