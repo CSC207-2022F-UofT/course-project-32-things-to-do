@@ -37,6 +37,8 @@ public class InvitationCreationInteractor implements InvitationCreationInputBoun
         StudentUser receiver = ((StudentSaveRequest)accounts.get(requestModel.getRecieverUsername())).initializeUser();
         CollaborativeTask collaborativeTask = (CollaborativeTask) TaskMap.findTask(requestModel.getCollaborativeId());
 
+        if (!(sender.getName().equals(collaborativeTask.getLeader().getName()))) return outputBoundary.prepareFailView("Only leader of the collaborative task can invite others to join.");
+
         if (!(userGateway.existsByName(requestModel.getRecieverUsername()))) return outputBoundary.prepareFailView("Please enter a registered student user.");
         else if (requestModel.getRecieverUsername().equals(sender.getName())) return outputBoundary.prepareFailView("Please enter user other than yourself.");
         else if (collaborativeTask.getTeammates().contains(receiver) || collaborativeTask.getPendingTeammates().contains(receiver)) return outputBoundary.prepareFailView("Please enter a student who has not already been invited.");
