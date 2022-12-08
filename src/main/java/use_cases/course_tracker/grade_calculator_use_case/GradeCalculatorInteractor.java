@@ -4,7 +4,6 @@ import entities.Assignment;
 import entities.CurrentUser;
 import entities.Gradable;
 import entities.Task;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
 import use_cases.course_tracker.CourseTrackerInteractor;
 
 import java.util.ArrayList;
@@ -17,13 +16,11 @@ import java.util.HashMap;
 public class GradeCalculatorInteractor extends CourseTrackerInteractor implements GradeCalculatorInputBoundary{
 
     private final GradeCalculatorOutputBoundary presenter;
-    private final CourseEnrolmentDsGateway courseAccess;
+
     private final ArrayList<String> targetTasksTitles = new ArrayList<>();
     private Double targetCourseGrade;
 
-    public GradeCalculatorInteractor(GradeCalculatorOutputBoundary presenter,
-                                     CourseEnrolmentDsGateway courseAccess) {
-        this.courseAccess = courseAccess;
+    public GradeCalculatorInteractor(GradeCalculatorOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
@@ -41,6 +38,10 @@ public class GradeCalculatorInteractor extends CourseTrackerInteractor implement
             String courseName = requestModel.getCourseName();
             ArrayList<String> ungradedTasks = requestModel.getUngradedTasks();
 
+            if (ungradedTasks == null || courseName.isEmpty()) {
+                throw new RuntimeException("Make sure you enter a course name first!");
+            }
+
             //parse user input
             String[] userInput = requestModel.getUserInput().split(",");
             if (userInput.length != ungradedTasks.size() && userInput.length > 0) {
@@ -54,11 +55,8 @@ public class GradeCalculatorInteractor extends CourseTrackerInteractor implement
                 throw new RuntimeException("No valid target task grade was read from input.");
             }
 
-            //retrieve course ID based on inputted course name
-            String courseID = courseNameToID(courseName, courseAccess);
-
             //query aggregate task map for all of this student's tasks in this course
-            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseID);
+            ArrayList<Task> studentCourseTasks = getStudentCourseTasks(courseName);
 
             //create a copy of studentCourseTasks including goal/predicted grades of ungraded tasks
             ArrayList<Task> studentCourseTasksCopy = copyStudentTasks(studentCourseTasks, ungradedTaskToGrade);

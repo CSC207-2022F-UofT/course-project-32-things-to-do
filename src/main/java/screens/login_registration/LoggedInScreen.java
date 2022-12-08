@@ -19,6 +19,7 @@ public class LoggedInScreen extends JFrame implements ActionListener {
      */
     public LoggedInScreen() {
 
+        // make labels and text panels
         JLabel title = new JLabel("Logged-in Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -31,11 +32,13 @@ public class LoggedInScreen extends JFrame implements ActionListener {
         JPanel buttons = new JPanel();
         buttons.add(logOut);
 
+        // make the logout button do something when clicked
         logOut.addActionListener(this);
 
         JPanel main = new JPanel();
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 
+        // add everything to the main screen
         main.add(title);
         main.add(usernameInfo);
         main.add(buttons);

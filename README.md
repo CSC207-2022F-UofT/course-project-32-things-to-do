@@ -25,6 +25,8 @@ The user can access all features of the program through the main dashboard.
 
 ![](images/dashboard_screen.png)
 
+To log out, the user can click the `Logout` button and will be taken back to the Welcome page, where they can log in or sign up a new User.
+
 ## To-Do List Task Creation
 If the user clicks on the `New Task` button, one of two things will occur:
 - If the user is an instructor, they will have a choice between creating a new assignment, new test, or returning to their main screen (`Cancel` button).
@@ -97,22 +99,24 @@ dates to their group.
 ## Progress Tracker
 
 If the user clicks on the `Progress Tracker` button, the screen for tracking their academic progress will be displayed.
-On this screen, the user can calculate their academic statistics for a course they are enrolled in.
+On this screen, the user can calculate their academic statistics for a course they are enrolled in. 
+This is a feature for students only.
 
-![](images/progress_tracker_screen.png)
+![](images/course_tracker_screen.png)
 
-To do so, the user must enter the name of the course and click the button `Calculate Grades and Progress` 
-The screen will then display the total weight of completed tasks in that course in % and also a final grade so far of inputted grades for that course. 
-If a desired grade has been inputted already or is inputted in this step, the required average for remaining ungraded tasks will be returned (with error messages if the goal grade isn't possible).
+Progress Tracker 
+A student enters the name of a course they are enrolled in. User clicks button `Calculate Grades and Progress` and sees their course progress (sum % weightage of completed tasks), mock grade (weighted grade from graded assessments), and their required average in remaining ungraded tasks (if a grade goal has been entered before). 
+They are also provided a list of currently ungraded tasks in that course. 
 
-Users can also input the grades they receive for a task in the course next, by inputted first the EXACT name of the task and a valid grade in %. 
-Users can also adjust their desired grade here. 
-After clicking `Save and Update`, the statistics at the top of the page will be updated with the new values.
+Students can then input (enter or reset) any grades that they receive for a task in the course by inputting first the EXACT name of the task and a valid grade in %. 
+They can also adjust their desired grade here. 
+After clicking `Save and Update` the statistics at the top of the page are updated with the new values.
 
-_Not yet implemented (extending on what is currently working in the MVP feature):_
-- error message for non-students (instructors) who try to use feature
-- displaying a list of tasks in a course upon student entering a course name
-- second part of user story in blueprint which allows users to play around with different scenarios for worst/best case final grades. This part of the program calculates the required average for a given assignment or test
+Grade Calculator
+Another tool of this feature is a grade sandbox where the student can play around with different grade values for their ungraded tasks. Following the order of the list of ungraded tasks above, a student enters a comma-separated list of valid grades in % (numbers only, no spaces) representing hypothetical grades for those tasks. 
+For at least one of these tasks, the student specifies the "target task(s)" and the "target grade" by preceding the grade input with a '*' character. The program then outputs the required grade (or average grades) for this task to obtain a final grade of the target grade assuming the other hypothetical grades are achieved. 
+If more than one target task is specified and the target grades in the input differ, the output will be calculated using the right-most target grade.
+
 
 ## Course Enrolment/Creation
 

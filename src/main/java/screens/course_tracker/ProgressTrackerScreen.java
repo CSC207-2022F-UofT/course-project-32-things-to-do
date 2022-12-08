@@ -40,7 +40,7 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener, Pro
     CardLayout cardLayout;
 
     //instance variables for storing information
-    ArrayList<String> ungradedTasks;
+    ArrayList<String> ungradedTasks = null;
 
     public ProgressTrackerScreen(JPanel screens, CardLayout cardLayout) {
 
@@ -56,14 +56,14 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener, Pro
         LabelTextPanel newGradeInfo = new LabelTextPanel(
                 new JLabel("Enter the new received grade"), newGrade);
         LabelTextPanel newGoalGradeInfo = new LabelTextPanel(
-                new JLabel("Enter new desired grade for this course"), newGoalGrade);
+                new JLabel("Enter new desired grade for this course (optional)"), newGoalGrade);
 
         JLabel instructions3 = new JLabel("3. GRADE SANDBOX!");
         JTextArea instructions3details = new JTextArea(1,20);
         instructions3details.setText(" Find out the required (average) grade of some ungraded target task(s) " +
-                "given your goal/predicted grades for the rest of your ungraded tasks.\nInput should be in the " +
-                "following example form:\n'89,*96,77.7,36,*97'\nwhere '*' indicates your goal grade in the " +
-                "course. The program will take the value of the LAST * value if they are different.\nAlso note that" +
+                "given your goal/predicted grades for the rest of your ungraded tasks.\n Input should be in the " +
+                "following example form:\n 89,*96,77.7,36,*97\n where '*' indicates your goal grade in the " +
+                "course. The program will take the value of the LAST * value if they are different.\n Also note that" +
                 " the total task weightage per course should be 100%.");
         instructions3details.setEditable(false);
         LabelTextPanel gradeCalculatorInput = new LabelTextPanel(

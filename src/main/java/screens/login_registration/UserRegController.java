@@ -16,6 +16,7 @@ public class UserRegController {
         this.userInput = accGateway;
     }
 
+    // create a request to register the user
     UserRegResponse create(String name, String pass1, String pass2, String typeOfUser) throws IOException {
         UserRegRequest request = new UserRegRequest(name, pass1, pass2, typeOfUser);
         return userInput.create(request);

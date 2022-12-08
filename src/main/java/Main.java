@@ -12,7 +12,6 @@ import use_cases.course_tracker.progress_tracker_use_case.*;
 import screens.collaborative_task_scheduling.*;
 import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
-import use_cases.calendar_scheduler.scheduler_use_case.*;
 import use_cases.login_registration.login_usecase.*;
 import use_cases.login_registration.logout_usecase.*;
 import use_cases.login_registration.user_register_usecase.*;
@@ -69,19 +68,22 @@ public class Main {
 
         ScheduleConflictOutputBoundary scheduleConflictOutputBoundary = new ScheduleConflictPresenter();
 
-        CourseEnrolmentDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
+        CourseEnrolmentCourseDsGateway courseAccess = new FileCourse("src/main/java/data/courses.ser");
+        FileTaskMap taskAccess = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ProgressTrackerScreen progressTrackerScreen = new ProgressTrackerScreen(screens, cardLayout);
         ProgressTrackerOutputBoundary trackerPresenter = new ProgressTrackerPresenter(progressTrackerScreen);
-        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess);
+        ProgressTrackerInputBoundary trackerInteractor = new ProgressTrackerInteractor(trackerPresenter, courseAccess,
+                taskAccess);
         ProgressTrackerController trackerController = new ProgressTrackerController(trackerInteractor);
 
         GradeCalculatorOutputBoundary gradePresenter = new GradeCalculatorPresenter(progressTrackerScreen);
-        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter, courseAccess);
+        GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
+        ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
-        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter);
+        ScheduleCTInputBoundary scheduleCTInteractor = new ScheduleCTInteractor(scheduleCTPresenter, scheduleCTDSGateway);
         ScheduleCTController scheduleCTController = new ScheduleCTController(scheduleCTInteractor);
 
         // Adding in course creation use case
@@ -91,10 +93,12 @@ public class Main {
         CourseCreationController courseController = new CourseCreationController(courseInteractor);
 
         // Adding in course enrolment use case
-        CourseEnrolmentDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
-        CourseTasksToStudentTodolistDsGateway tasksToTodolist = new FileUser("src/main/java/data/users.ser");
+        CourseEnrolmentCourseDsGateway enrolCourse = new FileCourse("src/main/java/data/courses.ser");
+        CourseEnrolmentUserDsGateway enrolUser = new FileUser("src/main/java/data/users.ser");
+        CourseEnrolmentTaskDsGateway enrolTasks = new FileTaskMap("src/main/java/data/TaskMap.txt");
         CourseEnrolmentOutputBoundary enrolmentPresenter = new CourseEnrolmentPresenter();
-        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(enrolCourse, tasksToTodolist, enrolmentPresenter);
+        CourseEnrolmentInputBoundary enrolmentInteractor = new CourseEnrolmentInteractor(
+                enrolUser, enrolCourse, enrolTasks, enrolmentPresenter);
         CourseEnrolmentController enrolmentController = new CourseEnrolmentController(enrolmentInteractor);
 
         // Adding in logout use case

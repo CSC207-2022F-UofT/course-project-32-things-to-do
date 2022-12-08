@@ -1,64 +1,126 @@
 package test_course_features;
 
-//import entities.Course;
-//import entities.StudentUser;
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
-//import screens.course_features.InMemoryCourse;
-//import screens.login_registration.InMemoryUser;
-//import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-//import use_cases.login_registration.user_register_usecase.UserRegGateway;
+import entities.Course;
+import entities.CurrentUser;
+import entities.StudentUser;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import screens.course_features.InMemoryCourse;
+import use_cases.course_features.course_creation_use_case.*;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentOutputBoundary;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentResponseModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * testing the components of a course enrolment
+ * which is basically every line of code in my interactor because clearly there are buuuuugs
+ * acc maybe this is why i should be doing tests while i code oop
+ */
+public class CourseEnrolmentInteractorTest {
+    @BeforeAll
+    static void beforeAll() {
+////        CurrentUser.setCurrentUser(new StudentUser("user1", "pwd"));
+//        StudentUser student = new StudentUser("user1", "pwd");
 //
-//import use_cases.course_features.course_enrolment_use_case.*;
+//        ArrayList<String> courseTasks = new ArrayList<>();
+//        courseTasks.add("1");
+//        courseTasks.add("2");
+//        courseTasks.add("3");
+//        Course course = new Course("course1", "inst1", courseTasks);
 //
-//import java.util.ArrayList;
+//        HashMap<String, Course> courseMap = new HashMap<>();
+//        courseMap.put("course1", course);
 //
-//import static org.junit.Assert.*;
+//        HashMap<String, StudentUser> studentMap = new HashMap<>();
+//        studentMap.put("user1", student);
 //
-///**
-// * TODO: NEED TO ADD THE TASK PART
-// */
-//class CourseEnrolmentInteractorTest {
+//        CourseEnrolmentDsGateway enrolmentGateway = new CourseEnrolmentDataAccess(courseMap, studentMap);
+    }
+
+    @Test
+    void testing() {
+        StudentUser student = new StudentUser("user1", "pwd");
+
+        ArrayList<String> courseTasks = new ArrayList<>();
+        courseTasks.add("1");
+        courseTasks.add("2");
+        courseTasks.add("3");
+        Course course = new Course("course1", "inst1", courseTasks);
+
+        HashMap<String, Course> courseMap = new HashMap<>();
+        courseMap.put("course1", course);
+
+        HashMap<String, StudentUser> studentMap = new HashMap<>();
+        studentMap.put("user1", student);
+
+        CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
+            @Override
+            public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel newStudent) {
+                ArrayList<String> courseTasks1 = new ArrayList<>();
+                courseTasks1.add("1");
+                courseTasks1.add("2");
+                courseTasks1.add("3");
+                Course course1 = new Course("course1", "inst1", courseTasks1);
+
+                assertEquals("course1", course1.getCourseID());
+                assertEquals("inst1", course1.getCourseName());
+                assertEquals("course1inst1", course1.getCourseID());
+                assertEquals(courseTasks1, course1.getTasks());
+                assertNotNull(course1.getTasks());
+//                assertTrue(enrolmentGateway.existsByCourseID(course1.getCourseID()));
 //
-//    @Test
-//    public void enrol() {
-//        // well technically interactor not done so ......
+//                assertTrue(enrolmentGateway.searchForCourse(course1.getCourseID()));
+//                assertTrue(enrolmentGateway.existsStudentInCourse(course1.getCourseID()));
 //
-//        CourseEnrolmentDsGateway courseGateway = new InMemoryCourse();
-//        CourseCreationDsGateway courseRepository = new InMemoryCourse();
-//        UserRegGateway userRepository = new InMemoryUser();
-//
-//        CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
-//            @Override
-//            public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel newStudent) {
-//                Assertions.assertEquals("course1inst1", newStudent.getCourseID());
-//                Assertions.assertEquals("user1", newStudent.getStudentID());
-//                Assertions.assertTrue(courseRepository.existsByCourseID("course1inst1"));
-//                Assertions.assertTrue(userRepository.existsByName("user1"));
-//                return null;
-//            }
-//
-//            @Override
-//            public CourseEnrolmentResponseModel prepareFailView(String error) {
-//                fail("Use case failure is unexpected.");
-//                return null;
-//            }
-//        };
-//
-//        // make course
-//        ArrayList<String> tasks = new ArrayList<>();
-//        tasks.add("task1");
-//        tasks.add("task2");
-//        Course course = new Course("course1", "inst1", tasks);
-//
-//        // make student
-//        StudentUser student = new StudentUser("user1", "pass1");
-//
-//        CourseEnrolmentInputBoundary interactor = new CourseEnrolmentInteractor(courseGateway, outputBoundary);
-//
-//        CourseEnrolmentRequestModel inputData = new CourseEnrolmentRequestModel(
-//                "course1", "inst1", "user1");
-//
-//        interactor.enrol(inputData);
-//    }
-//}
+//                assertTrue(enrolmentGateway.saveStudentToCourse(course1.getCourseID()););
+
+
+                // check coursetasks are made into the right ids (name_inst_course)
+
+                // check if the ids are saved to an arraylist
+
+                // check if the values from arraylist get the object associated with it,
+                // and add to temp map (old task id map)
+
+                // make 2 arraylists, old task ids, Tasks
+                // check if key name is changed to name_stud_course, and add to new task ids arraylist
+
+                // check if new task map with new id -> Tasks mapping is correct
+                //
+
+                // check if new task map is in tasksMap
+
+
+
+                // check
+                // check if student id is appended to course's 'students' parameter
+//                assertTrue(enrolmentGateway.searchForCourse("course1").getStudents().contains("user1"));
+
+                // student's to do list contains the course tasks
+                return null;
+            }
+
+            @Override
+            public CourseEnrolmentResponseModel prepareFailView(String error) {
+                return null;
+            }
+        };
+
+
+    }
+
+    @Test
+    void getCourseTasks() {
+
+    }
+
+    @Test
+    void addTasksToTodolist() {
+
+    }
+
+}
