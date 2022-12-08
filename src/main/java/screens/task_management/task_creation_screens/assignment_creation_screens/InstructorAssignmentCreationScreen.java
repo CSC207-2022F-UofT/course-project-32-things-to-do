@@ -93,7 +93,7 @@ public class InstructorAssignmentCreationScreen extends JPanel implements Action
 
                 // notify user of success and return to main screen
                 showMessageDialog(this, "Assignment Created Successfully");
-                screenLayout.show(screens, "StudentMain");
+                screenLayout.show(screens, "InstructorMain");
             } catch (Exception e) { // if anything goes wrong in the input (eg parsing error)
                 showMessageDialog(this, e.getMessage());
             }
