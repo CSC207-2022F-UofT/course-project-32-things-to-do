@@ -2,7 +2,7 @@ package screens.course_features;
 
 import entities.Course;
 import use_cases.course_features.course_creation_use_case.CourseCreationDsGateway;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGateway {
+public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentCourseDsGateway {
     /**
      * is this supposed to be String to Request Model OR String to Course
      * for clean architecture:
@@ -31,11 +31,11 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
         // checks if path or file exists
         if (Files.exists(Path.of(path))) {
             // exists: read existing file, which is the hashmap of all course ids to course objects
-            this.courses = readFile();
+            courses = readFile();
         } else {
             // dne: create and write empty map to new file
-            this.courses = new HashMap<>();
-            saveCourse();
+            courses = new HashMap<>();
+            save();
         }
     }
 
@@ -47,39 +47,34 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
      *              fileReader.close();
      */
     public HashMap<String, Course> readFile() throws IOException, ClassNotFoundException {
-        HashMap<String, Course> f;
-        try (FileInputStream fileReader = new FileInputStream(this.filePath)) {
-            ObjectInputStream in = new ObjectInputStream(fileReader);
-            f = (HashMap<String, Course>) in.readObject();
-            in.close();
-        }
+        FileInputStream fileReader = new FileInputStream(this.filePath);
+        ObjectInputStream in = new ObjectInputStream(fileReader);
+        HashMap<String, Course> f = (HashMap<String, Course>) in.readObject();
+        in.close();
+        fileReader.close();
         return f;
     }
 
     /**
-     * COURSE CREATION GATEWAY
      * adds the request model to database
      * @param requestModel the course info that is being saved
      */
     @Override
-    public void saveCourse(Course requestModel) throws IOException {
+    public void save(Course requestModel) throws IOException {
         courses.put(requestModel.getCourseID(), requestModel);
-        this.saveCourse();
+        this.save();
     }
 
     /**
      * COURSE CREATION GATEWAY
      * writes the map of course ids to course objects into the Course database file
-     * after out.close():
-     *             Remove this "close" call; closing the resource is handled automatically by the try-with-resources.
-     *             fileWriter.close();
      */
-    private void saveCourse() throws IOException {
-        try (FileOutputStream fileWriter = new FileOutputStream(filePath)) {
-            ObjectOutputStream out = new ObjectOutputStream(fileWriter);
-            out.writeObject(courses);
-            out.close();
-        }
+    private void save() throws IOException {
+        FileOutputStream fileWriter;
+        fileWriter = new FileOutputStream(filePath);
+        ObjectOutputStream out = new ObjectOutputStream(fileWriter);
+        out.writeObject(courses);
+        out.close();
     }
 
     /**
@@ -93,10 +88,10 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     }
 
     public Map<String, Course> getCourses() {
-        return this.courses;
+        return courses;
     }
 
-    @Override
+
     /**
      * COURSE ENROLMENT GATEWAY
      * gets the course object associated with course id
@@ -104,6 +99,7 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
      * and to copy the tasks
      * @param courseIdentifier the course id of the course that the student wants to enrol in
      */
+    @Override
     public Course searchForCourse(String courseIdentifier) {
         return courses.get(courseIdentifier);
     }
@@ -127,23 +123,17 @@ public class FileCourse implements CourseCreationDsGateway, CourseEnrolmentDsGat
     @Override
     public void saveStudentToCourse(String studentID, String courseID) throws IOException {
         courses.get(courseID).getStudents().add(studentID);
-        saveCourse();
-
+        save();
     }
 
     /**
      * COURSE ENROLMENT GATEWAY
      * gets the task ids of the course the student wants to enrol in
      * copy and change here as well? or toss to task creation request model
-     * @param requestModel the course we want tasks from
+     * @param courseIdentifier the course we want tasks from
      */
     @Override
-    public ArrayList<String> courseTasks(Course requestModel) {
-        return requestModel.getTasks();
+    public ArrayList<String> getCourseTasks(String courseIdentifier) {
+        return courses.get(courseIdentifier).getTasks();
     }
-
-//    public void add
-
-    // add tasks to student's to do list
-    // sketchy clean architecture happens here
 }

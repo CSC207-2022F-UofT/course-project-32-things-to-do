@@ -58,7 +58,8 @@ public class Course implements Serializable {
     }
 
     public ArrayList<String> getTasks() {
-        return new ArrayList<>(this.tasks);
+        return this.tasks;
+//        return new ArrayList<>(this.tasks);
     }
     /* new task added to course (input from instructor user) */
     public void addTask(String taskID) {

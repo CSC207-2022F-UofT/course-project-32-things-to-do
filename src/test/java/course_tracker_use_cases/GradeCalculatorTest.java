@@ -4,7 +4,7 @@ import entities.*;
 import org.junit.jupiter.api.Test;
 import screens.course_features.InMemoryCourse;
 import screens.course_tracker.GradeCalculatorPresenter;
-import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentDsGateway;
+import use_cases.course_features.course_enrolment_use_case.CourseEnrolmentCourseDsGateway;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorInteractor;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorRequestModel;
 import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorResponseModel;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GradeCalculatorTest {
 
-    CourseEnrolmentDsGateway courseAccess;
+    CourseEnrolmentCourseDsGateway courseAccess;
 
     /**
      * Helper function to set up all the static variables

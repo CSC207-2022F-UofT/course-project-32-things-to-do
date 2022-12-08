@@ -6,7 +6,7 @@ package use_cases.course_features.course_creation_use_case;
  Notes:
 - requests what is needed for its input data (what person in front of computer enters)
 - do NOT depend on anything NOR have any references to Entity objects: violates SRP
- */
+*/
 
 
 import java.util.ArrayList;
@@ -44,6 +44,14 @@ public class CourseCreationRequestModel {
     }
 
     public ArrayList<String> getTasks() {
-        return tasks;
+        // string from input will be like this: "task1,task2,task3"
+        // need to split into ["task1", "task2", "task3"]
+
+        String taskOneString = tasks.get(0); // only one element in arraylist
+        ArrayList<String> courseTasksSplit = new ArrayList<>();
+        for (String tasksSplit : taskOneString.split(",")) {
+            courseTasksSplit.add(tasksSplit);
+        }
+        return courseTasksSplit;
     }
 }
