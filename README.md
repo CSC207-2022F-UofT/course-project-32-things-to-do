@@ -6,6 +6,7 @@
 
 Start up the program by running the `Main.java` class in the `src/main/java` directory.
 Upon launching the program, a welcome screen with two buttons, `Sign Up` and `Log In`, appears.
+**Note**: For the course enrolment use case, upon having a `InstructorUser` create a `Course`, the program would need to be closed and rerun so that the data files update accordingly.
 
 ![](resources/images/welcome_screen.png)
 
@@ -149,10 +150,13 @@ On this screen, the user can either enrol in a course or create a course, depend
 **Course creation:**
 Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and a task _(in future implementation they would be able to add more than one task)_.
 
-![](resources/images/course_creation_screen.png)
+![](resources/images/course_creation_empty_screen.png)
 
 If the instructor clicks the `Create` button, the program will check whether the course already exists in the CourseMap and if all required fields are filled out.
 If any of checks failed, an error message will pop up.
+
+![](resources/images/creation_exists_msg.png)
+
 Once successful, the `Course` will be added to the `CourseMap`, where its key is the course ID, a unique string made up of the concatenation of the course name and course instructor entered by the instructor themselves.
 After the program has completed the course creation, the success message will pop up.
 During the entire creation process, clicking the `Cancel` button will close the window without any searches performed.
@@ -164,4 +168,9 @@ If any of the checks failed, an error message would pop up.
 Once successful, the username of the students (which is their unique ID) will be added to the `students` parameter (which is an ArrayList of strings) of the `Course` entity associated with the course ID.
 Then, the tasks (ArrayList of strings from the `tasks` parameter in the `Course` entity) will be copied and appended to the student’s own task list.
 After the program has completed the course enrolment, the success message will pop up.
+
+![](resources/images/course_enrolment_sucess.png)
+
+![](resources/images/enrolment_success_message.png)
+
 During the entire enrolment process, clicking the `Cancel` button will close the window without any searches performed.

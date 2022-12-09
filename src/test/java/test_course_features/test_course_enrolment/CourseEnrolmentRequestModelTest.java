@@ -1,4 +1,4 @@
-package test_course_features.course_enrolment;
+package test_course_features.test_course_enrolment;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
