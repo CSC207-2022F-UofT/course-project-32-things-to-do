@@ -37,12 +37,4 @@ class CourseCreationRequestModelTest {
         assertEquals("course1inst1", courseCreationRequestModel.getCourseID());
     }
 
-    @Test
-    void getTasks() {
-        ArrayList<String> goodTasks = new ArrayList<>();
-        goodTasks.add("task1");
-        goodTasks.add("task2");
-        goodTasks.add("task3");
-        assertEquals(courseCreationRequestModel.getTasks(), goodTasks);
-    }
 }

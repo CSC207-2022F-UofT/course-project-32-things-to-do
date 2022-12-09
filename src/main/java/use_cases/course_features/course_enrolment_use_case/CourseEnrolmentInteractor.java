@@ -8,27 +8,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Implementation of the business logic on the entities
+ */
 public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
-    final CourseEnrolmentUserDsGateway userDsGateway;
     final CourseEnrolmentCourseDsGateway courseDsGateway;
     final CourseEnrolmentTaskDsGateway taskDsGateway;
     final CourseEnrolmentOutputBoundary enrolmentOutputBoundary;
 
-    public CourseEnrolmentInteractor(CourseEnrolmentUserDsGateway userDsGateway,
-                                     CourseEnrolmentCourseDsGateway courseDsGateway,
+    public CourseEnrolmentInteractor(CourseEnrolmentCourseDsGateway courseDsGateway,
                                      CourseEnrolmentTaskDsGateway taskDsGateway,
                                      CourseEnrolmentOutputBoundary enrolmentOutputBoundary) {
-        this.userDsGateway = userDsGateway;
         this.courseDsGateway = courseDsGateway;
         this.taskDsGateway = taskDsGateway;
         this.enrolmentOutputBoundary = enrolmentOutputBoundary;
     }
 
+    /**
+     * the main controller of the interactor that will be calling the helper methods
+     */
     @Override
     public void enrol(CourseEnrolmentRequestModel requestModel) {
+        // initialization
+        StudentUser currentUser = (StudentUser) CurrentUser.getCurrentUser();
+
         // At least one field left blank
-        if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")
-                || requestModel.getStudentID().equals("")) {
+        if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")) {
             enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
             return;
         }
@@ -45,7 +50,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         // add student id to Course parameter 'students'
         try {
-            courseDsGateway.saveStudentToCourse(requestModel.getStudentID(), requestModel.getCourseID());
+            courseDsGateway.saveStudentToCourse(currentUser.getName(), requestModel.getCourseID());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,22 +67,30 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
 
         ArrayList<String> courseTaskIDs = new ArrayList<>();
         for (String taskTitleToId : courseTaskTitles) {
-            taskTitleToId = taskTitleToId + "_" + instructorName + "_" + courseName;
+            taskTitleToId = taskTitleToId + "_" + instructorName + "_none";
             courseTaskIDs.add(taskTitleToId);
         }
 
         // for each id in courseTaskIDs, get Task associated with it, save to temp map
         HashMap<String, Task> oldTaskIdMap = new HashMap<>();
         for (String oldTaskId : courseTaskIDs) {
-            Task taskValue = taskDsGateway.getTask(oldTaskId); // gets value from key
+            Task taskValue = TaskMap.getTaskMap().get(oldTaskId); // gets value from key
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
         // iterate through courseTaskIDs, get corresponding Task object, add to arraylist
         ArrayList<Task> values = new ArrayList<>();
         for (String key: courseTaskIDs) {
-            Task value = oldTaskIdMap.get(key);
-            values.add(value);
+            Task oldValue = oldTaskIdMap.get(key);
+            // makes a copy of the old value based on its Task type
+            Task newValue;
+            if (oldValue instanceof Test) {
+                newValue = ((Test) oldValue).getTestCopy();
+                values.add(newValue);
+            } else if (oldValue instanceof Assignment) {
+                newValue = ((Assignment) oldValue).getAssignmentCopy();
+                values.add(newValue);
+            }
         }
 
         // make newKeys with task id to title_student_course
@@ -85,45 +98,37 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // change key name from title_instructor_course to title_student_course
         for (String taskId : courseTaskIDs) {
             // change key name from title_inst_course to title_student_course
-            String newKey = taskId.replace(requestModel.getCourseInstructor(), requestModel.getStudentID());
-            newKeys.add(newKey);
+            String newKey = taskId.replace(
+                    requestModel.getCourseInstructor() + "_none",
+                    currentUser.getName() + "_" + courseName);
+            newKeys.add(newKey); // a1_paul_none --> a1_julie_csc207
         }
 
-        // add newKeys and values as a key-value pair to a temp new map
+        // add newKeys and values as a key-value pair to a temporary new map
         HashMap<String, Task> newTaskIdMap = new HashMap<>();
         for (int i = 0; i < newKeys.size(); i++) {
             // add key-value pairs to newTaskIdMap
+            // initialize the key of the new task copy (currently is initialized to an empty string)
+            values.get(i).setId(newKeys.get(i));
             newTaskIdMap.put(newKeys.get(i), values.get(i));
         }
 
-        // add newTaskIdMap to FileTaskMap
+        // add newTaskIdMap to FileTaskMap, method saves the task map
         taskDsGateway.saveNewMaptoMap(newTaskIdMap);
 
-        // 3. user gateway
+        // 3. current user
 
         // add course id to student's 'courses' parameter
-        try {
-            userDsGateway.addCourseToStudent(requestModel.getCourseID(), requestModel.getStudentID());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        currentUser.getCourses().add(requestModel.getCourseID());
 
         // add arraylist newKeys to student's to do list
-        try {
-            userDsGateway.addTasksToTodolist(requestModel.getStudentID(), newKeys);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // saving changes
-        // TODO: no need because individual method calls already saves?
+        currentUser.getToDoList().addAll(newKeys);
 
         // create response model, send to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
-                requestModel.getStudentID(), requestModel.getCourseID(), newKeys);
+                requestModel.getCourseID(), newKeys);
 
         enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
-
 
     }
 }

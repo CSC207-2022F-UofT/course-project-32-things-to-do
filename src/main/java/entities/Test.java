@@ -174,4 +174,8 @@ public class Test extends Task implements Timeblockable, Gradable, Preparatory {
     public void setPrepTimeScheduled(ArrayList<ArrayList<LocalDateTime>> prepTimeScheduled) {
         this.prepTimeScheduled = prepTimeScheduled;
     }
+
+    public Test getTestCopy() {
+        return new Test(getTitle(), "", startTime, endTime, weightage);
+    }
 }
