@@ -37,7 +37,7 @@ public class StudentSaveRequest extends UserRegSaveRequest {
      * @param creationTime the time at which this StudentUser was created or saved
      */
     public StudentSaveRequest(String name, String password, StudentUser student, LocalDateTime creationTime) {
-        super(name, password, creationTime);
+        super(name, password);
         this.name = name;
         this.password = password;
         this.toDoList = student.getToDoList();

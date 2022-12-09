@@ -93,7 +93,7 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(newTask, (StudentUser) user);
             SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
 
-            if (!schedulerResponseModel.isScheduleCancel()) {
+            if (schedulerResponseModel.isNotScheduleCancel()) {
                 TaskMap.addTask(id, newTask);
                 ((StudentUser)user).addTaskToList(id);
             } else {

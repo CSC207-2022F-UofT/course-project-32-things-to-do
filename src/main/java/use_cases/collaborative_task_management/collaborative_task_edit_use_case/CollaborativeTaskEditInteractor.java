@@ -5,7 +5,6 @@ import entities.CurrentUser;
 import entities.StudentUser;
 import entities.TaskMap;
 import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
-import use_cases.login_registration.user_register_usecase.UserRegGateway;
 import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
 import use_cases.task_management.read_write.TaskMapGateway;
 
@@ -19,7 +18,6 @@ import java.util.HashMap;
 public class CollaborativeTaskEditInteractor implements CollaborativeTaskEditInputBoundary {
     private final CollaborativeTaskEditPresenter presenter;
     private final TaskMapGateway taskMapGateway;
-    private final UserRegGateway userGateway;
     private final HashMap<String, UserRegSaveRequest> accounts;
     private final StudentUser student = (StudentUser) CurrentUser.getCurrentUser();
 
@@ -27,13 +25,11 @@ public class CollaborativeTaskEditInteractor implements CollaborativeTaskEditInp
      * Interactor for Collaborative Task Editing.
      * @param collaborativeTaskPresenter - displays success/fail views
      * @param taskMapGateway - the gateway that interacts with the Task Map Database.
-     * @param userGateway - the gateway that interacts with the User Database.
      * @param accounts - a transient data storage class that contains the same information as a User
      */
-    public CollaborativeTaskEditInteractor(CollaborativeTaskEditPresenter collaborativeTaskPresenter, TaskMapGateway taskMapGateway, UserRegGateway userGateway, HashMap<String, UserRegSaveRequest> accounts) {
+    public CollaborativeTaskEditInteractor(CollaborativeTaskEditPresenter collaborativeTaskPresenter, TaskMapGateway taskMapGateway, HashMap<String, UserRegSaveRequest> accounts) {
         this.presenter = collaborativeTaskPresenter;
         this.taskMapGateway = taskMapGateway;
-        this.userGateway = userGateway;
         this.accounts = accounts;
     }
 
@@ -68,8 +64,8 @@ public class CollaborativeTaskEditInteractor implements CollaborativeTaskEditInp
         if (requestModel.getComplete()) {
             TaskMap.findTask(requestModel.getId()).setComplete();
             for (StudentUser s : collaborativeTask.getTeammates()) {
-                student.removeTaskFromList(requestModel.getId());
-                student.addTaskToArchive(requestModel.getId());
+                s.removeTaskFromList(requestModel.getId());
+                s.addTaskToArchive(requestModel.getId());
             }
         }
 

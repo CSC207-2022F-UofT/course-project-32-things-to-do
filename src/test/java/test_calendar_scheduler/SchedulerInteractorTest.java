@@ -50,6 +50,10 @@ class SchedulerInteractorTest  {
         interactor.schedule(requestModel2);
     }
 
+    /**
+     * Test the scheduling of prep time
+     * NOTE: only works during working hours (7am - 11pm) due to issues coordinating current time
+     */
     @Test
     void testPrepTimeScheduling() {
         // Create anonymous implementing class for the output boundary
@@ -72,7 +76,7 @@ class SchedulerInteractorTest  {
         Assignment assignment = new Assignment("testAssignment", "assignmentID", currDateTime.plusDays(1), 0.0);
         assignment.setTimeNeeded(60.0);
 
-        // Test scheduling of conflicting task
+        // Test scheduling of prep time
         SchedulerRequestModel requestModel1 = new SchedulerRequestModel(event1, user);
         interactor.schedule(requestModel1);
 
@@ -99,7 +103,7 @@ class SchedulerInteractorTest  {
 
         expectedPrepTime.add(prepTime);
 
-//        assertEquals(expectedPrepTime, (assignment.getPrepTimeScheduled()));
+        assertEquals(expectedPrepTime, (assignment.getPrepTimeScheduled()));
     }
 
 }

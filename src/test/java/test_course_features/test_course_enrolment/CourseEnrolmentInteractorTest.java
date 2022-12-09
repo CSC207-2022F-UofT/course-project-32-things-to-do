@@ -31,9 +31,6 @@ class CourseEnrolmentInteractorTest {
         StudentUser studentbefore = new StudentUser("julie", "password1");
         CurrentUser.setCurrentUser(studentbefore);
 
-        // create instructor
-        InstructorUser instructor = new InstructorUser("paul", "password1");
-
         // instructor creating task objects for a course (these would be added to task map)
         Assignment a1 = new Assignment("a1", "a1_paul_none", null, 0.1);
         Assignment a2 = new Assignment("a2", "a2_paul_none", null, 0.1);
@@ -118,19 +115,12 @@ class CourseEnrolmentInteractorTest {
         CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
-//                assertNotNull(responseModel);
 
                 // 2 tasks are added on top of 2 existing tasks
-//                assertEquals(4, TaskMap.getTaskMap().size());
                 assertTrue(TaskMap.getTaskMap().containsKey("a1_julie_csc207"));
-//                assertTrue(TaskMap.getTaskMap().containsValue(taskAccess.getTask("a1_julie_csc207")));
-//
-//                assertTrue(responseModel.getTasks().contains("a1_julie_csc207"));
 
 
                 // go to taskmap, check if ids contain key tasks
-                // TODO: assertEquals(2, responseModel.getTasks().size()); not working (response only has 2)
-//                assertTrue(responseModel.getTasks().contains("task_julie_course"));
                 assertTrue(responseModel.getTasks().contains("a1_julie_csc207"));
 
                 return null;

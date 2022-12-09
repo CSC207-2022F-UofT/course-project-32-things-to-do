@@ -110,30 +110,35 @@ public class ToDoListScreen extends JPanel implements ActionListener {
             TaskDeletionController taskDeletionController = new TaskDeletionController(taskDeletionInteractor);
 
             //change card to corresponding task type edit/delete screen
-            if (taskType.equals("Assignment")) {
-                AssignmentDisplayer assignmentInfo = new AssignmentInfoRetriever(taskId);
-                AssignmentEditDeleteScreen assignmentEditDeleteScreen = new AssignmentEditDeleteScreen(
-                        assignmentEditController, taskDeletionController, screens, screenLayout, assignmentInfo);
-                screens.add("assignmentEdit", assignmentEditDeleteScreen);
-                screenLayout.show(screens, "assignmentEdit");
-            } else if (taskType.equals("Test")) {
-                TestDisplayer testInfo = new TestInfoRetriever(taskId);
-                TestEditDeleteScreen testEditDeleteScreen = new TestEditDeleteScreen(
-                        testEditController, taskDeletionController, screens, screenLayout, testInfo);
-                screens.add("testEdit", testEditDeleteScreen);
-                screenLayout.show(screens, "testEdit");
-            } else if (taskType.equals("Event")){
-                EventDisplayer eventInfo = new EventInfoRetriever(taskId);
-                EventEditDeleteScreen eventEditDeleteScreen = new EventEditDeleteScreen(
-                        eventEditController, taskDeletionController, screens, screenLayout, eventInfo);
-                screens.add("eventEdit", eventEditDeleteScreen);
-                screenLayout.show(screens, "eventEdit");
-            } else {
-                CollaborativeTaskDisplayer ctInfo = new CollaborativeTaskInfoRetreiver(taskId);
-                CollaborativeTaskEditDeleteScreen collaborativeTaskEditDeleteScreen = new CollaborativeTaskEditDeleteScreen(
-                        collaborativeTaskEditController, taskDeletionController, screens, screenLayout, ctInfo);
-                screens.add("collabrativeTaskEdit", collaborativeTaskEditDeleteScreen);
-                screenLayout.show(screens, "collabrativeTaskEdit");
+            switch (taskType) {
+                case "Assignment":
+                    AssignmentDisplayer assignmentInfo = new AssignmentInfoRetriever(taskId);
+                    AssignmentEditDeleteScreen assignmentEditDeleteScreen = new AssignmentEditDeleteScreen(
+                            assignmentEditController, taskDeletionController, screens, screenLayout, assignmentInfo);
+                    screens.add("assignmentEdit", assignmentEditDeleteScreen);
+                    screenLayout.show(screens, "assignmentEdit");
+                    break;
+                case "Test":
+                    TestDisplayer testInfo = new TestInfoRetriever(taskId);
+                    TestEditDeleteScreen testEditDeleteScreen = new TestEditDeleteScreen(
+                            testEditController, taskDeletionController, screens, screenLayout, testInfo);
+                    screens.add("testEdit", testEditDeleteScreen);
+                    screenLayout.show(screens, "testEdit");
+                    break;
+                case "Event":
+                    EventDisplayer eventInfo = new EventInfoRetriever(taskId);
+                    EventEditDeleteScreen eventEditDeleteScreen = new EventEditDeleteScreen(
+                            eventEditController, taskDeletionController, screens, screenLayout, eventInfo);
+                    screens.add("eventEdit", eventEditDeleteScreen);
+                    screenLayout.show(screens, "eventEdit");
+                    break;
+                default:
+                    CollaborativeTaskDisplayer ctInfo = new CollaborativeTaskInfoRetreiver(taskId);
+                    CollaborativeTaskEditDeleteScreen collaborativeTaskEditDeleteScreen = new CollaborativeTaskEditDeleteScreen(
+                            collaborativeTaskEditController, taskDeletionController, screens, screenLayout, ctInfo);
+                    screens.add("collabrativeTaskEdit", collaborativeTaskEditDeleteScreen);
+                    screenLayout.show(screens, "collabrativeTaskEdit");
+                    break;
             }
         }
     }

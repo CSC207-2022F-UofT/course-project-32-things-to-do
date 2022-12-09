@@ -16,9 +16,6 @@ public class CourseEnrolmentScreen extends JPanel implements ActionListener {
     /** student enters course instructor */
     JTextField courseInstructor = new JTextField(15);
 
-    /** student enters their username (aka student id) */
-    JTextField studentID = new JTextField(15);
-
     /** the controller */
     CourseEnrolmentController courseEnrolmentController;
 
