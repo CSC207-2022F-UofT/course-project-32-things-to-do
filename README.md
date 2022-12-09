@@ -152,22 +152,22 @@ If the user clicks on the `Courses` button, the screen for course enrolment (`St
 On this screen, the user can either enrol in a course or create a course, depending on their type.
 
 **Course creation:**
-Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and a task _(in future implementation they would be able to add more than one task)_.
+Upon clicking the `Create a Course` button, the instructor will be prompted to enter in the following text fields: the course name, the course instructor, and tasks.
 
 ![](resources/images/course_creation_empty_screen.png)
 
-If the instructor clicks the `Create` button, the program will check whether the course already exists in the CourseMap and if all required fields are filled out.
+If the instructor clicks the `Create` button, the program will check whether the course already exists in the courses.ser file and if all required fields are filled out.
 If any of checks failed, an error message will pop up.
 
 ![](resources/images/creation_exists_msg.png)
 
-Once successful, the `Course` will be added to the `CourseMap`, where its key is the course ID, a unique string made up of the concatenation of the course name and course instructor entered by the instructor themselves.
+Once successful, the `Course` will be added to the data file (with the help of the data access class and gateway interface), where its key is the course ID, a unique string made up of the concatenation of the course name and course instructor entered by the instructor themselves.
 After the program has completed the course creation, the success message will pop up.
 During the entire creation process, clicking the `Cancel` button will close the window without any searches performed.
 
 **Course enrolment:**
-Upon clicking the `Enrol in a Course` button, the student will be prompted to enter the course name and course instructor of the desired course, as well as their username.
-If the student clicks the `Enrol` button, the program will check whether all required text fields are filled out, and if the course ID key can be found in the Map by taking the first 2 inputs and concatenates them (which gives the unique course ID), and searching in the `CourseMap` to see if such a course exists.
+Upon clicking the `Enrol in a Course` button, the student will be prompted to enter the course name and course instructor of the desired course.
+If the student clicks the `Enrol` button, the program will check whether all required text fields are filled out, and if the course ID key can be found in the Map by taking the first 2 inputs and concatenating them (which gives the unique course ID), and searching in the course database (called through `FileCourse` which implements the use case gateways) to see if such a course exists.
 If any of the checks failed, an error message would pop up.
 Once successful, the username of the students (which is their unique ID) will be added to the `students` parameter (which is an ArrayList of strings) of the `Course` entity associated with the course ID.
 Then, the tasks (ArrayList of strings from the `tasks` parameter in the `Course` entity) will be copied and appended to the student’s own task list.
