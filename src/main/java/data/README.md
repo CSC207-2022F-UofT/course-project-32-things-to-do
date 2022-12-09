@@ -1,0 +1,1 @@
+Note (as of December 9th, 2022): This README.md is here to initialize the `data` package in which our .ser data file's path directories are. Since we are not pushing prep-populated data onto our repo we were unaware that this package was not initialized. Sorry for the inconvenience!
