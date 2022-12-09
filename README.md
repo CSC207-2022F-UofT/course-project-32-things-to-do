@@ -5,12 +5,12 @@
 ## How to Run the Program
 
 From the Main.java file, compile & run the program with a Java IDE. No pre-existing data needed.
+**Note**: For the course enrolment use case, upon having a `InstructorUser` create a `Course`, the program would need to be closed and rerun so that the data files update accordingly.
 
 ## Register/Log In
 
 Start up the program by running the `Main.java` class in the `src/main/java` directory.
 Upon launching the program, a welcome screen with two buttons, `Sign Up` and `Log In`, appears.
-**Note**: For the course enrolment use case, upon having a `InstructorUser` create a `Course`, the program would need to be closed and rerun so that the data files update accordingly.
 
 ![](resources/images/welcome_screen.png)
 
