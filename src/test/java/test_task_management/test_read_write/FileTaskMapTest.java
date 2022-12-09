@@ -16,6 +16,9 @@ class FileTaskMapTest {
         TaskMap.setTaskMap(new HashMap<>());
         TaskMap.addTask("id", new Assignment(
                 "title", "id", 0, LocalDateTime.now(), 20));
+
+        TaskMap.addTask("id2", new Assignment(
+                "title2", "id2", 0, LocalDateTime.now(), 20));
     }
 
     @Test
@@ -24,8 +27,7 @@ class FileTaskMapTest {
         ft.save(TaskMap.getTaskMap());
         assertTrue(ft.existsById("id"));
 
-        TaskMap.addTask("id2", new Assignment(
-                "title2", "id2", 0, LocalDateTime.now(), 20));
+
         ft.save(TaskMap.getTaskMap());
         assertTrue(ft.existsById("id2"));
     }
