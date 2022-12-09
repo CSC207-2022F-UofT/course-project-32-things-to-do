@@ -28,7 +28,7 @@ class CollaborativeTaskCreationResponseModelTest {
 
     @Test
     void getType() {
-        assertEquals(responseModel.getTitle(), "Collaborative");
+        assertEquals(responseModel.getType(), "Collaborative");
 
     }
 }
