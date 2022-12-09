@@ -1,10 +1,17 @@
 import entities.*;
 import screens.*;
 import screens.calendar_scheduler.*;
+import screens.collaborative_task_management.collaborative_task_creation_screens.CollaborativeTaskCreateScreen;
+import screens.collaborative_task_management.collaborative_task_creation_screens.CollaborativeTaskCreationController;
+import screens.collaborative_task_management.collaborative_task_creation_screens.CollaborativeTaskCreationResponseFormatter;
 import screens.course_tracker.*;
 import screens.course_features.*;
 import screens.login_registration.*;
 import screens.task_management.task_creation_screens.*;
+import screens.task_management.task_creation_screens.event_creation_screens.EventCreationController;
+import use_cases.collaborative_task_management.collaborative_task_creation_use_case.CollaborativeTaskCreationInputBoundary;
+import use_cases.collaborative_task_management.collaborative_task_creation_use_case.CollaborativeTaskCreationInteractor;
+import use_cases.collaborative_task_management.collaborative_task_creation_use_case.CollaborativeTaskCreationOutputBoundary;
 import use_cases.course_features.course_creation_use_case.*;
 import use_cases.course_tracker.grade_calculator_use_case.*;
 import use_cases.course_features.course_enrolment_use_case.*;
@@ -16,6 +23,10 @@ import use_cases.login_registration.login_usecase.*;
 import use_cases.login_registration.logout_usecase.*;
 import use_cases.login_registration.user_register_usecase.*;
 import screens.task_management.FileTaskMap;
+import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.task_creation_use_case.TaskCreationInputBoundary;
+import use_cases.task_management.task_creation_use_case.TaskCreationInteractor;
+import use_cases.task_management.task_creation_use_case.TaskCreationOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,6 +73,12 @@ public class Main {
         GradeCalculatorInputBoundary gradeInteractor = new GradeCalculatorInteractor(gradePresenter);
         GradeCalculatorController gradeController = new GradeCalculatorController(gradeInteractor);
 
+        // Adding in collaborative task creation use case
+        CollaborativeTaskCreationOutputBoundary collaborativeTaskCreationOutputBoundary = new CollaborativeTaskCreationResponseFormatter();
+        FileTaskMap taskMapGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
+        CollaborativeTaskCreationInputBoundary ctInteractor = new CollaborativeTaskCreationInteractor(taskMapGateway, collaborativeTaskCreationOutputBoundary);
+        CollaborativeTaskCreationController ctController = new CollaborativeTaskCreationController(ctInteractor);
+
         ScheduleCTDSGateway scheduleCTDSGateway = new FileTaskMap("src/main/java/data/TaskMap.txt");
         ScheduleCTViewInterface scheduleCTOutputView = new ScheduleCTView(cardLayout, screens);
         ScheduleCTOutputBoundary scheduleCTPresenter = new ScheduleCTPresenter(scheduleCTOutputView);
@@ -95,6 +112,9 @@ public class Main {
 
         InstructorChooseTaskCreateScreen chooseInstructortask = new InstructorChooseTaskCreateScreen(screens, cardLayout);
         screens.add("instructorTaskCreate", chooseInstructortask);
+
+        CollaborativeTaskCreateScreen collaborativeTaskCreateScreen = new CollaborativeTaskCreateScreen(ctController, screens, cardLayout);
+        screens.add("createCT", collaborativeTaskCreateScreen);
 
         ScheduleCTScreen scheduleCTScreen = new ScheduleCTScreen(scheduleCTController, screens, cardLayout);
         screens.add("scheduleCT", scheduleCTScreen);

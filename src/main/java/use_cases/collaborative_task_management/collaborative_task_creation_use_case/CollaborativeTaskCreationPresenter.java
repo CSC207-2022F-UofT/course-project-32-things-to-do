@@ -1,7 +1,0 @@
-package use_cases.collaborative_task_management.collaborative_task_creation_use_case;
-
-public interface CollaborativeTaskCreationPresenter {
-    CollaborativeTaskCreationResponseModel prepareSuccessView(CollaborativeTaskCreationResponseModel collaborativeTaskCreationResponseModel);
-
-    CollaborativeTaskCreationResponseModel prepareFailView(String error);
-}

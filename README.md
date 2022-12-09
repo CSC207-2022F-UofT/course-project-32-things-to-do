@@ -23,7 +23,7 @@ If the password meets the requirements and the username is not taken, then they 
 
 The user can access all features of the program through the main dashboard.
 
-![](resources/images/dashboard_screen.png)
+![](resources/images/dashboard_screen2.png)
 
 To log out, the user can click the `Logout` button and will be taken back to the Welcome page, where they can log in or sign up a new User.
 
@@ -77,6 +77,29 @@ By default, the weekly view is displayed, but the user can change the view throu
 
 The `Settings` button displays a popup dialog that lets the user change their set working hours for the automatic task scheduling feature.
 The `Home` button redirects the user back to the main dashboard.
+
+## Creating and Editing Collaborative Tasks
+
+If the user clicks on the `New Collaborative Task` button (which only appears in the Student Welcome Screen and not in the Instructor Welcome Screen) then,
+the user will be brought to the collaborative task creation screen, where they will be prompted to fill in the required information fields.
+- The user must fill in the title, start date, start time, end date, end time, deadline date, and deadline time, as well as indicate whether the event is recurring, and if so, the frequency of the collaborative task (must be one of "monthly", "weekly", "daily").
+  - The priority field is optional, and its value will automatically set to 0 if the field is left blank.
+    ![](resources/images/ct_create.png)
+
+If all required fields are filled in the correct format, a new collaborative task should be created, with an automatically generated ID based on the task's title and user's name. The task is then saved to the task map, TaskMap.txt file, and student's to-do list immediately.
+
+Like with other tasks, if a student clicks on the `To Do List` button, they will be brought to a screen displaying the titles of all of their tasks (including collaborative tasks), with accompanying `Edit/Delete` buttons.
+- Clicking any of those buttons will bring the student to the task's respective edit/delete screen.
+  - If the task is a collaborative task, the edit/delete screen will look almost identical to the creation screen, except with a new checkbox to mark the event as complete, a disabled title field, pre-filled values in the others, and a new option to change he task's leader and invite other students to join. .
+    ![](resources/images/ct_edit.png)
+    The student must click the Invite button for the user with the inputted username to be invited. 
+    Once the student fills in the task's new information and presses the `Finish` button, the existing task will be updated to reflect those changes. Any fields left blank result in an unchanged value.
+  - If the task is marked as complete, in addition to editing, the task will also be removed from the student's to-do list and into their task archive.
+    If the student presses the `Delete` button, the task will be removed from their to-do list and moved to their archive
+    Pressing the `Cancel` button will return the student to their to-do list screen.
+- Clicking the `Return` button will return the student to their dashboard
+
+
 
 ## Scheduling Collaborative Tasks
 
