@@ -2,6 +2,10 @@
 
 32 Things To Do is a to-do list application that lets students keep track of their assignments, courses and schedule.
 
+## How to Run the Program
+
+From the Main.java file, compile & run the program with a Java IDE. No pre-existing data needed.
+
 ## Register/Log In
 
 Start up the program by running the `Main.java` class in the `src/main/java` directory.
