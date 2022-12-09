@@ -41,6 +41,7 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         }
 
         ArrayList<StudentUser> users = task.getTeammates();
+        // if there are no teammates, there is nothing to schedule
         if (users != null) {
             users.add(task.getLeader());
         } else {
