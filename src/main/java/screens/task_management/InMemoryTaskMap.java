@@ -5,6 +5,7 @@ import use_cases.course_features.course_enrolment_use_case.*;
 import use_cases.task_management.read_write.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TaskMapGateway for testing purposes
@@ -54,7 +55,10 @@ public class InMemoryTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGat
      */
     @Override
     public void saveNewMaptoMap(HashMap<String, Task> newMap) {
-        taskMap.putAll(newMap);
+        for (Map.Entry<String, Task> entry : newMap.entrySet()) {
+            taskMap.put(entry.getKey(), entry.getValue());
+            save(taskMap);
+        }
 
     }
 }

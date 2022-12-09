@@ -7,6 +7,7 @@ import use_cases.task_management.read_write.*;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway, ScheduleCTDSGateway {
     String path;
@@ -85,8 +86,10 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
      */
     @Override
     public void saveNewMaptoMap(HashMap<String, Task> newMap) {
-        taskMap.putAll(newMap);
-        save(taskMap);
+        for (Map.Entry<String, Task> entry: newMap.entrySet()) {
+            taskMap.put(entry.getKey(), entry.getValue());
+            save(taskMap);
+        }
     }
 
     /**

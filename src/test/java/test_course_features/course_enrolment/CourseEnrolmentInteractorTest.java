@@ -87,7 +87,7 @@ class CourseEnrolmentInteractorTest {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
-                // go to course map, get course entity associated with
+                // go to course map, get course entity associated with it
                 assertTrue(courseAccess.searchForCourse(responseModel.getCourseID()).getStudents().contains("julie"));
                 assertEquals("julie", CurrentUser.getCurrentUser().getName());
                 return null;
@@ -127,11 +127,13 @@ class CourseEnrolmentInteractorTest {
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
 //                assertNotNull(responseModel);
 
+                // 2 tasks are added on top of 2 existing tasks
+//                assertEquals(4, TaskMap.getTaskMap().size());
+                assertTrue(TaskMap.getTaskMap().containsKey("a1_julie_csc207"));
+//                assertTrue(TaskMap.getTaskMap().containsValue(taskAccess.getTask("a1_julie_csc207")));
+//
+//                assertTrue(responseModel.getTasks().contains("a1_julie_csc207"));
 
-                // assert new task map is not empty (can't really check
-                // assert new task map key-value is in taskaccess
-
-                //
 
                 // go to taskmap, check if ids contain key tasks
                 // TODO: assertEquals(2, responseModel.getTasks().size()); not working (response only has 2)
@@ -159,6 +161,7 @@ class CourseEnrolmentInteractorTest {
     }
 
     /**
+     * DONE
      * tests whether the course a student enrolled in is added to the 'courses' parameter
      * ie
      * before: currentUser is StudentUser("julie", "pwd", ["task1_julie_null"], arraylist1, new ArrayList<>(), arraylist2, hashmap1)
@@ -173,7 +176,8 @@ class CourseEnrolmentInteractorTest {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
-                // TODO: assertEquals and more
+                assertTrue(((StudentUser) CurrentUser.getCurrentUser()).getCourses().contains("csc207paul"));
+                assertEquals("csc207paul", ((StudentUser) CurrentUser.getCurrentUser()).getCourses().get(0));
                 return null;
             }
 
@@ -209,6 +213,9 @@ class CourseEnrolmentInteractorTest {
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
                 assertTrue(responseModel.getTasks().contains("a1_julie_csc207"));
+                assertTrue(responseModel.getTasks().contains("a2_julie_csc207"));
+                assertTrue(((StudentUser) CurrentUser.getCurrentUser()).getToDoList().contains("a1_julie_csc207"));
+                assertTrue(((StudentUser) CurrentUser.getCurrentUser()).getToDoList().contains("a2_julie_csc207"));
                 return null;
             }
 

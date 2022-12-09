@@ -19,13 +19,10 @@ public class CourseEnrolmentResponseModel {
      * The CourseMap will only be storing the IDs of enrolled StudentUsers
      */
     public CourseEnrolmentResponseModel(String courseID, List<String> tasks) {
-//        this.studentID = studentID;
         this.courseID = courseID;
         this.tasks = (ArrayList<String>) tasks;
     }
-//    public String getStudentID() {
-//        return studentID;
-//    }
+
     public String getCourseID() {
         return courseID;
     }
