@@ -45,12 +45,6 @@ public class CourseCreationRequestModel {
     }
 
     public ArrayList<String> getTasks() {
-        // string from input will be like this: "task1,task2,task3"
-        // need to split into ["task1", "task2", "task3"]
-
-        String taskOneString = tasks.get(0); // only one element in arraylist
-        ArrayList<String> courseTasksSplit = new ArrayList<>();
-        Collections.addAll(courseTasksSplit, taskOneString.split(","));
-        return courseTasksSplit;
+        return tasks;
     }
 }

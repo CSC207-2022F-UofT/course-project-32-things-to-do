@@ -46,7 +46,7 @@ public class Course implements Serializable {
     }
 
     public ArrayList<String> getStudents() {
-        return new ArrayList<>(this.students);
+        return students;
     }
 
     public ArrayList<String> getTasks() {
