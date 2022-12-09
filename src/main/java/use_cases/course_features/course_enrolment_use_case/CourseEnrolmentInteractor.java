@@ -13,9 +13,6 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     final CourseEnrolmentCourseDsGateway courseDsGateway;
     final CourseEnrolmentTaskDsGateway taskDsGateway;
     final CourseEnrolmentOutputBoundary enrolmentOutputBoundary;
-    private StudentUser student; // for response model
-    private Course course; // for response model
-    private Task tasks; // for response model
 
     public CourseEnrolmentInteractor(CourseEnrolmentUserDsGateway userDsGateway,
                                      CourseEnrolmentCourseDsGateway courseDsGateway,
@@ -28,16 +25,18 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     }
 
     @Override
-    public CourseEnrolmentResponseModel enrol(CourseEnrolmentRequestModel requestModel) {
+    public void enrol(CourseEnrolmentRequestModel requestModel) {
         // At least one field left blank
         if (requestModel.getCourseName().equals("") || requestModel.getCourseInstructor().equals("")
                 || requestModel.getStudentID().equals("")) {
-            return enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
+            enrolmentOutputBoundary.prepareFailView("Please fill in all required information.");
+            return;
         }
 
         // checks if given course id is in the map of existing courses
         if (!courseDsGateway.existsByCourseID(requestModel.getCourseID())) {
-            return enrolmentOutputBoundary.prepareFailView("Entered information does not correspond to an existing course.");
+            enrolmentOutputBoundary.prepareFailView("Entered information does not correspond to an existing course.");
+            return;
         }
 
         // all checks passed; background work for enrolment starts to happen
@@ -74,21 +73,17 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
-        // create 2 parallel arraylists, one stores task ids, one stores Task objects
-        ArrayList<String> oldKeys = courseTaskIDs; // could also do (ArrayList) oldTaskIdMap.keySet()
-
-        // iterate through oldKeys, get corresponding Task object, add to arraylist
+        // iterate through courseTaskIDs, get corresponding Task object, add to arraylist
         ArrayList<Task> values = new ArrayList<>();
-        for (String key: oldKeys) {
+        for (String key: courseTaskIDs) {
             Task value = oldTaskIdMap.get(key);
             values.add(value);
         }
-//        ArrayList<Task> values = (ArrayList<Task>) oldTaskIdMap.entrySet();
 
         // make newKeys with task id to title_student_course
         ArrayList<String> newKeys = new ArrayList<>();
         // change key name from title_instructor_course to title_student_course
-        for (String taskId : oldKeys) {
+        for (String taskId : courseTaskIDs) {
             // change key name from title_inst_course to title_student_course
             String newKey = taskId.replace(requestModel.getCourseInstructor(), requestModel.getStudentID());
             newKeys.add(newKey);
@@ -127,7 +122,7 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
                 requestModel.getStudentID(), requestModel.getCourseID(), newKeys);
 
-        return enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
+        enrolmentOutputBoundary.prepareSuccessView(enrolmentResponseModel);
 
 
     }

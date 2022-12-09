@@ -1,8 +1,8 @@
 package screens.task_management.task_edit_delete_screens.event_edit_delete_screens;
 
 import screens.LabelTextPanel;
-import screens.task_management.task_edit_delete_screens.TaskDeletionController;
-import use_cases.task_management.task_edit_use_case.EventDisplayer;
+import screens.task_management.task_edit_delete_screens.*;
+import use_cases.task_management.task_edit_use_case.*;
 
 import javax.swing.*;
 import java.awt.*;

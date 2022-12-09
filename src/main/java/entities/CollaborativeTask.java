@@ -149,11 +149,8 @@ public class CollaborativeTask extends Task implements Timeblockable {
 
     /**
      * Schedule a time block for the user
-     *
-     * @return - whether the time block has been successfully scheduled
      */
-    public boolean scheduleTimeBlock() {
-        return true;
+    public void scheduleTimeBlock() {
     }
 
     /**

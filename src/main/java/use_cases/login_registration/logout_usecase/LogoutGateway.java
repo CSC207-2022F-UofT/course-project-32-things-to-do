@@ -1,6 +1,6 @@
 package use_cases.login_registration.logout_usecase;
 
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+import use_cases.login_registration.user_register_usecase.*;
 
 import java.io.IOException;
 

@@ -1,13 +1,8 @@
 package use_cases.calendar_scheduler.scheduler_use_case;
 
 import entities.*;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictRequestModel;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictResponseModel;
-import use_cases.task_management.todolist_use_case.TaskType;
-import use_cases.task_management.todolist_use_case.ToDoListItem;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -91,8 +86,8 @@ public class SchedulerInteractor implements SchedulerInputBoundary {
                 LocalDateTime existingEndTime = ((Timeblockable) existingTask).getTimeBlock()[1];
 
                 // Check if start or end time of task falls between start and end times of existingTask
-                if ((startTime.isAfter(existingStartTime) && startTime.isBefore(existingEndTime)) ||
-                        (endTime.isAfter(existingStartTime) && endTime.isBefore(existingEndTime))) {
+                if ((!startTime.isBefore(existingStartTime) && !startTime.isAfter(existingEndTime)) ||
+                        (!endTime.isBefore(existingStartTime) && !endTime.isAfter(existingEndTime))) {
 
                     return existingTask;
                 }

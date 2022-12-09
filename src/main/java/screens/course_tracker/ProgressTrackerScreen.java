@@ -67,7 +67,7 @@ public class ProgressTrackerScreen extends JPanel implements ActionListener, Pro
                 " the total task weightage per course should be 100%.");
         instructions3details.setEditable(false);
         LabelTextPanel gradeCalculatorInput = new LabelTextPanel(
-                new JLabel("Enter your sanbox input"), sandboxInput);
+                new JLabel("Enter your sandbox input"), sandboxInput);
 
         open = new JButton("Calculate Grades and Progress");
         enter = new JButton("Save and Update");

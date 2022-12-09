@@ -1,7 +1,6 @@
 package screens.course_tracker;
 
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorOutputBoundary;
-import use_cases.course_tracker.grade_calculator_use_case.GradeCalculatorResponseModel;
+import use_cases.course_tracker.grade_calculator_use_case.*;
 
 
 /**

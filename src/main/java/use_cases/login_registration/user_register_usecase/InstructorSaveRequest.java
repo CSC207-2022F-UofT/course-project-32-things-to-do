@@ -1,6 +1,6 @@
 package use_cases.login_registration.user_register_usecase;
 
-import entities.InstructorUser;
+import entities.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,11 +10,9 @@ public class InstructorSaveRequest extends UserRegSaveRequest {
      * A transient data storage class that contains the same information as an InstructorUser
      */
 
-    private String name;
+    private final String name;
 
-    private String password;
-
-    private LocalDateTime creationTime;
+    private final String password;
 
     private final ArrayList<String> courses;
 
@@ -25,10 +23,9 @@ public class InstructorSaveRequest extends UserRegSaveRequest {
      * @param creationTime the time at which this InstructorUser was created or last saved
      */
     public InstructorSaveRequest(String name, String password, InstructorUser instructor, LocalDateTime creationTime) {
-        super(name, password, instructor, creationTime);
+        super(name, password, creationTime);
         this.name = name;
         this.password = password;
-        this.creationTime = creationTime;
         this.courses = instructor.getCourses();
     }
 

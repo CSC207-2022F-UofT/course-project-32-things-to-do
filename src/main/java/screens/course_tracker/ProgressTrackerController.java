@@ -1,7 +1,6 @@
 package screens.course_tracker;
 
-import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerInputBoundary;
-import use_cases.course_tracker.progress_tracker_use_case.ProgressTrackerRequestModel;
+import use_cases.course_tracker.progress_tracker_use_case.*;
 
 /**
  * Controller for the Progress Tracker Use Case

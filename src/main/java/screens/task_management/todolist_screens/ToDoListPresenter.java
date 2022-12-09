@@ -1,7 +1,5 @@
 package screens.task_management.todolist_screens;
 
-import entities.StudentUser;
-import use_cases.task_management.todolist_use_case.TaskType;
 import use_cases.task_management.todolist_use_case.*;
 
 import java.util.ArrayList;
@@ -29,8 +27,10 @@ public class ToDoListPresenter  implements ToDoListOutputBoundary {
                 itemType = "Assignment";
             } else if (item.getTaskType().equals(TaskType.TEST)) {
                 itemType = "Test";
-            } else {
+            } else if (item.getTaskType().equals(TaskType.EVENT)) {
                 itemType = "Event";
+            } else {
+                itemType = "Collaborative";
             }
             ArrayList<String> itemView = new ArrayList<>();
             itemView.add(item.getTaskTitle());

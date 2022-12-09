@@ -2,8 +2,6 @@ package use_cases.course_features.course_enrolment_use_case;
 
 // Use case layer
 
-import java.util.ArrayList;
-
 public class CourseEnrolmentRequestModel {
     private final String courseName;
     private final String courseInstructor;
@@ -41,7 +39,4 @@ public class CourseEnrolmentRequestModel {
     public String getStudentID() {
         return studentID;
     }
-//    public ArrayList<String> getTasks() {
-//        return tasks;
-//    }
 }

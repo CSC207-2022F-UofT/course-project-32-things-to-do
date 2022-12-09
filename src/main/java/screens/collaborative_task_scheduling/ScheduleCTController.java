@@ -1,8 +1,6 @@
 package screens.collaborative_task_scheduling;
 
-import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTInputBoundary;
-import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTRequestModel;
-
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 
 /**
  * Controller for the Scheduling Collaborative Tasks Use Case

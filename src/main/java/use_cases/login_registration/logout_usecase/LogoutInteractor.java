@@ -1,12 +1,7 @@
 package use_cases.login_registration.logout_usecase;
 
-import entities.CurrentUser;
-import entities.InstructorUser;
-import entities.StudentUser;
-import entities.User;
-import use_cases.login_registration.user_register_usecase.InstructorSaveRequest;
-import use_cases.login_registration.user_register_usecase.StudentSaveRequest;
-import use_cases.login_registration.user_register_usecase.UserRegSaveRequest;
+import entities.*;
+import use_cases.login_registration.user_register_usecase.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -41,6 +36,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
 
         UserRegSaveRequest userModel;
 
+        // Initialize a new UserRegSaveRequest based on the type of User in the request
         if (user instanceof StudentUser) {
             userModel = new StudentSaveRequest(user.getName(), user.getPass(),
                     (StudentUser) user, now);
@@ -48,9 +44,11 @@ public class LogoutInteractor implements LogoutInputBoundary {
             userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
                     (InstructorUser) user, now);
         } else {
-            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), user, now);
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), now);
         }
 
+        // Save the UserRegSaveRequest object containing all the info from this session
+        // into the database
         userGateway.save(userModel);
     }
 }

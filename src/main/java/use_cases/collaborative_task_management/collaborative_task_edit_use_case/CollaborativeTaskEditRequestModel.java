@@ -1,46 +1,42 @@
 package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
 
-import entities.CollaborativeTask;
-import entities.StudentUser;
+import use_cases.task_management.task_edit_use_case.TaskEditRequestModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
-public class CollaborativeTaskEditRequestModel {
-    private final CollaborativeTask collaborativeTask;
-    private final String title;
-    private final int priority;
+/**
+ * Request Model for the Collaborative Task Edit Use Case
+ * Acts as the input data object in the use case layer
+ */
+
+public class CollaborativeTaskEditRequestModel extends TaskEditRequestModel {
     private final boolean recurring;
     private final String frequency;
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final LocalDateTime deadline;
-    private final ArrayList<StudentUser> teammates;
-    private final StudentUser leader;
+    private final String leaderName;
 
-
-    public CollaborativeTaskEditRequestModel(CollaborativeTask collaborativeTask, String title, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, ArrayList<StudentUser> teammates, StudentUser leader) {
-        this.collaborativeTask = collaborativeTask;
-        this.title = title;
-        this.priority = priority;
+    /**
+     * A request model for editing Collaborative Tasks.
+     * @param id - the ID of the Collaborative Task
+     * @param complete - whether the Collaborative task is complete
+     * @param priority - the priority of the Collaborative Task
+     * @param recurring - whether the Collaborative Task is recurring
+     * @param frequency - the frequency of the Collaborative Task if recurring
+     * @param startTime - the start time of the Collaborative Task
+     * @param endTime - the end time of the Collaborative Task
+     * @param deadline - the Collaborative Task's deadline
+     * @param leaderName - the Collaborative Task's leader's name
+     */
+    public CollaborativeTaskEditRequestModel(String id, boolean complete, int priority, boolean recurring, String frequency, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, String leaderName) {
+        super(id, complete, priority);
         this.recurring = recurring;
         this.frequency = frequency;
         this.startTime = startTime;
         this.endTime = endTime;
         this.deadline = deadline;
-        this.teammates = teammates;
-        this.leader = leader;
-    }
-    public CollaborativeTask getCollaborativeTask() {
-        return this.collaborativeTask;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public int getPriority() {
-        return this.priority;
+        this.leaderName = leaderName;
     }
 
     public boolean getRecurring() {
@@ -63,11 +59,7 @@ public class CollaborativeTaskEditRequestModel {
         return this.deadline;
     }
 
-    public ArrayList<StudentUser> getTeammates() {
-        return this.teammates;
-    }
-
-    public StudentUser getLeader() {
-        return this.leader;
+    public String getLeader() {
+        return this.leaderName;
     }
 }

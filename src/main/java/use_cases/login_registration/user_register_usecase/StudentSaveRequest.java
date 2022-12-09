@@ -1,7 +1,6 @@
 package use_cases.login_registration.user_register_usecase;
 
-import entities.InstructorUser;
-import entities.StudentUser;
+import entities.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,11 +12,9 @@ public class StudentSaveRequest extends UserRegSaveRequest {
      * A transient data storage class that contains the same information as a StudentUser
      */
 
-    private String name;
+    private final String name;
 
-    private String password;
-
-    private LocalDateTime creationTime;
+    private final String password;
 
     private final ArrayList<String> toDoList;
 
@@ -25,7 +22,7 @@ public class StudentSaveRequest extends UserRegSaveRequest {
 
     private final ArrayList<String> courses;
 
-    private final ArrayList inbox;
+    private final ArrayList<Invitation> inbox;
 
     private final ArrayList<String> notifications;
 
@@ -40,10 +37,9 @@ public class StudentSaveRequest extends UserRegSaveRequest {
      * @param creationTime the time at which this StudentUser was created or saved
      */
     public StudentSaveRequest(String name, String password, StudentUser student, LocalDateTime creationTime) {
-        super(name, password, student, creationTime);
+        super(name, password, creationTime);
         this.name = name;
         this.password = password;
-        this.creationTime = creationTime;
         this.toDoList = student.getToDoList();
         this.taskArchive = student.getTaskArchive();
         this.courses = student.getCourses();
@@ -68,7 +64,7 @@ public class StudentSaveRequest extends UserRegSaveRequest {
         return this.courses;
     }
 
-    public ArrayList getInbox() {
+    public ArrayList<Invitation> getInbox() {
 
         return this.inbox;
     }

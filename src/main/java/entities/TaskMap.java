@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 public class TaskMap implements Serializable {
     private static HashMap<String, Task> taskMap;
@@ -25,10 +24,6 @@ public class TaskMap implements Serializable {
      */
     public static void addTask(String id, Task task) {
         taskMap.put(id, task);
-    }
-
-    public static void addTasks(Map newTasks) {
-        taskMap.putAll(newTasks);
     }
 
     /**
@@ -55,27 +50,4 @@ public class TaskMap implements Serializable {
         taskMap = tasksMap;
     }
 
-//    /**
-//     * Saves the taskMap to a file
-//     * @param rw - ReadWriter object saving the taskMap
-//     */
-//    public static void saveToFile(TaskMapGateway rw) {
-//        try {
-//            rw.saveToFile(taskMap);
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-//
-//    /**
-//     * Loads the taskMap from a file
-//     * @param rw - ReadWriter object reading the TaskMap.txt
-//     */
-//    public static void load(TaskMapGateway rw) {
-//        try {
-//            taskMap = (HashMap<String, Task>) rw.readFromFile();
-//        } catch(Exception e) {
-//            setTaskMap(new HashMap<>());
-//        }
-//    }
 }

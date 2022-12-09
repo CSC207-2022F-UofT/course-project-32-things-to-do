@@ -1,24 +1,24 @@
 package use_cases.collaborative_task_management.collaborative_task_edit_use_case;
 
-import entities.StudentUser;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+/**
+ * Response Model for the Collaborative Task Edit Use Case
+ * Acts as the output data object in the use case layer
+ */
 
 public class CollaborativeTaskEditResponseModel {
-    final String title;
-    final LocalDateTime startTime;
-    final LocalDateTime endTime;
-    final LocalDateTime deadline;
-    final ArrayList<StudentUser> teammates;
-    final StudentUser leader;
+    private final String title;
+    private final String id;
 
-    public CollaborativeTaskEditResponseModel(String title, LocalDateTime startTime, LocalDateTime endTime, LocalDateTime deadline, ArrayList<StudentUser> teammates, StudentUser leader) {
+    /**
+     * A response model for Collaborative Task editing.
+     * @param title - the title of the Collaborative Task.
+     * @param id - the ID of the Collaborative Task.
+     */
+    public CollaborativeTaskEditResponseModel(String title, String id) {
         this.title = title;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.deadline = deadline;
-        this.teammates = teammates;
-        this.leader = leader;
+        this.id = id;
     }
+
+    public String getTitle() { return title; }
+    public String getId() { return id; }
 }

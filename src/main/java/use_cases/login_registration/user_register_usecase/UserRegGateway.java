@@ -3,6 +3,7 @@ package use_cases.login_registration.user_register_usecase;
 // Use case layer
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface UserRegGateway {
     /**
@@ -14,4 +15,5 @@ public interface UserRegGateway {
     boolean existsByName(String identifier);
 
     void save(UserRegSaveRequest requestModel) throws IOException;
+
 }

@@ -1,26 +1,19 @@
 package screens.task_management.todolist_screens;
 
-import screens.calendar_scheduler.ScheduleConflictPresenter;
-import screens.task_management.task_edit_delete_screens.TaskDeletionController;
-import screens.task_management.task_edit_delete_screens.TaskDeletionResponseFormatter;
-import screens.task_management.task_edit_delete_screens.TaskEditResponseFormatter;
-import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.AssignmentEditController;
-import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.AssignmentEditDeleteScreen;
-import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.AssignmentInfoRetriever;
-import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.EventEditController;
-import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.EventEditDeleteScreen;
-import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.EventInfoRetriever;
-import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.TestEditController;
-import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.TestEditDeleteScreen;
-import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.TestInfoRetriever;
+import screens.calendar_scheduler.*;
+import screens.collaborative_task_management.collaborative_task_edit_delete_screens.CollaborativeTaskEditController;
+import screens.collaborative_task_management.collaborative_task_edit_delete_screens.CollaborativeTaskEditDeleteScreen;
+import screens.collaborative_task_management.collaborative_task_edit_delete_screens.CollaborativeTaskInfoRetreiver;
+import screens.task_management.task_edit_delete_screens.*;
+import screens.task_management.task_edit_delete_screens.assignment_edit_delete_screens.*;
+import screens.task_management.task_edit_delete_screens.event_edit_delete_screens.*;
+import screens.task_management.task_edit_delete_screens.test_edit_delete_screens.*;
 import screens.task_management.FileTaskMap;
-import use_cases.calendar_scheduler.schedule_conflict_use_case.ScheduleConflictOutputBoundary;
-import use_cases.task_management.read_write.TaskMapGateway;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionInputBoundary;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionInteractor;
-import use_cases.task_management.task_deletion_use_case.TaskDeletionPresenter;
+import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
+import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskDisplayer;
+import use_cases.task_management.read_write.*;
+import use_cases.task_management.task_deletion_use_case.*;
 import use_cases.task_management.task_edit_use_case.*;
-import use_cases.task_management.todolist_use_case.ToDoListResponseModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -110,6 +103,7 @@ public class ToDoListScreen extends JPanel implements ActionListener {
             EventEditController eventEditController = new EventEditController(taskEditInteractor);
             AssignmentEditController assignmentEditController = new AssignmentEditController(taskEditInteractor);
             TestEditController testEditController = new TestEditController(taskEditInteractor);
+            CollaborativeTaskEditController collaborativeTaskEditController = new CollaborativeTaskEditController(taskEditInteractor);
 
             TaskDeletionPresenter taskDeletionPresenter = new TaskDeletionResponseFormatter();
             TaskDeletionInputBoundary taskDeletionInteractor = new TaskDeletionInteractor(taskMapGateway, taskDeletionPresenter);
@@ -128,12 +122,18 @@ public class ToDoListScreen extends JPanel implements ActionListener {
                         testEditController, taskDeletionController, screens, screenLayout, testInfo);
                 screens.add("testEdit", testEditDeleteScreen);
                 screenLayout.show(screens, "testEdit");
-            } else {
+            } else if (taskType.equals("Event")){
                 EventDisplayer eventInfo = new EventInfoRetriever(taskId);
                 EventEditDeleteScreen eventEditDeleteScreen = new EventEditDeleteScreen(
                         eventEditController, taskDeletionController, screens, screenLayout, eventInfo);
                 screens.add("eventEdit", eventEditDeleteScreen);
                 screenLayout.show(screens, "eventEdit");
+            } else {
+                CollaborativeTaskDisplayer ctInfo = new CollaborativeTaskInfoRetreiver(taskId);
+                CollaborativeTaskEditDeleteScreen collaborativeTaskEditDeleteScreen = new CollaborativeTaskEditDeleteScreen(
+                        collaborativeTaskEditController, taskDeletionController, screens, screenLayout, ctInfo);
+                screens.add("collabrativeTaskEdit", collaborativeTaskEditDeleteScreen);
+                screenLayout.show(screens, "collabrativeTaskEdit");
             }
         }
     }

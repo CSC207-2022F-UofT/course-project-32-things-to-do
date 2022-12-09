@@ -1,6 +1,6 @@
 package screens.collaborative_task_scheduling;
-import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.ScheduleCTResponseModel;
 
+import use_cases.collaborative_task_scheduling.scheduling_ct_use_case.*;
 
 /**
  * View Interface for the Scheduling Collaborative Tasks Presenter (ScheduleCTPresenter)

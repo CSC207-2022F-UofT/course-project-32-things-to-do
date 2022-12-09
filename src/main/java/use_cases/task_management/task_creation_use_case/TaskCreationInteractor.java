@@ -3,7 +3,7 @@ package use_cases.task_management.task_creation_use_case;
 import entities.*;
 import use_cases.calendar_scheduler.schedule_conflict_use_case.*;
 import use_cases.calendar_scheduler.scheduler_use_case.*;
-import use_cases.task_management.read_write.TaskMapGateway;
+import use_cases.task_management.read_write.*;
 
 public class TaskCreationInteractor implements TaskCreationInputBoundary {
     private final TaskMapGateway taskMapRepository;
@@ -96,6 +96,8 @@ public class TaskCreationInteractor implements TaskCreationInputBoundary {
             if (!schedulerResponseModel.isScheduleCancel()) {
                 TaskMap.addTask(id, newTask);
                 ((StudentUser)user).addTaskToList(id);
+            } else {
+                return outputBoundary.prepareFailView("Scheduling cancelled!");
             }
         } else {
             // save Task to TaskMap
