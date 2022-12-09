@@ -41,7 +41,13 @@ public class ScheduleCTInteractor implements ScheduleCTInputBoundary {
         }
 
         ArrayList<StudentUser> users = task.getTeammates();
-        users.add(task.getLeader());
+        // if there are no teammates, there is nothing to schedule
+        if (users != null) {
+            users.add(task.getLeader());
+        } else {
+            return scheduleCTOutputBoundary.prepareFailView("No teammates found. Cannot schedule collaborative task.");
+        }
+
 
         ArrayList<StudentUser> unavailableUsers = new ArrayList<>();
 
