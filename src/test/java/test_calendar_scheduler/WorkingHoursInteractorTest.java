@@ -2,7 +2,6 @@ package test_calendar_scheduler;
 
 import entities.*;
 import org.junit.jupiter.api.Test;
-import screens.calendar_scheduler.*;
 import use_cases.calendar_scheduler.working_hours_use_case.*;
 
 import java.time.LocalTime;
@@ -14,22 +13,6 @@ class WorkingHoursInteractorTest {
 
     @Test
     void testWorkingHours() {
-        WorkingHoursOutputBoundary workingHoursPresenter = new WorkingHoursPresenter() {
-            @Override
-            public ArrayList<LocalTime> getWorkingHours() {
-
-                WorkingHoursInteractor interactor = new WorkingHoursInteractor();
-                WorkingHoursResponseModel responseModel = interactor.getWorkingHours();
-
-                ArrayList<LocalTime> expectedWorkingHours = new ArrayList<>();
-                expectedWorkingHours.add(LocalTime.parse("08:00"));
-                expectedWorkingHours.add(LocalTime.parse("21:00"));
-
-                assertEquals(expectedWorkingHours, responseModel.getWorkingHours());
-
-                return null;
-            }
-        };
 
         // Create interactor and test entities
         StudentUser user = new StudentUser("testUser", "testPassword");

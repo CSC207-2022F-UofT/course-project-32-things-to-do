@@ -12,8 +12,8 @@ public class SchedulerResponseModel {
         this.scheduleCancel = scheduleCancel;
     }
 
-    public boolean isScheduleCancel() {
-        return scheduleCancel;
+    public boolean isNotScheduleCancel() {
+        return !scheduleCancel;
     }
 
     public void setScheduleCancel(boolean scheduleCancel) {

@@ -1,12 +1,8 @@
 package screens.collaborative_task_management.collaborative_task_edit_delete_screens;
 
-import entities.CollaborativeTask;
-import entities.TaskMap;
-import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditRequestModel;
-import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditInputBoundary;
-import use_cases.collaborative_task_management.collaborative_task_edit_use_case.CollaborativeTaskEditResponseModel;
-import use_cases.task_management.task_edit_use_case.TaskEditInputBoundary;
-import use_cases.task_management.task_edit_use_case.TaskEditResponseModel;
+import entities.*;
+import use_cases.collaborative_task_management.collaborative_task_edit_use_case.*;
+import use_cases.task_management.task_edit_use_case.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

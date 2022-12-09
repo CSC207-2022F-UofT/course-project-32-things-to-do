@@ -44,7 +44,7 @@ public class LogoutInteractor implements LogoutInputBoundary {
             userModel = new InstructorSaveRequest(user.getName(), user.getPass(),
                     (InstructorUser) user, now);
         } else {
-            userModel = new UserRegSaveRequest(user.getName(), user.getPass(), now);
+            userModel = new UserRegSaveRequest(user.getName(), user.getPass());
         }
 
         // Save the UserRegSaveRequest object containing all the info from this session

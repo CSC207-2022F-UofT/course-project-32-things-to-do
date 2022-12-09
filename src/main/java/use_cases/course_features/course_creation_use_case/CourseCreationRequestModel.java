@@ -10,7 +10,6 @@ package use_cases.course_features.course_creation_use_case;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class CourseCreationRequestModel {
     private final String courseName;

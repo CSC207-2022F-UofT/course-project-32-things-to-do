@@ -3,7 +3,6 @@ package use_cases.login_registration.user_register_usecase;
 import entities.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 // Use Case Layer
 
@@ -20,9 +19,8 @@ public class UserRegSaveRequest implements Serializable {
     /**
      * @param name the name of this User
      * @param password the password of this User
-     * @param creationTime the time at which this User was saved
      */
-    public UserRegSaveRequest(String name, String password, LocalDateTime creationTime) {
+    public UserRegSaveRequest(String name, String password) {
         this.name = name;
         this.password = password;
     }

@@ -65,13 +65,6 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
     }
 
     /**
-     * For Course enrolment use case
-     * returns the task object based on the task id
-     * @param taskId the unique id (key) of the task
-     * @return task
-     */
-
-    /**
      * For course enrolment use case, get a Task based on task id
      * @param taskId - the uniqueid of the task
      */

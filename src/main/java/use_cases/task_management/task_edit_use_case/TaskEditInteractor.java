@@ -42,7 +42,7 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             Event scheduleEvent = new Event(event.getTitle(), event.getId(), event.getPriority(), request.getStartTime(), request.getEndTime(), event.getRecurring(), event.getFrequency());
             SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(scheduleEvent, student);
             SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
-            if (!schedulerResponseModel.isScheduleCancel()) {
+            if (schedulerResponseModel.isNotScheduleCancel()) {
                 event.setTimeBlock(request.getStartTime(), request.getEndTime());
             }
 
@@ -79,7 +79,7 @@ public class TaskEditInteractor implements TaskEditInputBoundary {
             Test scheduleTest = new Test(test.getTitle(), test.getId(), test.getPriority(), request.getStartTime(), request.getEndTime(), test.getWeightage());
             SchedulerRequestModel scheduleRequestModel = new SchedulerRequestModel(scheduleTest, student);
             SchedulerResponseModel schedulerResponseModel = scheduler.schedule(scheduleRequestModel);
-            if (!schedulerResponseModel.isScheduleCancel()) {
+            if (schedulerResponseModel.isNotScheduleCancel()) {
                 test.setTimeBlock(request.getStartTime(), request.getEndTime());
             }
 

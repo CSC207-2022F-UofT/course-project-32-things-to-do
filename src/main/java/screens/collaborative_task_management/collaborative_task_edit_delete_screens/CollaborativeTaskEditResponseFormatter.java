@@ -10,7 +10,7 @@ public class CollaborativeTaskEditResponseFormatter implements CollaborativeTask
      * @return - response model
      */
     @Override
-    public CollaborativeTaskEditResponseModel prepareSuccessView(CollaborativeTaskEditResponseModel responseModel) { return  responseModel; };
+    public CollaborativeTaskEditResponseModel prepareSuccessView(CollaborativeTaskEditResponseModel responseModel) { return  responseModel; }
 
     /**
      * Prepare a fail view for when Collaborative Taskediting fails
@@ -18,5 +18,5 @@ public class CollaborativeTaskEditResponseFormatter implements CollaborativeTask
      * @return - throw a new CollaborativeTaskEditFailed error
      */
     @Override
-    public CollaborativeTaskEditResponseModel prepareFailView(String error) { throw new CollaborativeTaskEditFailed(error); };
+    public CollaborativeTaskEditResponseModel prepareFailView(String error) { throw new CollaborativeTaskEditFailed(error); }
 }

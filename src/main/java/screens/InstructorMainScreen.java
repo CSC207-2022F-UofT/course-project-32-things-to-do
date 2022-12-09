@@ -18,7 +18,6 @@ public class InstructorMainScreen extends JPanel implements ActionListener {
     JButton taskCreate;
     JButton calendar;
     JButton courses;
-    JButton scheduleCT;
 
     JButton logout;
 

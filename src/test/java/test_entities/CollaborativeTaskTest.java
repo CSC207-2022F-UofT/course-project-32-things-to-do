@@ -66,26 +66,12 @@ class CollaborativeTaskTest {
         assertEquals(collaborativeTask.getEndTime(), newEndTime);
     }
 
-//    @Test
-//    void getDeadline() {
-//        LocalDateTime deadline = LocalDateTime.of(2022, 12, 7, 4, 38);
-//        assertEquals(collaborativeTask.getDeadline(), deadline);
-//    }
-
     @Test
     void setDeadline() {
         LocalDateTime newDeadline = LocalDateTime.of(2022, 12, 7, 9, 38);
         collaborativeTask.setDeadline(newDeadline);
         assertEquals(collaborativeTask.getDeadline(), newDeadline);
     }
-
-//    @Test
-//    void getTimeBlock() {
-//        LocalDateTime startTime = LocalDateTime.of(2022, 12, 2, 4, 38);
-//        LocalDateTime endTime = LocalDateTime.of(2022, 12, 4, 4, 38);
-//        assertEquals(collaborativeTask.getTimeBlock()[0], startTime);
-//        assertEquals(collaborativeTask.getTimeBlock()[1], endTime);
-//    }
 
     @Test
     void setTimeBlock() {

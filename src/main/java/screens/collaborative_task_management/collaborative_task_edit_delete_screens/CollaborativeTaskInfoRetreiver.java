@@ -21,29 +21,29 @@ public class CollaborativeTaskInfoRetreiver implements CollaborativeTaskDisplaye
     }
 
     @Override
-    public String getTitle() { return collaborativeTask.getTitle(); };
+    public String getTitle() { return collaborativeTask.getTitle(); }
 
     @Override
-    public String getId() { return this.id; };
+    public String getId() { return this.id; }
 
     @Override
-    public int getPriority() { return collaborativeTask.getPriority(); };
+    public int getPriority() { return collaborativeTask.getPriority(); }
 
     @Override
-    public boolean isRecurring() { return collaborativeTask.getRecurring(); };
+    public boolean isRecurring() { return collaborativeTask.getRecurring(); }
 
     @Override
-    public String getFrequency() { return collaborativeTask.getFrequency(); };
+    public String getFrequency() { return collaborativeTask.getFrequency(); }
 
     @Override
-    public LocalDateTime getStartTime() { return collaborativeTask.getStartTime(); };
+    public LocalDateTime getStartTime() { return collaborativeTask.getStartTime(); }
 
     @Override
-    public LocalDateTime getEndTime() { return collaborativeTask.getEndTime(); };
+    public LocalDateTime getEndTime() { return collaborativeTask.getEndTime(); }
 
     @Override
-    public LocalDateTime getDeadline() { return collaborativeTask.getDeadline(); };
+    public LocalDateTime getDeadline() { return collaborativeTask.getDeadline(); }
 
     @Override
-    public StudentUser getLeader() { return collaborativeTask.getLeader(); };
+    public StudentUser getLeader() { return collaborativeTask.getLeader(); }
 }
