@@ -59,6 +59,6 @@ public class InMemoryTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGat
             taskMap.put(entry.getKey(), entry.getValue());
             save(taskMap);
         }
-
+        TaskMap.setTaskMap(taskMap);
     }
 }

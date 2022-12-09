@@ -90,6 +90,7 @@ public class FileTaskMap implements TaskMapGateway, CourseEnrolmentTaskDsGateway
             taskMap.put(entry.getKey(), entry.getValue());
             save(taskMap);
         }
+        TaskMap.setTaskMap(taskMap);
     }
 
     /**

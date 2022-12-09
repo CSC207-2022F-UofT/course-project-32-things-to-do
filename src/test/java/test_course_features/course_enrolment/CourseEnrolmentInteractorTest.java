@@ -38,13 +38,10 @@ class CourseEnrolmentInteractorTest {
         // instructor creating task objects for a course (these would be added to task map)
         Assignment a1 = new Assignment("a1", "a1_paul_none", null, 0.1);
         Assignment a2 = new Assignment("a2", "a2_paul_none", null, 0.1);
-//        entities.Test tt1 = new entities.Test(
-//                "tt1", "tt1_paul_csc207", null, null, 0.1);
 
         HashMap<String, Task> taskmapbefore = new HashMap<>();
         taskmapbefore.put("a1_paul_none", a1);
         taskmapbefore.put("a2_paul_none", a2);
-//        taskmapbefore.put("tt1_paul_csc207", tt1);
         TaskMap.setTaskMap(taskmapbefore);
 
         // list of task  titles for course creation
@@ -73,21 +70,20 @@ class CourseEnrolmentInteractorTest {
     // 1. course checks!
 
     /**
+     * TODO: done
      * Test for whether student id was successfully appended to Course's 'students' parameter
      * ie
      * before: Course("csc207", "paul", "csc207paul", ["a1", "a2"], new ArrayList<>())
      * after: Course("csc207", "paul", "csc207paul", ["a1", "a2"], "julie")
      */
-    @Test // DONE
+    @Test
     void isStudentInCourse() {
         setUp(); // setting up static variables
 
-        // initialize interactor and prereq objects
         CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
                 assertNotNull(responseModel);
-                // go to course map, get course entity associated with it
                 assertTrue(courseAccess.searchForCourse(responseModel.getCourseID()).getStudents().contains("julie"));
                 assertEquals("julie", CurrentUser.getCurrentUser().getName());
                 return null;
@@ -121,7 +117,6 @@ class CourseEnrolmentInteractorTest {
     void newMapToTaskMap() {
         setUp(); // setting up static variables
 
-        // initialize interactor and prereq objects
         CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
@@ -161,7 +156,7 @@ class CourseEnrolmentInteractorTest {
     }
 
     /**
-     * DONE
+     * TODO: DONE
      * tests whether the course a student enrolled in is added to the 'courses' parameter
      * ie
      * before: currentUser is StudentUser("julie", "pwd", ["task1_julie_null"], arraylist1, new ArrayList<>(), arraylist2, hashmap1)
@@ -171,7 +166,6 @@ class CourseEnrolmentInteractorTest {
     void courseAddedtoStudentCourses() {
         setUp(); // setting up static variables
 
-        // initialize interactor and prereq objects
         CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
@@ -199,6 +193,7 @@ class CourseEnrolmentInteractorTest {
     }
 
     /**
+     * TODO: Done
      * tests whether course tasks ids (student user) are in the student's to-do list
      * before: currentUser is StudentUser("julie", "pwd", ["task1_julie_null"], arraylist1, ["csc207paul"], arraylist2, hashmap1)
      * after: StudentUser("julie", "pwd", ["task1_julie_null, "a1_julie_csc207", "a2_julie_csc207"], arraylist1, ["csc207paul"], arraylist2, hashmap1)
@@ -207,7 +202,6 @@ class CourseEnrolmentInteractorTest {
     void todolistUpdated() {
         setUp(); // setting up static variables
 
-        // initialize interactor and prereq objects
         CourseEnrolmentOutputBoundary outputBoundary = new CourseEnrolmentOutputBoundary() {
             @Override
             public CourseEnrolmentResponseModel prepareSuccessView(CourseEnrolmentResponseModel responseModel) {
@@ -235,6 +229,4 @@ class CourseEnrolmentInteractorTest {
 
         tearDown();
     }
-
-
 }

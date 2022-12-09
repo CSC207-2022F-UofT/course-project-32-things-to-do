@@ -30,8 +30,6 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
     @Override
     public void enrol(CourseEnrolmentRequestModel requestModel) {
         // initialization
-        // TODO: might be illegal, can't call screen? -> HashMap<String, Task> taskHashMap = TaskMap.getTaskMap();
-        // TODO: currentuser set to null rn because did not run from main --> DO INTERACTOR TEST PLS
         StudentUser currentUser = (StudentUser) CurrentUser.getCurrentUser();
 
         // At least one field left blank
@@ -77,7 +75,6 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         HashMap<String, Task> oldTaskIdMap = new HashMap<>();
         for (String oldTaskId : courseTaskIDs) {
             Task taskValue = TaskMap.getTaskMap().get(oldTaskId); // gets value from key
-            // TODO: gateway way / Task taskValue = taskDsGateway.getTask(oldTaskId); // gets value from key
             oldTaskIdMap.put(oldTaskId, taskValue); // add key-value pair to new map
         }
 
@@ -119,15 +116,13 @@ public class CourseEnrolmentInteractor implements CourseEnrolmentInputBoundary {
         // add newTaskIdMap to FileTaskMap, method saves the task map
         taskDsGateway.saveNewMaptoMap(newTaskIdMap);
 
-        // 3. current user stuff TODO: NOT user gateway
+        // 3. current user
 
         // add course id to student's 'courses' parameter
         currentUser.getCourses().add(requestModel.getCourseID());
 
         // add arraylist newKeys to student's to do list
         currentUser.getToDoList().addAll(newKeys);
-
-        // saving changes TODO: no need to save if current user doesn't log out / close program?
 
         // create response model, send to presenter
         CourseEnrolmentResponseModel enrolmentResponseModel = new CourseEnrolmentResponseModel(
