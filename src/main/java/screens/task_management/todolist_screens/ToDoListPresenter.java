@@ -27,8 +27,10 @@ public class ToDoListPresenter  implements ToDoListOutputBoundary {
                 itemType = "Assignment";
             } else if (item.getTaskType().equals(TaskType.TEST)) {
                 itemType = "Test";
-            } else {
+            } else if (item.getTaskType().equals(TaskType.EVENT)) {
                 itemType = "Event";
+            } else {
+                itemType = "Collaborative";
             }
             ArrayList<String> itemView = new ArrayList<>();
             itemView.add(item.getTaskTitle());
