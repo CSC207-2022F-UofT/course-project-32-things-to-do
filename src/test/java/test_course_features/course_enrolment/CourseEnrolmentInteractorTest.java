@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import screens.course_features.InMemoryCourse;
 import screens.task_management.InMemoryTaskMap;
 import use_cases.course_features.course_enrolment_use_case.*;
-import use_cases.task_management.read_write.TaskMapGateway;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,7 +69,6 @@ class CourseEnrolmentInteractorTest {
     // 1. course checks!
 
     /**
-     * TODO: done
      * Test for whether student id was successfully appended to Course's 'students' parameter
      * ie
      * before: Course("csc207", "paul", "csc207paul", ["a1", "a2"], new ArrayList<>())
@@ -156,7 +154,6 @@ class CourseEnrolmentInteractorTest {
     }
 
     /**
-     * TODO: DONE
      * tests whether the course a student enrolled in is added to the 'courses' parameter
      * ie
      * before: currentUser is StudentUser("julie", "pwd", ["task1_julie_null"], arraylist1, new ArrayList<>(), arraylist2, hashmap1)
@@ -193,7 +190,6 @@ class CourseEnrolmentInteractorTest {
     }
 
     /**
-     * TODO: Done
      * tests whether course tasks ids (student user) are in the student's to-do list
      * before: currentUser is StudentUser("julie", "pwd", ["task1_julie_null"], arraylist1, ["csc207paul"], arraylist2, hashmap1)
      * after: StudentUser("julie", "pwd", ["task1_julie_null, "a1_julie_csc207", "a2_julie_csc207"], arraylist1, ["csc207paul"], arraylist2, hashmap1)
