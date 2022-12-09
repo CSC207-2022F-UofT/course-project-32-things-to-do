@@ -31,18 +31,18 @@ public class ProgressTrackerTest {
 
         //create some Task objects for the TaskMap
         Assignment assignment1 = new Assignment("testAssignment1", "testAssignment1_testStudent_testCourse",
-                null, 0.2);
+                null, 20.0);
         assignment1.setComplete();
         assignment1.setGradeReceived(87);
         Assignment assignment2 = new Assignment("testAssignment2", "testAssignment2_testStudent_testCourse",
-                null, 0.4);
+                null, 40.0);
         assignment2.setComplete();
         entities.Test test1 = new entities.Test("testTest1", "testTest1_testStudent_testCourse", null,
-                null, 0.3);
+                null, 30.0);
         test1.setComplete();
         test1.setGradeReceived(66.5);
         entities.Test test2 = new entities.Test("testTest2", "testTest2_testStudent_testCourse", null,
-                null, 0.1);
+                null, 10.0);
         test2.setComplete();
         Event event1 = new Event("testEvent", "testEvent_testStudent_testCourse", 0, null,
                 null, false, "");
